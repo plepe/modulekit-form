@@ -699,3 +699,19 @@ function form_get_data($def, $data) {
   return $newdata;
 }
 
+function form_check_access($form) {
+  $access=$_SESSION['auth_access'];
+  if(!isset($access))
+    $access=array();
+
+  foreach($form as $index=>$data) {
+    if(!isset($data['access']))
+      continue;
+    if(is_string($data['access']))
+      $data['access']=array($data['access']);
+    if(!array_intersect($data['access'], $access))
+      unset($form[$index]);
+  }
+
+  return $form;
+}
