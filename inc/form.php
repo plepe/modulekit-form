@@ -57,6 +57,10 @@
 # - hidden
 #   Value bleibt der, der am Anfang drinnen gespeichert wurde.
 #
+# Moegliche $moreparam:
+# - cookie_remember
+#   Name eines Cookies in dem geaenderte Werte gespeichert werden, damit dieses
+#   Formular fortgesetzt werden kann, wenn dazwischen das Formular verlassen wurde.
 $form_orig_data=$_REQUEST[form_orig_data];
 
 function form_element_orig_name($name) {
@@ -289,6 +293,18 @@ function form_get_inputstr($def, $f, $data, $maxcount, $varname, $moreparam) {
     $orig_v=$inputconf[4];
     $more_param=$conf[more_param];
     $more_more_param=$conf[more_param];
+
+    if($moreparam['cookie_remember']) {
+      $cookie_name=$moreparam['cookie_remember'];
+      $more_param.=" cookie_remember='{$cookie_name}'";
+      $more_more_param.=" cookie_remember='{$cookie_name}'";
+
+      $cookie=json_decode($_COOKIE[$cookie_name], true);
+      if(isset($cookie[$thisvarname])) {
+	$orig_v=$v;
+	$v=$cookie[$thisvarname];
+      }
+    }
 
     unset($error);
     if($data) {

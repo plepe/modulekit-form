@@ -480,6 +480,15 @@ function form_element_changed(ob, generated) {
     x();
   }
 
+  if(ob.getAttribute("cookie_remember")) {
+    var cookie_name=ob.getAttribute("cookie_remember");
+    var cookie=json_decode(cookie_read(cookie_name));
+    if(!cookie)
+      cookie={};
+    cookie[ob.name]=ob.value;
+    cookie_write(cookie_name, json_encode(cookie));
+  }
+
   // Checken, ob die Daten plausibel sind
   if((val=form_element_check(ob))!=null)
     form_element_set_value(ob, val);
