@@ -569,6 +569,9 @@ function form_show($def, $data, $varname, $moreparam=array()) {
 
     $ret.=form_get_inputstr($def, $field, $data, $maxcount, $varname, $moreparam);
 
+    if(($conf['type']!="hidden")&&($conf['help']))
+      $ret.="</td><td>{$conf['help']}\n";
+
     if($conf["type"]!="hidden")
       $ret.="</td></tr>\n";
   }
