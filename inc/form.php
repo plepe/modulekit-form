@@ -580,8 +580,12 @@ function form_show($def, $data, $varname, $moreparam=array()) {
   foreach($def as $field=>$conf) {
     $maxcount=form_get_maxcount($def, $field, $data);
 
-    if($conf["type"]!="hidden")
-      $ret.="<tr><td valign='top'><div class='form_name'>{$conf['name']}:</div><div class='form_desc'>{$conf['desc']}</div></td><td>\n";
+    if($conf["type"]!="hidden") {
+      $ret.="<tr><td valign='top'>";
+      if((!isset($conf['hide_field_name']))||(!$conf['hide_field_name']))
+	$ret.="<div class='form_name'>{$conf['name']}:</div>";
+      $ret.="<div class='form_desc'>{$conf['desc']}</div></td><td>\n";
+    }
 
     $ret.=form_get_inputstr($def, $field, $data, $maxcount, $varname, $moreparam);
 
