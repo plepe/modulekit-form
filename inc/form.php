@@ -63,6 +63,11 @@
 #   Formular fortgesetzt werden kann, wenn dazwischen das Formular verlassen wurde.
 $form_orig_data=$_REQUEST[form_orig_data];
 
+function form_reset($form, $data, $varname) {
+  global $form_orig_data;
+  unset($form_orig_data[$varname]);
+}
+
 function form_element_orig_name($name) {
   if(eregi("^([^\\[]+)(\\[.*)$", $name, $m))
     return "form_orig_data[".$m[1]."]".$m[2];
