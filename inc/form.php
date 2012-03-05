@@ -64,6 +64,13 @@
 #       [orig_name]    the original filename
 #       [num]          the number of the uploaded file (if a count has been specified)
 #       [ext]          the extension of the uploaded file
+#   value:
+#     array(
+#       'orig_name'=>'orig filename.pdf',
+#       'name'=>'saved name.pdf',
+#       'ext'=>'pdf',
+#       'size'=>'12345'
+#     ),
 #
 # Moegliche $moreparam:
 # - cookie_remember
@@ -507,10 +514,16 @@ function form_get_inputstr($def, $f, $data, $maxcount, $varname, $moreparam) {
         }
         break;
       case "file":
-        if(!$v)
-          $v=array();
-	$ret.="<input type='hidden' name='{$thisvarname}' value='{$thisvarname}'>\n";
 	$more_ret.="<input type='hidden' name='{$morevarname}' value='{$morevarname}'>\n";
+	if($v['orig_name']) {
+	  $ret.="{$v['orig_name']}";
+	  $ret.="<input type='hidden' name='{$thisvarname}[orig_name]' value='{$v['orig_name']}'>\n";
+	  $ret.="<input type='hidden' name='{$thisvarname}[name]' value='{$v['name']}'>\n";
+	  $ret.="<input type='hidden' name='{$thisvarname}[size]' value='{$v['size']}'>\n";
+	  $ret.="<input type='hidden' name='{$thisvarname}[ext]' value='{$v['ext']}'>\n";
+	}
+	$ret.="<input type='hidden' name='{$thisvarname}[var]' value='{$thisvarname}'>\n";
+
 	$ret.="<span class='form_orig'><input type='file' name='{$thisvarname}' $more_param";
 	$more_ret.="<span class='form_orig'><input type='file' name='{$morevarname}' $more_more_param";
 	$ret.=" onChange='form_element_changed(this)' />$t</span><br />\n";
@@ -722,44 +735,46 @@ function form_get_data($def, $data) {
           break;
 	case "file":
 	  // find path to variable
-	  $path=preg_match("/^([a-zA-Z0-9]+)\[([a-zA-Z0-9\[\]]+)*\]$/", $v, $m);
+	  $path=preg_match("/^([a-zA-Z0-9]+)\[([a-zA-Z0-9\[\]]+)*\]$/", $v['var'], $m);
 	  $var1=$m[1];
 	  $varp=explode("][", $m[2]);
-
-	  // initialize result variable
-	  $ev=array();
 
 	  // save name
 	  $x=$_FILES[$var1]['name'];
 	  foreach($varp as $p)
 	    $x=$x[$p];
-	  $ev['orig_name']=$x;
+	  if($x) {
+	    $ev=array('orig_name'=>$x);
 
-	  // extension
-	  $ev['ext']="";
-	  if(preg_match("/\.([a-zA-Z0-9]+)$/", $ev['orig_name'], $m))
-	    $ev['ext']=$m[1];
+	    // extension
+	    $ev['ext']="";
+	    if(preg_match("/\.([a-zA-Z0-9]+)$/", $ev['orig_name'], $m))
+	      $ev['ext']=$m[1];
 
-	  // save size
-	  $x=$_FILES[$var1]['size'];
-	  foreach($varp as $p)
-	    $x=$x[$p];
-	  $ev['size']=$x;
+	    // save size
+	    $x=$_FILES[$var1]['size'];
+	    foreach($varp as $p)
+	      $x=$x[$p];
+	    $ev['size']=$x;
 
-	  // save file itself - get tmpname
-	  $x=$_FILES[$var1]['tmp_name'];
-	  foreach($varp as $p)
-	    $x=$x[$p];
-          // build a new filename from the template
-	  if(!$template=$def[$k]['template'])
-	    $template="[orig_name]";
-	  $ev['name']=strtr($template, array(
-	    '[orig_name]'=>$ev['orig_name'],
-	    '[num]'=>$i,
-	    '[ext]'=>$ev['ext'],
-	  ));
-	  // move
-          move_uploaded_file($x, "{$def[$k]['path']}/{$ev['name']}");
+	    // save file itself - get tmpname
+	    $x=$_FILES[$var1]['tmp_name'];
+	    foreach($varp as $p)
+	      $x=$x[$p];
+	    // build a new filename from the template
+	    if(!$template=$def[$k]['template'])
+	      $template="[orig_name]";
+	    $ev['name']=strtr($template, array(
+	      '[orig_name]'=>$ev['orig_name'],
+	      '[num]'=>$i,
+	      '[ext]'=>$ev['ext'],
+	    ));
+	    // move
+	    move_uploaded_file($x, "{$def[$k]['path']}/{$ev['name']}");
+	  }
+	  else {
+	    $ev=$v;
+	  }
 
 	  break;
         default:
