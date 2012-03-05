@@ -57,6 +57,14 @@
 # - hidden
 #   Value bleibt der, der am Anfang drinnen gespeichert wurde.
 #
+# - file
+#   additional options:
+#     path: path in which to save file(s)
+#     template: a template for the filename. possible replacement patterns:
+#       [orig_name]    the original filename
+#       [num]          the number of the uploaded file (if a count has been specified)
+#       [ext]          the extension of the uploaded file
+#
 # Moegliche $moreparam:
 # - cookie_remember
 #   Name eines Cookies in dem geaenderte Werte gespeichert werden, damit dieses
@@ -218,6 +226,7 @@ function form_element_check($field, $conf, $data, $rek=1) {
       case "multiselect":
       case "radio":
       case "checkbox":
+      case "file":
       case "hidden":
         break;
       default:
@@ -497,6 +506,16 @@ function form_get_inputstr($def, $f, $data, $maxcount, $varname, $moreparam) {
           $more_ret.=" onChange='form_element_changed(this)' />$t</span><br />\n";
         }
         break;
+      case "file":
+        if(!$v)
+          $v=array();
+	$ret.="<input type='hidden' name='{$thisvarname}' value='{$thisvarname}'>\n";
+	$more_ret.="<input type='hidden' name='{$morevarname}' value='{$morevarname}'>\n";
+	$ret.="<span class='form_orig'><input type='file' name='{$thisvarname}' $more_param";
+	$more_ret.="<span class='form_orig'><input type='file' name='{$morevarname}' $more_more_param";
+	$ret.=" onChange='form_element_changed(this)' />$t</span><br />\n";
+	$more_ret.=" onChange='form_element_changed(this)' />$t</span><br />\n";
+        break;
       case "hidden":
         $ret.="<input type='hidden' name='$thisvarname' $more_param ".
               "value='$v' />\n";
@@ -701,6 +720,48 @@ function form_get_data($def, $data) {
         case "form":
           $ev=form_get_data($def[$k]["values"], $v);
           break;
+	case "file":
+	  // find path to variable
+	  $path=preg_match("/^([a-zA-Z0-9]+)\[([a-zA-Z0-9\[\]]+)*\]$/", $v, $m);
+	  $var1=$m[1];
+	  $varp=explode("][", $m[2]);
+
+	  // initialize result variable
+	  $ev=array();
+
+	  // save name
+	  $x=$_FILES[$var1]['name'];
+	  foreach($varp as $p)
+	    $x=$x[$p];
+	  $ev['orig_name']=$x;
+
+	  // extension
+	  $ev['ext']="";
+	  if(preg_match("/\.([a-zA-Z0-9]+)$/", $ev['orig_name'], $m))
+	    $ev['ext']=$m[1];
+
+	  // save size
+	  $x=$_FILES[$var1]['size'];
+	  foreach($varp as $p)
+	    $x=$x[$p];
+	  $ev['size']=$x;
+
+	  // save file itself - get tmpname
+	  $x=$_FILES[$var1]['tmp_name'];
+	  foreach($varp as $p)
+	    $x=$x[$p];
+          // build a new filename from the template
+	  if(!$template=$def[$k]['template'])
+	    $template="[orig_name]";
+	  $ev['name']=strtr($template, array(
+	    '[orig_name]'=>$ev['orig_name'],
+	    '[num]'=>$i,
+	    '[ext]'=>$ev['ext'],
+	  ));
+	  // move
+          move_uploaded_file($x, "{$def[$k]['path']}/{$ev['name']}");
+
+	  break;
         default:
           unset($ev);
       }
