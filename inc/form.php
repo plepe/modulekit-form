@@ -516,7 +516,10 @@ function form_get_inputstr($def, $f, $data, $maxcount, $varname, $moreparam) {
       case "file":
 	$more_ret.="<input type='hidden' name='{$morevarname}' value='{$morevarname}'>\n";
 	if($v['orig_name']) {
+	  $ret.="<span id='{$thisvarname}-oldfile'>\n";
 	  $ret.="{$v['orig_name']}";
+	  $ret.=" <a href='javascript:form_file_overwrite(\"$thisvarname\")'>Change File</a>";
+	  $ret.="</span>\n";
 	  $ret.="<input type='hidden' name='{$thisvarname}[orig_name]' value='{$v['orig_name']}'>\n";
 	  $ret.="<input type='hidden' name='{$thisvarname}[name]' value='{$v['name']}'>\n";
 	  $ret.="<input type='hidden' name='{$thisvarname}[size]' value='{$v['size']}'>\n";
@@ -524,9 +527,14 @@ function form_get_inputstr($def, $f, $data, $maxcount, $varname, $moreparam) {
 	}
 	$ret.="<input type='hidden' name='{$thisvarname}[var]' value='{$thisvarname}'>\n";
 
+	if($v['orig_name'])
+	  $ret.="<span id='{$thisvarname}-newfile' style='display: none'>";
 	$ret.="<span class='form_orig'><input type='file' name='{$thisvarname}' $more_param";
 	$more_ret.="<span class='form_orig'><input type='file' name='{$morevarname}' $more_more_param";
-	$ret.=" onChange='form_element_changed(this)' />$t</span><br />\n";
+	$ret.=" onChange='form_element_changed(this)' />$t</span>";
+	if($v['orig_name'])
+	  $ret.="</span>";
+	$ret.="<br />\n";
 	$more_ret.=" onChange='form_element_changed(this)' />$t</span><br />\n";
         break;
       case "hidden":

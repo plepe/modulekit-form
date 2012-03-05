@@ -605,3 +605,10 @@ function form_textarea_move(ev) {
 function form_textarea_up() {
   form_textarea_active=null;
 }
+
+function form_file_overwrite(id) {
+  var el=document.getElementById(id+"-oldfile");
+  el.style.display="none";
+  var el=document.getElementById(id+"-newfile");
+  el.style.display="inline";
+}
