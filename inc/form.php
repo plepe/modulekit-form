@@ -64,6 +64,7 @@
 #       [orig_name]    the original filename
 #       [num]          the number of the uploaded file (if a count has been specified)
 #       [ext]          the extension of the uploaded file
+#       [timestamp]    timestamp of form "2011-12-24-18-00-00"
 #   value:
 #     array(
 #       'orig_name'=>'orig filename.pdf',
@@ -776,6 +777,7 @@ function form_get_data($def, $data) {
 	      '[orig_name]'=>$ev['orig_name'],
 	      '[num]'=>$i,
 	      '[ext]'=>$ev['ext'],
+	      '[timestamp]'=>Date("Y-m-d-H-i-s"),
 	    ));
 	    // move
 	    move_uploaded_file($x, "{$def[$k]['path']}/{$ev['name']}");
