@@ -280,9 +280,10 @@ function form_element_check(ob) {
         return form_element_error(ob, "Zeitformat nicht erkannt!");
       break;
     case "integer":
-      if(!(val=ob.value.match(/^[0-9]*$/)))
+      if(!(val=ob.value.match(/^\-?[0-9]*$/)))
         return form_element_error(ob, "Bitte eine Ganzzahl angeben!");
-      val=parseInt(ob.value);
+      if(ob.value!="")
+	val=parseInt(ob.value);
       break;
     case "person":
       if(autocomp_blur_state) { // ist true, wenn sich die maus nicht ueberm autocomp-dingens befindet
