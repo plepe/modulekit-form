@@ -341,11 +341,11 @@ function form_get_inputstr($def, $f, $data, $maxcount, $varname, $moreparam) {
 
       if(is_array($orig_v)) {
 	foreach($orig_v as $orig_vv) {
-	  $ret.="<input type='hidden' name='".form_element_orig_name($thisvarname)."[]' value=\"$orig_vv\" />\n";
+	  $ret.="<input type='hidden' name='".form_element_orig_name($thisvarname)."[]' value=\"".htmlspecialchars($orig_vv)."\" />\n";
 	}
       }
       else {
-	$ret.="<input type='hidden' name='".form_element_orig_name($thisvarname)."' value=\"$orig_v\" />\n";
+	$ret.="<input type='hidden' name='".form_element_orig_name($thisvarname)."' value=\"".htmlspecialchars($orig_v)."\" />\n";
       }
 
       if($error)
@@ -456,7 +456,8 @@ function form_get_inputstr($def, $f, $data, $maxcount, $varname, $moreparam) {
         break;
       case "textarea": // <div onMouseOver='alert(\"bla\")'>
         $ret.="<table border='0' cellpadding='0' cellspacing='0'><tr><td><textarea name='$thisvarname' $more_param onChange='form_element_changed(this)' >";
-        $ret.="$ev</textarea></td><td width='2' class='form_textarea_resize_e' onMouseDown='form_textarea_down(\"$thisvarname\", event)'></td></tr><tr><td height='2' class='form_textarea_resize_s' onMouseDown='form_textarea_down(\"$thisvarname\", event)'><td class='form_textarea_resize_se' onMouseDown='form_textarea_down(\"$thisvarname\", event)'></td></tr></table>\n";
+        $ret.=htmlspecialchars($ev);
+	$ret.="</textarea></td><td width='2' class='form_textarea_resize_e' onMouseDown='form_textarea_down(\"$thisvarname\", event)'></td></tr><tr><td height='2' class='form_textarea_resize_s' onMouseDown='form_textarea_down(\"$thisvarname\", event)'><td class='form_textarea_resize_se' onMouseDown='form_textarea_down(\"$thisvarname\", event)'></td></tr></table>\n";
         $more_ret.="<table border='0' cellpadding='0' cellspacing='0'><tr><td><textarea name='$morevarname' $more_more_param onChange='form_element_changed(this)' ></textarea></td><td width='2' class='form_textarea_resize_e' onMouseDown='form_textarea_down(\"$thisvarname\", event)'></td></tr><tr><td height='2' class='form_textarea_resize_s' onMouseDown='form_textarea_down(\"$thisvarname\", event)'><td class='form_textarea_resize_se' onMouseDown='form_textarea_down(\"$thisvarname\", event)'></td></tr></table>\n";
         break;
       case "select":
