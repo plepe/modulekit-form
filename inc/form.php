@@ -90,11 +90,15 @@ function form_element_orig_name($name) {
 }
 
 function form_print_errors($error) {
-  print "<ul>\n";
+  $ret="";
+
+  $ret.="<ul>\n";
   foreach($error as $e) {
-    print "  <li> $e</li>\n";
+    $ret.="  <li> $e</li>\n";
   }
-  print "</ul>\n";
+  $ret.="</ul>\n";
+
+  return $ret;
 }
 
 function form_check($def, $data) {
