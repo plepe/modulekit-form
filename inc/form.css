@@ -1,0 +1,10 @@
+table.form td.field_desc {
+  max-width: 256px;
+  vertical-align: top;
+  padding-bottom: 2px;
+}
+table.form td.field_value {
+}
+table.form td.field_value input[type=text] {
+  width: 400px;
+}
