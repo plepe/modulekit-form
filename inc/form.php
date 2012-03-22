@@ -65,6 +65,8 @@
 #       [num]          the number of the uploaded file (if a count has been specified)
 #       [ext]          the extension of the uploaded file
 #       [timestamp]    timestamp of form "2011-12-24-18-00-00"
+#     web_path: a link to allow download of an already uploaded file
+#       [file_name]    will be replaced by the given file name
 #   value:
 #     array(
 #       'orig_name'=>'orig filename.pdf',
@@ -523,7 +525,12 @@ function form_get_inputstr($def, $f, $data, $maxcount, $varname, $moreparam) {
 	$more_ret.="<input type='hidden' name='{$morevarname}' value='{$morevarname}'>\n";
 	if($v['orig_name']) {
 	  $ret.="<span id='{$thisvarname}-oldfile'>\n";
-	  $ret.="{$v['orig_name']}";
+	  if(isset($conf['web_path'])) {
+	    $link=strtr($conf['web_path'], array("[file_name]"=>$v['name']));
+	    $ret.="<a href='{$link}'>{$v['orig_name']}</a>";
+	  }
+	  else
+	    $ret.="{$v['orig_name']}";
 	  $ret.=" <a href='javascript:form_file_overwrite(\"$thisvarname\")'>Change File</a>";
 	  $ret.="</span>\n";
 	  $ret.="<input type='hidden' name='{$thisvarname}[orig_name]' value='{$v['orig_name']}'>\n";
