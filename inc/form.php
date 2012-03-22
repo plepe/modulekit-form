@@ -67,6 +67,7 @@
 #       [timestamp]    timestamp of form "2011-12-24-18-00-00"
 #     web_path: a link to allow download of an already uploaded file
 #       [file_name]    will be replaced by the given file name
+#     accept_ext: an array with acceptable extensions (default: all)
 #   value:
 #     array(
 #       'orig_name'=>'orig filename.pdf',
@@ -80,6 +81,7 @@
 #   Name eines Cookies in dem geaenderte Werte gespeichert werden, damit dieses
 #   Formular fortgesetzt werden kann, wenn dazwischen das Formular verlassen wurde.
 $form_orig_data=$_REQUEST[form_orig_data];
+$form_errors=array();
 
 function form_reset($form, $data, $varname) {
   global $form_orig_data;
@@ -127,6 +129,12 @@ function form_check($def, $data) {
       default:
     }
   }
+
+  global $form_errors;
+  foreach($form_errors as $e) {
+    $error[]=$e;
+  }
+  $form_errors=array();
 
   return $error;
 }
@@ -671,6 +679,8 @@ function form_get_compare_data($data, $compare_attr) {
 }
 
 function form_get_data($def, $data) {
+  global $form_errors;
+
   if(!$data)
     return $data;
 
@@ -761,24 +771,33 @@ function form_get_data($def, $data) {
 	  $var1=$m[1];
 	  $varp=explode("][", $m[2]);
 
+	  $error=false;
+
 	  // save name
 	  $x=$_FILES[$var1]['name'];
 	  foreach($varp as $p)
 	    $x=$x[$p];
-	  if($x) {
-	    $ev=array('orig_name'=>$x);
+	  if(!$x)
+	    $error=true;
+	  $ev=array('orig_name'=>$x);
+         
+	  // extension
+	  $ev['ext']="";
+	  if(preg_match("/\.([a-zA-Z0-9]+)$/", $ev['orig_name'], $m))
+	    $ev['ext']=strtolower($m[1]);
+	  if(isset($def[$k]['accept_ext'])&&
+	     (!in_array($ev['ext'], $def[$k]['accept_ext']))) {
+	    $form_errors[]="{$def[$k]['name']}: Extension '{$ev['ext']}' nicht akzeptiert";
+	    $error=true;
+	  }
 
-	    // extension
-	    $ev['ext']="";
-	    if(preg_match("/\.([a-zA-Z0-9]+)$/", $ev['orig_name'], $m))
-	      $ev['ext']=$m[1];
+	  // save size
+	  $x=$_FILES[$var1]['size'];
+	  foreach($varp as $p)
+	    $x=$x[$p];
+	  $ev['size']=$x;
 
-	    // save size
-	    $x=$_FILES[$var1]['size'];
-	    foreach($varp as $p)
-	      $x=$x[$p];
-	    $ev['size']=$x;
-
+	  if($error===false) {
 	    // save file itself - get tmpname
 	    $x=$_FILES[$var1]['tmp_name'];
 	    foreach($varp as $p)
