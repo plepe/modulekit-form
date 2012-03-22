@@ -789,6 +789,12 @@ function form_get_data($def, $data) {
 	    move_uploaded_file($x, "{$def[$k]['path']}/{$ev['name']}");
 	  }
 	  else {
+	    // hide temporary value
+	    if(isset($v['var']))
+	      unset($v['var']);
+	    if(!sizeof($v))
+	      $v=null;
+
 	    $ev=$v;
 	  }
 
