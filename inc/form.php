@@ -773,56 +773,61 @@ function form_get_data($def, $data) {
 
 	  $error=false;
 
-	  // save name
-	  $x=$_FILES[$var1]['name'];
+	  $x=$_FILES[$var1]['tmp_name'];
 	  foreach($varp as $p)
 	    $x=$x[$p];
-	  if(!$x)
-	    $error=true;
-	  $ev=array('orig_name'=>$x);
-         
-	  // extension
-	  $ev['ext']="";
-	  if(preg_match("/\.([a-zA-Z0-9]+)$/", $ev['orig_name'], $m))
-	    $ev['ext']=strtolower($m[1]);
-	  if(isset($def[$k]['accept_ext'])&&
-	     (!in_array($ev['ext'], $def[$k]['accept_ext']))) {
-	    $form_errors[]="{$def[$k]['name']}: Extension '{$ev['ext']}' nicht akzeptiert";
-	    $error=true;
-	  }
+	  $tmp_name=$x;
 
-	  // save size
-	  $x=$_FILES[$var1]['size'];
-	  foreach($varp as $p)
-	    $x=$x[$p];
-	  $ev['size']=$x;
-
-	  if($error===false) {
-	    // save file itself - get tmpname
-	    $x=$_FILES[$var1]['tmp_name'];
-	    foreach($varp as $p)
-	      $x=$x[$p];
-	    // build a new filename from the template
-	    if(!$template=$def[$k]['template'])
-	      $template="[orig_name]";
-	    $ev['name']=strtr($template, array(
-	      '[orig_name]'=>$ev['orig_name'],
-	      '[num]'=>$i,
-	      '[ext]'=>$ev['ext'],
-	      '[timestamp]'=>Date("Y-m-d-H-i-s"),
-	    ));
-	    // move
-	    move_uploaded_file($x, "{$def[$k]['path']}/{$ev['name']}");
-	  }
-	  else {
-	    // hide temporary value
-	    if(isset($v['var']))
-	      unset($v['var']);
-	    if(!sizeof($v))
-	      $v=null;
-
+          if(!$tmp_name) {
+	    // no file uploaded -> use old values
 	    $ev=$v;
 	  }
+	  else {
+	    // save name
+	    $x=$_FILES[$var1]['name'];
+	    foreach($varp as $p)
+	      $x=$x[$p];
+	    if(!$x)
+	      $error=true;
+	    $ev=array('orig_name'=>$x);
+
+	    // extension
+	    $ev['ext']="";
+	    if(preg_match("/\.([a-zA-Z0-9]+)$/", $ev['orig_name'], $m))
+	      $ev['ext']=strtolower($m[1]);
+	    if(isset($def[$k]['accept_ext'])&&
+	       (!in_array($ev['ext'], $def[$k]['accept_ext']))) {
+	      $form_errors[]="{$def[$k]['name']}: Extension '{$ev['ext']}' nicht akzeptiert";
+	      $error=true;
+	    }
+
+	    // save size
+	    $x=$_FILES[$var1]['size'];
+	    foreach($varp as $p)
+	      $x=$x[$p];
+	    $ev['size']=$x;
+
+	    if($error===false) {
+	      // build a new filename from the template
+	      if(!$template=$def[$k]['template'])
+		$template="[orig_name]";
+	      $ev['name']=strtr($template, array(
+		'[orig_name]'=>$ev['orig_name'],
+		'[num]'=>$i,
+		'[ext]'=>$ev['ext'],
+		'[timestamp]'=>Date("Y-m-d-H-i-s"),
+	      ));
+	      // save file to directory (under new name)
+	      move_uploaded_file($tmp_name, "{$def[$k]['path']}/{$ev['name']}");
+	    }
+	  }
+
+	  // hide temporary value
+	  $v=null;
+	  if(isset($ev['var']))
+	    unset($ev['var']);
+	  if(!sizeof($ev))
+	    $ev=null;
 
 	  break;
         default:
