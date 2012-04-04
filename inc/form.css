@@ -5,6 +5,7 @@ table.form td.field_desc {
 }
 table.form td.field_value {
 }
-table.form td.field_value input[type=text] {
+table.form td.field_value input[type=text],
+table.form td.field_value textarea {
   width: 400px;
 }
