@@ -505,12 +505,12 @@ function form_get_inputstr($def, $f, $data, $maxcount, $varname, $moreparam) {
         break;
       case "radio":
         foreach($conf["values"] as $i=>$t) {
-          $ret.="<span class='form_orig'><input type='radio' name='$thisvarname' value='$i' $more_param";
-          $more_ret.="<input class='form_orig'>type='radio' name='$morevarname' value='$i' $more_more_param";
+          $ret.="<span class='form_orig'><input type='radio' id='$thisvarname-$i' name='$thisvarname' value='$i' $more_param";
+          $more_ret.="<input class='form_orig'>type='radio' id='$morevarname-$i' name='$morevarname' value='$i' $more_more_param";
           if($v==$i)
             $ret.=" checked='checked'";
-          $ret.=" onChange='form_element_changed(this)' />$t</span><br />\n";
-          $more_ret.=" onChange='form_element_changed(this)' />$t</span><br />\n";
+          $ret.=" onChange='form_element_changed(this)' /><label for='$thisvarname-$i'>$t</label></span><br />\n";
+          $more_ret.=" onChange='form_element_changed(this)' /><label for='$morevarname-$i'>$t</label></span><br />\n";
         }
         break;
       case "checkbox":
@@ -521,12 +521,12 @@ function form_get_inputstr($def, $f, $data, $maxcount, $varname, $moreparam) {
           $conf["values"]=array();
         }
         foreach($conf["values"] as $i=>$t) {
-          $ret.="<span class='form_orig'><input type='checkbox' name='{$thisvarname}[]' value='$i' $more_param";
-          $more_ret.="<span class='form_orig'><input type='checkbox' name='{$morevarname}[]' value='$i' $more_more_param";
+          $ret.="<span class='form_orig'><input type='checkbox' id='$thisvarname-$i' name='{$thisvarname}[]' value='$i' $more_param";
+          $more_ret.="<span class='form_orig'><input type='checkbox' id='$morevarname-$i' name='{$morevarname}[]' value='$i' $more_more_param";
           if(in_array($i, $v))
             $ret.=" checked";
-          $ret.=" onChange='form_element_changed(this)' />$t</span><br />\n";
-          $more_ret.=" onChange='form_element_changed(this)' />$t</span><br />\n";
+          $ret.=" onChange='form_element_changed(this)' /><label for='$thisvarname-$i'>$t</label></span><br />\n";
+          $more_ret.=" onChange='form_element_changed(this)' /><label for='$thisvarname-$i'>$t</label></span><br />\n";
         }
         break;
       case "file":
