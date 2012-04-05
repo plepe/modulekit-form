@@ -422,7 +422,7 @@ function form_get_inputstr($def, $f, $data, $maxcount, $varname, $moreparam) {
 	  $x=$ev;
 
 	$ret.="<input type='text' name='$thisvarname' $more_param ".
-	      "onChange='form_element_changed(this)' ".form_autocomp_init(array("values"=>"form_data_{$data_id}"))." value='$x'/><br>\n";
+	      "onChange='form_element_changed(this)' ".form_autocomp_init(array("values"=>"form_data_{$data_id}"))." value=\"".htmlspecialchars($x)."\"'/><br>\n";
         $more_ret.="<input type='text' name='$morevarname' $more_more_param ".
                    form_autocomp_init(array("values"=>"form_data_{$data_id}"))."/><br>\n";
         break;
@@ -453,7 +453,7 @@ function form_get_inputstr($def, $f, $data, $maxcount, $varname, $moreparam) {
         }
         else {
           $ret.="<input type='text' name='$thisvarname' $more_param ".
-                "value='$ev' onChange='form_element_changed(this)' ".autocomp_init("plugin/forms")."/><br>\n";
+                "value=\"".htmlspecialchars($ev)."\" onChange='form_element_changed(this)' ".autocomp_init("plugin/forms")."/><br>\n";
         }
         $more_ret.="<input type='text' name='$morevarname' $more_more_param ".
                    autocomp_init("plugin/forms")."/><br>\n";
@@ -464,33 +464,33 @@ function form_get_inputstr($def, $f, $data, $maxcount, $varname, $moreparam) {
       case "integer":
       case "text":
         $ret.="<input type='text' name='$thisvarname' $more_param onChange='form_element_changed(this)' onKeyUp='form_element_typing(this)' ".
-              "value='$ev' /><br>\n";
+              "value=\"".htmlspecialchars($ev)."\" /><br>\n";
         $more_ret.="<input type='text' name='$morevarname' $more_more_param onChange='form_element_changed(this)' onKeyUp='form_element_typing(this)' /><br>\n";
         break;
       case "date":
         if(!($ev=date_get_human($v, 3)))
           $ev=$v;
         $ret.="<input type='text' name='$thisvarname' id='$thisvarname' $more_param ".
-              "value='$ev' onChange='form_element_changed(this)' /><img src='images/kalender.png' onClick='form_show_cal(\"$thisvarname\")' align='center'><br>\n";
+              "value=\"".htmlspecialchars($ev)."\" onChange='form_element_changed(this)' /><img src='images/kalender.png' onClick='form_show_cal(\"$thisvarname\")' align='center'><br>\n";
         $more_ret.="<input type='text' name='$morevarname' $more_more_param onChange='form_element_changed(this)' /><br>\n";
         break;
       case "datetime":
         if(!($ev=date_get_human($v)))
           $ev=$v;
         $ret.="<input type='text' name='$thisvarname' id='$thisvarname' $more_param ".
-              "value='$ev' onChange='form_element_changed(this)' /><img src='images/kalender.png' onClick='form_show_cal(\"$thisvarname\")' align='center'><br>\n";
+              "value=\"".htmlspecialchars($ev)."\" onChange='form_element_changed(this)' /><img src='images/kalender.png' onClick='form_show_cal(\"$thisvarname\")' align='center'><br>\n";
         $more_ret.="<input type='text' id='$thisvarname' name='$morevarname' $more_more_param onChange='form_element_changed(this)' /><br>\n";
         break;
       case "time":
         if(!($ev=time_get_human($v)))
           $ev=$v;
         $ret.="<input type='text' name='$thisvarname' id='$thisvarname' $more_param ".
-              "value='$ev' onChange='form_element_changed(this)' /><br>\n";
+              "value=\"".htmlspecialchars($ev)."\" onChange='form_element_changed(this)' /><br>\n";
         $more_ret.="<input type='text' id='$thisvarname' name='$morevarname' $more_more_param onChange='form_element_changed(this)' /><br>\n";
         break;
       case "password":
         $ret.="<input type='password' name='$thisvarname' $more_param ".
-              "value='$ev' onChange='form_element_changed(this)' />\n";
+              "value=\"".htmlspecialchars($ev)."\" onChange='form_element_changed(this)' />\n";
         $more_ret.="<input type='password' name='$morevarname' $more_more_param onChange='form_element_changed(this)' />\n";
         break;
       case "textarea": // <div onMouseOver='alert(\"bla\")'>
@@ -503,8 +503,8 @@ function form_get_inputstr($def, $f, $data, $maxcount, $varname, $moreparam) {
         $ret.="<select name='$thisvarname' $more_param onChange='form_element_changed(this)' >\n";
         $more_ret.="<select name='$morevarname' $more_more_param onChange='form_element_changed(this)' >\n";
         foreach($conf["values"] as $i=>$t) {
-          $ret.="  <option value='$i'";
-          $more_ret.="  <option value='$i'";
+          $ret.="  <option value=\"".htmlspecialchars($i)."\"";
+          $more_ret.="  <option value=\"".htmlspecialchars($i)."\"";
           if($v==$i)
             $ret.=" selected='selected'";
           $ret.=">$t</option>\n";
@@ -518,8 +518,8 @@ function form_get_inputstr($def, $f, $data, $maxcount, $varname, $moreparam) {
         if(!$v)
           $v=array();
         foreach($conf["values"] as $i=>$t) {
-          $ret.="  <option value='$i'";
-          $more_ret.="  <option value='$i'";
+          $ret.="  <option value=\"".htmlspecialchars($i)."\"";
+          $more_ret.="  <option value=\"".htmlspecialchars($i)."\"";
           if(in_array($i, $v))
             $ret.=" selected";
           $ret.=">$t</option>\n";
@@ -530,8 +530,8 @@ function form_get_inputstr($def, $f, $data, $maxcount, $varname, $moreparam) {
         break;
       case "radio":
         foreach($conf["values"] as $i=>$t) {
-          $ret.="<span class='form_orig'><input type='radio' id='$thisvarname-$i' name='$thisvarname' value='$i' $more_param";
-          $more_ret.="<input class='form_orig' type='radio' id='$morevarname-$i' name='$morevarname' value='$i' $more_more_param";
+          $ret.="<span class='form_orig'><input type='radio' id='$thisvarname-$i' name='$thisvarname' value=\"".htmlspecialchars($i)."\" $more_param";
+          $more_ret.="<input class='form_orig' type='radio' id='$morevarname-$i' name='$morevarname' value=\"".htmlspecialchars($i)."\" $more_more_param";
           if($v==$i)
             $ret.=" checked='checked'";
           $ret.=" onChange='form_element_changed(this)' /><label for='$thisvarname-$i'>$t</label></span><br />\n";
@@ -546,8 +546,8 @@ function form_get_inputstr($def, $f, $data, $maxcount, $varname, $moreparam) {
           $conf["values"]=array();
         }
         foreach($conf["values"] as $i=>$t) {
-          $ret.="<span class='form_orig'><input type='checkbox' id='$thisvarname-$i' name='{$thisvarname}[]' value='$i' $more_param";
-          $more_ret.="<span class='form_orig'><input type='checkbox' id='$morevarname-$i' name='{$morevarname}[]' value='$i' $more_more_param";
+          $ret.="<span class='form_orig'><input type='checkbox' id='$thisvarname-$i' name='{$thisvarname}[]' value=\"".htmlspecialchars($i)."\" $more_param";
+          $more_ret.="<span class='form_orig'><input type='checkbox' id='$morevarname-$i' name='{$morevarname}[]' value=\"".htmlspecialchars($i)."\" $more_more_param";
           if(in_array($i, $v))
             $ret.=" checked";
           $ret.=" onChange='form_element_changed(this)' /><label for='$thisvarname-$i'>$t</label></span><br />\n";
@@ -566,10 +566,8 @@ function form_get_inputstr($def, $f, $data, $maxcount, $varname, $moreparam) {
 	    $ret.="{$v['orig_name']}";
 	  $ret.=" <a href='javascript:form_file_overwrite(\"$thisvarname\")'>Change File</a>";
 	  $ret.="</span>\n";
-	  $ret.="<input type='hidden' name='{$thisvarname}[orig_name]' value='{$v['orig_name']}'>\n";
-	  $ret.="<input type='hidden' name='{$thisvarname}[name]' value='{$v['name']}'>\n";
-	  $ret.="<input type='hidden' name='{$thisvarname}[size]' value='{$v['size']}'>\n";
-	  $ret.="<input type='hidden' name='{$thisvarname}[ext]' value='{$v['ext']}'>\n";
+	  foreach(array("orig_name", "name", "size", "ext") as $k)
+	    $ret.="<input type='hidden' name='{$thisvarname}[$k]' value=\"".htmlspecialchars($v[$k])."\">\n";
 	}
 	$ret.="<input type='hidden' name='{$thisvarname}[var]' value='{$thisvarname}'>\n";
 
@@ -585,7 +583,7 @@ function form_get_inputstr($def, $f, $data, $maxcount, $varname, $moreparam) {
         break;
       case "hidden":
         $ret.="<input type='hidden' name='$thisvarname' $more_param ".
-              "value='$v' />\n";
+              "value=\"".htmlspecialchars($v)."\" />\n";
         $more_ret.="<input type='hidden' name='$morevarname' $more_more_param />\n";
         break;
       case "form":
