@@ -815,6 +815,7 @@ function keys(ob) {
 function form_autocomp_set_data(data) {
   form_autocomp_clean_box();
   var k=keys(data);
+  form_autocomp_count=k.length;
 
   if(k.length==0) {
     msg=ob.getAttribute("form_autocomp_error");
@@ -830,13 +831,14 @@ function form_autocomp_set_data(data) {
 function form_autocomp_search() {
   ob=form_autocomp_cur_ob;
 
-  if(ob.value!="") {
+  //if(ob.value!="") {
     var x;
     form_autocomp_clean_box(ob);
     search_msg=ob.getAttribute("form_autocomp_search_msg");
     form_autocomp_add_text(search_msg);
 
     if(x=ob.getAttribute("form_autocomp_url"))
+      // TODO: include timeout
       ajax_start_request(x, new Array("value="+ob.value), form_autocomp_get_data);
     if(x=ob.getAttribute("form_autocomp_values")) {
       var y={};
@@ -847,7 +849,7 @@ function form_autocomp_search() {
       }
       form_autocomp_set_data(y);
     }
-  }
+  //}
 
   return 1;
 }
@@ -862,8 +864,9 @@ function form_autocomp_onkeyup(ob, event) {
      (event.keyCode==13)||(event.keyCode==27))
     return false;
 
-  clearTimeout(form_autocomp_timer);
-  form_autocomp_timer=setTimeout("form_autocomp_search()", 100);
+  form_autocomp_search();
+//  clearTimeout(form_autocomp_timer);
+//  form_autocomp_timer=setTimeout("form_autocomp_search()", 100);
 }
 
 function form_autocomp_onblur(ob, event) {
@@ -883,6 +886,8 @@ function form_autocomp_onfocus(ob, event) {
   if(ob.value==ob.defaultValue) {
     ob.select();
   }
+  form_autocomp_cur_ob=ob;
+  form_autocomp_search();
 }
 
 function form_autocomp_blurred() {
