@@ -178,12 +178,12 @@ function form_element_check_person(xmldata) {
     ob=obs[0];
   else
     return;
-  autocomp_count=xmldata.getElementsByTagName('ac').length;
+  form_autocomp_count=xmldata.getElementsByTagName('ac').length;
 
-  if(autocomp_count>1) {
+  if(form_autocomp_count>1) {
     return form_element_error(ob, "Personenangabe nicht eindeutig");
   }
-  else if(autocomp_count==0) {
+  else if(form_autocomp_count==0) {
     return form_element_error(ob, "Person nicht gefunden");
   }
   else {
@@ -286,7 +286,7 @@ function form_element_check(ob) {
 	val=parseInt(ob.value);
       break;
     case "person":
-      if(autocomp_blur_state) { // ist true, wenn sich die maus nicht ueberm autocomp-dingens befindet
+      if(form_autocomp_blur_state) { // ist true, wenn sich die maus nicht ueberm form_autocomp-dingens befindet
         if(val!="") {
           if(form_last_check!=val) {
             form_last_check=val;
@@ -612,4 +612,244 @@ function form_file_overwrite(id) {
   el.style.display="none";
   var el=document.getElementById(id+"-newfile");
   el.style.display="inline";
+}
+
+var form_autocomp_box;
+var form_autocomp_timer;
+var form_autocomp_cur_ob;
+var form_autocomp_blur_state;
+var form_autocomp_pos;
+var form_autocomp_count;
+var form_autocomp_selected;
+var form_autocomp_nosubmit;
+var IE=false;
+
+function form_autocomp_onsubmit() {
+  if(form_autocomp_nosubmit) {
+    form_autocomp_nosubmit=false;
+    return false;
+  }
+}
+
+function form_autocomp_clean_box(ob) {
+  if(!ob)
+    ob=form_autocomp_cur_ob;
+
+  form_autocomp_cur_ob=ob;
+
+  if(!form_autocomp_box) {
+    form_autocomp_box=document.createElement("div");
+    form_autocomp_box.className="form_autocomp_box";
+    form_autocomp_box.onmousemotion=form_autocomp_noblur;
+    form_autocomp_box.onmouseover=form_autocomp_noblur;
+    form_autocomp_box.onmouseout=form_autocomp_blur;
+
+    ob.form.onsubmit=form_autocomp_onsubmit;
+  }
+  else {
+    while(x=form_autocomp_box.firstChild)
+      form_autocomp_box.removeChild(x);
+  }
+
+  document.body.appendChild(form_autocomp_box);
+  p=get_abs_pos(ob);
+  form_autocomp_box.style.position="absolute";
+  form_autocomp_box.style.left=p[0] + "px";
+  form_autocomp_box.style.top =(p[1]+ob.offsetHeight) + "px";
+  form_autocomp_box.style.width=(ob.offsetWidth-1)+"px";
+  form_autocomp_pos=-1;
+  form_autocomp_count=0;
+  form_autocomp_selected=null;
+}
+
+function form_autocomp_choose_text() {
+  form_autocomp_cur_ob.value=this.firstChild.data;
+  form_autocomp_hide_box();
+}
+
+function form_autocomp_add_text(s) {
+  ob1=document.createElement("span");
+  form_autocomp_box.appendChild(ob1);
+  ob1.onclick=form_autocomp_choose_text;
+  ob1.className="form_autocomp_entry";
+
+  text=document.createTextNode(s);
+  ob1.appendChild(text);
+
+  br=document.createElement("br");
+  form_autocomp_box.appendChild(br);
+}
+
+function form_autocomp_hide_box() {
+  form_autocomp_pos=-1;
+  form_autocomp_count=0;
+  clearTimeout(form_autocomp_timer);
+
+  if((!form_autocomp_box)||(!form_autocomp_box.parentNode))
+    return;
+
+  form_autocomp_box.style.display="none";
+  form_autocomp_box.parentNode.removeChild(form_autocomp_box);
+  form_autocomp_box=null;
+
+  form_autocomp_blur_state=1;
+  if(form_autocomp_cur_ob.onchange)
+    form_autocomp_cur_ob.onchange();
+}
+
+function form_autocomp_highlight() {
+  if(form_autocomp_selected)
+    form_autocomp_selected.className="form_autocomp_entry";
+
+  ob=form_autocomp_box.firstChild;
+  while(ob&&(ob.nodeName!="SPAN"))
+    ob=ob.nextSibling;
+
+  for(i=0;i<form_autocomp_pos;i++) {
+    ob=ob.nextSibling;
+    while(ob&&(ob.nodeName!="SPAN"))
+      ob=ob.nextSibling;
+  }
+
+  if(ob.offsetTop+ob.offsetHeight-ob.offsetParent.scrollTop+1>ob.offsetParent.clientHeight) {
+    ob.offsetParent.scrollTop=ob.offsetTop+ob.offsetHeight+1-ob.offsetParent.clientHeight;
+  }
+  if(ob.offsetTop-ob.offsetParent.scrollTop<0) {
+    ob.offsetParent.scrollTop=ob.offsetTop;
+  }
+
+  ob.className="form_autocomp_selected";
+  form_autocomp_selected=ob;
+}
+
+function form_autocomp_movecursor(ob, event) {
+  if(!form_autocomp_box)
+    return;
+  if(form_autocomp_count==0)
+    return;
+
+  if(event.keyCode==40) {
+    form_autocomp_pos++;
+    if(form_autocomp_pos>=form_autocomp_count)
+      form_autocomp_pos=0;
+
+    form_autocomp_highlight();
+    return 1;
+  }
+
+  if(event.keyCode==38) {
+    form_autocomp_pos--;
+    if(form_autocomp_pos<0)
+      form_autocomp_pos=form_autocomp_count-1;
+
+    form_autocomp_highlight();
+    return 1;
+  }
+
+}
+
+function form_autocomp_onkeypress(ob, event) {
+  if(!IE)
+    if(form_autocomp_movecursor(ob, event))
+      return false;
+}
+
+function form_autocomp_onkeydown(ob, event) {
+  if(IE) {
+    if(form_autocomp_movecursor(ob, event))
+      return false;
+  }
+  else {
+    if((event.keyCode==38)||(event.keyCode==40))
+      return;
+  }
+
+  if((form_autocomp_box)&&(event.keyCode==13)) {
+    form_autocomp_blur_state=1;
+    form_autocomp_cur_ob.value=form_autocomp_selected.firstChild.data;
+    form_autocomp_hide_box();
+    form_autocomp_nosubmit=true;
+  }
+
+//  if((form_autocomp_box)&&(event.keyCode!=16)) {
+//    alert(event.keyCode);
+//  }
+
+  if((form_autocomp_box)&&(event.keyCode==9)) {
+    form_autocomp_blur_state=1;
+  }
+
+  // 16=shift
+  if((form_autocomp_box)&&(event.keyCode!=16)) {
+    form_autocomp_hide_box();
+  }
+
+  return 1;
+}
+
+function form_autocomp_get_data(data) {
+  form_autocomp_clean_box();
+  form_autocomp_count=data.getElementsByTagName('ac').length;
+  if(form_autocomp_count==0) {
+    msg=ob.getAttribute("form_autocomp_error");
+    form_autocomp_add_text(msg);
+  }
+  else {
+    for(i=0;i<form_autocomp_count;i++) {
+      form_autocomp_add_text(data.getElementsByTagName('ac')[i].firstChild.nodeValue);
+    }
+  }
+}
+
+function form_autocomp_search() {
+  ob=form_autocomp_cur_ob;
+
+  if(ob.value!="") {
+    form_autocomp_clean_box(ob);
+    search_msg=ob.getAttribute("form_autocomp_search_msg");
+    form_autocomp_add_text(search_msg);
+
+    url=ob.getAttribute("form_autocomp_url");
+    ajax_start_request(url, new Array("value="+ob.value), form_autocomp_get_data);
+  }
+
+  return 1;
+}
+
+function form_autocomp_onkeyup(ob, event) {
+  if(!ob)
+    ob=form_autocomp_cur_ob;
+
+  form_autocomp_cur_ob=ob;
+
+  if((event.keyCode==38)||(event.keyCode==40)||
+     (event.keyCode==13)||(event.keyCode==27))
+    return false;
+
+  clearTimeout(form_autocomp_timer);
+  form_autocomp_timer=setTimeout("form_autocomp_search()", 500);
+}
+
+function form_autocomp_onblur(ob, event) {
+  if(form_autocomp_blur_state)
+    form_autocomp_hide_box();
+
+/*  p=get_abs_pos(form_autocomp_box);
+  alert(event+" "+event.pageX+" "+p[0]+" "+form_autocomp_box.offsetWidth);
+  if((event.clientX>=p[0])&&(event.clientX<p[0]+form_autocomp_box.offsetWidth)&&
+     (event.clientY>=p[1])&&(event.clientY<p[1]+form_autocomp_box.offsetHeight)) {
+    alert("x");
+  }*/
+
+}
+
+function form_autocomp_blurred() {
+}
+
+function form_autocomp_noblur() {
+  form_autocomp_blur_state=0;
+}
+
+function form_autocomp_blur() {
+  form_autocomp_blur_state=1;
 }

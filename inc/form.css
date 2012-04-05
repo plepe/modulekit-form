@@ -12,3 +12,21 @@ table.form td.field_value textarea {
 table.form label:hover {
   text-decoration: underline;
 }
+.form_autocomp_box {
+  border: 1px solid black;
+  display: block;
+  background: white;
+  overflow: auto;
+  overflow-y: scroll;
+  max-height: 150px;
+  min-width: 100px;
+  width: 100px;
+}
+.form_autocomp_entry {
+  background: white;
+  margin-bottom: 2px;
+}
+.form_autocomp_selected {
+  background: yellow;
+  margin-bottom: 2px;
+}

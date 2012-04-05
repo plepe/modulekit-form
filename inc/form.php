@@ -884,3 +884,18 @@ function form_get_changed($form, $var_name) {
 
   return $ret;
 }
+
+function form_autocomp_init($url, $search_msg="Searching ...", $error="Nothing found") {
+  $ret="";
+
+  $ret.=" onKeyDown='form_autocomp_onkeydown(this, event)'";
+  $ret.=" onKeyUp='form_autocomp_onkeyup(this, event)'";
+  $ret.=" onKeyPress='form_autocomp_onkeypress(this, event)'";
+  $ret.=" onBlur='form_autocomp_onblur(this, event)'";
+  $ret.=" form_autocomplete='off'";
+  $ret.=" form_autocomp_url=\"$url\"";
+  $ret.=" form_autocomp_search_msg=\"$search_msg\"";
+  $ret.=" form_autocomp_error=\"$error\"";
+
+  return $ret;
+}
