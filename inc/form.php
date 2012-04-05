@@ -506,7 +506,7 @@ function form_get_inputstr($def, $f, $data, $maxcount, $varname, $moreparam) {
       case "radio":
         foreach($conf["values"] as $i=>$t) {
           $ret.="<span class='form_orig'><input type='radio' id='$thisvarname-$i' name='$thisvarname' value='$i' $more_param";
-          $more_ret.="<input class='form_orig'>type='radio' id='$morevarname-$i' name='$morevarname' value='$i' $more_more_param";
+          $more_ret.="<input class='form_orig' type='radio' id='$morevarname-$i' name='$morevarname' value='$i' $more_more_param";
           if($v==$i)
             $ret.=" checked='checked'";
           $ret.=" onChange='form_element_changed(this)' /><label for='$thisvarname-$i'>$t</label></span><br />\n";
