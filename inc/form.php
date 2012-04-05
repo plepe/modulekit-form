@@ -126,6 +126,11 @@ function form_check($def, $data) {
           }
         }
         break;
+      case "inputselect":
+	if(($data[$key]!=="")&&(!$conf['values'][$data[$key]])) {
+	  $error[]="'$conf[name]': Ungültiger Wert \"{$data[$key]}\"";
+	}
+	break;
       case "form":
         $err=form_check($conf["values"], $data[$key]);
         foreach($err as $e) {
@@ -247,11 +252,6 @@ function form_element_check($field, $conf, $data, $rek=1) {
           return "Zeitformat nicht erkannt";
 
         break;
-      case "inputselect":
-	if(($data[$field]!=="")&&(!$conf['values'][$data[$field]])) {
-	  return "Ungültiger Wert \"{$data[$field]}\"";
-	}
-	break;
       case "password":
       case "textarea":
       case "select":
