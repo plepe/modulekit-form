@@ -879,6 +879,12 @@ function form_autocomp_onblur(ob, event) {
 
 }
 
+function form_autocomp_onfocus(ob, event) {
+  if(ob.value==ob.defaultValue) {
+    ob.select();
+  }
+}
+
 function form_autocomp_blurred() {
 }
 

@@ -932,6 +932,7 @@ function form_autocomp_init($data, $search_msg="Searching ...", $error="Nothing 
   $ret.=" onKeyDown='form_autocomp_onkeydown(this, event)'";
   $ret.=" onKeyUp='form_autocomp_onkeyup(this, event)'";
   $ret.=" onKeyPress='form_autocomp_onkeypress(this, event)'";
+  $ret.=" onFocus='form_autocomp_onfocus(this, event)'";
   $ret.=" onBlur='form_autocomp_onblur(this, event)'";
   $ret.=" autocomplete='off'";
   if(isset($data['url']))
