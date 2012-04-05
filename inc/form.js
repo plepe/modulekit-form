@@ -667,11 +667,12 @@ function form_autocomp_choose_text() {
   form_autocomp_hide_box();
 }
 
-function form_autocomp_add_text(s) {
+function form_autocomp_add_text(s, value) {
   ob1=document.createElement("span");
   form_autocomp_box.appendChild(ob1);
   ob1.onclick=form_autocomp_choose_text;
   ob1.className="form_autocomp_entry";
+  ob1.value=value;
 
   text=document.createTextNode(s);
   ob1.appendChild(text);
@@ -801,16 +802,51 @@ function form_autocomp_get_data(data) {
   }
 }
 
+function keys(ob) {
+  var ret=[];
+
+  for(var i in ob) {
+    ret.push(i);
+  }
+
+  return ret;
+}
+
+function form_autocomp_set_data(data) {
+  form_autocomp_clean_box();
+  var k=keys(data);
+
+  if(k.length==0) {
+    msg=ob.getAttribute("form_autocomp_error");
+    form_autocomp_add_text(msg);
+  }
+  else {
+    for(i=0;i<k.length;i++) {
+      form_autocomp_add_text(data[k[i]], k[i]);
+    }
+  }
+}
+
 function form_autocomp_search() {
   ob=form_autocomp_cur_ob;
 
   if(ob.value!="") {
+    var x;
     form_autocomp_clean_box(ob);
     search_msg=ob.getAttribute("form_autocomp_search_msg");
     form_autocomp_add_text(search_msg);
 
-    url=ob.getAttribute("form_autocomp_url");
-    ajax_start_request(url, new Array("value="+ob.value), form_autocomp_get_data);
+    if(x=ob.getAttribute("form_autocomp_url"))
+      ajax_start_request(x, new Array("value="+ob.value), form_autocomp_get_data);
+    if(x=ob.getAttribute("form_autocomp_values")) {
+      var y={};
+      var x=eval(x);
+      for(var i in x) {
+	if(x[i].toLowerCase().indexOf(ob.value.toLowerCase()) != -1)
+	  y[i]=x[i];
+      }
+      form_autocomp_set_data(y);
+    }
   }
 
   return 1;
@@ -827,7 +863,7 @@ function form_autocomp_onkeyup(ob, event) {
     return false;
 
   clearTimeout(form_autocomp_timer);
-  form_autocomp_timer=setTimeout("form_autocomp_search()", 500);
+  form_autocomp_timer=setTimeout("form_autocomp_search()", 100);
 }
 
 function form_autocomp_onblur(ob, event) {

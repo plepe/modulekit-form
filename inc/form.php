@@ -76,6 +76,11 @@
 #       'size'=>'12345'
 #     ),
 #
+# - inputselect
+#   behaves similar to select, but user can input parts of the name
+#   additional options:
+#     values: hash with possible values
+#
 # Moegliche $moreparam:
 # - cookie_remember
 #   Name eines Cookies in dem geaenderte Werte gespeichert werden, damit dieses
@@ -242,6 +247,11 @@ function form_element_check($field, $conf, $data, $rek=1) {
           return "Zeitformat nicht erkannt";
 
         break;
+      case "inputselect":
+	if(($data[$field]!=="")&&(!$conf['values'][$data[$field]])) {
+	  return "Ungültiger Wert \"{$data[$field]}\"";
+	}
+	break;
       case "password":
       case "textarea":
       case "select":
@@ -401,6 +411,21 @@ function form_get_inputstr($def, $f, $data, $maxcount, $varname, $moreparam) {
     $ev=$v;
     $more_ret="";
     switch($conf["type"]) {
+      case "inputselect":
+        $data_id=uniqid();
+	$ret.="<script type='text/javascript'>\nvar form_data_{$data_id}=".json_encode($conf['values']).";\n</script>\n";
+
+	if(isset($conf['values'][$ev])) {
+	  $x=$conf['values'][$ev];
+	}
+	else
+	  $x=$ev;
+
+	$ret.="<input type='text' name='$thisvarname' $more_param ".
+	      "onChange='form_element_changed(this)' ".form_autocomp_init(array("values"=>"form_data_{$data_id}"))." value='$x'/><br>\n";
+        $more_ret.="<input type='text' name='$morevarname' $more_more_param ".
+                   form_autocomp_init(array("values"=>"form_data_{$data_id}"))."/><br>\n";
+        break;
       case "person":
         if(ereg("^[0-9]*$", $v)) {
           $res_forms_pers=sql("select * from person where person.personnummer='$v'");
@@ -712,6 +737,18 @@ function form_get_data($def, $data) {
         case "hidden":
           $ev=$v;
           break;
+        case "inputselect":
+	  if($v=="") {
+	    $ev=null;
+	  }
+	  else {
+	    $x=array_search($v, $def[$k]['values']);
+	    if($x===false)
+	      $ev=$v;
+	    else
+	      $ev=$x;
+	  }
+	  break;
         case "person":
           if(ereg("^[0-9]$", $v)) {
             $res_t=sql("select person.personnummer from person join person_mhda ".
@@ -885,15 +922,22 @@ function form_get_changed($form, $var_name) {
   return $ret;
 }
 
-function form_autocomp_init($url, $search_msg="Searching ...", $error="Nothing found") {
+function form_autocomp_init($data, $search_msg="Searching ...", $error="Nothing found") {
   $ret="";
+
+  if(is_string($data)) {
+    $data=array('url'=>$data);
+  }
 
   $ret.=" onKeyDown='form_autocomp_onkeydown(this, event)'";
   $ret.=" onKeyUp='form_autocomp_onkeyup(this, event)'";
   $ret.=" onKeyPress='form_autocomp_onkeypress(this, event)'";
   $ret.=" onBlur='form_autocomp_onblur(this, event)'";
-  $ret.=" form_autocomplete='off'";
-  $ret.=" form_autocomp_url=\"$url\"";
+  $ret.=" autocomplete='off'";
+  if(isset($data['url']))
+    $ret.=" form_autocomp_url=\"{$data['url']}\"";
+  if(isset($data['values']))
+    $ret.=" form_autocomp_values=\"{$data['values']}\"";
   $ret.=" form_autocomp_search_msg=\"$search_msg\"";
   $ret.=" form_autocomp_error=\"$error\"";
 
