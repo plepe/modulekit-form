@@ -88,6 +88,14 @@
 $form_orig_data=$_REQUEST[form_orig_data];
 $form_errors=array();
 
+function html_export_var($data) {
+  print "<script type='text/javascript'>\n";
+  foreach($data as $k=>$v) {
+    print "var $k=".json_encode($v).";\n";
+  }
+  print "</script>\n";
+}
+
 function form_reset($form, $data, $varname) {
   global $form_orig_data;
   unset($form_orig_data[$varname]);
