@@ -29,6 +29,31 @@ class form_element_array extends form_element {
     unset($this->data);
   }
 
+  function set_orig_data($data) {
+    $this->orig_data=$data;
+
+    $element_class="form_element_{$this->def['def']['type']}";
+    $element_def=$this->def['def'];
+
+    foreach($data as $k=>$v) {
+      if(!isset($this->elements[$k])) {
+	$element_id="{$this->id}_{$k}";
+	$element_options=$this->options;
+	$element_options['var_name']="{$this->options['var_name']}[{$k}]";
+
+	if(class_exists($element_class)) {
+	  $this->elements[$k]=new $element_class($element_id, $element_def, $element_options);
+	}
+      }
+
+      $this->elements[$k]->set_orig_data($v);
+    }
+  }
+
+  function get_orig_data($data) {
+    return $this->orig_data;
+  }
+
   function build_form() {
     $this->elements=array();
 

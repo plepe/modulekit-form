@@ -20,8 +20,15 @@ class form {
 
     $this->build_form();
 
+    $this->has_data=false;
     if($_REQUEST[$this->options['var_name']])
-      $this->set_data(form_get_data($this->def, $_REQUEST[$this->options['var_name']]));
+      $this->set_request_data($_REQUEST[$this->options['var_name']]);
+
+    $this->has_orig_data=false;
+    if(isset($_REQUEST['form_orig_'.$this->options['var_name']])) {
+      $orig_data=json_decode($_REQUEST['form_orig_'.$this->options['var_name']], true);
+      $this->set_orig_data($orig_data);
+    }
   }
 
   function build_form() {
@@ -40,6 +47,9 @@ class form {
   }
 
   function get_data() {
+    if(!$this->has_data)
+      return null;
+
     $data=array();
     foreach($this->elements as $k=>$element) {
       $data[$k]=$element->get_data();
@@ -49,12 +59,48 @@ class form {
   }
 
   function set_data($data) {
+    $this->has_data=true;
+
     foreach($this->elements as $k=>$element) {
       if(isset($data[$k]))
 	$element->set_data($data[$k]);
       else
 	$element->set_data(null);
     }
+  }
+
+  function set_request_data($data) {
+    $this->has_data=true;
+
+    foreach($this->elements as $k=>$element) {
+      if(isset($data[$k]))
+	$element->set_request_data($data[$k]);
+      else
+	$element->set_request_data(null);
+    }
+  }
+
+  function set_orig_data($data) {
+    $this->has_orig_data=true;
+
+    foreach($this->elements as $k=>$element) {
+      if(isset($data[$k]))
+	$element->set_orig_data($data[$k]);
+      else
+	$element->set_orig_data(null);
+    }
+  }
+
+  function get_orig_data() {
+    if(!$this->has_orig_data)
+      return $this->get_data();
+
+    $data=array();
+    foreach($this->elements as $k=>$element) {
+      $data[$k]=$element->get_orig_data();
+    }
+
+    return $data;
   }
 
   function errors() {
@@ -66,12 +112,16 @@ class form {
   }
 
   function reset() {
-    return form_reset($this->def, $this->data, $this->options['var_name']);
+    $this->has_orig_data=false;
+    //return form_reset($this->def, $this->data, $this->options['var_name']);
   }
 
   function show() {
     $ret ="<table id='{$this->id}' class='form'>\n";
 
+    $orig_data=$this->get_orig_data();
+
+    $ret.="<input type='hidden' name='form_orig_{$this->options['var_name']}' value=\"".htmlspecialchars(json_encode($orig_data))."\">";
     foreach($this->elements as $k=>$element) {
       $ret.=$element->show();
     }

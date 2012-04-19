@@ -4,6 +4,7 @@ class form_element {
   public $id;
   public $options;
   public $data;
+  public $orig_data;
 
   function __construct($id, $def, $options) {
     $this->id=$id;
@@ -15,8 +16,20 @@ class form_element {
     $this->data=$data;
   }
 
+  function set_request_data($data) {
+    $this->set_data($data);
+  }
+
   function get_data() {
     return $this->data;
+  }
+
+  function set_orig_data($data) {
+    $this->orig_data=$data;
+  }
+
+  function get_orig_data($data) {
+    return $this->orig_data;
   }
 
   function show() {
