@@ -30,3 +30,13 @@ table.form label:hover {
   background: yellow;
   margin-bottom: 2px;
 }
+
+.form_orig {
+}
+.form_modified {
+  background: #ffff7f;
+}
+.form_error {
+  color: #ffffff;
+  background: #ff0000;
+}
