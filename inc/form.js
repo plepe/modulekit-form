@@ -886,11 +886,15 @@ function form_autocomp_onblur(ob, event) {
 }
 
 function form_autocomp_onfocus(ob, event) {
-  if(ob.value==ob.defaultValue) {
-    ob.select();
-  }
   form_autocomp_cur_ob=ob;
   form_autocomp_search();
+}
+
+function form_autocomp_onclick(ob, event) {
+  if(ob.value==ob.defaultValue) {
+    ob.select();
+    form_autocomp_search();
+  }
 }
 
 function form_autocomp_blurred() {
