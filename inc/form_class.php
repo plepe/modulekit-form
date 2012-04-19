@@ -3,6 +3,7 @@ include "form_element.php";
 include "form_element_text.php";
 include "form_element_array.php";
 include "form_element_radio.php";
+include "form_element_checkbox.php";
 
 class form {
   public $def;
