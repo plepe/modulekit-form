@@ -829,7 +829,10 @@ function form_autocomp_set_data(data) {
 }
 
 function form_autocomp_search() {
-  ob=form_autocomp_cur_ob;
+  var ob=form_autocomp_cur_ob;
+  var search_str=ob.value.toLowerCase();
+  if((ob.selectionStart==0)&&(ob.selectionEnd==search_str.length))
+    search_str="";
 
   //if(ob.value!="") {
     var x;
@@ -844,7 +847,7 @@ function form_autocomp_search() {
       var y={};
       var x=eval(x);
       for(var i in x) {
-	if(x[i].toLowerCase().indexOf(ob.value.toLowerCase()) != -1)
+	if(x[i].toLowerCase().indexOf(search_str) != -1)
 	  y[i]=x[i];
       }
       form_autocomp_set_data(y);
