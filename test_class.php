@@ -1,6 +1,9 @@
+<?
+Header("content-type: text/html; charset=utf-8");
+?>
 <html>
 <head>
-<link rel='stylesheet' href='inc/form.css'>
+<link rel='stylesheet' type='text/css' href='inc/form.css'>
 <script type='text/javascript' src='inc/form.js'></script>
 </head>
 <body>
