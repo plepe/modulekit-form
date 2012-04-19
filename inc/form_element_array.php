@@ -29,6 +29,32 @@ class form_element_array extends form_element {
     unset($this->data);
   }
 
+  function set_request_data($data) {
+    $this->data=$data;
+    if($this->data['__new']) {
+      unset($this->data['__new']);
+      $this->data[]=null;
+    }
+    if($this->data['__remove']) {
+      foreach($this->data['__remove'] as $k=>$dummy) {
+	unset($this->data[$k]);
+	unset($this->elements[$k]);
+      }
+      unset($this->data['__remove']);
+    }
+
+    $this->build_form();
+
+    foreach($this->elements as $k=>$element) {
+      if(isset($data[$k]))
+	$element->set_data($data[$k]);
+      else
+	$element->set_data(null);
+    }
+
+    unset($this->data);
+  }
+
   function set_orig_data($data) {
     $this->orig_data=$data;
 
@@ -80,8 +106,10 @@ class form_element_array extends form_element {
     foreach($this->elements as $k=>$element) {
       $ret.="<div>\n";
       $ret.=$element->show_element();
+      $ret.="<input type='submit' name='{$this->options['var_name']}[__remove][{$k}]' value='X'>";
       $ret.="</div>\n";
     }
+    $ret.="<input type='submit' name='{$this->options['var_name']}[__new]' value='Element hinzufügen'>\n";
 
     return $ret;
   }
