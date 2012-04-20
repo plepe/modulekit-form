@@ -104,11 +104,33 @@ class form {
   }
 
   function errors() {
-    return form_check($this->def, $this->data);
+    $errors=array();
+
+    if(!$this->has_data)
+      return false;
+
+    foreach($this->elements as $k=>$element) {
+      $data[$k]=$element->errors(&$errors);
+    }
+
+    if(!sizeof($errors))
+      return false;
+    return $errors;
   }
 
-  function show_errors() {
-    return form_print_errors($this->errors());
+  function show_errors($errors) {
+    if(!$errors)
+      $errors=$this->errors();
+
+    $ret="";
+
+    $ret.="<ul class='form_errors'>\n";
+    foreach($errors as $e) {
+      $ret.="  <li> $e</li>\n";
+    }
+    $ret.="</ul>\n";
+
+    return $ret;
   }
 
   function reset() {

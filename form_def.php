@@ -4,6 +4,7 @@ $form_def=array(
     'name'	=>"Name",
     'desc'	=>"Please enter a name",
     'type'	=>"text",
+    'req'	=>true,
   ),
   'sex'		=>array(
     'name'	=>"Sex",

@@ -24,6 +24,11 @@ class form_element {
     return $this->data;
   }
 
+  function errors($errors) {
+    if(isset($this->def['req'])&&($this->def['req'])&&(!$this->data))
+      $errors[]="{$this->def['name']}: Wert muss angegeben werden.";
+  }
+
   function set_orig_data($data) {
     $this->orig_data=$data;
   }
