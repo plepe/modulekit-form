@@ -1,15 +1,14 @@
 <?
 Header("content-type: text/html; charset=utf-8");
+include "inc/form.php";
+include "form_def.php";
 ?>
 <html>
 <head>
-<link rel='stylesheet' type='text/css' href='inc/form.css'>
-<script type='text/javascript' src='inc/form.js'></script>
+<?form_include();?>
 </head>
 <body>
 <?
-include "inc/form.php";
-include "form_def.php";
 
 $form=new form("data", $form_def);
 

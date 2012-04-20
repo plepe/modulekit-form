@@ -5,6 +5,16 @@ include "form_element_array.php";
 include "form_element_radio.php";
 include "form_element_checkbox.php";
 
+function form_include() {
+  ?>
+<link rel='stylesheet' type='text/css' href='inc/form.css'>
+<script type='text/javascript' src='inc/functions.js'></script>
+<script type='text/javascript' src='inc/form.js'></script>
+<script type='text/javascript' src='inc/form_element.js'></script>
+<script type='text/javascript' src='inc/form_element_text.js'></script>
+  <?
+}
+
 class form {
   public $def;
   public $id;
@@ -173,6 +183,10 @@ class form {
     }
 
     $ret.="</table>\n";
+
+    $ret.="<script type='text/javascript'>\n";
+    $ret.="var form_{$this->id}=new form(\"{$this->id}\", ".json_encode($this->def).", ".json_encode($this->options).");\n";
+    $ret.="</script>\n";
 
     return $ret;
   }
