@@ -57,13 +57,9 @@ class form_element_array extends form_element {
       $this->data[]=null;
       $this->changed_count=true;
     }
-    if($this->data['__remove']) {
-      foreach($this->data['__remove'] as $k=>$dummy) {
-	unset($this->data[$k]);
-	unset($this->elements[$k]);
-      }
+    if(isset($this->data['__remove'])) {
+      $remove=$this->data['__remove'];
       unset($this->data['__remove']);
-      $this->changed_count=true;
     }
 
     $this->build_form();
@@ -73,6 +69,14 @@ class form_element_array extends form_element {
 	$element->set_data($data[$k]);
       else
 	$element->set_data(null);
+    }
+
+    if(isset($remove)) {
+      foreach($remove as $k=>$dummy) {
+	unset($this->data[$k]);
+	unset($this->elements[$k]);
+      }
+      $this->changed_count=true;
     }
 
     unset($this->data);
@@ -85,18 +89,9 @@ class form_element_array extends form_element {
     $element_def=$this->def['def'];
 
     foreach($data as $k=>$v) {
-      if(!isset($this->elements[$k])) {
-	$element_id="{$this->id}_{$k}";
-	$element_options=$this->options;
-	$element_options['var_name']="{$this->options['var_name']}[{$k}]";
-	$element_def['_name']="#".(sizeof($this->elements)+1);
-
-	if(class_exists($element_class)) {
-	  $this->elements[$k]=new $element_class($element_id, $element_def, $element_options, $this);
-	}
+      if(isset($this->elements[$k])) {
+	$this->elements[$k]->set_orig_data($v);
       }
-
-      $this->elements[$k]->set_orig_data($v);
     }
   }
 
