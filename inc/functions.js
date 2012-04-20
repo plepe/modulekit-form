@@ -277,3 +277,16 @@ Function.prototype.inherits_from=function(parentClass) {
   this.prototype.constructor = this;
   this.prototype.parent = parentClass.prototype;
 }
+
+// Source: http://www.hardcode.nl/subcategory_1/article_414-copy-or-clone-javascript-array-object
+// use as: var b=new clone(a);
+function clone(source) {
+    for (i in source) {
+        if (typeof source[i] == 'source') {
+            this[i] = new clone_object(source[i]);
+        }
+        else{
+            this[i] = source[i];
+        }
+    }
+}

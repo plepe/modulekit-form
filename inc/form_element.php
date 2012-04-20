@@ -58,7 +58,7 @@ class form_element {
   }
 
   function show() {
-    $ret.="<tr><td class='field_desc'>";
+    $ret.="<tr id='$this->id'><td class='field_desc'>";
     if((!isset($this->def['hide_field_name']))||(!$this->def['hide_field_name']))
       $ret.="<div class='form_name'>{$this->def['name']}:</div>";
     $ret.="<div class='form_desc'>{$this->def['desc']}</div></td>\n";
