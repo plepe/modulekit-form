@@ -1,9 +1,24 @@
 <?
 class form_element_array extends form_element {
+  public $changed_count;
+
   function __construct($id, $def, $options) {
     parent::__construct($id, $def, $options);
+    $this->changed_count=false;
 
     $this->build_form();
+  }
+
+  function is_complete() {
+    if($this->changed_count)
+      return false;
+
+    foreach($this->elements as $k=>$element) {
+      if(!$element->is_complete())
+	return false;
+    }
+
+    return true;
   }
 
   function errors(&$errors) {
@@ -40,6 +55,7 @@ class form_element_array extends form_element {
     if($this->data['__new']) {
       unset($this->data['__new']);
       $this->data[]=null;
+      $this->changed_count=true;
     }
     if($this->data['__remove']) {
       foreach($this->data['__remove'] as $k=>$dummy) {
@@ -47,6 +63,7 @@ class form_element_array extends form_element {
 	unset($this->elements[$k]);
       }
       unset($this->data['__remove']);
+      $this->changed_count=true;
     }
 
     $this->build_form();

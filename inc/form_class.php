@@ -110,12 +110,36 @@ class form {
       return false;
 
     foreach($this->elements as $k=>$element) {
+      if(!$element->is_complete())
+	return false;
+    }
+
+    foreach($this->elements as $k=>$element) {
       $data[$k]=$element->errors(&$errors);
     }
 
     if(!sizeof($errors))
       return false;
     return $errors;
+  }
+
+  function is_empty() {
+    return !$this->has_data;
+  }
+
+  function is_complete() {
+    if(!$this->has_data)
+      return false;
+
+    if($this->errors())
+      return false;
+
+    foreach($this->elements as $k=>$element) {
+      if(!$element->is_complete())
+	return false;
+    }
+
+    return true;
   }
 
   function show_errors($errors) {

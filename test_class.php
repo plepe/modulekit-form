@@ -13,23 +13,23 @@ include "form_def.php";
 
 $form=new form("data", $form_def);
 
-if($data=$form->get_data()) {
-  if($form->errors()) {
-    // print errors
-    print "Errors in the form were found:";
-    print $form->show_errors();
-  }
-  else {
-    // save data to database (or - in this example - print to stdout)
-    print "Data: <pre>\n";
-    print_r($data);
-    print "</pre>\n";
-
-    // reset form data
-    $form->reset();
-  }
+if($form->errors()) {
+  // print errors
+  print "Errors in the form were found:";
+  print $form->show_errors();
 }
-else {
+
+if($form->is_complete()) {
+  // save data to database (or - in this example - print to stdout)
+  print "Data: <pre>\n";
+  print_r($form->get_data());
+  print "</pre>\n";
+
+  // reset form data
+  //$form->reset();
+}
+
+if($form->is_empty()) {
   // load data from database (or use default data)
   $data=array();
   $form->set_data($data);
