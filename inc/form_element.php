@@ -5,11 +5,13 @@ class form_element {
   public $options;
   public $data;
   public $orig_data;
+  public $parent;
 
-  function __construct($id, $def, $options) {
+  function __construct($id, $def, $options, $parent) {
     $this->id=$id;
     $this->def=$def;
     $this->options=$options;
+    $this->parent=$parent;
   }
 
   function set_data($data) {

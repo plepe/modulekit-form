@@ -41,7 +41,7 @@ class form {
       $element_options['var_name']="{$this->options['var_name']}[{$k}]";
 
       if(class_exists($element_class)) {
-	$this->elements[$k]=new $element_class($element_id, $element_def, $element_options);
+	$this->elements[$k]=new $element_class($element_id, $element_def, $element_options, null);
       }
     }
   }

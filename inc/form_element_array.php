@@ -2,7 +2,7 @@
 class form_element_array extends form_element {
   public $changed_count;
 
-  function __construct($id, $def, $options) {
+  function __construct($id, $def, $options, $parent) {
     parent::__construct($id, $def, $options);
     $this->changed_count=false;
 
@@ -91,7 +91,7 @@ class form_element_array extends form_element {
 	$element_options['var_name']="{$this->options['var_name']}[{$k}]";
 
 	if(class_exists($element_class)) {
-	  $this->elements[$k]=new $element_class($element_id, $element_def, $element_options);
+	  $this->elements[$k]=new $element_class($element_id, $element_def, $element_options, $this);
 	}
       }
 
@@ -118,7 +118,7 @@ class form_element_array extends form_element {
       $element_options['var_name']="{$this->options['var_name']}[{$k}]";
 
       if(class_exists($element_class)) {
-	$this->elements[$k]=new $element_class($element_id, $element_def, $element_options);
+	$this->elements[$k]=new $element_class($element_id, $element_def, $element_options, $this);
       }
     }
   }
