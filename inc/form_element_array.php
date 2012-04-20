@@ -89,6 +89,7 @@ class form_element_array extends form_element {
 	$element_id="{$this->id}_{$k}";
 	$element_options=$this->options;
 	$element_options['var_name']="{$this->options['var_name']}[{$k}]";
+	$element_def['_name']="#".(sizeof($this->elements)+1);
 
 	if(class_exists($element_class)) {
 	  $this->elements[$k]=new $element_class($element_id, $element_def, $element_options, $this);
@@ -116,6 +117,7 @@ class form_element_array extends form_element {
       $element_id="{$this->id}_{$k}";
       $element_options=$this->options;
       $element_options['var_name']="{$this->options['var_name']}[{$k}]";
+      $element_def['_name']="#".(sizeof($this->elements)+1);
 
       if(class_exists($element_class)) {
 	$this->elements[$k]=new $element_class($element_id, $element_def, $element_options, $this);

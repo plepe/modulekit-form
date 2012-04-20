@@ -14,6 +14,20 @@ class form_element {
     $this->parent=$parent;
   }
 
+  function name() {
+    if(isset($this->def['_name']))
+      return $this->def['_name'];
+
+    return $this->def['name'];
+  }
+
+  function path_name() {
+    if($this->parent===null)
+      return $this->name();
+
+    return $this->parent->path_name()."/".$this->name();
+  }
+
   function set_data($data) {
     $this->data=$data;
   }
@@ -28,7 +42,7 @@ class form_element {
 
   function errors($errors) {
     if(isset($this->def['req'])&&($this->def['req'])&&(!$this->data))
-      $errors[]="{$this->def['name']}: Wert muss angegeben werden.";
+      $errors[]=$this->path_name().": Wert muss angegeben werden.";
   }
 
   function is_complete() {
