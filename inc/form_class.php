@@ -13,6 +13,8 @@ function form_include() {
 <script type='text/javascript' src='inc/form_element.js'></script>
 <script type='text/javascript' src='inc/form_element_text.js'></script>
 <script type='text/javascript' src='inc/form_element_array.js'></script>
+<script type='text/javascript' src='inc/form_element_radio.js'></script>
+<script type='text/javascript' src='inc/form_element_checkbox.js'></script>
   <?
 }
 
