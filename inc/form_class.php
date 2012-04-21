@@ -29,7 +29,7 @@ class form {
     $this->def=$def;
     form_process_def($this->def);
     $this->options=$options;
-    if(!$this->options['var_name'])
+    if(!isset($this->options['var_name']))
       $this->options['var_name']=$this->id;
 
     $this->build_form();
@@ -210,11 +210,14 @@ function form_process_def(&$def) {
   foreach($def as $k=>$element_def) {
     if(isset($element_def['count'])) {
       $def[$k]=array(
-        'name'		=>$element_def['name'],
-	'desc'		=>$element_def['desc'],
 	'type'		=>"array",
 	'count'		=>$element_def['count'],
       );
+      if(isset($element_def['name']))
+	$def[$k]['name']=$element_def['name'];
+      if(isset($element_def['desc']))
+	$def[$k]['desc']=$element_def['desc'];
+
       unset($element_def['name']);
       unset($element_def['desc']);
       unset($element_def['count']);

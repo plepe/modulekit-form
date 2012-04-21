@@ -3,7 +3,7 @@ class form_element_array extends form_element {
   public $changed_count;
 
   function __construct($id, $def, $options, $parent) {
-    parent::__construct($id, $def, $options);
+    parent::__construct($id, $def, $options, $parent);
     $this->changed_count=false;
 
     $this->build_form();
@@ -83,6 +83,8 @@ class form_element_array extends form_element {
   }
 
   function set_orig_data($data) {
+    if((!isset($data))||(!is_array($data)))
+      $data=array();
     $this->orig_data=$data;
 
     $element_class="form_element_{$this->def['def']['type']}";
@@ -95,7 +97,7 @@ class form_element_array extends form_element {
     }
   }
 
-  function get_orig_data($data) {
+  function get_orig_data() {
     return $this->orig_data;
   }
 

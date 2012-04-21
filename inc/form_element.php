@@ -60,7 +60,7 @@ class form_element {
     $this->orig_data=$data;
   }
 
-  function get_orig_data($data) {
+  function get_orig_data() {
     return $this->orig_data;
   }
 
@@ -71,17 +71,21 @@ class form_element {
     $tr->appendChild($td);
 
     if((!isset($this->def['hide_field_name']))||(!$this->def['hide_field_name'])) {
-      $div=$document->createElement("div");
-      $div->setAttribute("class", "form_name");
-      $text=$document->createTextNode($this->def['name'].":");
-      $div->appendChild($text);
-      $td->appendChild($div);
+      if(isset($this->def['name'])) {
+	$div=$document->createElement("div");
+	$div->setAttribute("class", "form_name");
+	$text=$document->createTextNode($this->def['name'].":");
+	$div->appendChild($text);
+	$td->appendChild($div);
+      }
 
-      $div=$document->createElement("div");
-      $div->setAttribute("class", "form_desc");
-      $text=$document->createTextNode($this->def['desc']);
-      $div->appendChild($text);
-      $td->appendChild($div);
+      if(isset($this->def['desc'])) {
+	$div=$document->createElement("div");
+	$div->setAttribute("class", "form_desc");
+	$text=$document->createTextNode($this->def['desc']);
+	$div->appendChild($text);
+	$td->appendChild($div);
+      }
     }
 
     $td=$document->createElement("td");
