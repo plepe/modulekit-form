@@ -1,7 +1,8 @@
 <?
 class form_element_radio extends form_element {
-  function show_element() {
-    $ret="";
+  function show_element($document) {
+    $div=parent::show_element($document);
+
     foreach($this->def['values'] as $k=>$v) {
       $id="{$this->id}-$k";
 
@@ -12,23 +13,29 @@ class form_element_radio extends form_element {
 	 (($k==$this->data)||($k==$this->orig_data)))
 	$class="form_modified";
 
-      $ret.="<span class='$class'>";
+      $span=$document->createElement("span");
+      $span->setAttribute("class", $class);
+      $div->appendChild($span);
 
-      $ret.="<input ".
-	"type='radio' ".
-	"id='{$id}' ".
-	"name='{$this->options['var_name']}' ".
-	"onChange='form_element_changed(this)' ".
-	"onKeyUp='form_element_typing(this)' ".
-	"value=\"".htmlspecialchars($k)."\"".
-	($k==$this->data?" checked":"").
-	"/>\n";
-
-      $ret.="<label for='{$id}'>$v</label>";
+      $input=$document->createElement("input");
+      $input->setAttribute("type", "radio");
+      $input->setAttribute("id", $id);
+      $input->setAttribute("name", "{$this->options['var_name']}");
+      $input->setAttribute("value", $k);
+      if($k==$this->data)
+	$input->setAttribute("checked", "checked");
+      $span->appendChild($input);
       
-      $ret.="</span><br/>";
+      $label=$document->createElement("label");
+      $label->setAttribute("for", $id);
+      $text=$document->createTextNode($v);
+      $label->appendChild($text);
+      $span->appendChild($label);
+
+      $br=$document->createElement("br");
+      $div->appendChild($br);
     }
 
-    return $ret;
+    return $div;
   }
 }

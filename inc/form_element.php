@@ -21,6 +21,13 @@ class form_element {
     return $this->def['name'];
   }
 
+  function type() {
+    if($this->def['type'])
+      return $this->def['type'];
+
+    return "default";
+  }
+
   function path_name() {
     if($this->parent===null)
       return $this->name();
@@ -57,17 +64,39 @@ class form_element {
     return $this->orig_data;
   }
 
-  function show() {
-    $ret.="<tr id='$this->id'><td class='field_desc'>";
-    if((!isset($this->def['hide_field_name']))||(!$this->def['hide_field_name']))
-      $ret.="<div class='form_name'>{$this->def['name']}:</div>";
-    $ret.="<div class='form_desc'>{$this->def['desc']}</div></td>\n";
-    $ret.="<td class='field_value'>\n";
+  function show($document) {
+    $tr=$document->createElement("tr");
+    $td=$document->createElement("td");
+    $td->setAttribute("class", "field_desc");
+    $tr->appendChild($td);
 
-    $ret.=$this->show_element();
+    if((!isset($this->def['hide_field_name']))||(!$this->def['hide_field_name'])) {
+      $div=$document->createElement("div");
+      $div->setAttribute("class", "form_name");
+      $text=$document->createTextNode($this->def['name'].":");
+      $div->appendChild($text);
+      $td->appendChild($div);
 
-    $ret.="</td></tr>\n";
+      $div=$document->createElement("div");
+      $div->setAttribute("class", "form_desc");
+      $text=$document->createTextNode($this->def['desc']);
+      $div->appendChild($text);
+      $td->appendChild($div);
+    }
 
-    return $ret;
+    $td=$document->createElement("td");
+    $td->setAttribute("class", "field_value");
+    $tr->appendChild($td);
+
+    $td->appendChild($this->show_element($document));
+
+    return $tr;
+  }
+
+  function show_element($document) {
+    $div=$document->createElement("div");
+    $div->setAttribute("class", "form_element_".$this->type());
+    $div->setAttribute("id", $this->id);
+    return $div;
   }
 }

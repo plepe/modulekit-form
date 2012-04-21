@@ -9,7 +9,7 @@ form_element_array.prototype.init=function(id, def, options, parent, dom_parent)
   this.elements={};
   while(current) {
     if(current.nodeName=="DIV") {
-      var k=current.id.match(/-([0-9]+)/)[1];
+      var k=current.getAttribute("form_element_num");
       var element_class="form_element_"+this.def.def.type;
       var element_id=this.id+"-"+k;
       var element_options=new clone(this.options);

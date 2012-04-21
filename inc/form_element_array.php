@@ -120,17 +120,34 @@ class form_element_array extends form_element {
     }
   }
 
-  function show_element() {
-    $ret="";
+  function show_element($document) {
+    $div=parent::show_element($document);
 
     foreach($this->elements as $k=>$element) {
-      $ret.="<div id='{$this->id}-$k'>\n";
-      $ret.=$element->show_element();
-      $ret.="<input type='submit' name='{$this->options['var_name']}[__remove][{$k}]' value='X'>";
-      $ret.="</div>\n";
-    }
-    $ret.="<input type='submit' name='{$this->options['var_name']}[__new]' value='Element hinzufügen'>\n";
+      $el_div=$document->createElement("div");
+      $el_div->setAttribute("form_element_num", $k);
+      $el_div->setAttribute("class", "form_element_array_part");
+      $div->appendChild($el_div);
 
-    return $ret;
+      $el_div->appendChild($element->show_element($document));
+
+      $input=$document->createElement("input");
+      $input->setAttribute("type", "submit");
+      $input->setAttribute("name", "{$this->options['var_name']}[__remove][{$k}]");
+      $input->setAttribute("value", "X");
+
+      $div->appendChild($input);
+
+      $br=$document->createElement("br");
+      $div->appendChild($br);
+    }
+
+    $input=$document->createElement("input");
+    $input->setAttribute("type", "submit");
+    $input->setAttribute("name", "{$this->options['var_name']}[__new]");
+    $input->setAttribute("value", "Element hinzufügen");
+    $div->appendChild($input);
+
+    return $div;
   }
 }

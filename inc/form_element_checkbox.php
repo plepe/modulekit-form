@@ -1,7 +1,8 @@
 <?
 class form_element_checkbox extends form_element {
-  function show_element() {
-    $ret="";
+  function show_element($document) {
+    $div=parent::show_element($document);
+
     foreach($this->def['values'] as $k=>$v) {
       $id="{$this->id}-$k";
 
@@ -11,23 +12,29 @@ class form_element_checkbox extends form_element {
          (in_array($k, $this->orig_data)!=in_array($k, $this->data)))
 	$class="form_modified";
 
-      $ret.="<span class='$class'>";
+      $span=$document->createElement("span");
+      $span->setAttribute("class", $class);
+      $div->appendChild($span);
 
-      $ret.="<input ".
-	"type='checkbox' ".
-	"id='{$id}' ".
-	"name='{$this->options['var_name']}[]' ".
-	"onChange='form_element_changed(this)' ".
-	"onKeyUp='form_element_typing(this)' ".
-	"value=\"".htmlspecialchars($k)."\"".
-	(in_array($k, $this->data)?" checked":"").
-	"/>\n";
+      $input=$document->createElement("input");
+      $input->setAttribute("type", "checkbox");
+      $input->setAttribute("id", $id);
+      $input->setAttribute("name", "{$this->options['var_name']}[]");
+      $input->setAttribute("value", $k);
+      if(in_array($k, $this->data))
+	$input->setAttribute("checked", "checked");
+      $span->appendChild($input);
+      
+      $label=$document->createElement("label");
+      $label->setAttribute("for", $id);
+      $text=$document->createTextNode($v);
+      $label->appendChild($text);
+      $span->appendChild($label);
 
-      $ret.="<label for='{$id}'>$v</label>";
-
-      $ret.="</span><br/>";
+      $br=$document->createElement("br");
+      $div->appendChild($br);
     }
 
-    return $ret;
+    return $div;
   }
 }

@@ -25,8 +25,7 @@ form.prototype.build_form=function() {
     var element_options=new clone(this.options);
     element_options.var_name=element_options.var_name+"["+k+"]";
     var element_dom_parent=null;
-    if(element_dom_parent=document.getElementById(element_id))
-      element_dom_parent=element_dom_parent.cells[1];
+    element_dom_parent=document.getElementById(element_id);
 
     if(class_exists(element_class)) {
       this.elements[k]=eval("new "+element_class+"()");
