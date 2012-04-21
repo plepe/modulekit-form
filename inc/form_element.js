@@ -1,16 +1,14 @@
 function form_element() {
 }
 
-form_element.prototype.init=function(id, def, options, parent) {
+form_element.prototype.init=function(id, def, options, parent, dom_parent) {
   this.id=id;
   this.def=def;
   this.options=options;
   this.parent=parent;
+  this.dom_parent=dom_parent;
 
-  this.tr=document.getElementById(this.id);
-  if(this.tr)
-    this.dom_parent=this.tr.cells[1];
-  else
+  if(!this.dom_parent)
     this.dom_parent=document.createElement("div");
 }
 

@@ -24,10 +24,13 @@ form.prototype.build_form=function() {
     var element_id=this.id+"_"+k;
     var element_options=new clone(this.options);
     element_options.var_name=element_options.var_name+"["+k+"]";
+    var element_dom_parent=null;
+    if(element_dom_parent=document.getElementById(element_id))
+      element_dom_parent=element_dom_parent.cells[1];
 
     if(class_exists(element_class)) {
       this.elements[k]=eval("new "+element_class+"()");
-      this.elements[k].init(element_id, this.def[k], element_options, null);
+      this.elements[k].init(element_id, this.def[k], element_options, null, element_dom_parent);
     }
   }
 }
