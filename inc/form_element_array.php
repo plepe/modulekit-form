@@ -124,7 +124,7 @@ class form_element_array extends form_element {
     $ret="";
 
     foreach($this->elements as $k=>$element) {
-      $ret.="<div>\n";
+      $ret.="<div id='{$this->id}-$k'>\n";
       $ret.=$element->show_element();
       $ret.="<input type='submit' name='{$this->options['var_name']}[__remove][{$k}]' value='X'>";
       $ret.="</div>\n";
