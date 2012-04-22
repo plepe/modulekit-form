@@ -85,3 +85,29 @@ form.prototype.show=function(dom_parent) {
   dom_parent.appendChild(this.table);
   return this.table;
 }
+
+form.prototype.errors=function() {
+  var list=[];
+
+  for(var i in this.elements) {
+    this.elements[i].errors(list);
+  }
+
+  if(list.length==null)
+    return false;
+
+  return list;
+}
+
+form.prototype.show_errors=function(div) {
+  var ul=document.createElement("ul");
+  div.appendChild(ul);
+
+  var list=this.errors();
+  for(var i=0; i<list.length; i++) {
+    var li=document.createElement("li");
+    var text=document.createTextNode(list[i]);
+    li.appendChild(text);
+    ul.appendChild(li);
+  }
+}

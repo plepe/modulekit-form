@@ -9,6 +9,20 @@ form_element.prototype.init=function(id, def, options, form_parent) {
   this.data=null;
 }
 
+form_element.prototype.name=function() {
+  if(this.def._name)
+    return this.def._name;
+
+  return this.def.name;
+}
+
+form_element.prototype.path_name=function() {
+  if(this.form_parent===null)
+    return this.name();
+
+  return this.form_parent.path_name()+"/"+this.name();
+}
+
 form_element.prototype.connect=function(dom_parent) {
   this.dom_parent=dom_parent;
 }
@@ -69,4 +83,9 @@ form_element.prototype.show_element=function() {
   this.dom.className="form_element_"+this.type();
   this.dom.id=this.id;
   return this.dom;
+}
+
+form_element.prototype.errors=function(list) {
+  if((this.def.req)&&((!this.data)||(this.data=="")))
+    list.push(this.path_name()+": Wert muss angegeben werden.");
 }
