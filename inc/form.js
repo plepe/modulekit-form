@@ -1,7 +1,12 @@
 function form(id, def, options) {
   this.id=id;
   this.def=def;
+  if(!options)
+    options={};
   this.options=options;
+  if(!this.options.var_name)
+    this.options.var_name=this.id;
+
   this.has_data=false;
 
   this.orig_data=null;
