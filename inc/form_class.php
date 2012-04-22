@@ -204,7 +204,13 @@ class form {
       $table->appendChild($element->show($document));
     }
 
-    $ret =$document->saveHTML();
+    $ret="";
+
+    // Include a hidden submit button as default action, to prevent that other submit buttons (e.g. for removing/adding elements in array elements) get precedence for default submit actions (e.g. user presses enter)
+    $ret.="<div style='width: 0px; height: 0px; overflow: hidden'><input type='submit'></div>\n";
+
+    // render the form
+    $ret.=$document->saveHTML();
 
     // create javascript representation of form
     global $form_use_js;
