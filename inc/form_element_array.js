@@ -2,8 +2,12 @@ form_element_array.inherits_from(form_element);
 function form_element_array() {
 }
 
-form_element_array.prototype.init=function(id, def, options, parent, dom_parent) {
-  this.parent.init.call(this, id, def, options, parent, dom_parent);
+form_element_array.prototype.init=function(id, def, options, form_parent) {
+  this.parent.init.call(this, id, def, options, form_parent);
+}
+
+form_element_array.prototype.connect=function(dom_parent) {
+  this.parent.connect.call(this, dom_parent);
 
   var current=this.dom_parent.firstChild;
   this.elements={};
@@ -17,7 +21,8 @@ form_element_array.prototype.init=function(id, def, options, parent, dom_parent)
 
       if(class_exists(element_class)) {
 	this.elements[k]=eval("new "+element_class+"()");
-	this.elements[k].init(element_id, this.def.def, element_options, this, current);
+	this.elements[k].init(element_id, this.def.def, element_options, this);
+	this.elements[k].connect(current);
       }
     }
 

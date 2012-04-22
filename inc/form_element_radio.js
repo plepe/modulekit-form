@@ -2,8 +2,12 @@ form_element_radio.inherits_from(form_element);
 function form_element_radio() {
 }
 
-form_element_radio.prototype.init=function(id, def, options, parent, dom_parent) {
-  this.parent.init.call(this, id, def, options, parent, dom_parent);
+form_element_radio.prototype.init=function(id, def, options, form_parent) {
+  this.parent.init.call(this, id, def, options, form_parent);
+}
+
+form_element_radio.prototype.connect=function(dom_parent) {
+  this.parent.connect.call(this, dom_parent);
 
   var current=this.dom_parent.firstChild;
   this.dom_values={};

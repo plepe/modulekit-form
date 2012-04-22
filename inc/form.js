@@ -3,18 +3,22 @@ function form(id, def, options) {
   this.def=def;
   this.options=options;
 
-  this.table=document.getElementById(this.id);
-  if(!this.table)
-    return;
-
   this.orig_data=null;
-  var inputs=this.table.getElementsByTagName("input");
-  for(var i=0; i<inputs.length; i++) {
-    if(inputs[i].name=="form_orig_"+this.options.var_name)
-      this.orig_data=json_decode(inputs[i].value);
-  }
 
   this.build_form();
+
+  this.table=document.getElementById(this.id);
+  if(this.table) {
+    // read orig_data
+    var inputs=this.table.getElementsByTagName("input");
+    for(var i=0; i<inputs.length; i++) {
+      if(inputs[i].name=="form_orig_"+this.options.var_name)
+	this.orig_data=json_decode(inputs[i].value);
+    }
+
+    // connect elements to php-form
+    this.connect(this.table);
+  }
 }
 
 form.prototype.build_form=function() {
@@ -24,13 +28,21 @@ form.prototype.build_form=function() {
     var element_id=this.id+"_"+k;
     var element_options=new clone(this.options);
     element_options.var_name=element_options.var_name+"["+k+"]";
-    var element_dom_parent=null;
-    element_dom_parent=document.getElementById(element_id);
 
     if(class_exists(element_class)) {
       this.elements[k]=eval("new "+element_class+"()");
-      this.elements[k].init(element_id, this.def[k], element_options, null, element_dom_parent);
+      this.elements[k].init(element_id, this.def[k], element_options, null);
     }
+  }
+}
+
+form.prototype.connect=function() {
+  for(var k in this.def) {
+    var element_id=this.id+"_"+k;
+    var element_dom_parent=document.getElementById(element_id);
+
+    if(element_dom_parent)
+      this.elements[k].connect(element_dom_parent);
   }
 }
 
