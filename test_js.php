@@ -12,7 +12,7 @@ include "form_def.php";
 <div id='form'>
 <?
 form_process_def($form_def);
-html_export_var(array("form_def"=>$form_def));
+html_export_var(array("form_def"=>$form_def, "default_data"=>$default_data));
 
 // show form
 

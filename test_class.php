@@ -30,8 +30,7 @@ if($form->is_complete()) {
 
 if($form->is_empty()) {
   // load data from database (or use default data)
-  $data=array();
-  $form->set_data($data);
+  $form->set_data($default_data);
 }
 
 // show form
