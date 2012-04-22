@@ -15,6 +15,8 @@ include "form_def.php";
 </pre>
 
 <h1>FORM</h1>
+<div id='errors'>
+</div>
 <form id='form'>
 <?
 form_process_def($form_def);
