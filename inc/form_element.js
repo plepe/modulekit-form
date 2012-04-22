@@ -27,6 +27,10 @@ form_element.prototype.get_data=function() {
   return this.data=this.dom_element.value;
 }
 
+form_element.prototype.set_data=function(data) {
+  this.data=data;
+}
+
 form_element.prototype.show=function() {
   var tr=document.createElement("tr");
   var td=document.createElement("td");

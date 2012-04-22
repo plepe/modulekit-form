@@ -2,6 +2,7 @@ function form(id, def, options) {
   this.id=id;
   this.def=def;
   this.options=options;
+  this.has_data=false;
 
   this.orig_data=null;
 
@@ -54,6 +55,17 @@ form.prototype.get_data=function() {
   }
 
   return ret;
+}
+
+form.prototype.set_data=function(data) {
+  this.has_data=true;
+
+  for(var k in this.elements) {
+    if(data[k])
+      this.elements[k].set_data(data[k]);
+    else
+      this.elements[k].set_data(null);
+  }
 }
 
 form.prototype.show=function(dom_parent) {

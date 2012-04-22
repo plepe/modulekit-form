@@ -11,10 +11,14 @@ form_element_array.prototype.init=function(id, def, options, form_parent) {
 form_element_array.prototype.build_form=function() {
   this.elements={};
 
-  this.data=[];
-  for(var k=0; k<this.def.count.default; k++) {
-    this.data.push(null);
+  if(!this.data) {
+    this.data={};
+    for(var k=0; k<this.def.count.default; k++) {
+      this.data[k]=null;
+    }
+  }
 
+  for(var k in this.data) {
     var element_def=new clone(this.def.def);
     var element_class="form_element_"+element_def.type;
     var element_id=this.id+"_"+k;
@@ -61,6 +65,20 @@ form_element_array.prototype.get_data=function() {
   }
 
   return ret;
+}
+
+form_element_array.prototype.set_data=function(data) {
+  this.data=data;
+  this.build_form();
+
+  for(var k in this.elements) {
+    if(data[k])
+      this.elements[k].set_data(data[k]);
+    else
+      this.elements[k].set_data(null);
+  }
+
+  this.data=null;
 }
 
 form_element_array.prototype.show_element=function() {
