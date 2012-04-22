@@ -9,7 +9,13 @@ include "form_def.php";
 <script type='text/javascript' src='test_jsonly.js'></script>
 </head>
 <body>
-<div id='form'>
+
+<h1>Data (JSON)</h1>
+<pre id='data'>
+</pre>
+
+<h1>FORM</h1>
+<form id='form'>
 <?
 form_process_def($form_def);
 html_export_var(array("form_def"=>$form_def, "default_data"=>$default_data));
@@ -18,5 +24,7 @@ html_export_var(array("form_def"=>$form_def, "default_data"=>$default_data));
 
 
 ?>
+</form>
+
 </body>
 </html>
