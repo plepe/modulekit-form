@@ -4,6 +4,8 @@ function form_element_radio() {
 
 form_element_radio.prototype.init=function(id, def, options, form_parent) {
   this.parent.init.call(this, id, def, options, form_parent);
+
+  this.data=null;
 }
 
 form_element_radio.prototype.connect=function(dom_parent) {
@@ -22,10 +24,54 @@ form_element_radio.prototype.connect=function(dom_parent) {
 }
 
 form_element_radio.prototype.get_data=function() {
+  if(!this.dom_values)
+    return this.data;
+
   for(var i in this.dom_values) {
+    this.data=null;
+
     if(this.dom_values[i].checked)
-      return i;
+      return this.data=i;
   }
 
   return null;
+}
+
+form_element_radio.prototype.show_element=function() {
+  var div=this.parent.show_element.call(this);
+  this.get_data();
+  this.dom_values={};
+
+  for(var k in this.def.values) {
+    var id=this.id+"-"+k;
+
+    var cls="form_orig";
+    // TODO: check for changed data
+
+    var span=document.createElement("span");
+    span.className=cls;
+    div.appendChild(span);
+
+    var input=document.createElement("input");
+    input.type="radio";
+    input.id=id;
+    input.name=this.options.var_name;
+    input.value=k;
+    // TODO: indexOf not supported in IE8 and earlier
+    if(this.data==k)
+      input.checked=true;
+    span.appendChild(input);
+    this.dom_values[k]=input;
+
+    var label=document.createElement("label");
+    label.setAttribute("for", id);
+    var text=document.createTextNode(this.def.values[k]);
+    label.appendChild(text);
+    span.appendChild(label);
+
+    var br=document.createElement("br");
+    div.appendChild(br);
+  }
+
+  return div;
 }

@@ -4,6 +4,8 @@ function form_element_checkbox() {
 
 form_element_checkbox.prototype.init=function(id, def, options, form_parent) {
   this.parent.init.call(this, id, def, options, form_parent);
+  this.data=[];
+  this.dom_values=null;
 }
 
 form_element_checkbox.prototype.connect=function(dom_parent) {
@@ -22,13 +24,54 @@ form_element_checkbox.prototype.connect=function(dom_parent) {
 }
 
 form_element_checkbox.prototype.get_data=function() {
-  var ret=[];
+  if(!this.dom_values)
+    return this.data;
+
+  this.data=[];
 
   for(var i in this.dom_values) {
     if(this.dom_values[i].checked)
-      ret.push(i);
+      this.data.push(i);
   }
 
-  return ret;
+  return this.data;
 }
 
+form_element_checkbox.prototype.show_element=function() {
+  var div=this.parent.show_element.call(this);
+  this.get_data();
+  this.dom_values={};
+
+  for(var k in this.def.values) {
+    var id=this.id+"-"+k;
+
+    var cls="form_orig";
+    // TODO: check for changed data
+
+    var span=document.createElement("span");
+    span.className=cls;
+    div.appendChild(span);
+
+    var input=document.createElement("input");
+    input.type="checkbox";
+    input.id=id;
+    input.name=this.options.var_name+"[]";
+    input.value=k;
+    // TODO: indexOf not supported in IE8 and earlier
+    if(this.data.indexOf(k)!=-1)
+      input.checked=true;
+    span.appendChild(input);
+    this.dom_values[k]=input;
+
+    var label=document.createElement("label");
+    label.setAttribute("for", id);
+    var text=document.createTextNode(this.def.values[k]);
+    label.appendChild(text);
+    span.appendChild(label);
+
+    var br=document.createElement("br");
+    div.appendChild(br);
+  }
+
+  return div;
+}

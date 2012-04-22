@@ -4,6 +4,29 @@ function form_element_array() {
 
 form_element_array.prototype.init=function(id, def, options, form_parent) {
   this.parent.init.call(this, id, def, options, form_parent);
+
+  this.build_form();
+}
+
+form_element_array.prototype.build_form=function() {
+  this.elements={};
+
+  this.data=[];
+  for(var k=0; k<this.def.count.default; k++) {
+    this.data.push(null);
+
+    var element_def=new clone(this.def.def);
+    var element_class="form_element_"+element_def.type;
+    var element_id=this.id+"_"+k;
+    var element_options=new clone(this.options);
+    element_options.var_name=element_options.var_name+"["+k+"]";
+    element_def._name="#"+(k+1);
+
+    if(class_exists(element_class)) {
+      this.elements[k]=eval("new "+element_class+"()");
+      this.elements[k].init(element_id, element_def, element_options, this);
+    }
+  }
 }
 
 form_element_array.prototype.connect=function(dom_parent) {
@@ -38,4 +61,36 @@ form_element_array.prototype.get_data=function() {
   }
 
   return ret;
+}
+
+form_element_array.prototype.show_element=function() {
+  var div=this.parent.show_element.call(this);
+  this.get_data();
+
+  for(var k in this.elements) {
+    var el_div=document.createElement("div");
+    el_div.setAttribute("form_element_num", k);
+    el_div.className="form_element_array_part";
+    div.appendChild(el_div);
+
+    el_div.appendChild(this.elements[k].show_element());
+
+    var input=document.createElement("input");
+    input.type="submit";
+    input.name=this.options.var_name+"[__remove]["+k+"]";
+    input.value="X";
+
+    div.appendChild(input);
+
+    var br=document.createElement("br");
+    div.appendChild(br);
+  }
+
+  var input=document.createElement("input");
+  input.type="submit";
+  input.name=this.options.var_name+"[__new]";
+  input.value="Element hinzufügen";
+  div.appendChild(input);
+
+  return div;
 }

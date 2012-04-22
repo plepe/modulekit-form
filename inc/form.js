@@ -55,3 +55,16 @@ form.prototype.get_data=function() {
 
   return ret;
 }
+
+form.prototype.show=function(dom_parent) {
+  this.table=document.createElement("table");
+  this.table.id=this.id;
+  this.table.className="form";
+
+  for(var i in this.elements) {
+    this.table.appendChild(this.elements[i].show());
+  }
+
+  dom_parent.appendChild(this.table);
+  return this.table;
+}
