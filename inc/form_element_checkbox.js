@@ -37,6 +37,22 @@ form_element_checkbox.prototype.get_data=function() {
   return this.data;
 }
 
+form_element_checkbox.prototype.set_data=function(data) {
+  this.parent.set_data.call(this, data);
+
+  if(!this.dom_values)
+    return;
+
+  for(var k in this.dom_values) {
+    this.dom_values[k].checked=false;
+  }
+
+  for(var i=0; i<this.data.length; i++) {
+    var k=this.data[i];
+    this.dom_values[k].checked=true;
+  }
+}
+
 form_element_checkbox.prototype.show_element=function() {
   var div=this.parent.show_element.call(this);
   this.get_data();

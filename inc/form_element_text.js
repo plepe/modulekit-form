@@ -29,3 +29,10 @@ form_element_text.prototype.show_element=function() {
 
   return div;
 }
+
+form_element_text.prototype.set_data=function(data) {
+  this.parent.set_data.call(this, data);
+
+  if(this.dom_element)
+    this.dom_element.value=this.data;
+}

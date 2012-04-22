@@ -78,6 +78,11 @@ form_element_array.prototype.set_data=function(data) {
       this.elements[k].set_data(null);
   }
 
+  var p=this.dom.parentNode;
+  p.removeChild(this.dom);
+  var div=this.show_element();
+  p.appendChild(div);
+
   this.data=null;
 }
 

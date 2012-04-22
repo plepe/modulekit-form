@@ -24,7 +24,8 @@ form_element.prototype.get_data=function() {
   if(!this.dom_element)
     return this.data;
 
-  return this.data=this.dom_element.value;
+  this.data=this.dom_element.value;
+  return this.data;
 }
 
 form_element.prototype.set_data=function(data) {
@@ -64,8 +65,8 @@ form_element.prototype.show=function() {
 }
 
 form_element.prototype.show_element=function() {
-  var div=document.createElement("div");
-  div.className="form_element_"+this.type();
-  div.id=this.id;
-  return div;
+  this.dom=document.createElement("div");
+  this.dom.className="form_element_"+this.type();
+  this.dom.id=this.id;
+  return this.dom;
 }

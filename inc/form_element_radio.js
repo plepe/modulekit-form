@@ -37,6 +37,18 @@ form_element_radio.prototype.get_data=function() {
   return null;
 }
 
+form_element_radio.prototype.set_data=function(data) {
+  this.parent.set_data.call(this, data);
+
+  if(!this.dom_values)
+    return;
+
+  for(var k in this.dom_values) {
+    if(this.data==k)
+      this.dom_values[k].checked=true;
+  }
+}
+
 form_element_radio.prototype.show_element=function() {
   var div=this.parent.show_element.call(this);
   this.get_data();
