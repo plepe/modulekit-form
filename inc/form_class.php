@@ -4,19 +4,27 @@ include "form_element_text.php";
 include "form_element_array.php";
 include "form_element_radio.php";
 include "form_element_checkbox.php";
+global $form_use_js;
+$form_use_js=true;
 
-function form_include() {
+function form_include($js=true) {
+  global $form_use_js;
+  $form_use_js=$js;
+
   ?>
 <link rel='stylesheet' type='text/css' href='inc/form.css'>
+<link rel='stylesheet' type='text/css' href='inc/form_element_array.css'>
+  <?
+  if($form_use_js) { ?>
 <script type='text/javascript' src='inc/functions.js'></script>
 <script type='text/javascript' src='inc/form.js'></script>
 <script type='text/javascript' src='inc/form_element.js'></script>
 <script type='text/javascript' src='inc/form_element_text.js'></script>
 <script type='text/javascript' src='inc/form_element_array.js'></script>
-<link rel='stylesheet' type='text/css' href='inc/form_element_array.css'>
 <script type='text/javascript' src='inc/form_element_radio.js'></script>
 <script type='text/javascript' src='inc/form_element_checkbox.js'></script>
   <?
+  }
 }
 
 class form {
@@ -198,9 +206,13 @@ class form {
 
     $ret =$document->saveHTML();
 
-    $ret.="<script type='text/javascript'>\n";
-    $ret.="var form_{$this->id}=new form(\"{$this->id}\", ".json_encode($this->def).", ".json_encode($this->options).");\n";
-    $ret.="</script>\n";
+    // create javascript representation of form
+    global $form_use_js;
+    if($form_use_js) {
+      $ret.="<script type='text/javascript'>\n";
+      $ret.="var form_{$this->id}=new form(\"{$this->id}\", ".json_encode($this->def).", ".json_encode($this->options).");\n";
+      $ret.="</script>\n";
+    }
 
     return $ret;
   }

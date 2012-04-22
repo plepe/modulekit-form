@@ -6,7 +6,7 @@ include "form_def.php";
 <html>
 <head>
 <?form_include();?>
-<script type='text/javascript' src='test_js.js'></script>
+<script type='text/javascript' src='test_jsonly.js'></script>
 </head>
 <body>
 <div id='form'>
