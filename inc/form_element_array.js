@@ -57,7 +57,7 @@ form_element_array.prototype.connect=function(dom_parent) {
     var k;
     if((current.nodeName=="DIV")&&(k=current.getAttribute("form_element_num"))) {
       var element_class="form_element_"+this.def.def.type;
-      var element_id=this.id+"-"+k;
+      var element_id=this.id+"_"+k;
       var element_options=new clone(this.options);
       element_options.var_name=element_options.var_name+"["+k+"]";
 
@@ -111,7 +111,9 @@ form_element_array.prototype.set_data=function(data) {
   this.build_form();
 
   for(var k in this.elements) {
-    if(data[k])
+    if(!data)
+      this.elements[k].set_data(null);
+    else if(data[k])
       this.elements[k].set_data(data[k]);
     else
       this.elements[k].set_data(null);
