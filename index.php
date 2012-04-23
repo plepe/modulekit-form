@@ -22,5 +22,8 @@ This Forms library has the goal to easily create HTML forms. Configuration is do
 <li> <a href='test_jsonly.php<?=$params?>'>Javascript only</a><br>If you are writing an Ajax application you might want to create Forms directly from Javascript, e.g. because you do no longer reload webpages.
 </ul>
 
+<h1>Documentation</h1>
+See the <a href='doc/'>Documentation</a>.
+
 </body>
 </html>

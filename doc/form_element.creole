@@ -1,0 +1,20 @@
+== form_element ==
+'form_element' is the master element for all element. The most basic functions are defined here. The following keys are valid for all element types:
+
+=== type ===
+{string} The 'type' key defines the type of the element, e.g. 'text', 'form', 'checkbox'.
+
+This key is required.
+
+=== name ===
+{string} The name of the element.
+
+This key is not required, but usually you want it.
+
+=== desc ===
+{string} A short description what this element is about
+
+=== req ===
+{boolean} Define that this element is required.
+
+Example: {"name":{"type":"text","name":"Name","req":true}}
