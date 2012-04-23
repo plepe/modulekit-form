@@ -10,6 +10,14 @@ include "form_def.php";
 <body>
 <?
 
+if($_REQUEST['q']) {
+  $form_def=json_decode($_REQUEST['q'], true);
+  $default_data=null;
+}
+if($_REQUEST['d']) {
+  $default_data=json_decode($_REQUEST['d'], true);
+}
+
 $form=new form("data", $form_def);
 
 if($form->errors()) {

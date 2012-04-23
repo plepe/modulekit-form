@@ -3,7 +3,13 @@
 </head>
 <body>
 <?
-$params="";
+if($_REQUEST['q']) {
+  $params="?q=".urlencode($_REQUEST['q']);
+}
+if($_REQUEST['d']) {
+  $params.="&d=".urlencode($_REQUEST['d']);
+}
+
 ?>
 
 <h1>Forms</h1>

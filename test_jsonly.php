@@ -2,6 +2,15 @@
 Header("content-type: text/html; charset=utf-8");
 include "inc/form.php";
 include "form_def.php";
+
+if($_REQUEST['q']) {
+  $form_def=json_decode($_REQUEST['q'], true);
+  $default_data=null;
+}
+if($_REQUEST['d']) {
+  $default_data=json_decode($_REQUEST['d'], true);
+}
+
 ?>
 <html>
 <head>
