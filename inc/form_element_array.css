@@ -3,6 +3,7 @@ div.form_element_array_part {
 div.form_element_array_part_element {
   display: inline-block;
   vertical-align: top;
+  border-bottom: 1px solid #c0c0c0;
 }
 div.form_element_array_part_element_actions {
   display: inline-block;
