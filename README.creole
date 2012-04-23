@@ -1,0 +1,7 @@
+== Forms ==
+This Forms library has the goal to easily create HTML forms. Configuration is done with an associative array, the returned data will have the same structure (same keys, but with data).
+
+There are three modes to use this library:
+* PHP Only: Maybe users disable Javascript. Forms should still work. Also we should never trust the Javascript implementation to get checks (e.g. for correct data) right or rather people might try nasty stuff.
+* PHP/Javascript combined: The forms are defined and created in PHP, Javascript is responsible for interactivity, like checking validity of data, adding/removing elements and highlighting changed values.
+* Javascript only: If you are writing an Ajax application you might want to create Forms directly from Javascript, e.g. because you do no longer reload webpages.
