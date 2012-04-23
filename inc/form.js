@@ -74,6 +74,13 @@ form.prototype.set_data=function(data) {
 }
 
 form.prototype.show=function(dom_parent) {
+  // Include a hidden submit button as default action, to prevent that other submit buttons (e.g. for removing/adding elements in array elements) get precedence for default submit actions (e.g. user presses enter)
+  var div=document.createElement("div");
+  div.setAttribute("style", "width: 0px; height: 0px; overflow: hidden;");
+  div.innerHTML="<input type='submit'>";
+  dom_parent.appendChild(div);
+
+  // render the form
   this.table=document.createElement("table");
   this.table.id=this.id;
   this.table.className="form";
