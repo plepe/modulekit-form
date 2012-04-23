@@ -18,21 +18,22 @@ form_element_array.prototype.build_form=function() {
     }
   }
 
-  var i=1;
   for(var k in this.data) {
-    var element_def=new clone(this.def.def);
-    var element_class="form_element_"+element_def.type;
-    var element_id=this.id+"_"+k;
-    var element_options=new clone(this.options);
-    element_options.var_name=element_options.var_name+"["+k+"]";
-    element_def._name="#"+i;
+    this.create_element(k);
+  }
+}
 
-    if(class_exists(element_class)) {
-      this.elements[k]=eval("new "+element_class+"()");
-      this.elements[k].init(element_id, element_def, element_options, this);
-    }
+form_element_array.prototype.create_element=function(k) {
+  var element_def=new clone(this.def.def);
+  var element_class="form_element_"+element_def.type;
+  var element_id=this.id+"_"+k;
+  var element_options=new clone(this.options);
+  element_options.var_name=element_options.var_name+"["+k+"]";
+  element_def._name="#"+k; // TODO: set increasing number as name!
 
-    i++;
+  if(class_exists(element_class)) {
+    this.elements[k]=eval("new "+element_class+"()");
+    this.elements[k].init(element_id, element_def, element_options, this);
   }
 }
 
@@ -42,8 +43,8 @@ form_element_array.prototype.connect=function(dom_parent) {
   var current=this.dom_parent.firstChild;
   this.elements={};
   while(current) {
-    if(current.nodeName=="DIV") {
-      var k=current.getAttribute("form_element_num");
+    var k;
+    if((current.nodeName=="DIV")&&(k=current.getAttribute("form_element_num"))) {
       var element_class="form_element_"+this.def.def.type;
       var element_id=this.id+"-"+k;
       var element_options=new clone(this.options);
@@ -53,6 +54,30 @@ form_element_array.prototype.connect=function(dom_parent) {
 	this.elements[k]=eval("new "+element_class+"()");
 	this.elements[k].init(element_id, this.def.def, element_options, this);
 	this.elements[k].connect(current);
+      }
+
+      // modify part actions
+      var input=current.firstChild;
+      while((input)&&(input.className!="form_element_array_part_element_actions")) input=input.nextSibling;
+      if(!input)
+	break;
+      input=input.firstChild;
+      while(input) {
+	if(input.name==this.options.var_name+"[__remove]["+k+"]") {
+	  input.onclick=this.remove_element.bind(this, k);
+	}
+	input=input.nextSibling;
+      }
+    }
+
+    // modify actions
+    if(current.className=="form_element_array_actions") {
+      var input=current.firstChild;
+      while(input) {
+	if(input.name==this.options.var_name+"[__new]") {
+	  input.onclick=this.add_element.bind(this);
+	}
+	input=input.nextSibling;
       }
     }
 
@@ -113,6 +138,7 @@ form_element_array.prototype.show_element_part=function(k, element) {
   input.type="submit";
   input.name=this.options.var_name+"[__remove]["+k+"]";
   input.value="X";
+  input.onclick=this.remove_element.bind(this, k);
   el_div.appendChild(input);
 
   return div;
@@ -135,6 +161,7 @@ form_element_array.prototype.show_element=function() {
   input.type="submit";
   input.name=this.options.var_name+"[__new]";
   input.value="Element hinzufügen";
+  input.onclick=this.add_element.bind(this);
   el_div.appendChild(input);
 
   return div;
@@ -143,4 +170,41 @@ form_element_array.prototype.show_element=function() {
 form_element_array.prototype.errors=function(list) {
   for(var k in this.elements)
     this.elements[k].errors(list);
+}
+
+form_element_array.prototype.add_element=function() {
+  var highest_id=0;
+
+  for(var i in this.elements)
+    if(i>highest_id)
+      highest_id=i;
+
+  highest_id=parseInt(highest_id)+1;
+  this.create_element(highest_id);
+
+  var current=document.getElementById(this.id).firstChild;
+  while(current) {
+    if(current.className=="form_element_array_actions") {
+      current.parentNode.insertBefore(this.show_element_part(highest_id, this.elements[highest_id]), current);
+      break;
+    }
+    current=current.nextSibling;
+  }
+
+  return false;
+}
+
+form_element_array.prototype.remove_element=function(k) {
+  var current=document.getElementById(this.id).firstChild;
+  while(current) {
+    if((current.className=="form_element_array_part")&&(current.getAttribute("form_element_num")==k)) {
+      current.parentNode.removeChild(current);
+      delete(this.elements[k]);
+      break;
+    }
+
+    current=current.nextSibling;
+  }
+
+  return false;
 }
