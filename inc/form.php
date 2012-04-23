@@ -1,6 +1,7 @@
 <?
 include "functions.php";
 include "form_element.php";
+include "form_element_form.php";
 include "form_element_text.php";
 include "form_element_array.php";
 include "form_element_radio.php";
@@ -20,6 +21,7 @@ function form_include($js=true) {
 <script type='text/javascript' src='inc/functions.js'></script>
 <script type='text/javascript' src='inc/form.js'></script>
 <script type='text/javascript' src='inc/form_element.js'></script>
+<script type='text/javascript' src='inc/form_element_form.js'></script>
 <script type='text/javascript' src='inc/form_element_text.js'></script>
 <script type='text/javascript' src='inc/form_element_array.js'></script>
 <script type='text/javascript' src='inc/form_element_radio.js'></script>
@@ -55,75 +57,43 @@ class form {
   }
 
   function build_form() {
-    $this->elements=array();
-
-    foreach($this->def as $k=>$element_def) {
-      $element_class="form_element_{$element_def['type']}";
-      $element_id="{$this->id}_{$k}";
-      $element_options=$this->options;
-      $element_options['var_name']="{$this->options['var_name']}[{$k}]";
-
-      if(class_exists($element_class)) {
-	$this->elements[$k]=new $element_class($element_id, $element_def, $element_options, null);
-      }
-    }
+    $def=array(
+      'type'	=>'form',
+      'def'	=>$this->def,
+    );
+    $this->element=new form_element_form($this->id, $def, $this->options, null);
   }
 
   function get_data() {
     if(!$this->has_data)
       return null;
 
-    $data=array();
-    foreach($this->elements as $k=>$element) {
-      $data[$k]=$element->get_data();
-    }
-
-    return $data;
+    return $this->element->get_data();
   }
 
   function set_data($data) {
     $this->has_data=true;
 
-    foreach($this->elements as $k=>$element) {
-      if(isset($data[$k]))
-	$element->set_data($data[$k]);
-      else
-	$element->set_data(null);
-    }
+    $this->element->set_data($data);
   }
 
   function set_request_data($data) {
     $this->has_data=true;
 
-    foreach($this->elements as $k=>$element) {
-      if(isset($data[$k]))
-	$element->set_request_data($data[$k]);
-      else
-	$element->set_request_data(null);
-    }
+    $this->element->set_request_data($data);
   }
 
   function set_orig_data($data) {
     $this->has_orig_data=true;
 
-    foreach($this->elements as $k=>$element) {
-      if(isset($data[$k]))
-	$element->set_orig_data($data[$k]);
-      else
-	$element->set_orig_data(null);
-    }
+    $this->element->set_orig_data($data);
   }
 
   function get_orig_data() {
     if(!$this->has_orig_data)
       return $this->get_data();
 
-    $data=array();
-    foreach($this->elements as $k=>$element) {
-      $data[$k]=$element->get_orig_data();
-    }
-
-    return $data;
+    return $this->element->get_orig_data();
   }
 
   function errors() {
@@ -132,14 +102,10 @@ class form {
     if(!$this->has_data)
       return false;
 
-    foreach($this->elements as $k=>$element) {
-      if(!$element->is_complete())
-	return false;
-    }
+    if(!$this->element->is_complete())
+      return false;
 
-    foreach($this->elements as $k=>$element) {
-      $data[$k]=$element->errors(&$errors);
-    }
+    $this->element->errors(&$errors);
 
     if(!sizeof($errors))
       return false;
@@ -157,12 +123,7 @@ class form {
     if($this->errors())
       return false;
 
-    foreach($this->elements as $k=>$element) {
-      if(!$element->is_complete())
-	return false;
-    }
-
-    return true;
+    return $this->element->is_complete();
   }
 
   function show_errors($errors) {
@@ -188,10 +149,8 @@ class form {
   function show() {
     $document=new DOMDocument();
 
-    $table=$document->createElement("table");
-    $table->setAttribute("id", $this->id);
-    $table->setAttribute("class", "form");
-    $document->appendChild($table);
+    $div=$this->element->show_element($document);
+    $document->appendChild($div);
 
     $orig_data=$this->get_orig_data();
 
@@ -200,10 +159,6 @@ class form {
     $input_orig_data->setAttribute("name", "form_orig_{$this->options['var_name']}");
     $input_orig_data->setAttribute("value", json_encode($orig_data));
     $document->appendChild($input_orig_data);
-    
-    foreach($this->elements as $k=>$element) {
-      $table->appendChild($element->show($document));
-    }
 
     $ret="";
 

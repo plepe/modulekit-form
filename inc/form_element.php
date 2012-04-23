@@ -29,10 +29,12 @@ class form_element {
   }
 
   function path_name() {
-    if($this->parent===null)
+    $parent_path=$this->parent->path_name();
+
+    if($parent_path===null)
       return $this->name();
 
-    return $this->parent->path_name()."/".$this->name();
+    return $parent_path."/".$this->name();
   }
 
   function set_data($data) {

@@ -17,10 +17,12 @@ form_element.prototype.name=function() {
 }
 
 form_element.prototype.path_name=function() {
-  if(this.form_parent===null)
+  var parent_path=this.form_parent.path_name();
+
+  if(parent_path===null)
     return this.name();
 
-  return this.form_parent.path_name()+"/"+this.name();
+  return parent_path+"/"+this.name();
 }
 
 form_element.prototype.connect=function(dom_parent) {

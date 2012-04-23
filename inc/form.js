@@ -28,49 +28,33 @@ function form(id, def, options) {
 }
 
 form.prototype.build_form=function() {
-  this.elements={};
-  for(var k in this.def) {
-    var element_class="form_element_"+this.def[k].type;
-    var element_id=this.id+"_"+k;
-    var element_options=new clone(this.options);
-    element_options.var_name=element_options.var_name+"["+k+"]";
+  var def={
+    type: 'form',
+    def: this.def
+  };
 
-    if(class_exists(element_class)) {
-      this.elements[k]=eval("new "+element_class+"()");
-      this.elements[k].init(element_id, this.def[k], element_options, null);
-    }
-  }
+  this.element=new form_element_form();
+  this.element.init(this.id, def, this.options, null);
 }
 
 form.prototype.connect=function() {
-  for(var k in this.def) {
-    var element_id=this.id+"_"+k;
-    var element_dom_parent=document.getElementById(element_id);
+  var def={
+    type: 'form',
+    def: this.def
+  };
 
-    if(element_dom_parent)
-      this.elements[k].connect(element_dom_parent);
-  }
+  var element_dom_parent=document.getElementById(this.id);
+  this.element.connect(element_dom_parent);
 }
 
 form.prototype.get_data=function() {
-  var ret={};
-
-  for(var i in this.elements) {
-    ret[i]=this.elements[i].get_data();
-  }
-
-  return ret;
+  return this.element.get_data();
 }
 
 form.prototype.set_data=function(data) {
   this.has_data=true;
 
-  for(var k in this.elements) {
-    if(data[k])
-      this.elements[k].set_data(data[k]);
-    else
-      this.elements[k].set_data(null);
-  }
+  this.element.set_data(data);
 }
 
 form.prototype.show=function(dom_parent) {
@@ -81,13 +65,7 @@ form.prototype.show=function(dom_parent) {
   dom_parent.appendChild(div);
 
   // render the form
-  this.table=document.createElement("table");
-  this.table.id=this.id;
-  this.table.className="form";
-
-  for(var i in this.elements) {
-    this.table.appendChild(this.elements[i].show());
-  }
+  this.table=this.element.show_element();
 
   dom_parent.appendChild(this.table);
   return this.table;
@@ -96,9 +74,7 @@ form.prototype.show=function(dom_parent) {
 form.prototype.errors=function() {
   var list=[];
 
-  for(var i in this.elements) {
-    this.elements[i].errors(list);
-  }
+  this.element.errors(list);
 
   if(list.length==null)
     return false;
