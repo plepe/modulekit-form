@@ -47,6 +47,22 @@ $form_def=array(
     'type'	=>"multiselect",
     'values'	=>array("Ubuntu Linux", "Debian Linux", "Other Linux", "MacOS X", "MS Windows", "OS/2"),
   ),
+  'cats'	=>array(
+    'type'	=>"form",
+    'name'	=>"Cats",
+    'desc'	=>"Describe all your cats",
+    'count'	=>array("default"=>2),
+    'def'	=>array(
+      'name'	=>array(
+        'name'	=>"Name",
+	'type'	=>"text",
+      ),
+      'age'	=>array(
+        'name'	=>"Age",
+	'type'	=>"text",
+      ),
+    ),
+  ),
 );
 
 $default_data=array(
