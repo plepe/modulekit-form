@@ -122,33 +122,52 @@ class form_element_array extends form_element {
     }
   }
 
+  function show_element_part($k, $element, $document) {
+    // wrapper #k
+    $div=$document->createElement("div");
+    $div->setAttribute("form_element_num", $k);
+    $div->setAttribute("class", "form_element_array_part");
+
+    // element #k
+    $el_div=$document->createElement("div");
+    $el_div->setAttribute("form_element_num", $k);
+    $el_div->setAttribute("class", "form_element_array_part_element");
+    $div->appendChild($el_div);
+
+    $el_div->appendChild($element->show_element($document));
+
+    // Actions #k
+    $el_div=$document->createElement("div");
+    $el_div->setAttribute("form_element_num", $k);
+    $el_div->setAttribute("class", "form_element_array_part_element_actions");
+    $div->appendChild($el_div);
+
+    $input=$document->createElement("input");
+    $input->setAttribute("type", "submit");
+    $input->setAttribute("name", "{$this->options['var_name']}[__remove][{$k}]");
+    $input->setAttribute("value", "X");
+    $el_div->appendChild($input);
+
+    return $div;
+  }
+
   function show_element($document) {
     $div=parent::show_element($document);
 
     foreach($this->elements as $k=>$element) {
-      $el_div=$document->createElement("div");
-      $el_div->setAttribute("form_element_num", $k);
-      $el_div->setAttribute("class", "form_element_array_part");
-      $div->appendChild($el_div);
-
-      $el_div->appendChild($element->show_element($document));
-
-      $input=$document->createElement("input");
-      $input->setAttribute("type", "submit");
-      $input->setAttribute("name", "{$this->options['var_name']}[__remove][{$k}]");
-      $input->setAttribute("value", "X");
-
-      $div->appendChild($input);
-
-      $br=$document->createElement("br");
-      $div->appendChild($br);
+      $part_div=$this->show_element_part($k, $element, $document);
+      $div->appendChild($part_div);
     }
+
+    $el_div=$document->createElement("div");
+    $el_div->setAttribute("class", "form_element_array_actions");
+    $div->appendChild($el_div);
 
     $input=$document->createElement("input");
     $input->setAttribute("type", "submit");
     $input->setAttribute("name", "{$this->options['var_name']}[__new]");
     $input->setAttribute("value", "Element hinzufügen");
-    $div->appendChild($input);
+    $el_div->appendChild($input);
 
     return $div;
   }

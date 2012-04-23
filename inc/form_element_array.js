@@ -89,34 +89,53 @@ form_element_array.prototype.set_data=function(data) {
   this.data=null;
 }
 
+form_element_array.prototype.show_element_part=function(k, element) {
+  // wrapper #k
+  var div=document.createElement("div");
+  div.setAttribute("form_element_num", k);
+  div.className="form_element_array_part";
+
+  // element #k
+  var el_div=document.createElement("div");
+  el_div.setAttribute("form_element_num", k);
+  el_div.className="form_element_array_part_element";
+  div.appendChild(el_div);
+
+  el_div.appendChild(element.show_element());
+
+  // Actions #k
+  var el_div=document.createElement("div");
+  el_div.setAttribute("form_element_num", k);
+  el_div.className="form_element_array_part_element_actions";
+  div.appendChild(el_div);
+
+  var input=document.createElement("input");
+  input.type="submit";
+  input.name=this.options.var_name+"[__remove]["+k+"]";
+  input.value="X";
+  el_div.appendChild(input);
+
+  return div;
+}
+
 form_element_array.prototype.show_element=function() {
   var div=this.parent.show_element.call(this);
   this.get_data();
 
   for(var k in this.elements) {
-    var el_div=document.createElement("div");
-    el_div.setAttribute("form_element_num", k);
-    el_div.className="form_element_array_part";
-    div.appendChild(el_div);
-
-    el_div.appendChild(this.elements[k].show_element());
-
-    var input=document.createElement("input");
-    input.type="submit";
-    input.name=this.options.var_name+"[__remove]["+k+"]";
-    input.value="X";
-
-    div.appendChild(input);
-
-    var br=document.createElement("br");
-    div.appendChild(br);
+    var part_div=this.show_element_part(k, this.elements[k]);
+    div.appendChild(part_div);
   }
+
+  var el_div=document.createElement("div");
+  el_div.className="form_element_array_actions";
+  div.appendChild(el_div);
 
   var input=document.createElement("input");
   input.type="submit";
   input.name=this.options.var_name+"[__new]";
   input.value="Element hinzufügen";
-  div.appendChild(input);
+  el_div.appendChild(input);
 
   return div;
 }
