@@ -23,13 +23,24 @@ form_element_array.prototype.build_form=function() {
   }
 }
 
+form_element_array.prototype.index_element=function(el) {
+  var i=1;
+  for(var k in this.elements) {
+    if(el==k)
+      return "#"+i;
+    i++;
+  }
+
+  return null;
+}
+
 form_element_array.prototype.create_element=function(k) {
   var element_def=new clone(this.def.def);
   var element_class="form_element_"+element_def.type;
   var element_id=this.id+"_"+k;
   var element_options=new clone(this.options);
   element_options.var_name=element_options.var_name+"["+k+"]";
-  element_def._name="#"+k; // TODO: set increasing number as name!
+  element_def.__defineGetter__("_name", this.index_element.bind(this, k));
 
   if(class_exists(element_class)) {
     this.elements[k]=eval("new "+element_class+"()");
