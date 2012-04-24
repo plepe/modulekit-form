@@ -17,10 +17,17 @@ if(isset($_REQUEST['page'])&&(preg_match("/^[a-z_]+$/", $_REQUEST['page'])))
 $d=opendir(".");
 while($f=readdir($d)) {
   if(preg_match("/^(.*)\.creole$/", $f, $m)) {
-    print "<li><a href='index.php?page={$m[1]}'>{$m[1]}</a></li>\n";
+    $pages[]=$m[1];
   }
 }
 closedir($d);
+
+foreach($pages as $p) {
+  if($page==$p)
+    print "<li>{$p}</li>\n";
+  else
+    print "<li><a href='index.php?page={$p}'>{$p}</a></li>\n";
+}
 ?>
 </ul>
 </div>
