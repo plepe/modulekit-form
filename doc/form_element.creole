@@ -17,4 +17,7 @@ This key is not required, but usually you want it.
 === req ===
 {boolean} Define that this element is required.
 
+== count ===
+{hash array} You can define a count of items here. The data type of the element changes to an array. See [[form_element_array]] for more details (which is used internally to handle this parameter).
+
 Example: {"name":{"type":"text","name":"Name","req":true}}

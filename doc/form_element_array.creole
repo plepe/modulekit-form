@@ -1,0 +1,17 @@
+== form_element_array ==
+Use a form element multiple times. Result is a hash array of the included form element. If no elements are defined, the result is null. Array does not need to be defined explicitly, you can set a 'count' on any form element. Child elements will automatically be named "#1", "#2", ....
+
+=== type ===
+{string} 'array'
+
+=== count ===
+{hash array} Definition of count of values. Key 'default' defines the default count of values.
+
+E.g.: count:{"default":2}
+
+=== def ===
+{hash array} A definition of a child element.
+
+== Example ==
+* Example: {"hobbies":{"type":"text","name":"Hobbies","count":{"default":3},"req":true}}
+* Example: {"hobbies":{"type":"array","name":"Hobbies","count":{"default":3},"def":{"type":"text","req":true}}}

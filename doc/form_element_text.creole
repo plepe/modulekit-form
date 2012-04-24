@@ -1,0 +1,5 @@
+== form_element_text ==
+A simple text input field. Result is a string. All parameters of the parent element [[form_element]] are possible.
+
+== Example ==
+Example: {"name":{"type":"text","name":"Name"},"occupation":{"type":"text","name":"Occupation","desc":"Please describe what you are up to"}}

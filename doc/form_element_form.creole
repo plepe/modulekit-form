@@ -1,0 +1,9 @@
+== form_element_form ==
+Embed a form into the form. Result is a hash array of the included form elements.
+All parameters of the parent element [[form_element]] are possible, although 'req' does not make sense here.
+
+=== def ===
+{hash array} A defintion of child elements.
+
+== Example ==
+Example: {"cats":{"type":"form","name":"Cats","count":{"default":2},"def":{"name":{"type":"text","name":"Name"},"age":{"type":"text","name":"Age"},"sex":{"type":"radio","name":"Sex","values":{"m":"male","f":"female"}}}}}

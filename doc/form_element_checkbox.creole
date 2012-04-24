@@ -1,0 +1,10 @@
+== form_element_checkbox ==
+A list of checkboxes. Result is an array of strings (a list of selected keys) or null. All parameters of the parent element [[form_element]] are possible.
+
+=== values ===
+{hash array} A list of possible values.
+
+e.g. {"php":"PHP","c":"C","cpp":"C++","js":"Javascript"}
+
+== Example ==
+Example: {"lang":{"type":"checkbox","name":"Preferred languages","values":{"php":"PHP","c":"C","cpp":"C++","js":"Javascript"}}}
