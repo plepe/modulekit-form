@@ -10,6 +10,20 @@ if(isset($_REQUEST['page'])&&(preg_match("/^[a-z_]+$/", $_REQUEST['page'])))
 <title>Form - Doc - <?=$page?></title>
 </head>
 <body>
+<div class='overview'>
+<ul>
+<?
+$d=opendir(".");
+while($f=readdir($d)) {
+  if(preg_match("/^(.*)\.creole$/", $f, $m)) {
+    print "<li><a href='index.php?page={$m[1]}'>{$m[1]}</a></li>\n";
+  }
+}
+closedir($d);
+?>
+</ul>
+</div>
+<div class='content'>
 <?
 require_once("Text/Wiki/Creole.php");
 $parser=new Text_Wiki_Creole();
@@ -32,5 +46,6 @@ if(preg_match_all("/Example: (\{.*\})/", $text, $m, PREG_OFFSET_CAPTURE)) {
 
 print $text;
 ?>
+</div>
 </body>
 </html>
