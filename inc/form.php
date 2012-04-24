@@ -182,7 +182,7 @@ class form {
 
 function form_process_def(&$def) {
   foreach($def as $k=>$element_def) {
-    if(isset($element_def['count'])) {
+    if(isset($element_def['count'])&&($element_def['type']!="array")) {
       $def[$k]=array(
 	'type'		=>"array",
 	'count'		=>$element_def['count'],
