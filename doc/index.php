@@ -1,9 +1,21 @@
 <?
+Header("content-type: text/html; charset=utf-8");
+
+$page="form_element";
+if(isset($_REQUEST['page'])&&(preg_match("/^[a-z_]+$/", $_REQUEST['page'])))
+  $page=$_REQUEST['page'];
+?>
+<html>
+<head>
+<title>Form - Doc - <?=$page?></title>
+</head>
+<body>
+<?
 require_once("Text/Wiki/Creole.php");
 $parser=new Text_Wiki_Creole();
 $parser->setRenderConf("Xhtml", "wikilink", "new_url", "index.php?q=");
 
-$content=file_get_contents("form_element.creole");
+$content=file_get_contents("{$page}.creole");
 $text=$parser->transform($content, "Xhtml");
 
 if(preg_match_all("/Example: (\{.*\})/", $text, $m, PREG_OFFSET_CAPTURE)) {
@@ -19,3 +31,6 @@ if(preg_match_all("/Example: (\{.*\})/", $text, $m, PREG_OFFSET_CAPTURE)) {
 }
 
 print $text;
+?>
+</body>
+</html>
