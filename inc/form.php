@@ -855,6 +855,9 @@ function form_get_data($def, $data) {
 	      // save file to directory (under new name)
 	      move_uploaded_file($tmp_name, "{$def[$k]['path']}/{$ev['name']}");
 	    }
+	    else {
+	      $ev=null;
+	    }
 	  }
 
 	  // hide temporary value
