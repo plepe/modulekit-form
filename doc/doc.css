@@ -1,0 +1,16 @@
+.overview {
+  position: absolute;
+  left: 5px;
+  width: 200px;
+  border: 1px solid #0000ff;
+  background: #a0a0ff;
+  top: 5px;
+}
+.content {
+  position: absolute;
+  left: 215px;
+}
+a {
+  text-decoration: none;
+  color: #0000ff;
+}

@@ -7,6 +7,7 @@ if(isset($_REQUEST['page'])&&(preg_match("/^[a-z_]+$/", $_REQUEST['page'])))
 ?>
 <html>
 <head>
+<link rel='stylesheet' type='text/css' href='doc.css'>
 <title>Form - Doc - <?=$page?></title>
 </head>
 <body>
