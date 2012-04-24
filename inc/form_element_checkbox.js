@@ -34,6 +34,9 @@ form_element_checkbox.prototype.get_data=function() {
       this.data.push(i);
   }
 
+  if(!this.data.length)
+    return null;
+
   return this.data;
 }
 
@@ -46,6 +49,9 @@ form_element_checkbox.prototype.set_data=function(data) {
   for(var k in this.dom_values) {
     this.dom_values[k].checked=false;
   }
+
+  if(!this.data)
+    return;
 
   for(var i=0; i<this.data.length; i++) {
     var k=this.data[i];
