@@ -35,7 +35,9 @@ foreach($pages as $p) {
 <?
 require_once("Text/Wiki/Creole.php");
 $parser=new Text_Wiki_Creole();
-$parser->setRenderConf("Xhtml", "wikilink", "new_url", "index.php?q=");
+$parser->setRenderConf("Xhtml", "wikilink", "new_url", "index.php?page=");
+$parser->setRenderConf("Xhtml", "wikilink", "view_url", "index.php?page=");
+$parser->setRenderConf('xhtml', 'wikilink', 'pages', $pages);
 
 $content=file_get_contents("{$page}.creole");
 $text=$parser->transform($content, "Xhtml");
