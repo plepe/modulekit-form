@@ -1,0 +1,7 @@
+== form ==
+Form is the central class you directly interact with from PHP/JS code
+
+== function save_data() ==
+Call this function to finally save data (e.g. resets the internal "original" data by the newly saved data - for display of modified fields; classes that save their data themselved, e.g. saving file to destination).
+
+Availability: PHP, (planned: JS)

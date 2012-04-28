@@ -105,4 +105,7 @@ class form_element {
     $div->setAttribute("id", $this->id);
     return $div;
   }
+
+  function save_data() {
+  }
 }
