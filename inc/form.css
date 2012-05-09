@@ -30,3 +30,11 @@ table.form label:hover {
   background: yellow;
   margin-bottom: 2px;
 }
+div.form_errors {
+  border: 1px solid red;
+  padding: 2px;
+}
+div.form_errors ul {
+  margin-top: 2px;
+  margin-bottom: 2px;
+}
