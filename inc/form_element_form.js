@@ -76,6 +76,27 @@ form_element_form.prototype.set_data=function(data) {
   }
 }
 
+form_element_form.prototype.set_orig_data=function(data) {
+  for(var k in this.elements) {
+    if(!data)
+      this.elements[k].set_orig_data(null);
+    else if(data[k])
+      this.elements[k].set_orig_data(data[k]);
+    else
+      this.elements[k].set_orig_data(null);
+  }
+}
+
+form_element_form.prototype.get_orig_data=function() {
+  var ret={};
+
+  for(var i in this.elements) {
+    ret[i]=this.elements[i].get_orig_data();
+  }
+
+  return ret;
+}
+
 form_element_form.prototype.errors=function(list) {
   for(var i in this.elements) {
     this.elements[i].errors(list);

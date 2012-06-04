@@ -48,6 +48,14 @@ form_element.prototype.set_data=function(data) {
   this.data=data;
 }
 
+form_element.prototype.set_orig_data=function(data) {
+  this.orig_data=data;
+}
+
+form_element.prototype.get_orig_data=function() {
+  return this.orig_data;
+}
+
 form_element.prototype.show=function() {
   var tr=document.createElement("tr");
   var td=document.createElement("td");

@@ -57,6 +57,19 @@ form.prototype.set_data=function(data) {
   this.element.set_data(data);
 }
 
+form.prototype.set_orig_data=function(data) {
+  this.has_orig_data=true;
+
+  this.element.set_orig_data(data);
+}
+
+form.prototype.get_orig_data=function(data) {
+  if(!this.has_orig_data)
+    return this.get_data();
+
+  return this.element.get_orig_data();
+}
+
 form.prototype.show=function(dom_parent) {
   // Include a hidden submit button as default action, to prevent that other submit buttons (e.g. for removing/adding elements in array elements) get precedence for default submit actions (e.g. user presses enter)
   var div=document.createElement("div");
