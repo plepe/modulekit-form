@@ -9,21 +9,24 @@ function form(id, def, options) {
 
   this.has_data=false;
 
-  this.orig_data=null;
-
   this.build_form();
 
   this.table=document.getElementById(this.id);
   if(this.table) {
-    // read orig_data
-    var inputs=this.table.getElementsByTagName("input");
-    for(var i=0; i<inputs.length; i++) {
-      if(inputs[i].name=="form_orig_"+this.options.var_name)
-	this.orig_data=json_decode(inputs[i].value);
-    }
-
     // connect elements to php-form
     this.connect(this.table);
+
+    // read orig_data
+    var orig_data;
+    var inputs=document.getElementsByTagName("input");
+    for(var i=0; i<inputs.length; i++) {
+      if(inputs[i].name=="form_orig_"+this.options.var_name)
+	orig_data=json_decode(inputs[i].value);
+    }
+
+    // set orig_data to elements
+    if(orig_data)
+      this.set_orig_data(orig_data);
   }
 }
 
