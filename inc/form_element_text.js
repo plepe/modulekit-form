@@ -41,7 +41,14 @@ form_element_text.prototype.set_data=function(data) {
 }
 
 form_element_text.prototype.notify_change=function() {
+  this.check_modified();
+}
+
+form_element_text.prototype.check_modified=function() {
   var cls;
+
+  this.parent.check_modified.call();
+
   this.data=this.dom_element.value;
 
   if(this.orig_data&&this.data!=this.orig_data)

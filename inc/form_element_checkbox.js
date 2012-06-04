@@ -103,6 +103,12 @@ form_element_checkbox.prototype.show_element=function() {
 }
 
 form_element_checkbox.prototype.notify_change=function() {
+  this.check_modified();
+}
+
+form_element_checkbox.prototype.check_modified=function() {
+  this.parent.check_modified.call();
+
   this.data=this.get_data();
 
   for(var k in this.def.values) {

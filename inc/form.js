@@ -67,6 +67,8 @@ form.prototype.set_orig_data=function(data) {
   this.has_orig_data=true;
 
   this.element.set_orig_data(data);
+
+  this.element.check_modified();
 }
 
 form.prototype.get_orig_data=function(data) {

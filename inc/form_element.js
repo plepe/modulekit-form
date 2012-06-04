@@ -99,3 +99,6 @@ form_element.prototype.errors=function(list) {
   if((this.def.req)&&((!this.data)||(this.data=="")))
     list.push(this.path_name()+": Wert muss angegeben werden.");
 }
+
+form_element.prototype.check_modified=function() {
+}
