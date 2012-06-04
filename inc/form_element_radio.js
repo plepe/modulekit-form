@@ -17,6 +17,8 @@ form_element_radio.prototype.connect=function(dom_parent) {
     if(current.nodeName=="SPAN") {
       var dom=current.firstChild;
       this.dom_values[dom.value]=dom;
+
+      dom.onchange=this.notify_change.bind(this);
     }
 
     current=current.nextSibling;
@@ -75,6 +77,8 @@ form_element_radio.prototype.show_element=function() {
     span.appendChild(input);
     this.dom_values[k]=input;
 
+    input.onchange=this.notify_change.bind(this);
+
     var label=document.createElement("label");
     label.setAttribute("for", id);
     var text=document.createTextNode(this.def.values[k]);
@@ -86,4 +90,19 @@ form_element_radio.prototype.show_element=function() {
   }
 
   return div;
+}
+
+form_element_radio.prototype.notify_change=function() {
+  this.data=this.get_data();
+
+  for(var k in this.def.values) {
+    var cls="form_orig";
+
+    if(this.orig_data&&
+       (this.data!=this.orig_data)&&
+       ((k==this.data)||(k==this.orig_data)))
+      cls="form_modified";
+
+    this.dom_values[k].parentNode.className=cls;
+  }
 }

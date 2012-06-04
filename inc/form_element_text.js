@@ -9,6 +9,8 @@ form_element_text.prototype.init=function(id, def, options, form_parent) {
 form_element_text.prototype.connect=function(dom_parent) {
   this.parent.connect.call(this, dom_parent);
   this.dom_element=this.dom_parent.getElementsByTagName("input")[0];
+
+  this.dom_element.onchange=this.notify_change.bind(this);
 }
 
 form_element_text.prototype.show_element=function() {
@@ -26,6 +28,7 @@ form_element_text.prototype.show_element=function() {
     input.value=this.data;
   div.appendChild(input);
   this.dom_element=input;
+  this.dom_element.onchange=this.notify_change.bind(this);
 
   return div;
 }
@@ -35,4 +38,16 @@ form_element_text.prototype.set_data=function(data) {
 
   if(this.dom_element)
     this.dom_element.value=this.data;
+}
+
+form_element_text.prototype.notify_change=function() {
+  var cls;
+  this.data=this.dom_element.value;
+
+  if(this.orig_data&&this.data!=this.orig_data)
+    cls="form_modified";
+  else
+    cls="form_orig";
+
+  this.dom_element.className=cls;
 }
