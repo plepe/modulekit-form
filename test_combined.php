@@ -1,11 +1,12 @@
 <?
 Header("content-type: text/html; charset=utf-8");
-include "inc/form.php";
+include "modulekit/loader.php"; /* loads all php-includes */
 include "form_def.php";
 ?>
 <html>
 <head>
-<?form_include(true);?>
+<?php print modulekit_include_js(); /* prints all js-includes */ ?>
+<?php print modulekit_include_css(); /* prints all css-includes */ ?>
 </head>
 <body>
 <?
