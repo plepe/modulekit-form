@@ -52,6 +52,23 @@ class form_element {
   function errors($errors) {
     if(isset($this->def['req'])&&($this->def['req'])&&(!$this->data))
       $errors[]=$this->path_name().": Wert muss angegeben werden.";
+
+    if(isset($this->def['check'])) {
+      $check_errors=array();
+
+      $this->check(&$check_errors, $this->def['check']);
+
+      foreach($check_errors as $e)
+	$errors[]=$this->path_name().": {$e}";
+    }
+  }
+
+  function check($errors, $param) {
+    $check_fun="check_".array_shift($param);
+
+    if(method_exists($this, $check_fun)) {
+      call_user_func(array($this, $check_fun), &$errors, $param);
+    }
   }
 
   function is_complete() {

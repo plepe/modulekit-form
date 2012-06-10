@@ -16,6 +16,7 @@ Definition:
 * desc: Description (usually written below Name in smaller letters); accepts full HTML (in contrast to 'name').
 * count: We internally be converted to a form element of type array using the options of this key. E.g. array('default'=>2) resp. { 'default': 2 }. See 'Form Element Array' for more information.
 * req: A value is required.
+* check: Evaluate validity of input. Defined as array("type", parameters). Will call function "check_type" inside form element, will be passed parameters. Example: "regexp" for Form Element Text (will call function "check_regexp").
 
 === Form Element "Form" ===
 A form inside the form. E.g. if you have several cats, and want to record the same properties for every cat, like Name, Age and Race.
