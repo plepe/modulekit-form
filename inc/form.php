@@ -179,5 +179,9 @@ function form_process_def(&$def) {
       unset($element_def['count']);
       $def[$k]['def']=$element_def;
     }
+
+    if(($element_def['type']=="array")||($element_def['type']=="form")) {
+      form_process_def($def[$k]['def']['def']);
+    }
   }
 }
