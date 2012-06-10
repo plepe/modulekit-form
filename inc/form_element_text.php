@@ -28,4 +28,16 @@ class form_element_text extends form_element {
     $div->appendChild($input);
     return $div;
   }
+
+  function check_regexp($errors, $param) {
+    if(sizeof($param)<1)
+      return;
+
+    if(!preg_match("/{$param[0]}/", $this->get_data())) {
+      if(sizeof($param)<2)
+	$errors[]="Ungültiger Wert";
+      else
+	$errors[]=$param[1];
+    }
+  }
 }

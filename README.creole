@@ -44,6 +44,7 @@ Basic form element with a single line text input.
 
 Definition:
 * type: 'text'
+* check: array("regexp", REGEXP, [MESSAGE]), e.g. array("regexp", "^A", "Value needs to start with an 'A'")
 
 Value:
 * String. Will be stripped of additional slashes.
