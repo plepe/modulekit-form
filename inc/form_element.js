@@ -98,6 +98,25 @@ form_element.prototype.show_element=function() {
 form_element.prototype.errors=function(list) {
   if((this.def.req)&&((!this.data)||(this.data=="")))
     list.push(this.path_name()+": Wert muss angegeben werden.");
+
+  if(this.def.check) {
+    var check_errors=[];
+
+    this.check(check_errors, this.def.check);
+
+    for(var i=0; i<check_errors.length; i++)
+      list.push(this.path_name()+": "+check_errors[i]);
+
+  }
+}
+
+form_element.prototype.check=function(list, param) {
+  var check=this.def.check.slice(0);
+  var check_fun="check_"+check.shift();
+
+  if(typeof this[check_fun]==='function') {
+    this[check_fun](list, check);
+  }
 }
 
 form_element.prototype.check_modified=function() {
