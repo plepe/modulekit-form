@@ -39,6 +39,21 @@ $form_editor=array(
 	'type'	=>"radio",
 	'values'	=>$form_types,
       ),
+      'values'	=>array(
+        'name'	=>"Values",
+	'type'	=>"form",
+	'def'	=>array(
+		  'k'	=>array(
+		    'name'	=>"k",
+		    'type'	=>"text",
+		  ),
+		  'v'	=>array(
+		    'name'	=>"v",
+		    'type'	=>"text",
+		  ),
+	  ),
+	'count'	=>array("default"=>2),
+      ),
     ),
   ),
 );
@@ -70,6 +85,20 @@ print $form->show();
 print "<input type='submit' value='Ok'>\n";
 print "</form>\n";
 
+function fix_values(&$def) {
+  foreach($def as $id=>$d) {
+    if(($d['type']=="form")||($d['type']=="array")) {
+      fix_values($def[$id]['def']);
+    }
+
+    $values=array();
+    if($d['values']) foreach($d['values'] as $x) {
+      $values[$x['k']]=$x['v'];
+    }
+    $def[$id]['values']=$values;
+  }
+}
+
 if($form->is_complete()) {
   $data=$form->get_data();
   $def=array();
@@ -77,6 +106,8 @@ if($form->is_complete()) {
     $def[$v['id']]=$v;
     unset($def[$v['id']]['id']);
   }
+
+  fix_values($def);
 
   print "Form definition:<pre>\n";
   print_r($def);
