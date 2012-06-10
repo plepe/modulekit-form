@@ -58,3 +58,15 @@ form_element_text.prototype.check_modified=function() {
 
   this.dom_element.className=cls;
 }
+
+form_element_text.prototype.check_regexp=function(list, param) {
+  if(param.length<1)
+    return;
+
+  if(!this.get_data().match(param[0])) {
+    if(param.length<2)
+      list.push("Ungültiger Wert");
+    else
+      list.push(param[1]);
+  }
+}
