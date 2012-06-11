@@ -182,4 +182,23 @@ class form_element {
 
     $errors[]=$param[1];
   }
+
+  // call check() on another form element of the same hierarchy
+  function check_check($errors, $param) {
+    $check_errors=array();
+
+    $other=$this->parent->elements[$param[0]];
+    if(!$other)
+      return;
+
+    $other->check(&$check_errors, $param[1]);
+
+    if(sizeof($check_errors)) {
+      if(sizeof($param)>2)
+	$errors[]=$param[2];
+      else foreach($check_errors as $e) {
+	$errors[]=$other->path_name().": {$e}";
+      }
+    }
+  }
 }

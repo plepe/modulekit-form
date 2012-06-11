@@ -20,6 +20,7 @@ Definition:
 ** 'and': combine several checks, e.g. array("and", array("regexp", ...), array("foo", ...)) - all sub-checks need to resolve positive.
 ** 'or': combine several checks, e.g. array("and", array("regexp", ...), array("foo", ...)) - at least one sub-check need to resolve positive.
 ** 'not': inverse check, e.g. array("not", array("regexp", ...)) - the sub-check need to resolve negative.
+** 'check': Call check on a sibling form element.
 
 === Form Element "Form" ===
 A form inside the form. E.g. if you have several cats, and want to record the same properties for every cat, like Name, Age and Race.
