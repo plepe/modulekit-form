@@ -217,4 +217,19 @@ form_element.prototype.check_is=function(list, param) {
 }
 
 form_element.prototype.check_modified=function() {
+  if(this.def.check) {
+    var check_errors=[];
+
+    this.check(check_errors, this.def.check);
+
+    if(check_errors.length) {
+      var text=[];
+
+      for(var i=0; i<check_errors.length; i++) {
+	text.push(this.path_name()+": "+check_errors[i]);
+      }
+
+      alert(text.join("\n"));
+    }
+  }
 }
