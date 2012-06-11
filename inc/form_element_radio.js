@@ -97,7 +97,7 @@ form_element_radio.prototype.notify_change=function() {
 }
 
 form_element_radio.prototype.check_modified=function() {
-  this.parent.check_modified.call();
+  this.parent.check_modified.call(this);
 
   this.data=this.get_data();
 

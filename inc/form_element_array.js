@@ -244,7 +244,7 @@ form_element_array.prototype.remove_element=function(k) {
 }
 
 form_element_array.prototype.check_modified=function() {
-  this.parent.check_modified.call();
+  this.parent.check_modified.call(this);
 
   for(var i in this.elements) {
     this.elements[i].check_modified();

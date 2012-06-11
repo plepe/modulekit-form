@@ -107,7 +107,7 @@ form_element_checkbox.prototype.notify_change=function() {
 }
 
 form_element_checkbox.prototype.check_modified=function() {
-  this.parent.check_modified.call();
+  this.parent.check_modified.call(this);
 
   this.data=this.get_data();
 
