@@ -49,7 +49,7 @@ form_element_text.prototype.notify_change=function() {
 form_element_text.prototype.check_modified=function() {
   var cls;
 
-  this.parent("form_element_checkbox").check_modified.call();
+  this.parent("form_element_checkbox").check_modified.call(this);
 
   this.data=this.dom_element.value;
 

@@ -109,7 +109,7 @@ form_element_checkbox.prototype.notify_change=function() {
 }
 
 form_element_checkbox.prototype.check_modified=function() {
-  this.parent("form_element_checkbox").check_modified.call();
+  this.parent("form_element_checkbox").check_modified.call(this);
 
   this.data=this.get_data();
 

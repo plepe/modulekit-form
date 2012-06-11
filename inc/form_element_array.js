@@ -248,7 +248,7 @@ form_element_array.prototype.notify_change=function() {
 }
 
 form_element_array.prototype.check_modified=function() {
-  this.parent("form_element_array").check_modified.call();
+  this.parent("form_element_array").check_modified.call(this);
 
   for(var i in this.elements) {
     this.elements[i].check_modified();

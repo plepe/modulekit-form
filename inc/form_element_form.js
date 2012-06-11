@@ -113,7 +113,7 @@ form_element_form.prototype.notify_change=function() {
 }
 
 form_element_form.prototype.check_modified=function() {
-  this.parent("form_element_form").check_modified.call();
+  this.parent("form_element_form").check_modified.call(this);
 
   for(var i in this.elements) {
     this.elements[i].check_modified();

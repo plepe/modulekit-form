@@ -63,7 +63,7 @@ form_element_json.prototype.notify_change=function() {
 form_element_json.prototype.check_modified=function() {
   var cls;
 
-  this.parent("form_element_json").check_modified.call();
+  this.parent("form_element_json").check_modified.call(this);
 
   this.data=this.dom_element.value;
 

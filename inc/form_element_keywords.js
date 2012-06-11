@@ -162,7 +162,7 @@ form_element_keywords.prototype.get_data=function() {
 form_element_keywords.prototype.check_modified=function() {
   var cls;
 
-  this.parent("form_element_keywords").check_modified.call();
+  this.parent("form_element_keywords").check_modified.call(this);
 
   this.get_data();
 
