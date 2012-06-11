@@ -110,11 +110,95 @@ form_element.prototype.errors=function(list) {
 }
 
 form_element.prototype.check=function(list, param) {
-  var check=this.def.check.slice(0);
+  var check=param.slice(0);
   var check_fun="check_"+check.shift();
 
   if(typeof this[check_fun]==='function') {
     this[check_fun](list, check);
+  }
+}
+
+// call check() for all elements of the param-array
+// if last element is a string it wil be returned as error message (if any of the checks returned an error)
+form_element.prototype.check_and=function(list, param) {
+  var list_errors=[];
+
+  for(var i=0; i<param.length; i++) {
+    if((typeof param[i] == "string")&&(i==param.length-1)) {
+      if(list_errors.length)
+	errors.push(param[i]);
+
+      list_errors=[];
+    }
+    else {
+      this.check(list_errors, param[i]);
+    }
+  }
+
+  for(var i=0; i<list_errors.length; i++)
+    list.push(list_errors[i]);
+}
+
+// call check() for all elements of the param-array until one successful check is found
+// if last element is a string it wil be returned as error message (if all of the checks returned an error)
+form_element.prototype.check_or=function(list, param) {
+  var list_errors=[];
+
+  for(var i=0; i<param.length; i++) {
+    var check_errors=[];
+
+    if((typeof param[i] == "string")&&(i==param.length-1)) {
+      if(list_errors.length)
+	errors.push(param[i]);
+
+      list_errors=[];
+    }
+    else {
+      this.check(check_errors, param[i]);
+
+      if(!check_errors.length)
+	return;
+    }
+
+    for(var j=0; j<check_errors.length; j++)
+      list_errors.push(check_errors[j]);
+  }
+
+  for(var j=0; j<list_errors.length; j++)
+    list.push(list_errors[j]);
+}
+
+// call check() for the first element of the param-array, return second element as error message if check() returns successful
+form_element.prototype.check_not=function(list, param) {
+  var check_errors=[];
+
+  this.check(check_errors, param[0]);
+
+  if(check_errors.length)
+    return;
+
+  if(param.length<2)
+    list.push("Ungültiger Wert");
+  else
+    list.push(param[1]);
+}
+
+// call check() on another form element of the same hierarchy
+form_element.prototype.check_check=function(list, param) {
+  var check_errors=[];
+
+  other=this.form_parent.elements[param[0]];
+  if(!other)
+    return;
+
+  other.check(check_errors, param[1]);
+
+  if(check_errors.length) {
+    if(param.length>2)
+      list.push(param[2]);
+    else
+      for(var i=0; i<check_errors.length; i++)
+	list.push(other.path_name()+": "+check_errors[i]);
   }
 }
 
