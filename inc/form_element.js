@@ -203,5 +203,18 @@ form_element.prototype.check_check=function(list, param) {
   }
 }
 
+// call check() on another form element of the same hierarchy
+form_element.prototype.check_is=function(list, param) {
+  if(param.length<1)
+    return;
+
+  if(this.get_data()!=param[0]) {
+    if(param.length<2)
+      list.push("Ungültiger Wert");
+    else
+      list.push(param[1]);
+  }
+}
+
 form_element.prototype.check_modified=function() {
 }

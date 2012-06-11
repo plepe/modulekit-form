@@ -201,4 +201,16 @@ class form_element {
       }
     }
   }
+
+  function check_is($errors, $param) {
+    if(sizeof($param)<1)
+      return;
+
+    if($this->get_data()!=$param[0]) {
+      if(sizeof($param)<2)
+	$errors[]="Ungültiger Wert";
+      else
+	$errors[]=$param[1];
+    }
+  }
 }
