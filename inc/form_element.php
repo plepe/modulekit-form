@@ -122,4 +122,61 @@ class form_element {
     $div->setAttribute("id", $this->id);
     return $div;
   }
+
+  // call check() for all elements of the param-array
+  // if last element is a string it wil be returned as error message (if any of the checks returned an error)
+  function check_and($errors, $param) {
+    $list_errors=array();
+
+    foreach($param as $i=>$p) {
+      if(is_string($p)&&($i==sizeof($param)-1)) {
+	if(sizeof($list_errors))
+	  $errors[]=$p;
+
+	$list_errors=array();
+      }
+      else
+	$this->check(&$list_errors, $p);
+    }
+
+    $errors=array_merge($errors, $list_errors);
+  }
+
+  // call check() for all elements of the param-array until one successful check is found
+  // if last element is a string it wil be returned as error message (if all of the checks returned an error)
+  function check_or($errors, $param) {
+    $list_errors=array();
+
+    foreach($param as $i=>$p) {
+      $check_errors=array();
+
+      if(is_string($p)&&($i==sizeof($param)-1)) {
+	$errors[]=$p;
+
+	$list_errors=array();
+      }
+      else {
+	$this->check(&$check_errors, $p);
+
+	if(!sizeof($check_errors))
+	  return;
+      }
+
+      $list_errors=array_merge($list_errors, $check_errors);
+    }
+
+    $errors=array_merge($errors, $list_errors);
+  }
+
+  // call check() for the first element of the param-array, return second element as error message if check() returns successful
+  function check_not($errors, $param) {
+    $check_errors=array();
+
+    $this->check(&$check_errors, $param[0]);
+
+    if(sizeof($check_errors))
+      return;
+
+    $errors[]=$param[1];
+  }
 }
