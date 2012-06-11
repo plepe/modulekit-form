@@ -177,7 +177,10 @@ class form_element {
     if(sizeof($check_errors))
       return;
 
-    $errors[]=$param[1];
+    if(sizeof($param)<2)
+      $errors[]="Ungültiger Wert";
+    else
+      $errors[]=$param[1];
   }
 
   // call check() on another form element of the same hierarchy
