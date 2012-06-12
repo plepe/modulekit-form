@@ -56,7 +56,23 @@ form_element.prototype.get_orig_data=function() {
   return this.orig_data;
 }
 
+form_element.prototype.show_hidden=function() {
+  input=document.createElement("input");
+  input.type="hidden";
+
+  return input;
+}
+
 form_element.prototype.show=function() {
+  if(this.def.show_depend) {
+    var errors=[];
+
+    this.check(errors, this.def.show_depend);
+
+    if(errors.length)
+      return this.show_hidden();
+  }
+
   var tr=document.createElement("tr");
   var td=document.createElement("td");
   td.className="field_desc";
