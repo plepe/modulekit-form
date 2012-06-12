@@ -28,6 +28,7 @@ $form_editor=array(
 	'name'	=>"ID",
 	'type'	=>"text",
 	'req'	=>true,
+	'check'	=>array("regexp", "^[a-zA-Z0-9_]+$"),
       ),
       'name'	=>array(
 	'name'	=>"Name",
@@ -41,8 +42,10 @@ $form_editor=array(
       ),
       'values'	=>array(
         'name'	=>"Values",
-	'type'	=>"form",
+	'type'	=>"array",
 	'def'	=>array(
+	    'type'	=>'form',
+	    'def'	=>array(
 		  'k'	=>array(
 		    'name'	=>"k",
 		    'type'	=>"text",
@@ -51,8 +54,10 @@ $form_editor=array(
 		    'name'	=>"v",
 		    'type'	=>"text",
 		  ),
-	  ),
+		),
+	      ),
 	'count'	=>array("default"=>2),
+	'show_depend'=>array("check", "type", array("or", array("is", "radio"), array("is", "select"), array("is", "checkbox"))),
       ),
     ),
   ),
