@@ -254,3 +254,10 @@ form_element_array.prototype.check_modified=function() {
     this.elements[i].check_modified();
   }
 }
+
+form_element_array.prototype.refresh=function() {
+  this.parent.refresh.call(this);
+
+  for(var i in this.elements)
+    this.elements[i].refresh();
+}
