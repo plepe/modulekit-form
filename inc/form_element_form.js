@@ -110,3 +110,10 @@ form_element_form.prototype.check_modified=function() {
     this.elements[i].check_modified();
   }
 }
+
+form_element_form.prototype.refresh=function() {
+  this.parent.refresh.call(this);
+
+  for(var i in this.elements)
+    this.elements[i].refresh();
+}

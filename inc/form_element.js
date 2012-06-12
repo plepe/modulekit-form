@@ -6,6 +6,10 @@ form_element.prototype.init=function(id, def, options, form_parent) {
   this.def=def;
   this.options=options;
   this.form_parent=form_parent;
+  if(form_parent==null)
+    this.form_root=this;
+  else
+    this.form_root=form_parent.form_root;
   this.data=null;
 }
 
@@ -233,6 +237,8 @@ form_element.prototype.check_is=function(list, param) {
 }
 
 form_element.prototype.check_modified=function() {
+  this.form_root.refresh();
+
   if(this.def.check) {
     var check_errors=[];
 
@@ -248,4 +254,7 @@ form_element.prototype.check_modified=function() {
       alert(text.join("\n"));
     }
   }
+}
+
+form_element.prototype.refresh=function() {
 }
