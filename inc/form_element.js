@@ -67,14 +67,8 @@ form_element.prototype.show=function() {
   tr.id="tr-"+this.id;
   this.tr=tr;
 
-  if(this.def.show_depend) {
-    var errors=[];
-
-    this.check(errors, this.def.show_depend);
-
-    if(errors.length)
-      tr.style.display="none";
-  }
+  if(!this.is_shown())
+    tr.style.display="none";
 
   var td=document.createElement("td");
   td.className="field_desc";
@@ -254,15 +248,25 @@ form_element.prototype.notify_change=function() {
   }
 }
 
-form_element.prototype.refresh=function() {
+form_element.prototype.is_shown=function() {
   if(this.def.show_depend) {
     errors=[];
 
     this.check(errors, this.def.show_depend);
 
     if(errors.length)
-      this.tr.style.display="none";
-    else
-      this.tr.style.display=null;
+      return false;
   }
+
+  return true;
+}
+
+form_element.prototype.refresh=function() {
+  if(!this.tr)
+    return;
+
+  if(this.is_shown())
+    this.tr.style.display=null;
+  else
+    this.tr.style.display="none";
 }

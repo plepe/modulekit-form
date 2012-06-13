@@ -88,14 +88,8 @@ class form_element {
     $tr->setAttribute("id", "tr-".$this->id);
     $this->tr=$tr;
 
-    if(isset($this->def['show_depend'])) {
-      $errors=array();
-
-      $this->check(&$errors, $this->def['show_depend']);
-
-      if(sizeof($errors))
-	$tr->setAttribute("style", "display: none;");
-    }
+    if(!$this->is_shown())
+      $tr->setAttribute("style", "display: none;");
 
     $td=$document->createElement("td");
     $td->setAttribute("class", "field_desc");
@@ -224,5 +218,19 @@ class form_element {
       else
 	$errors[]=$param[1];
     }
+  }
+
+  function is_shown() {
+    if($this->def['show_depend']) {
+      $errors=array();
+
+      $this->check(&$errors, $this->def['show_depend']);
+
+      if(sizeof($errors)) {
+	return false;
+      }
+    }
+
+    return true;
   }
 }
