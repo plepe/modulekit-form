@@ -100,7 +100,8 @@ form_element_array.prototype.get_data=function() {
   var ret={};
 
   for(var i in this.elements) {
-    ret[i]=this.elements[i].get_data();
+    if(this.elements[i].is_shown())
+      ret[i]=this.elements[i].get_data();
   }
 
   return ret;

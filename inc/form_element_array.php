@@ -30,7 +30,8 @@ class form_element_array extends form_element {
   function get_data() {
     $data=array();
     foreach($this->elements as $k=>$element) {
-      $data[$k]=$element->get_data();
+      if($element->is_shown())
+	$data[$k]=$element->get_data();
     }
 
     return $data;
