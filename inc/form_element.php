@@ -83,24 +83,29 @@ class form_element {
     return $this->orig_data;
   }
 
-  function show_hidden($document) {
+  function show_hidden($tr, $document) {
     $input=$document->createElement("input");
     $input->setAttribute("type", "hidden");
+    $tr->appendChild($input);
     // TODO: Save current value as hidden element to not loose data
-    return $input;
   }
 
   function show($document) {
+    $tr=$document->createElement("tr");
+    $tr->setAttribute("id", "tr-".$this->id);
+    $this->tr=$tr;
+
     if(isset($this->def['show_depend'])) {
       $errors=array();
 
       $this->check(&$errors, $this->def['show_depend']);
 
-      if(sizeof($errors))
-	return $this->show_hidden($document);
+      if(sizeof($errors)) {
+	$this->show_hidden($tr, $document);
+	return $tr;
+      }
     }
 
-    $tr=$document->createElement("tr");
     $td=$document->createElement("td");
     $td->setAttribute("class", "field_desc");
     $tr->appendChild($td);
