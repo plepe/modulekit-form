@@ -158,7 +158,8 @@ form_element_keywords.prototype.refresh=function() {
 
   this.parent("form_element_keywords").refresh.call(this);
 
-  this.get_data();
+  if(!this.dom_element)
+    return;
 
   if(this.orig_data&&this.data.join(",")!=this.orig_data.join(","))
     cls="form_modified";

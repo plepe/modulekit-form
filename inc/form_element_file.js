@@ -45,7 +45,8 @@ form_element_text.prototype.refresh=function() {
 
   this.parent("form_element_file").check_modified.call(this);
 
-  this.data=this.dom_element.value;
+  if(!this.dom_element)
+    return;
 
   if(this.orig_data&&this.data!=this.orig_data)
     cls="form_modified";

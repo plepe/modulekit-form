@@ -95,7 +95,8 @@ form_element_radio.prototype.show_element=function() {
 form_element_radio.prototype.refresh=function() {
   this.parent("form_element_radio").refresh.call(this);
 
-  this.data=this.get_data();
+  if(!this.dom_values)
+    return;
 
   for(var k in this.def.values) {
     var cls="form_orig";

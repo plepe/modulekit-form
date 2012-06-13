@@ -256,4 +256,5 @@ form_element.prototype.notify_change=function() {
 }
 
 form_element.prototype.refresh=function() {
+  this.data=this.get_data();
 }

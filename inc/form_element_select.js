@@ -80,16 +80,13 @@ form_element_select.prototype.show_element=function() {
 form_element_select.prototype.refresh=function() {
   this.parent("form_element_select").refresh.call(this);
 
-  this.data=this.get_data();
+  if(!this.dom_element)
+    return;
 
-  for(var k in this.def.values) {
-    var cls="form_orig";
+  if(this.orig_data&&this.data!=this.orig_data)
+    cls="form_modified";
+  else
+    cls="form_orig";
 
-    if(this.orig_data&&
-       (this.data!=this.orig_data)&&
-       ((k==this.data)||(k==this.orig_data)))
-      cls="form_modified";
-
-    this.dom_values[k].parentNode.className=cls;
-  }
+  this.dom_element.className=cls;
 }

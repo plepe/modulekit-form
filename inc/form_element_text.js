@@ -54,8 +54,6 @@ form_element_text.prototype.refresh=function() {
   if(!this.dom_element)
     return;
 
-  this.data=this.dom_element.value;
-
   if(this.orig_data&&this.data!=this.orig_data)
     cls="form_modified";
   else
