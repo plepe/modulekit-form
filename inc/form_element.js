@@ -236,7 +236,7 @@ form_element.prototype.check_is=function(list, param) {
   }
 }
 
-form_element.prototype.check_modified=function() {
+form_element.prototype.notify_change=function() {
   this.form_root.refresh();
 
   if(this.def.check) {

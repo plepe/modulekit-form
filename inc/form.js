@@ -68,7 +68,11 @@ form.prototype.set_orig_data=function(data) {
 
   this.element.set_orig_data(data);
 
-  this.element.check_modified();
+  this.refresh();
+}
+
+form.prototype.refresh=function() {
+  this.element.refresh();
 }
 
 form.prototype.get_orig_data=function(data) {

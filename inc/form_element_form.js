@@ -103,14 +103,6 @@ form_element_form.prototype.errors=function(list) {
   }
 }
 
-form_element_form.prototype.check_modified=function() {
-  this.parent.check_modified.call(this);
-
-  for(var i in this.elements) {
-    this.elements[i].check_modified();
-  }
-}
-
 form_element_form.prototype.refresh=function() {
   this.parent.refresh.call(this);
 

@@ -102,12 +102,8 @@ form_element_checkbox.prototype.show_element=function() {
   return div;
 }
 
-form_element_checkbox.prototype.notify_change=function() {
-  this.check_modified();
-}
-
-form_element_checkbox.prototype.check_modified=function() {
-  this.parent.check_modified.call(this);
+form_element_checkbox.prototype.refresh=function() {
+  this.parent.refresh.call(this);
 
   this.data=this.get_data();
 
