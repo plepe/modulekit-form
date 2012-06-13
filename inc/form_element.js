@@ -31,6 +31,8 @@ form_element.prototype.path_name=function() {
 
 form_element.prototype.connect=function(dom_parent) {
   this.dom_parent=dom_parent;
+
+  this.tr=document.getElementById("tr-"+this.id);
 }
 
 form_element.prototype.type=function() {
@@ -60,24 +62,30 @@ form_element.prototype.get_orig_data=function() {
   return this.orig_data;
 }
 
-form_element.prototype.show_hidden=function() {
+form_element.prototype.show_hidden=function(tr) {
   input=document.createElement("input");
   input.type="hidden";
+  tr.appendChild(input);
 
   return input;
 }
 
 form_element.prototype.show=function() {
+  var tr=document.createElement("tr");
+  tr.id="tr-"+this.id;
+  this.tr=tr;
+
   if(this.def.show_depend) {
     var errors=[];
 
     this.check(errors, this.def.show_depend);
 
-    if(errors.length)
-      return this.show_hidden();
+    if(errors.length) {
+      this.show_hidden(tr);
+      return tr;
+    }
   }
 
-  var tr=document.createElement("tr");
   var td=document.createElement("td");
   td.className="field_desc";
   tr.appendChild(td);
