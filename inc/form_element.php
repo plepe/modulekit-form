@@ -83,13 +83,6 @@ class form_element {
     return $this->orig_data;
   }
 
-  function show_hidden($tr, $document) {
-    $input=$document->createElement("input");
-    $input->setAttribute("type", "hidden");
-    $tr->appendChild($input);
-    // TODO: Save current value as hidden element to not loose data
-  }
-
   function show($document) {
     $tr=$document->createElement("tr");
     $tr->setAttribute("id", "tr-".$this->id);
@@ -100,10 +93,8 @@ class form_element {
 
       $this->check(&$errors, $this->def['show_depend']);
 
-      if(sizeof($errors)) {
-	$this->show_hidden($tr, $document);
-	return $tr;
-      }
+      if(sizeof($errors))
+	$tr->setAttribute("style", "display: none;");
     }
 
     $td=$document->createElement("td");

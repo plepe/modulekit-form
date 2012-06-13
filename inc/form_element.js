@@ -62,14 +62,6 @@ form_element.prototype.get_orig_data=function() {
   return this.orig_data;
 }
 
-form_element.prototype.show_hidden=function(tr) {
-  input=document.createElement("input");
-  input.type="hidden";
-  tr.appendChild(input);
-
-  return input;
-}
-
 form_element.prototype.show=function() {
   var tr=document.createElement("tr");
   tr.id="tr-"+this.id;
@@ -80,10 +72,8 @@ form_element.prototype.show=function() {
 
     this.check(errors, this.def.show_depend);
 
-    if(errors.length) {
-      this.show_hidden(tr);
-      return tr;
-    }
+    if(errors.length)
+      tr.style.display="none";
   }
 
   var td=document.createElement("td");
@@ -265,4 +255,15 @@ form_element.prototype.notify_change=function() {
 
 form_element.prototype.refresh=function() {
   this.data=this.get_data();
+
+  if(this.def.show_depend) {
+    errors=[];
+
+    this.check(errors, this.def.show_depend);
+
+    if(errors.length)
+      this.tr.style.display="none";
+    else
+      this.tr.style.display=null;
+  }
 }
