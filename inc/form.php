@@ -76,6 +76,11 @@
 #       'size'=>'12345'
 #     ),
 #
+#   files are not saved during file_get_data(), you need to call 
+#   file_save_data() too. Use e.g.:
+#   $data=file_get_data($form, $data);
+#   $data=file_save_data($form, $data);
+#
 # - inputselect
 #   behaves similar to select, but user can input parts of the name
 #   additional options:
@@ -703,6 +708,48 @@ function form_get_compare_data($data, $compare_attr) {
   return $ret;
 }
 
+function form_save_data($def, $data) {
+  if(!$data)
+    return $data;
+
+  foreach($data as $k=>$v) {
+    if($def[$k]["count"]) {
+      $count=sizeof($data[$k]);
+    }
+    else {
+      $count=1;
+    }
+
+    for($i=0;$i<$count;$i++) {
+      if($def[$k]["count"])
+        $v=$data[$k][$i];
+      else
+        $v=$data[$k];
+
+      switch($def[$k]["type"]) {
+        case "form":
+          $v=form_save_data($def[$k]["values"], $v);
+          break;
+	case "file":
+	  $v['name']=$v['new_name'];
+
+	  // save file to directory (under new name)
+	  move_uploaded_file($v['tmp_name'], "{$def[$k]['path']}/{$v['name']}");
+
+	  unset($v['new_name']);
+	  unset($v['tmp_name']);
+      }
+
+      if($def[$k]["count"])
+        $data[$k][$i]=$v;
+      else
+        $data[$k]=$v;
+    }
+  }
+
+  return $data;
+}
+
 function form_get_data($def, $data) {
   global $form_errors;
 
@@ -845,17 +892,16 @@ function form_get_data($def, $data) {
 	    $ev['size']=$x;
 
 	    if($error===false) {
+	      $ev['tmp_name']=$tmp_name;
 	      // build a new filename from the template
 	      if(!$template=$def[$k]['template'])
 		$template="[orig_name]";
-	      $ev['name']=strtr($template, array(
+	      $ev['new_name']=strtr($template, array(
 		'[orig_name]'=>$ev['orig_name'],
 		'[num]'=>$i,
 		'[ext]'=>$ev['ext'],
 		'[timestamp]'=>Date("Y-m-d-H-i-s"),
 	      ));
-	      // save file to directory (under new name)
-	      move_uploaded_file($tmp_name, "{$def[$k]['path']}/{$ev['name']}");
 	    }
 	    else {
 	      $ev=null;
