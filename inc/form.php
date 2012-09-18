@@ -731,13 +731,15 @@ function form_save_data($def, $data) {
           $v=form_save_data($def[$k]["values"], $v);
           break;
 	case "file":
-	  $v['name']=$v['new_name'];
+	  if(isset($v['tmp_name'])) {
+	    $v['name']=$v['new_name'];
 
-	  // save file to directory (under new name)
-	  move_uploaded_file($v['tmp_name'], "{$def[$k]['path']}/{$v['name']}");
+	    // save file to directory (under new name)
+	    move_uploaded_file($v['tmp_name'], "{$def[$k]['path']}/{$v['name']}");
 
-	  unset($v['new_name']);
-	  unset($v['tmp_name']);
+	    unset($v['new_name']);
+	    unset($v['tmp_name']);
+	  }
       }
 
       if($def[$k]["count"])
