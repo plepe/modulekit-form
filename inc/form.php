@@ -962,7 +962,7 @@ function form_get_changed($form, $var_name) {
   global $form_orig_data;
 
   $data=form_get_data($form, $_REQUEST[$var_name]);
-  $orig_data=form_get_orig_data($form_orig_data[$var_name]);
+  $orig_data=form_get_orig_data($form_orig_data, $var_name);
 
   $ret=array();
   foreach($form as $k=>$def) {
