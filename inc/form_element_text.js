@@ -42,6 +42,8 @@ form_element_text.prototype.set_data=function(data) {
 
 form_element_text.prototype.notify_change=function() {
   this.check_modified();
+
+  this.form_parent.notify_change();
 }
 
 form_element_text.prototype.check_modified=function() {

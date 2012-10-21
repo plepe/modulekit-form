@@ -243,6 +243,10 @@ form_element_array.prototype.remove_element=function(k) {
   return false;
 }
 
+form_element_array.prototype.notify_change=function() {
+  this.form_parent.notify_change();
+}
+
 form_element_array.prototype.check_modified=function() {
   this.parent.check_modified.call();
 

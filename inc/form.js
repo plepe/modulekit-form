@@ -38,6 +38,7 @@ form.prototype.build_form=function() {
 
   this.element=new form_element_form();
   this.element.init(this.id, def, this.options, null);
+  this.element.form=this;
 }
 
 form.prototype.connect=function() {
@@ -114,4 +115,9 @@ form.prototype.show_errors=function(div) {
     li.appendChild(text);
     ul.appendChild(li);
   }
+}
+
+form.prototype.notify_change=function() {
+  if(this.onchange)
+    this.onchange();
 }
