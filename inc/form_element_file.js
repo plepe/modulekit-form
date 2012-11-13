@@ -3,7 +3,7 @@ function form_element_text() {
 }
 
 form_element_text.prototype.init=function(id, def, options, form_parent) {
-  this.parent("form_element_text").init.call(this, id, def, options, form_parent);
+  this.parent("form_element_checkbox").init.call(this, id, def, options, form_parent);
 }
 
 form_element_text.prototype.connect=function(dom_parent) {
@@ -14,7 +14,7 @@ form_element_text.prototype.connect=function(dom_parent) {
 }
 
 form_element_text.prototype.show_element=function() {
-  var div=this.parent("form_element_text").show_element.call(this);
+  var div=this.parent("form_element_checkbox").show_element.call(this);
 
   var cls="form_orig";
   if(this.orig_data&&this.data!=this.orig_data)
@@ -34,7 +34,7 @@ form_element_text.prototype.show_element=function() {
 }
 
 form_element_text.prototype.set_data=function(data) {
-  this.parent("form_element_text").set_data.call(this, data);
+  this.parent("form_element_checkbox").set_data.call(this, data);
 
   if(this.dom_element)
     this.dom_element.value=this.data;
@@ -49,7 +49,7 @@ form_element_text.prototype.notify_change=function() {
 form_element_text.prototype.check_modified=function() {
   var cls;
 
-  this.parent("form_element_text").check_modified.call();
+  this.parent("form_element_checkbox").check_modified.call();
 
   this.data=this.dom_element.value;
 

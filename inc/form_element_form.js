@@ -6,17 +6,17 @@ form_element_form.prototype.path_name=function() {
   if(this.form_parent===null)
     return null;
 
-  return this.parent.path_name.call(this);
+  return this.parent("form_element_form").path_name.call(this);
 }
 
 form_element_form.prototype.init=function(id, def, options, form_parent) {
-  this.parent.init.call(this, id, def, options, form_parent);
+  this.parent("form_element_form").init.call(this, id, def, options, form_parent);
 
   this.build_form();
 }
 
 form_element_form.prototype.connect=function(dom_parent) {
-  this.parent.connect.call(this, dom_parent);
+  this.parent("form_element_form").connect.call(this, dom_parent);
 
   for(var k in this.def.def) {
     var element_id=this.id+"_"+k;
@@ -112,7 +112,7 @@ form_element_form.prototype.notify_change=function() {
 }
 
 form_element_form.prototype.check_modified=function() {
-  this.parent.check_modified.call();
+  this.parent("form_element_form").check_modified.call();
 
   for(var i in this.elements) {
     this.elements[i].check_modified();

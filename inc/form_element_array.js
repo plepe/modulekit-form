@@ -3,7 +3,7 @@ function form_element_array() {
 }
 
 form_element_array.prototype.init=function(id, def, options, form_parent) {
-  this.parent.init.call(this, id, def, options, form_parent);
+  this.parent("form_element_array").init.call(this, id, def, options, form_parent);
 
   this.build_form();
 }
@@ -49,7 +49,7 @@ form_element_array.prototype.create_element=function(k) {
 }
 
 form_element_array.prototype.connect=function(dom_parent) {
-  this.parent.connect.call(this, dom_parent);
+  this.parent("form_element_array").connect.call(this, dom_parent);
 
   var current=this.dom_parent.firstChild;
   this.elements={};
@@ -179,7 +179,7 @@ form_element_array.prototype.show_element_part=function(k, element) {
 }
 
 form_element_array.prototype.show_element=function() {
-  var div=this.parent.show_element.call(this);
+  var div=this.parent("form_element_array").show_element.call(this);
   this.get_data();
 
   for(var k in this.elements) {
@@ -248,7 +248,7 @@ form_element_array.prototype.notify_change=function() {
 }
 
 form_element_array.prototype.check_modified=function() {
-  this.parent.check_modified.call();
+  this.parent("form_element_array").check_modified.call();
 
   for(var i in this.elements) {
     this.elements[i].check_modified();

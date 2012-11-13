@@ -273,9 +273,26 @@ function class_exists (cls) {
 }
 
 Function.prototype.inherits_from=function(parentClass) {
+  var name=this.toString().match(/function\s*(\w+)/);
+  if(name&&name.length===2)
+    name=name[1];
+  else
+    name=null;
+
   this.prototype = new parentClass;
   this.prototype.constructor = this;
-  this.prototype.parent = parentClass.prototype;
+
+  if(!this.prototype.parent_list)
+    this.prototype.parent_list={};
+  this.prototype.parent_list[name]=
+    parentClass.prototype;
+
+  this.prototype.parent=function(current) {
+    if((!current)||(!this.parent_list[current]))
+      current=null;
+
+    return this.parent_list[current];
+  }
 }
 
 // Source: http://www.hardcode.nl/subcategory_1/article_414-copy-or-clone-javascript-array-object
