@@ -4,6 +4,13 @@ class form_element_text extends form_element {
     return "text";
   }
 
+  function create_element($document) {
+    $input=$document->createElement("input");
+    $input->setAttribute("type", "text");
+
+    return $input;
+  }
+
   function show_element($document) {
     $div=parent::show_element($document);
 
@@ -13,8 +20,7 @@ class form_element_text extends form_element {
       ($this->data!=$this->orig_data))
       $class="form_modified";
 
-    $input=$document->createElement("input");
-    $input->setAttribute("type", "text");
+    $input=$this->create_element($document);
     $input->setAttribute("class", $class);
     $input->setAttribute("name", $this->options['var_name']);
     $input->setAttribute("value", $this->data);

@@ -13,6 +13,13 @@ form_element_text.prototype.connect=function(dom_parent) {
   this.dom_element.onchange=this.notify_change.bind(this);
 }
 
+form_element_text.prototype.create_element=function() {
+  var input=document.createElement("input");
+  input.type="text";
+
+  return input;
+}
+
 form_element_text.prototype.show_element=function() {
   var div=this.parent("form_element_text").show_element.call(this);
 
@@ -20,8 +27,7 @@ form_element_text.prototype.show_element=function() {
   if(this.orig_data&&this.data!=this.orig_data)
     cls="form_modified";
 
-  var input=document.createElement("input");
-  input.type="text";
+  var input=this.create_element();
   input.className=cls;
   input.name=this.options.var_name;
   if(this.data)
