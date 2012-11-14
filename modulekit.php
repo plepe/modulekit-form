@@ -13,6 +13,7 @@ $include_php=array(
   "inc/form_element_radio.php",
   "inc/form_element_text.php",
   "inc/form_element_color.php",
+  "inc/form_element_password.php",
 );
 $include_js=array(
   "inc/functions.js",
@@ -24,6 +25,7 @@ $include_js=array(
   "inc/form_element_checkbox.js",
   "inc/form_element_array.js",
   "inc/form_element_color.js",
+  "inc/form_element_password.js",
 );
 $include_css=array(
   "inc/form.css",
