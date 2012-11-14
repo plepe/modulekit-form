@@ -115,6 +115,13 @@ class form {
     //return form_reset($this->def, $this->data, $this->options['var_name']);
   }
 
+  function save_data() {
+    $this->has_orig_data=false;
+
+    $this->element->save_data();
+    $this->element->set_orig_data($this->get_data());
+  }
+
   function show() {
     $document=new DOMDocument();
 

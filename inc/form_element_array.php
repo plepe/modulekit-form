@@ -171,4 +171,12 @@ class form_element_array extends form_element {
 
     return $div;
   }
+
+  function save_data() {
+    parent::save_data();
+
+    foreach($this->elements as $k=>$element) {
+      $element->save_data();
+    }
+  }
 }

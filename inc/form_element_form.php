@@ -103,4 +103,12 @@ class form_element_form extends form_element {
 
     return $table;
   }
+
+  function save_data() {
+    parent::save_data();
+
+    foreach($this->elements as $k=>$element) {
+      $element->save_data();
+    }
+  }
 }
