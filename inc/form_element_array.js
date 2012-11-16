@@ -13,7 +13,7 @@ form_element_array.prototype.build_form=function() {
 
   if(!this.data) {
     this.data={};
-    for(var k=0; k<this.def.count.default; k++) {
+    for(var k=0; k<this.def.count['default']; k++) {
       this.data[k]=null;
     }
   }
