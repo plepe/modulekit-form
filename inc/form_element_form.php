@@ -22,13 +22,14 @@ class form_element_form extends form_element {
 
     foreach($this->def['def'] as $k=>$element_def) {
       $element_class="form_element_{$element_def['type']}";
+      if(!class_exists($element_class))
+	$element_class="form_element_unsupported";
+
       $element_id="{$this->id}_{$k}";
       $element_options=$this->options;
       $element_options['var_name']="{$this->options['var_name']}[{$k}]";
 
-      if(class_exists($element_class)) {
-	$this->elements[$k]=new $element_class($element_id, $element_def, $element_options, $this);
-      }
+      $this->elements[$k]=new $element_class($element_id, $element_def, $element_options, $this);
     }
   }
 

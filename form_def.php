@@ -18,10 +18,10 @@ $form_def=array(
     'count'	=>array('default'=>2),
     'req'	=>true,
   ),
-/*  'birthday'	=>array(
+  'birthday'	=>array(
     'name'	=>"Birthday",
     'type'	=>"date",
-  ), */
+  ),
   'languages'	=>array(
     'name'	=>"What languages to you speak?",
     'type'	=>"checkbox",
@@ -80,6 +80,8 @@ $default_data=array(
   "sex"=>"m",
   "hobbies"=>array(0=>"Linux", 2=>"PHP", 5=>"Cycling"),
   "languages"=>array("php", "js"),
+  "nationality"=>"Austria",
+  "os"=>array("Ubuntu Linux", "Debian Linux"),
   "tags"=>array("Foo", "Bar"),
   "json"=>array(1, 2, "foo", "bar"=>array("b", "a", "r")),
 );

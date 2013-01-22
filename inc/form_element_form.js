@@ -32,14 +32,15 @@ form_element_form.prototype.build_form=function() {
 
   for(var k in this.def.def) {
     var element_class="form_element_"+this.def.def[k].type;
+    if(!class_exists(element_class))
+      element_class="form_element_unsupported";
+
     var element_id=this.id+"_"+k;
     var element_options=new clone(this.options);
     element_options.var_name=element_options.var_name+"["+k+"]";
 
-    if(class_exists(element_class)) {
-      this.elements[k]=eval("new "+element_class+"()");
-      this.elements[k].init(element_id, this.def.def[k], element_options, this);
-    }
+    this.elements[k]=eval("new "+element_class+"()");
+    this.elements[k].init(element_id, this.def.def[k], element_options, this);
   }
 }
 
