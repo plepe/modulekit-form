@@ -3,6 +3,10 @@ table.form td.field_desc {
   vertical-align: top;
   padding-bottom: 2px;
 }
+table.form td.field_desc .form_desc {
+  font-size: 0.75em;
+  font-style: italic;
+}
 table.form td.field_value {
 }
 table.form td.field_value input[type=text],
