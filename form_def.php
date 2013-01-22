@@ -67,6 +67,7 @@ $form_def=array(
     'type'	=>"keywords",
     'name'	=>"Tags",
     'desc'	=>"Comma-separated list of values",
+    'values'	=>array("Vacation", "Sightseeing", "Travel", "Paris", "Vienna", "Berlin", "New York", "Tokyo"),
   ),
 );
 

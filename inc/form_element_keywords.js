@@ -60,6 +60,20 @@ form_element_keywords.prototype.show_element=function() {
   this.dom_element=input;
   this.dom_element.onchange=this.notify_change.bind(this);
 
+  if(this.def.values) {
+    var datalist=document.createElement("datalist");
+    datalist.id=this.id+"-datalist";
+
+    for(var i=0; i<this.def.values.length; i++) {
+      var option=document.createElement("option");
+      option.value=this.def.values[i];
+
+      datalist.appendChild(option);
+    }
+
+    div.appendChild(datalist);
+  }
+
   this.create_interaction();
 
   return div;
@@ -153,9 +167,11 @@ form_element_keywords.prototype.add_keyword=function() {
   span.className="keyword";
 
   var input=document.createElement("input");
+  input.setAttribute("list", this.id+"-datalist");
   span.appendChild(input);
   input.onblur=this.add_keyword_save.bind(this, input);
   input.onkeypress=this.add_keyword_keypress.bind(this, input);
+  input.onkeyup=this.add_keyword_keyup.bind(this, input);
 
   this.keywords_list.appendChild(span);
 
@@ -173,14 +189,21 @@ form_element_keywords.prototype.add_keyword_save=function(input) {
 
 form_element_keywords.prototype.add_keyword_keypress=function(input, event) {
   if(event.keyCode==13) {
-    this.add_keyword_save(input);
-    this.dom_actions.add.focus();
-
     return false;
   }
   if(event.charCode==",".charCodeAt(0)) {
     this.add_keyword_save(input);
 
     this.add_keyword();
+  }
+}
+
+form_element_keywords.prototype.add_keyword_keyup=function(input, event) {
+  if(event.keyCode==13) {
+    if(input.value=="")
+      return false;
+
+    this.add_keyword_save(input);
+    this.dom_actions.add.focus();
   }
 }

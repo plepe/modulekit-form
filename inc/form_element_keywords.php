@@ -25,6 +25,20 @@ class form_element_keywords extends form_element {
     $input->setAttribute("name", $this->options['var_name']);
     $input->setAttribute("value", implode(", ", $this->data));
 
+    if(isset($this->def['values'])) {
+      $datalist=$document->createElement("datalist");
+      $datalist->setAttribute("id", "{$this->id}-datalist");
+
+      foreach($this->def['values'] as $value) {
+	$option=$document->createElement("option");
+	$option->setAttribute("value", $value);
+
+	$datalist->appendChild($option);
+      }
+
+      $div->appendChild($datalist);
+    }
+
     $div->appendChild($input);
     return $div;
   }
