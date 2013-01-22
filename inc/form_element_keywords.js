@@ -179,12 +179,19 @@ form_element_keywords.prototype.add_keyword=function() {
 }
 
 form_element_keywords.prototype.add_keyword_save=function(input) {
+  // avoid onblur event when removing input due to other actions
+  if(this.save_active)
+    return;
+  this.save_active=true;
+
   var new_data=this.get_data();
 
   if(!input.value.match(/^ *$/))
     new_data=new_data.concat([input.value]);
 
   this.set_data(new_data);
+
+  delete(this.save_active);
 }
 
 form_element_keywords.prototype.add_keyword_keypress=function(input, ev) {
@@ -197,6 +204,7 @@ form_element_keywords.prototype.add_keyword_keypress=function(input, ev) {
     this.add_keyword_save(input);
 
     this.add_keyword();
+    return false;
   }
 }
 
