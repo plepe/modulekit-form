@@ -66,6 +66,12 @@ form_element_keywords.prototype.set_data=function(data) {
     var text=document.createTextNode(this.data[i]);
     span.appendChild(text);
 
+    var button=document.createElement("input");
+    button.type="button";
+    button.onclick=this.remove_keyword.bind(this, i);
+    button.value="X";
+    span.appendChild(button);
+
     this.keywords_list.appendChild(span);
   }
 
@@ -102,4 +108,12 @@ form_element_keywords.prototype.check_modified=function() {
   cls+=" connected";
 
   this.dom_element.className=cls;
+}
+
+form_element_keywords.prototype.remove_keyword=function(i) {
+  var data=this.get_data();
+
+  data=data.slice(0, i).concat(data.slice(i+1));
+
+  this.set_data(data);
 }
