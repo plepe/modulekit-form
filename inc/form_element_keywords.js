@@ -187,19 +187,23 @@ form_element_keywords.prototype.add_keyword_save=function(input) {
   this.set_data(new_data);
 }
 
-form_element_keywords.prototype.add_keyword_keypress=function(input, event) {
-  if(event.keyCode==13) {
+form_element_keywords.prototype.add_keyword_keypress=function(input, ev) {
+  if(!ev) ev=event;
+
+  if(ev.keyCode==13) {
     return false;
   }
-  if(event.charCode==",".charCodeAt(0)) {
+  if(ev.charCode==",".charCodeAt(0)) {
     this.add_keyword_save(input);
 
     this.add_keyword();
   }
 }
 
-form_element_keywords.prototype.add_keyword_keyup=function(input, event) {
-  if(event.keyCode==13) {
+form_element_keywords.prototype.add_keyword_keyup=function(input, ev) {
+  if(!ev) ev=event;
+
+  if(ev.keyCode==13) {
     if(input.value=="")
       return false;
 
