@@ -40,7 +40,7 @@ form_element_array.prototype.create_element=function(k) {
   var element_id=this.id+"_"+k;
   var element_options=new clone(this.options);
   element_options.var_name=element_options.var_name+"["+k+"]";
-  element_def.__defineGetter__("_name", this.index_element.bind(this, k));
+  // element_def.__defineGetter__("_name", this.index_element.bind(this, k));
 
   if(class_exists(element_class)) {
     this.elements[k]=eval("new "+element_class+"()");
