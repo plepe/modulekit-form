@@ -14,6 +14,7 @@ $include_php=array(
   "inc/form_element_text.php",
   "inc/form_element_color.php",
   "inc/form_element_password.php",
+  "inc/form_element_keywords.php",
 );
 $include_js=array(
   "inc/functions.js",

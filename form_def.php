@@ -63,6 +63,11 @@ $form_def=array(
       ),
     ),
   ),
+  'tags'	=>array(
+    'type'	=>"keywords",
+    'name'	=>"Tags",
+    'desc'	=>"Comma-separated list of values",
+  ),
 );
 
 $default_data=array(
@@ -70,4 +75,5 @@ $default_data=array(
   "sex"=>"m",
   "hobbies"=>array(0=>"Linux", 2=>"PHP", 5=>"Cycling"),
   "languages"=>array("php", "js"),
+  "tags"=>array("Foo", "Bar"),
 );
