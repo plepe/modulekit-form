@@ -12,6 +12,12 @@ form_element_keywords.prototype.connect=function(dom_parent) {
 
   this.dom_element.onchange=this.notify_change.bind(this);
 
+  this.create_interaction();
+
+  this.set_data(this.get_data());
+}
+
+form_element_keywords.prototype.create_interaction=function() {
   this.keywords_list=document.createElement("div");
   this.keywords_list.className="keywords";
   this.dom_element.parentNode.appendChild(this.keywords_list);
@@ -28,8 +34,6 @@ form_element_keywords.prototype.connect=function(dom_parent) {
   this.dom_actions.add=button;
 
   this.dom_element.parentNode.appendChild(this.actions);
-
-  this.set_data(this.get_data());
 }
 
 form_element_keywords.prototype.create_element=function() {
@@ -56,9 +60,7 @@ form_element_keywords.prototype.show_element=function() {
   this.dom_element=input;
   this.dom_element.onchange=this.notify_change.bind(this);
 
-  this.keywords_list=document.createElement("div");
-  this.keywords_list.className="keywords";
-  this.dom_element.parentNode.appendChild(this.keywords_list);
+  this.create_interaction();
 
   return div;
 }
