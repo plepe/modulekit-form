@@ -67,6 +67,8 @@ form_element_keywords.prototype.set_data=function(data) {
   if(this.dom_element)
     this.dom_element.value=this.data.join(", ");
 
+  this.get_data();
+
   while(this.keywords_list.firstChild)
     this.keywords_list.removeChild(this.keywords_list.firstChild);
 
@@ -101,6 +103,19 @@ form_element_keywords.prototype.get_data=function() {
 
   this.data=this.dom_element.value;
   this.data=this.data.split(/ *, */);
+
+  // avoid empty keywords, detect duplicates
+  var new_data=[];
+  var dupl_detect={};
+  for(var i=0; i<this.data.length; i++) {
+    if(dupl_detect[this.data[i]])
+      /* nothing */;
+    else if(!this.data[i].match(/^ *$/))
+      new_data.push(this.data[i]);
+
+    dupl_detect[this.data[i]]=true;
+  }
+  this.data=new_data;
 
   return this.data;
 }
