@@ -1,0 +1,13 @@
+div.form_element_keywords input.connected {
+  display: none;
+}
+div.form_element_keywords span.keyword {
+  border: 1px solid #000000;
+  padding: 0.125em;
+  white-space: nowrap;
+  margin-right: 0.25em;
+}
+div.form_element_keywords span.keyword input[type=button] {
+  border: 1px solid #707070;
+  margin-left: 0.125em;
+}
