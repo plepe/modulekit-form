@@ -18,12 +18,14 @@ form_element_keywords.prototype.connect=function(dom_parent) {
 
   this.actions=document.createElement("div");
   this.actions.className="actions";
+  this.dom_actions={};
 
   var button=document.createElement("input");
   button.type="button";
   button.value="neu";
   button.onclick=this.add_keyword.bind(this);
   this.actions.appendChild(button);
+  this.dom_actions.add=button;
 
   this.dom_element.parentNode.appendChild(this.actions);
 
@@ -170,6 +172,7 @@ form_element_keywords.prototype.add_keyword_save=function(input) {
 form_element_keywords.prototype.add_keyword_keypress=function(input, event) {
   if(event.keyCode==13) {
     this.add_keyword_save(input);
+    this.dom_actions.add.focus();
 
     return false;
   }
