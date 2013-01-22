@@ -69,6 +69,10 @@ $form_def=array(
     'desc'	=>"Comma-separated list of values",
     'values'	=>array("Vacation", "Sightseeing", "Travel", "Paris", "Vienna", "Berlin", "New York", "Tokyo"),
   ),
+  'json'	=>array(
+    'type'	=>"json",
+    'name'	=>"JSON",
+  ),
 );
 
 $default_data=array(
@@ -77,4 +81,5 @@ $default_data=array(
   "hobbies"=>array(0=>"Linux", 2=>"PHP", 5=>"Cycling"),
   "languages"=>array("php", "js"),
   "tags"=>array("Foo", "Bar"),
+  "json"=>array(1, 2, "foo", "bar"=>array("b", "a", "r")),
 );
