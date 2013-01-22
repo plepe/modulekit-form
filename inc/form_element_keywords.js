@@ -16,6 +16,17 @@ form_element_keywords.prototype.connect=function(dom_parent) {
   this.keywords_list.className="keywords";
   this.dom_element.parentNode.appendChild(this.keywords_list);
 
+  this.actions=document.createElement("div");
+  this.actions.className="actions";
+
+  var button=document.createElement("input");
+  button.type="button";
+  button.value="neu";
+  button.onclick=this.add_keyword.bind(this);
+  this.actions.appendChild(button);
+
+  this.dom_element.parentNode.appendChild(this.actions);
+
   this.set_data(this.get_data());
 }
 
@@ -116,4 +127,40 @@ form_element_keywords.prototype.remove_keyword=function(i) {
   data=data.slice(0, i).concat(data.slice(i+1));
 
   this.set_data(data);
+}
+
+form_element_keywords.prototype.add_keyword=function() {
+  var span=document.createElement("span");
+  span.className="keyword";
+
+  var input=document.createElement("input");
+  span.appendChild(input);
+  input.onblur=this.add_keyword_save.bind(this, input);
+  input.onkeypress=this.add_keyword_keypress.bind(this, input);
+
+  this.keywords_list.appendChild(span);
+
+  input.focus();
+}
+
+form_element_keywords.prototype.add_keyword_save=function(input) {
+  var new_data=this.get_data();
+
+  if(!input.value.match(/^ *$/))
+    new_data=new_data.concat([input.value]);
+
+  this.set_data(new_data);
+}
+
+form_element_keywords.prototype.add_keyword_keypress=function(input, event) {
+  if(event.keyCode==13) {
+    this.add_keyword_save(input);
+
+    return false;
+  }
+  if(event.charCode==",".charCodeAt(0)) {
+    this.add_keyword_save(input);
+
+    this.add_keyword();
+  }
 }
