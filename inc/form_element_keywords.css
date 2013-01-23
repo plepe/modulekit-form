@@ -20,3 +20,20 @@ div.form_element_keywords span.keyword input[type=button] {
 div.form_element_keywords div.keywords input {
   border: none;
 }
+div.form_element_keywords div.edit_actions {
+  display: none;
+}
+
+/* edit mode */
+div.form_element_keywords.edit input.connected {
+  display: inline;
+}
+div.form_element_keywords.edit div.actions {
+  display: none;
+}
+div.form_element_keywords.edit div.keywords {
+  display: none;
+}
+div.form_element_keywords.edit div.edit_actions {
+  display: inline;
+}

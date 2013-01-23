@@ -34,6 +34,14 @@ form_element_keywords.prototype.create_interaction=function() {
   this.actions.appendChild(button);
   this.dom_actions.add=button;
 
+  var button=document.createElement("input");
+  button.type="button";
+  button.value=(typeof this.def.text_edit!="undefined"?
+    this.def.text_edit:"editieren");
+  button.onclick=this.edit.bind(this);
+  this.actions.appendChild(button);
+  this.dom_actions.edit=button;
+
   this.dom_element.parentNode.appendChild(this.actions);
 }
 
@@ -229,4 +237,55 @@ form_element_keywords.prototype.add_keyword_keyup=function(input, ev) {
     this.add_keyword_save(input);
     this.dom_actions.add.focus();
   }
+}
+
+form_element_keywords.prototype.edit=function() {
+  if(!this.edit_actions) {
+    this.edit_actions=document.createElement("div");
+    this.edit_actions.className="edit_actions";
+
+    var button=document.createElement("input");
+    button.type="button";
+    button.value=(typeof this.def.text_save!="undefined"?
+      this.def.text_save:"Ok");
+    button.onclick=this.edit_save.bind(this);
+    this.edit_actions.appendChild(button);
+
+    var button=document.createElement("input");
+    button.type="button";
+    button.value=(typeof this.def.text_cancel!="undefined"?
+      this.def.text_cancel:"Abbrechen");
+    button.onclick=this.edit_cancel.bind(this);
+    this.edit_actions.appendChild(button);
+
+    this.dom_element.parentNode.appendChild(this.edit_actions);
+  }
+
+  // remember old value
+  this.old_value=this.dom_element.value;
+
+  this.dom_parent.className=this.dom_parent.className+" edit";
+  this.dom_element.focus();
+}
+
+form_element_keywords.prototype.edit_save=function() {
+  this.set_data(this.get_data());
+
+  this.edit_hide();
+}
+
+form_element_keywords.prototype.edit_cancel=function() {
+  this.dom_element.value=this.old_value;
+
+  this.edit_hide();
+}
+
+form_element_keywords.prototype.edit_hide=function() {
+  var x=this.dom_parent.className.split(/ /);
+  var y=[];
+  for(var i=0; i<x.length; i++)
+    if(x[i]!="edit")
+      y.push(x[i]);
+
+  this.dom_parent.className=y.join(" ");
 }

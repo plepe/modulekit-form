@@ -18,6 +18,9 @@ Definition:
 * link: Link each keyword to the specified URL, where % will be replaced by the current value, e.g. "search.php?keyword=%"
 * text_remove: Text to display on the remove-buttons (default: "X")
 * text_add: Text to display on the add-button (default: "neu")
+* text_edit: Text to display on the edit-button (default: "editieren")
+* text_edit_save: Text to display on the Save-button in edit mode (default: "Ok")
+* text_edit_cancel: Text to display on the Cancel-button in edit mode (default: "Abbrechen")
 
 Return:
 * Array, e.g. array("foo", "bar") resp. ["foo", "bar"]
