@@ -259,6 +259,7 @@ form_element_keywords.prototype.edit=function() {
     this.edit_actions.appendChild(button);
 
     this.dom_element.parentNode.appendChild(this.edit_actions);
+    this.dom_element.onkeypress=this.edit_keypress.bind(this);
   }
 
   // remember old value
@@ -276,6 +277,7 @@ form_element_keywords.prototype.edit_save=function() {
 
 form_element_keywords.prototype.edit_cancel=function() {
   this.dom_element.value=this.old_value;
+  this.set_data(this.get_data());
 
   this.edit_hide();
 }
@@ -288,4 +290,17 @@ form_element_keywords.prototype.edit_hide=function() {
       y.push(x[i]);
 
   this.dom_parent.className=y.join(" ");
+}
+
+form_element_keywords.prototype.edit_keypress=function(ev) {
+  if(!ev) ev=event;
+
+  if(ev.keyCode==13) {
+    this.edit_save();
+    return false;
+  }
+  else if(ev.keyCode==27) {
+    this.edit_cancel();
+    return false;
+  }
 }
