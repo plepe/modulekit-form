@@ -123,6 +123,8 @@ form_element_keywords.prototype.set_data=function(data) {
     span.appendChild(button);
 
     this.keywords_list.appendChild(span);
+
+    this.keywords_list.appendChild(document.createTextNode(" "));
   }
 
   this.notify_change();
