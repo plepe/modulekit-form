@@ -43,7 +43,9 @@ class form_element_keywords extends form_element {
     return $div;
   }
 
-  function get_data() {
+  function set_request_data($data) {
+    $this->data=$data;
+
     if(is_string($this->data)) {
       $this->data=explode(",", $this->data);
       foreach($this->data as $i=>$d)
@@ -51,7 +53,9 @@ class form_element_keywords extends form_element {
     }
 
     $this->data=array_unique($this->data);
+  }
 
+  function get_data() {
     return $this->data;
   }
 }
