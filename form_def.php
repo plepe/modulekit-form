@@ -8,7 +8,7 @@ $form_def=array(
   ),
   'sex'		=>array(
     'name'	=>"Sex",
-    'desc'	=>"Choose your gender",
+    'desc'	=>"Choose your <a href='http://en.wikipedia.org/wiki/Gender'>gender</a>",
     'type'	=>"radio",
     'values'	=>array('m'=>"male", 'f'=>"female"),
   ),

@@ -74,8 +74,7 @@ form_element.prototype.show=function() {
     if(this.def.desc) {
       var div=document.createElement("div");
       div.className="form_desc";
-      var text=document.createTextNode(this.def.desc+":");
-      div.appendChild(text);
+      div.innerHTML=this.def.desc;
       td.appendChild(div);
     }
   }

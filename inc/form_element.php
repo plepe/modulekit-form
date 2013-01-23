@@ -84,7 +84,7 @@ class form_element {
       if(isset($this->def['desc'])) {
 	$div=$document->createElement("div");
 	$div->setAttribute("class", "form_desc");
-	$text=$document->createTextNode($this->def['desc']);
+        $text=DOM_createHTMLElement($this->def['desc'], $document);
 	$div->appendChild($text);
 	$td->appendChild($div);
       }

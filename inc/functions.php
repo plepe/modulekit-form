@@ -8,3 +8,9 @@ if(!function_exists("html_export_var")) {
     print "</script>\n";
   }
 }
+
+function DOM_createHTMLElement($text, $document) {
+  $dom=new DOMDocument();
+  $dom->loadHTML("<html><span>{$text}</span></html>");
+  return $document->importNode($dom->lastChild, true);
+}
