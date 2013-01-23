@@ -1,0 +1,18 @@
+.demo {
+  position: relative;
+  border-top: 1px solid black;
+}
+.definition,
+.form_data {
+  position: absolute;
+  height: 20em;
+  overflow: auto;
+  width: 48%;
+  top: 0px;
+}
+.definition {
+  left: 1%;
+}
+.form_data {
+  right: 1%;
+}

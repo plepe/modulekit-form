@@ -17,11 +17,18 @@ function init() {
 }
 
 function process() {
-  var div=document.getElementById("data");
+  var div=document.getElementById("definition");
   while(div.firstChild)
     div.removeChild(div.firstChild);
 
-  var text=document.createTextNode(json_encode(form_data.get_data()));
+  var text=document.createTextNode(JSON.stringify(form_data.def, null, "    "));
+  div.appendChild(text);
+
+  var div=document.getElementById("form_data");
+  while(div.firstChild)
+    div.removeChild(div.firstChild);
+
+  var text=document.createTextNode(JSON.stringify(form_data.get_data(), null, "    "));
   div.appendChild(text);
 
   var errors=form_data.errors();

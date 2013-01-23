@@ -16,15 +16,11 @@ if($_REQUEST['d']) {
 <head>
 <?php print modulekit_include_js(); /* prints all js-includes */ ?>
 <?php print modulekit_include_css(); /* prints all css-includes */ ?>
+<link rel='stylesheet' type='text/css' href='demo.css'/>
 <script type='text/javascript' src='demo_jsonly.js'></script>
 </head>
 <body>
 
-<h1>Data (JSON)</h1>
-<pre id='data'>
-</pre>
-
-<h1>FORM</h1>
 <div id='errors'>
 </div>
 <form id='form'>
@@ -37,6 +33,20 @@ html_export_var(array("form_def"=>$form_def, "default_data"=>$default_data));
 
 ?>
 </form>
+
+<div class='demo'>
+
+<div class='definition'>
+Form definition:<pre id='definition'>
+</pre>
+</div>
+
+<div class='form_data'>
+Data: <pre id='form_data'>
+</pre>
+</div>
+
+</div> <!-- demo -->
 
 </body>
 </html>

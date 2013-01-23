@@ -6,6 +6,7 @@ include "demo_form.php";
 <html>
 <head>
 <?php print modulekit_include_css(); /* prints all css-includes */ ?>
+<link rel='stylesheet' type='text/css' href='demo.css'/>
 </head>
 <body>
 <?
@@ -27,13 +28,11 @@ if($form->errors()) {
 }
 
 if($form->is_complete()) {
-  // save data to database (or - in this example - print to stdout)
-  print "Data: <pre>\n";
-  print_r($form->get_data());
-  print "</pre>\n";
+  // save data to database
+  print "Form is complete (no errors).<br>\n";
 
   // reset form data
-  //$form->reset();
+  $form->reset();
 }
 
 if($form->is_empty()) {
@@ -47,9 +46,22 @@ print $form->show();
 print "<input type='submit' value='Ok'>\n";
 print "</form>\n";
 
-print "Form definition:<pre>\n";
+print "<div class='demo'>\n";
+
+print "<div class='definition'>\n";
+print "Form definition:<pre id='definition'>\n";
 print_r($form_def);
 print "</pre>\n";
+print "</div>\n";
+
+// save data to database (or - in this example - print to stdout)
+print "<div class='form_data'>\n";
+print "Data: <pre id='form_data'>\n";
+print_r($form->get_data());
+print "</pre>\n";
+print "</div>\n";
+
+print "</div> <!-- demo -->\n";
 
 ?>
 </body>
