@@ -12,6 +12,6 @@ if($_REQUEST['d'])
   print "Data: ".htmlspecialchars($_REQUEST['d'])."<br>\n";
 
 print "<h2>Choose mode</h2>\n";
-print "<a href='test_phponly.php$params'>PHP Only</a><br>\n";
-print "<a href='test_combined.php$params'>Combined</a><br>\n";
-print "<a href='test_jsonly.php$params'>JS Only</a><br>\n";
+print "<a href='demo_phponly.php$params'>PHP Only</a><br>\n";
+print "<a href='demo_combined.php$params'>Combined</a><br>\n";
+print "<a href='demo_jsonly.php$params'>JS Only</a><br>\n";
