@@ -7,13 +7,106 @@ There are three modes to use this library:
 * Javascript only: If you are writing an Ajax application you might want to create Forms directly from Javascript, e.g. because you do no longer reload webpages.
 
 == Elements ==
+=== All Form Elements ===
+All form elements share some options.
+
+Definition:
+* type: defines type of form element (e.g. 'text')
+* name: Name of the element (e.g. "Birthday")
+* desc: Description (usually written below Name in smaller letters); accepts full HTML (in contrast to 'name').
+* count: We internally be converted to a form element of type array using the options of this key. E.g. array('default'=>2) resp. { 'default': 2 }. See 'Form Element Array' for more information.
+* req: A value is required.
+
+=== Form Element "Form" ===
+A form inside the form. E.g. if you have several cats, and want to record the same properties for every cat, like Name, Age and Race.
+
+Definition (see 'All Form Elements' for inherited options):
+* type: 'form'
+* def: Definition of the sub form.
+
+Value:
+* A hash of the sub form.
+
+=== Form Element "Array" ===
+A variable count of the child elements. This can also be accomplished by setting a 'count' to any form element. Single values may be removed or added interactively.
+
+Definition:
+* type: 'array'
+* def: Definition of the sub element.
+* default: default count of values
+
+Value:
+* Array of sub elements.
+
+=== Form Element "Text" ===
+Basic form element with a single line text input.
+
+Definition:
+* type: 'text'
+
+Value:
+* String. Will be stripped of additional slashes.
+
+=== Unsupported Form Elements ===
+Any form elements that are not supported (yet) will show the name and a warning, that the form element type is not supported. Any data set to the element will be kept, as internally a JSON form element will be used.
+
+Definition:
+* type: any which is not listed on this page
+
+Value:
+* Any, see JSON.
+
+=== Form Element "Checkbox" ===
+A list of checkboxes where a random count of boxes may be checked.
+
+Definition:
+* type: 'checkbox'
+* values: hash array of options, e.g. array('php'=>"PHP", 'js'=>"Javascript', 'cpp'=>"C++")
+
+Value:
+* Array of indexes of the chosen option(s). E.g. array('php', 'js')
+=== Form Element "Radio" ===
+A list of radio boxes where a maximum of one of boxes may be checked.
+
+Definition:
+* type: 'radio'
+* values: hash array of options, e.g. array('m'=>"male", 'f'=>"female")
+
+Value:
+* Index of the chosen option, e.g. 'm'.
+
+=== Form Element "Password" ===
+Like Form Element "Text", but hides the password.
+
+Definition:
+* type: 'password'
+
+Value:
+* String
+
+=== Form Element "JSON" ===
+An input for arbitrary JSON data. Will be returned as decoded value, as supported by the language.
+
+Definition:
+* type: 'json'
+
+Value:
+* A mixed value which is supported by JSON.
+
+=== Form Element "Color" ===
+An input of type 'color'. You may want to load the Spectrum Colorpicker: http://bgrins.github.com/spectrum/ 
+
+Definition:
+* type: 'color'
+
+Value:
+* Depends on your system, but usually a 6-character hex code prefixed with '#'.
+
 === Form Element "Keywords" ===
 Provide an interface to add/remove random keywords.
 
 Definition:
 * type: 'keywords'
-* name: Name of the element
-* desc: Description (usually written below name)
 * values: List of common keywords from which the user can select while typing (HTML5 only; using a "datalist")
 * link: Link each keyword to the specified URL, where % will be replaced by the current value, e.g. "search.php?keyword=%"
 * text_remove: Text to display on the remove-buttons (default: "X")
@@ -22,5 +115,5 @@ Definition:
 * text_edit_save: Text to display on the Save-button in edit mode (default: "Ok")
 * text_edit_cancel: Text to display on the Cancel-button in edit mode (default: "Abbrechen")
 
-Return:
-* Array, e.g. array("foo", "bar") resp. ["foo", "bar"]
+Value:
+* Array of strings, e.g. array("foo", "bar") resp. ["foo", "bar"]
