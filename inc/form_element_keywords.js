@@ -28,7 +28,8 @@ form_element_keywords.prototype.create_interaction=function() {
 
   var button=document.createElement("input");
   button.type="button";
-  button.value="neu";
+  button.value=(typeof this.def.text_add!="undefined"?
+    this.def.text_add:"neu");
   button.onclick=this.add_keyword.bind(this);
   this.actions.appendChild(button);
   this.dom_actions.add=button;
@@ -109,7 +110,8 @@ form_element_keywords.prototype.set_data=function(data) {
     var button=document.createElement("input");
     button.type="button";
     button.onclick=this.remove_keyword.bind(this, i);
-    button.value="X";
+    button.value=(typeof this.def.text_remove!="undefined"?
+      this.def.text_remove:"X");
     span.appendChild(button);
 
     this.keywords_list.appendChild(span);

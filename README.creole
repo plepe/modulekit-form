@@ -16,6 +16,8 @@ Definition:
 * desc: Description (usually written below name)
 * values: List of common keywords from which the user can select while typing (HTML5 only; using a "datalist")
 * link: Link each keyword to the specified URL, where % will be replaced by the current value, e.g. "search.php?keyword=%"
+* text_remove: Text to display on the remove-buttons (default: "X")
+* text_add: Text to display on the add-button (default: "neu")
 
 Return:
 * Array, e.g. array("foo", "bar") resp. ["foo", "bar"]
