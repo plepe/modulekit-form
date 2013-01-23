@@ -95,7 +95,16 @@ form_element_keywords.prototype.set_data=function(data) {
     span.className="keyword";
 
     var text=document.createTextNode(this.data[i]);
-    span.appendChild(text);
+    var v;
+    if(this.def.link) {
+      v=document.createElement("a");
+      v.href=this.def.link.replace("%", urlencode(this.data[i]));
+    }
+    else
+      v=document.createElement("span");
+    v.className="value";
+    v.appendChild(text);
+    span.appendChild(v);
 
     var button=document.createElement("input");
     button.type="button";
