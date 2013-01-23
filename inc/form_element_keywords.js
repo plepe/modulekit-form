@@ -219,6 +219,12 @@ form_element_keywords.prototype.add_keyword_keypress=function(input, ev) {
   if(ev.keyCode==13) {
     return false;
   }
+  if(ev.keyCode==27) {
+    input.value="";
+
+    this.add_keyword_save(input);
+    return false;
+  }
   if(ev.charCode==",".charCodeAt(0)) {
     this.add_keyword_save(input);
 
