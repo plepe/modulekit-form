@@ -5,3 +5,17 @@ There are three modes to use this library:
 * PHP Only: Maybe users disable Javascript. Forms should still work. Also we should never trust the Javascript implementation to get checks (e.g. for correct data) right or rather people might try nasty stuff.
 * PHP/Javascript combined: The forms are defined and created in PHP, Javascript is responsible for interactivity, like checking validity of data, adding/removing elements and highlighting changed values.
 * Javascript only: If you are writing an Ajax application you might want to create Forms directly from Javascript, e.g. because you do no longer reload webpages.
+
+== Elements ==
+=== Form Element "Keywords" ===
+Provide an interface to add/remove random keywords.
+
+Definition:
+* type: 'keywords'
+* name: Name of the element
+* desc: Description (usually written below name)
+* values: List of common keywords from which the user can select while typing (HTML5 only; using a "datalist")
+* link: Link each keyword to the specified URL, where % will be replaced by the current value, e.g. "search.php?keyword=%"
+
+Return:
+* Array, e.g. array("foo", "bar") resp. ["foo", "bar"]
