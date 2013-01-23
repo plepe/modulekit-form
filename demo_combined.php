@@ -8,6 +8,7 @@ include "demo_form.php";
 <?php print modulekit_include_js(); /* prints all js-includes */ ?>
 <?php print modulekit_include_css(); /* prints all css-includes */ ?>
 <link rel='stylesheet' type='text/css' href='demo.css'/>
+<script type='text/javascript' src='demo_combined.js'></script>
 </head>
 <body>
 <?
@@ -22,11 +23,13 @@ if($_REQUEST['d']) {
 
 $form=new form("data", $form_def);
 
+?> <div id='errors'> <?
 if($form->errors()) {
   // print errors
   print "Errors in the form were found:";
   print $form->show_errors();
 }
+?> </div> <?
 
 if($form->is_complete()) {
   // save data to database
@@ -44,7 +47,8 @@ if($form->is_empty()) {
 // show form
 print "<form enctype='multipart/form-data' method='post'>\n";
 print $form->show();
-print "<input type='submit' value='Ok'>\n";
+print "<input type='submit' value='Ok - submit to PHP'>\n";
+print "<input type='button' value='Ok - submit to JS' onClick='demo_submit()'>\n";
 print "</form>\n";
 
 print "<div class='demo'>\n";
