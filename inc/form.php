@@ -115,11 +115,17 @@ class form {
     //return form_reset($this->def, $this->data, $this->options['var_name']);
   }
 
+  // save_data() is like get_data(), but calls save_data() on all elements
+  // (e.g. to save temporary files to disk and resets "orig data" to the new
+  // state
   function save_data() {
     $this->has_orig_data=false;
 
     $this->element->save_data();
-    $this->element->set_orig_data($this->get_data());
+    $data=$this->get_data();
+    $this->element->set_orig_data($data);
+
+    return $data;
   }
 
   function show() {
