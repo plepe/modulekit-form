@@ -11,6 +11,6 @@ if(!function_exists("html_export_var")) {
 
 function DOM_createHTMLElement($text, $document) {
   $dom=new DOMDocument();
-  $dom->loadHTML("<html><span>{$text}</span></html>");
+  $dom->loadHTML("<?xml encoding='UTF-8'><html><span>{$text}</span></html>");
   return $document->importNode($dom->lastChild, true);
 }
