@@ -124,6 +124,10 @@ function form_check($def, $data) {
     if($conf["req"]&&(!$data[$key]))
       $error[]="'$conf[name]' muss angegeben werden.";
 
+    $e=form_element_check($key, $conf, $data);
+    if($e)
+      $error[]="{$conf['name']}: $e";
+
     switch($conf["type"]) {
       case "datetime":
       case "date":
