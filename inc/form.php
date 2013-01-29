@@ -419,6 +419,9 @@ function form_get_inputstr($def, $f, $data, $maxcount, $varname, $moreparam) {
       $more_more_param.=" form_onchange='$conf[onchange]'";
     }
 
+    if(($v===null)&&isset($conf['default']))
+      $v=$conf['default'];
+
     $ev=$v;
     $more_ret="";
     switch($conf["type"]) {
