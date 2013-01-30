@@ -303,7 +303,7 @@ function form_get_orig_data($orig_data, $varname) {
     return $orig_data;
   }
  
-  if(ereg("^\\[?([a-zA-Z0-9_]*)\\]?(.*)$", $varname, $m)) {
+  if(ereg("^\\[?([a-zA-Z0-9_\-]*)\\]?(.*)$", $varname, $m)) {
     return form_get_orig_data($orig_data[$m[1]], $m[2]);
   }
 }
