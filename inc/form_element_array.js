@@ -40,7 +40,9 @@ form_element_array.prototype.create_element=function(k) {
   var element_id=this.id+"_"+k;
   var element_options=new clone(this.options);
   element_options.var_name=element_options.var_name+"["+k+"]";
-  // element_def.__defineGetter__("_name", this.index_element.bind(this, k));
+  element_def._name=function(k) {
+    return this.index_element(k);
+  }.bind(this, k);
 
   if(class_exists(element_class)) {
     this.elements[k]=eval("new "+element_class+"()");
@@ -60,10 +62,14 @@ form_element_array.prototype.connect=function(dom_parent) {
       var element_id=this.id+"_"+k;
       var element_options=new clone(this.options);
       element_options.var_name=element_options.var_name+"["+k+"]";
+      var element_def=new clone(this.def.def);
+      element_def._name=function(k) {
+	return this.index_element(k);
+      }.bind(this, k);
 
       if(class_exists(element_class)) {
 	this.elements[k]=eval("new "+element_class+"()");
-	this.elements[k].init(element_id, this.def.def, element_options, this);
+	this.elements[k].init(element_id, element_def, element_options, this);
 	this.elements[k].connect(current);
       }
 

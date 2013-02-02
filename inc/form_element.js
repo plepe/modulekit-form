@@ -15,7 +15,7 @@ form_element.prototype.init=function(id, def, options, form_parent) {
 
 form_element.prototype.name=function() {
   if(this.def._name)
-    return this.def._name;
+    return this.def._name();
 
   return this.def.name;
 }
