@@ -92,14 +92,8 @@ form_element_radio.prototype.show_element=function() {
   return div;
 }
 
-form_element_radio.prototype.notify_change=function() {
-  this.check_modified();
-
-  this.form_parent.notify_change();
-}
-
-form_element_radio.prototype.check_modified=function() {
-  this.parent("form_element_radio").check_modified.call(this);
+form_element_radio.prototype.refresh=function() {
+  this.parent("form_element_radio").refresh.call(this);
 
   this.data=this.get_data();
 

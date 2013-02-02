@@ -130,12 +130,6 @@ form_element_keywords.prototype.set_data=function(data) {
   this.notify_change();
 }
 
-form_element_keywords.prototype.notify_change=function() {
-  this.check_modified();
-
-  this.form_parent.notify_change();
-}
-
 form_element_keywords.prototype.get_data=function() {
   if(!this.dom_element)
     return this.data;
@@ -159,10 +153,10 @@ form_element_keywords.prototype.get_data=function() {
   return this.data;
 }
 
-form_element_keywords.prototype.check_modified=function() {
+form_element_keywords.prototype.refresh=function() {
   var cls;
 
-  this.parent("form_element_keywords").check_modified.call(this);
+  this.parent("form_element_keywords").refresh.call(this);
 
   this.get_data();
 

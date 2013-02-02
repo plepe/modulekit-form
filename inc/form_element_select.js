@@ -77,12 +77,8 @@ form_element_select.prototype.show_element=function() {
   return div;
 }
 
-form_element_select.prototype.notify_change=function() {
-  this.check_modified();
-}
-
-form_element_select.prototype.check_modified=function() {
-  this.parent("form_element_select").check_modified.call(this);
+form_element_select.prototype.refresh=function() {
+  this.parent("form_element_select").refresh.call(this);
 
   this.data=this.get_data();
 

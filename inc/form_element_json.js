@@ -54,19 +54,15 @@ form_element_json.prototype.get_data=function() {
   return this.data;
 }
 
-form_element_json.prototype.notify_change=function() {
-  this.check_modified();
+form_element_json.prototype.refresh=function() {
+  this.parent("form_element_json").refresh.call(this);
 
-  this.form_parent.notify_change();
-}
-
-form_element_json.prototype.check_modified=function() {
-  var cls;
-
-  this.parent("form_element_json").check_modified.call(this);
+  if(!this.dom_element)
+    return;
 
   this.data=this.dom_element.value;
 
+  var cls;
   if(this.orig_data&&this.data!=this.orig_data)
     cls="form_modified";
   else

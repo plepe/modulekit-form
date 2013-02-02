@@ -104,24 +104,8 @@ form_element_form.prototype.errors=function(list) {
   }
 }
 
-form_element_form.prototype.notify_change=function() {
-  if(this.form_parent)
-    this.form_parent.notify_change();
-
-  if(this.form)
-    this.form.notify_change();
-}
-
-form_element_form.prototype.check_modified=function() {
-  this.parent("form_element_form").check_modified.call(this);
-
-  for(var i in this.elements) {
-    this.elements[i].check_modified();
-  }
-}
-
 form_element_form.prototype.refresh=function() {
-  this.parent.refresh.call(this);
+  this.parent("form_element_form").refresh.call(this);
 
   for(var i in this.elements)
     this.elements[i].refresh();

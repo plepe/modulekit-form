@@ -243,20 +243,8 @@ form_element_array.prototype.remove_element=function(k) {
   return false;
 }
 
-form_element_array.prototype.notify_change=function() {
-  this.form_parent.notify_change();
-}
-
-form_element_array.prototype.check_modified=function() {
-  this.parent("form_element_array").check_modified.call(this);
-
-  for(var i in this.elements) {
-    this.elements[i].check_modified();
-  }
-}
-
 form_element_array.prototype.refresh=function() {
-  this.parent.refresh.call(this);
+  this.parent("form_element_array").refresh.call(this);
 
   for(var i in this.elements)
     this.elements[i].refresh();

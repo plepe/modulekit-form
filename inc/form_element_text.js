@@ -46,16 +46,13 @@ form_element_text.prototype.set_data=function(data) {
     this.dom_element.value=this.data;
 }
 
-form_element_text.prototype.notify_change=function() {
-  this.check_modified();
-
-  this.form_parent.notify_change();
-}
-
-form_element_text.prototype.check_modified=function() {
+form_element_text.prototype.refresh=function() {
   var cls;
 
-  this.parent("form_element_text").check_modified.call(this);
+  this.parent("form_element_text").refresh.call(this);
+
+  if(!this.dom_element)
+    return;
 
   this.data=this.dom_element.value;
 
