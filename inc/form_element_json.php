@@ -32,4 +32,8 @@ class form_element_json extends form_element {
   function set_request_data($data) {
     $this->data=json_decode($data, true);
   }
+
+  function is_modified() {
+    return json_encode($this->get_data())!==json_encode($this->get_orig_data());
+  }
 }

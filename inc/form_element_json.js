@@ -68,3 +68,7 @@ form_element_json.prototype.refresh=function() {
 
   this.dom_element.className=cls;
 }
+
+form_element_json.prototype.is_modified=function() {
+  return JSON.stringify(this.get_data())!==JSON.stringify(this.get_orig_data());
+}
