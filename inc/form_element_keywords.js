@@ -56,7 +56,7 @@ form_element_keywords.prototype.show_element=function() {
   var div=this.parent("form_element_keywords").show_element.call(this);
 
   var cls="form_orig";
-  if(this.orig_data&&this.data!=this.orig_data)
+  if(this.is_modified())
     cls="form_modified";
   cls+=" connected";
 
@@ -270,6 +270,11 @@ form_element_keywords.prototype.edit=function() {
 
   this.dom_parent.className=this.dom_parent.className+" edit";
   this.dom_element.focus();
+}
+
+form_element_keywords.prototype.is_modified=function() {
+  if(this.orig_data&&this.data.join(",")!=this.orig_data.join(","))
+    return true;
 }
 
 form_element_keywords.prototype.edit_save=function() {

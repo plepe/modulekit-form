@@ -24,7 +24,7 @@ form_element_json.prototype.show_element=function() {
   var div=this.parent("form_element_json").show_element.call(this);
 
   var cls="form_orig";
-  if(this.orig_data&&this.data!=this.orig_data)
+  if(this.is_modified())
     cls="form_modified";
 
   var input=this.create_element();
@@ -61,7 +61,7 @@ form_element_json.prototype.refresh=function() {
     return;
 
   var cls;
-  if(this.orig_data&&this.data!=this.orig_data)
+  if(this.is_modified())
     cls="form_modified";
   else
     cls="form_orig";

@@ -83,7 +83,7 @@ form_element_select.prototype.refresh=function() {
   if(!this.dom_element)
     return;
 
-  if(this.orig_data&&this.data!=this.orig_data)
+  if(this.is_modified())
     cls="form_modified";
   else
     cls="form_orig";

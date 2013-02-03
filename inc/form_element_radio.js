@@ -101,9 +101,7 @@ form_element_radio.prototype.refresh=function() {
   for(var k in this.def.values) {
     var cls="form_orig";
 
-    if(this.orig_data&&
-       (this.data!=this.orig_data)&&
-       ((k==this.data)||(k==this.orig_data)))
+    if(this.is_modified())
       cls="form_modified";
 
     this.dom_values[k].parentNode.className=cls;
