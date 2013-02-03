@@ -368,3 +368,23 @@ function in_array (needle, haystack, argStrict) {
 
     return false;
 }
+
+// compares if both arrays contain the same values
+// ignores order of elements
+function array_compare_values(arr1, arr2) {
+  var tmp={};
+
+  for(var i=0; i<arr1.length; i++)
+    tmp[arr1[i]]=true;
+
+  for(var i=0; i<arr2.length; i++)
+    if(typeof tmp[arr2[i]]=="undefined")
+      return true;
+    else
+      delete tmp[arr2[i]];
+
+  for(var i in tmp)
+    return true;
+
+  return false;
+}
