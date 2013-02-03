@@ -119,3 +119,7 @@ form_element_checkbox.prototype.refresh=function() {
     this.dom_values[k].parentNode.className=cls;
   }
 }
+
+form_element_checkbox.prototype.is_modified=function() {
+  return array_compare_values(this.get_data(), this.get_orig_data());
+}

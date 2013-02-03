@@ -58,4 +58,13 @@ class form_element_keywords extends form_element {
   function get_data() {
     return $this->data;
   }
+
+  function is_modified() {
+    if(sizeof(array_diff($this->get_data(), $this->get_orig_data()))!=0)
+      return true;
+    if(sizeof(array_diff($this->get_orig_data(), $this->get_data()))!=0)
+      return true;
+
+    return false;
+  }
 }

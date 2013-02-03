@@ -307,3 +307,7 @@ form_element_keywords.prototype.edit_keypress=function(ev) {
     return false;
   }
 }
+
+form_element_keywords.prototype.is_modified=function() {
+  return array_compare_values(this.get_data(), this.get_orig_data());
+}
