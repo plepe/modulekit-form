@@ -72,6 +72,10 @@ form.prototype.set_orig_data=function(data) {
   this.refresh();
 }
 
+form.prototype.is_modified=function() {
+  return this.element.is_modified();
+}
+
 form.prototype.refresh=function() {
   this.element.refresh();
 }

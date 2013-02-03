@@ -236,4 +236,8 @@ class form_element {
 
     return true;
   }
+
+  function is_modified() {
+    return $this->get_data()!==$this->get_orig_data();
+  }
 }

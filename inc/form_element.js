@@ -271,3 +271,7 @@ form_element.prototype.refresh=function() {
   else
     this.tr.style.display="none";
 }
+
+form_element.prototype.is_modified=function() {
+  return this.get_data()!==this.get_orig_data();
+}

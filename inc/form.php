@@ -128,6 +128,10 @@ class form {
     return $data;
   }
 
+  function is_modified() {
+    return $this->element->is_modified();
+  }
+
   function show() {
     $document=new DOMDocument();
 
