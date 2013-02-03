@@ -180,4 +180,26 @@ class form_element_array extends form_element {
       $element->save_data();
     }
   }
+
+  function is_modified() {
+    $orig_data=$this->get_orig_data();
+
+    foreach($this->elements as $k=>$element) {
+      // new key, was not present in orig_data
+      if(!isset($orig_data[$k]))
+	return true;
+
+      // data of sub-elements were changed
+      if($element->is_modified())
+	return true;
+    }
+
+    foreach($orig_data as $k=>$v) {
+      // key has been removed
+      if(!isset($this->elements[$k]))
+	return true;
+    }
+
+    return false;
+  }
 }

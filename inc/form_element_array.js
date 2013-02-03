@@ -256,3 +256,25 @@ form_element_array.prototype.refresh=function() {
   for(var i in this.elements)
     this.elements[i].refresh();
 }
+
+form_element_array.prototype.is_modified=function() {
+  var orig_data=this.get_orig_data();
+
+  for(var i in this.elements) {
+    // new key, was not present in orig_data
+    if(typeof orig_data[i]=="undefined")
+      return true;
+
+    // data of sub-elements were changed
+    if(this.elements[i].is_modified())
+      return true;
+  }
+
+  for(var i in orig_data) {
+    // key has been removed
+    if(typeof this.elements[i]=="undefined")
+      return true;
+  }
+
+  return false;
+}

@@ -111,3 +111,11 @@ form_element_form.prototype.refresh=function() {
   for(var i in this.elements)
     this.elements[i].refresh();
 }
+
+form_element_form.prototype.is_modified=function() {
+  for(var i in this.elements)
+    if(this.elements[i].is_modified())
+      return true;
+
+  return false;
+}

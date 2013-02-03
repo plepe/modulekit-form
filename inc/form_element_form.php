@@ -113,4 +113,13 @@ class form_element_form extends form_element {
       $element->save_data();
     }
   }
+
+  function is_modified() {
+    foreach($this->elements as $k=>$element) {
+      if($element->is_modified())
+	return true;
+    }
+
+    return false;
+  }
 }
