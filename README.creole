@@ -6,6 +6,45 @@ There are three modes to use this library:
 * PHP/Javascript combined: The forms are defined and created in PHP, Javascript is responsible for interactivity, like checking validity of data, adding/removing elements and highlighting changed values.
 * Javascript only: If you are writing an Ajax application you might want to create Forms directly from Javascript, e.g. because you do no longer reload webpages.
 
+== Example code ==
+=== PHP ===
+{{{
+$f=new form('data', array(
+  'name'=>array(
+    'type'=>'text',
+    'name'=>'Name',
+  ),
+  'sex'=>array(
+    'type'=>'radio',
+    'name'=>'Sex',
+    'values'=>array('m'=>'male', 'f'=>'female', 'x'=>'other'),
+  ),
+));
+
+$f->set_data({ name: 'Alice', sex: 'f' });
+
+print $f->show();
+}}}
+
+=== JavaScript ===
+{{{
+f=new form('data', {
+  name: {
+    type: 'text',
+    name: 'Name',
+  },
+  sex: {
+    type: 'radio',
+    name: 'Sex',
+    values: { m: 'male', f: 'female', x: 'other' },
+  }
+});
+
+f.show(document.getElementById("put_the_form_there"));
+
+f.set_data({ name: 'Bob', sex: 'm' });
+}}}
+
 == Elements ==
 === All Form Elements ===
 All form elements share some options.
