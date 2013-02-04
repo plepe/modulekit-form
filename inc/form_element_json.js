@@ -50,6 +50,9 @@ form_element_json.prototype.get_data=function() {
   if(!this.dom_element)
     return this.data;
 
+  if(!this.dom_element.value)
+    return null;
+
   this.data=JSON.parse(this.dom_element.value);
   return this.data;
 }
