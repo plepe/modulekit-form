@@ -374,6 +374,12 @@ function in_array (needle, haystack, argStrict) {
 function array_compare_values(arr1, arr2) {
   var tmp={};
 
+  if((!arr1)&&(!arr2))
+    return false;
+
+  if((!arr1)||(!arr2))
+    return true;
+
   for(var i=0; i<arr1.length; i++)
     tmp[arr1[i]]=true;
 
