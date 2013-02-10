@@ -19,6 +19,7 @@ $include_php=array(
   "inc/form_element_unsupported.php",
   "inc/form_element_select.php",
   "inc/form_element_file.php",
+  "inc/form_element_directory.php",
 );
 $include_js=array(
   "inc/functions.js",

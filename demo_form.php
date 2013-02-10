@@ -73,12 +73,19 @@ $form_def=array(
     'type'	=>"json",
     'name'	=>"JSON",
   ),
-  'photos'	=>array(
+  'cv'	=>array(
     'type'	=>"file",
-    'name'	=>"Photos",
+    'name'	=>"Curriculum Vitae",
     'desc'	=>"Upload a file",
     'path'	=>"/tmp",
     'template'	=>"submission-[timestamp].[ext]",
+  ),
+  'photos'	=>array(
+    'type'	=>"directory",
+    'name'	=>"Photos",
+    'desc'	=>"Upload multiple files",
+    'path'	=>"/tmp",
+    'template'	=>"submission-[timestamp]",
   ),
 );
 
