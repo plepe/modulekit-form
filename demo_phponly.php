@@ -32,7 +32,7 @@ if($form->is_complete()) {
   print "Form is complete (no errors).<br>\n";
 
   // reset form data
-  $form->reset();
+  $form->save_data();
 }
 
 if($form->is_empty()) {

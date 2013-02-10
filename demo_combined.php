@@ -35,8 +35,8 @@ if($form->is_complete()) {
   // save data to database
   print "Form is complete (no errors).<br>\n";
 
-  // reset form data
-  $form->reset();
+  // save data to database
+  $form->save_data();
 }
 
 if($form->is_empty()) {
