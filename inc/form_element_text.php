@@ -25,6 +25,8 @@ class form_element_text extends form_element {
     $input->setAttribute("name", $this->options['var_name']);
     $input->setAttribute("value", $this->data);
 
+    $this->dom_element=$input;
+
     $div->appendChild($input);
     return $div;
   }
