@@ -184,3 +184,27 @@ array(
   'orig_name'=>name of file as it was when uploaded,
 )
 }}}
+
+=== Form Element "Directory" ===
+Upload multiple files. Files are moved to a newly created directory in the specified path, as value an array will be returned.
+
+Definition:
+* type: 'directory'
+* path: Path where the directory for the files will be created and the files get saved to
+* template: A name template how the directory will be called, the following patterns may be used (Example: "submission-[timestamp]", Default: "[timestamp]"):
+** [timestamp]: Date in form YYYY-MM-DD-HH-MM-SS
+
+Value:
+{{{
+array(
+  'name'=>name of the directory,
+  'list'=>array(   // list of all the files
+    0=>array(
+      'name'=>name of file,
+      'type'=>mime type,
+      'size'=>size in byte,
+    )
+    1=>...
+  )
+)
+}}}
