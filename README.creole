@@ -163,3 +163,20 @@ Definition:
 
 Value:
 * Array of strings, e.g. array("foo", "bar") resp. ["foo", "bar"]
+
+=== Form Element "File" ===
+Upload single files. Files are moved to the specified directory (see option 'path'), as value an array will be returned.
+
+Definition:
+* type: 'file'
+* path: Path where the files get saved to
+
+Value:
+{{{
+array(
+  'name'=>name of file as saved in path,
+  'type'=>mime type,
+  'size'=>size in byte,
+  'orig_name'=>name of file as it was when uploaded,
+)
+}}}

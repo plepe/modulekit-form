@@ -73,6 +73,12 @@ $form_def=array(
     'type'	=>"json",
     'name'	=>"JSON",
   ),
+  'photos'	=>array(
+    'type'	=>"file",
+    'name'	=>"Photos",
+    'desc'	=>"Upload a file",
+    'path'	=>"/tmp",
+  ),
 );
 
 $default_data=array(
