@@ -57,12 +57,27 @@ class form_element_file extends form_element {
       $data[$k]=$this->_FILES_value($var_path, $k);
 
     $data['orig_name']=$data['name'];
+    $p2=strrpos($data['name'], ".");
+    $data['ext']=substr($data['name'], $p2+1);
+
+    $template="[orig_name]";
+    if(isset($this->def['template']))
+      $template=$this->def['template'];
+
+    $data['new_name']=strtr($template, array(
+      '[orig_name]'	=>$data['name'],
+      '[ext]'		=>$data['ext'],
+      '[timestamp]'	=>Date("Y-m-d-H-i-s"),
+    ));
 
     parent::set_request_data($data);
   }
 
   function save_data() {
-    move_uploaded_file($this->data['tmp_name'], "{$this->def['path']}/{$this->data['name']}");
+    move_uploaded_file($this->data['tmp_name'], "{$this->def['path']}/{$this->data['new_name']}");
+
+    $this->data['name']=$this->data['new_name'];
     unset($this->data['tmp_name']);
+    unset($this->data['new_name']);
   }
 }

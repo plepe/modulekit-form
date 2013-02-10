@@ -78,6 +78,7 @@ $form_def=array(
     'name'	=>"Photos",
     'desc'	=>"Upload a file",
     'path'	=>"/tmp",
+    'template'	=>"submission-[timestamp].[ext]",
   ),
 );
 

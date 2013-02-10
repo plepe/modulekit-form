@@ -170,6 +170,10 @@ Upload single files. Files are moved to the specified directory (see option 'pat
 Definition:
 * type: 'file'
 * path: Path where the files get saved to
+* template: A name template how files may be called, the following patterns may be used (Example: "submission-[timestamp].[ext]", Default: "[orig_name]"):
+** [orig_name]: original file name
+** [ext]: the extension
+** [timestamp]: Date in form YYYY-MM-DD-HH-MM-SS
 
 Value:
 {{{
