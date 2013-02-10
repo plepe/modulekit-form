@@ -92,6 +92,7 @@ $form_def=array(
 $default_data=array(
   "name"=>"Max Mustermann",
   "sex"=>"m",
+  "comment"=>"Foo Bar\nBlablabla\n",
   "hobbies"=>array(0=>"Linux", 2=>"PHP", 5=>"Cycling"),
   "languages"=>array("php", "js"),
   "nationality"=>"Austria",
