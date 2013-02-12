@@ -17,7 +17,6 @@ class form_element_file extends form_element {
     $input->setAttribute("type", "file");
     $input->setAttribute("class", $class);
     $input->setAttribute("name", $this->options['var_name']);
-    $input->setAttribute("value", $this->data);
 
     $div->appendChild($input);
     return $div;

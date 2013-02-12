@@ -31,7 +31,6 @@ class form_element_directory extends form_element {
     $input->setAttribute("class", $class);
     $input->setAttribute("name", "{$this->options['var_name']}[]");
     $input->setAttribute("multiple", "multiple");
-    $input->setAttribute("value", $this->data);
 
     $div->appendChild($input);
     return $div;
