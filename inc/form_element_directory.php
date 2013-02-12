@@ -55,11 +55,8 @@ class form_element_directory extends form_element {
   function errors($errors) {
     parent::errors(&$errors);
 
-    $data_all=$this->get_data();
-    foreach($data_all['list'] as $data)
-      if($data['error']) {
-	$errors[]=$this->path_name().": Datei '{$data['name']}' konnte nicht raufgeladen werden, Fehler {$data['error']}.";
-      }
+    if(isset($this->errors))
+      $errors=array_merge($errors, $this->errors);
   }
 
   function set_request_data($data) {
@@ -83,6 +80,14 @@ class form_element_directory extends form_element {
     foreach(array("name", "type", "tmp_name", "error", "size") as $k)
       foreach($this->_FILES_value($var_path, $k) as $i=>$v)
         $data['list'][$i][$k]=$v;
+
+    $this->errors=array();
+    foreach($data['list'] as $i=>$d) {
+      if($d['error']) {
+	$this->errors[]=$this->path_name().": Datei '{$d['name']}' konnte nicht raufgeladen werden, Fehler {$d['error']}.";
+	unset($data['list'][$i]);
+      }
+    }
 
     // no file uploaded
     if((sizeof($data['list'])==1)&&
