@@ -13,6 +13,19 @@ class form_element_directory extends form_element {
       ($this->data!=$this->orig_data))
       $class="form_modified";
 
+    if($data=$this->get_data()) {
+      $ul=$document->createElement("ul");
+
+      foreach($data['list'] as $d) {
+	$li=$document->createElement("li");
+	$li->appendChild($document->createTextNode($d['name']));
+
+	$ul->appendChild($li);
+      }
+
+      $div->appendChild($ul);
+    }
+
     $input=$document->createElement("input");
     $input->setAttribute("type", "file");
     $input->setAttribute("class", $class);
