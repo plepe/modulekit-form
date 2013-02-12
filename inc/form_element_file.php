@@ -39,6 +39,15 @@ class form_element_file extends form_element {
     return $m;
   }
 
+  function errors($errors) {
+    parent::errors(&$errors);
+
+    $data=$this->get_data();
+    if($data['error']) {
+      $errors[]=$this->path_name().": Datei '{$data['orig_name']}' konnte nicht raufgeladen werden, Fehler {$data['error']}.";
+    }
+  }
+
   function set_request_data($data) {
     $var_path=array();
     $var_name=$this->options['var_name'];
@@ -55,6 +64,10 @@ class form_element_file extends form_element {
     $data=array();
     foreach(array("name", "type", "tmp_name", "error", "size") as $k)
       $data[$k]=$this->_FILES_value($var_path, $k);
+
+    // no file uploaded
+    if($data['error']==UPLOAD_ERR_NO_FILE)
+      return;
 
     $data['orig_name']=$data['name'];
     $p2=strrpos($data['name'], ".");

@@ -40,6 +40,16 @@ class form_element_directory extends form_element {
     return $m;
   }
 
+  function errors($errors) {
+    parent::errors(&$errors);
+
+    $data_all=$this->get_data();
+    foreach($data_all['list'] as $data)
+      if($data['error']) {
+	$errors[]=$this->path_name().": Datei '{$data['name']}' konnte nicht raufgeladen werden, Fehler {$data['error']}.";
+      }
+  }
+
   function set_request_data($data) {
     $var_path=array();
     $var_name=$this->options['var_name'];
@@ -61,6 +71,11 @@ class form_element_directory extends form_element {
     foreach(array("name", "type", "tmp_name", "error", "size") as $k)
       foreach($this->_FILES_value($var_path, $k) as $i=>$v)
         $data['list'][$i][$k]=$v;
+
+    // no file uploaded
+    if((sizeof($data['list'])==1)&&
+       ($data['list'][0]['error']==UPLOAD_ERR_NO_FILE))
+      return;
 
     $template="[timestamp]";
     if(isset($this->def['template']))
