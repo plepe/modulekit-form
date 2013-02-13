@@ -31,9 +31,7 @@ form_element_form.prototype.build_form=function() {
   this.elements={};
 
   for(var k in this.def.def) {
-    var element_class="form_element_"+this.def.def[k].type;
-    if(!class_exists(element_class))
-      element_class="form_element_unsupported";
+    var element_class=get_form_element_class(this.def.def[k]);
 
     var element_id=this.id+"_"+k;
     var element_options=new clone(this.options);

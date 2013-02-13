@@ -106,7 +106,7 @@ class form_element_array extends form_element {
     if(isset($this->data))
       $data=$this->data;
 
-    $element_class="form_element_{$this->def['def']['type']}";
+    $element_class=get_form_element_class($this->def['def']);
     $element_def=$this->def['def'];
     foreach($data as $k=>$v) {
       $element_id="{$this->id}_{$k}";
@@ -114,9 +114,7 @@ class form_element_array extends form_element {
       $element_options['var_name']="{$this->options['var_name']}[{$k}]";
       $element_def['_name']="#".(sizeof($this->elements)+1);
 
-      if(class_exists($element_class)) {
-	$this->elements[$k]=new $element_class($element_id, $element_def, $element_options, $this);
-      }
+      $this->elements[$k]=new $element_class($element_id, $element_def, $element_options, $this);
     }
   }
 

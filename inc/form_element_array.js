@@ -36,7 +36,7 @@ form_element_array.prototype.index_element=function(el) {
 
 form_element_array.prototype.create_element=function(k) {
   var element_def=new clone(this.def.def);
-  var element_class="form_element_"+element_def.type;
+  var element_class=get_form_element_class(element_def);
   var element_id=this.id+"_"+k;
   var element_options=new clone(this.options);
   element_options.var_name=element_options.var_name+"["+k+"]";

@@ -241,3 +241,11 @@ class form_element {
     return $this->get_data()!==$this->get_orig_data();
   }
 }
+
+function get_form_element_class($def) {
+  $element_class="form_element_{$def['type']}";
+  if(!class_exists($element_class))
+    $element_class="form_element_unsupported";
+
+  return $element_class;
+}

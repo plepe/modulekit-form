@@ -21,9 +21,7 @@ class form_element_form extends form_element {
     $this->elements=array();
 
     foreach($this->def['def'] as $k=>$element_def) {
-      $element_class="form_element_{$element_def['type']}";
-      if(!class_exists($element_class))
-	$element_class="form_element_unsupported";
+      $element_class=get_form_element_class($element_def);
 
       $element_id="{$this->id}_{$k}";
       $element_options=$this->options;
