@@ -1,4 +1,6 @@
 <?
+$form_element_type_alias=array();
+
 class form_element {
   public $def;
   public $id;
@@ -243,7 +245,15 @@ class form_element {
 }
 
 function get_form_element_class($def) {
-  $element_class="form_element_{$def['type']}";
+  global $form_element_type_alias;
+
+  $type=$def['type'];
+
+  if(isset($form_element_type_alias[$type]))
+    $type=$form_element_type_alias[$type];
+
+  $element_class="form_element_{$type}";
+
   if(!class_exists($element_class))
     $element_class="form_element_unsupported";
 

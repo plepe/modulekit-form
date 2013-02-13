@@ -1,3 +1,5 @@
+var form_element_type_alias={};
+
 function form_element() {
 }
 
@@ -277,7 +279,13 @@ form_element.prototype.is_modified=function() {
 }
 
 function get_form_element_class(def) {
-  var element_class="form_element_"+def.type;
+  var type=def.type;
+
+  if(form_element_type_alias[def.type])
+    type=form_element_type_alias[def.type];
+
+  var element_class="form_element_"+type;
+
   if(!class_exists(element_class))
     element_class="form_element_unsupported";
 

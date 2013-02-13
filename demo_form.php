@@ -59,7 +59,7 @@ $form_def=array(
       ),
       'age'	=>array(
         'name'	=>"Age",
-	'type'	=>"numeric",
+	'type'	=>"integer",
       ),
     ),
   ),

@@ -1,3 +1,6 @@
+form_element_type_alias['integer']='numeric';
+form_element_type_alias['float']='numeric';
+
 form_element_numeric.inherits_from(form_element_text);
 function form_element_numeric() {
 }
