@@ -21,6 +21,7 @@ $include_php=array(
   "inc/form_element_select.php",
   "inc/form_element_file.php",
   "inc/form_element_directory.php",
+  "inc/form_element_numeric.php",
 );
 $include_js=array(
   "inc/functions.js",
@@ -38,6 +39,7 @@ $include_js=array(
   "inc/form_element_json.js",
   "inc/form_element_unsupported.js",
   "inc/form_element_select.js",
+  "inc/form_element_numeric.js",
 );
 $include_css=array(
   "inc/form.css",

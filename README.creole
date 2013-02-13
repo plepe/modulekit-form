@@ -102,6 +102,15 @@ Definition (also see Form Element "Text"):
 Value:
 * String. Will be stripped of additional slashes.
 
+=== Form Element "Numeric" ===
+Based on Form Element "Text", returns null (if empty) or a float.
+
+Definition (also see Form Element "Text"):
+* type: 'numeric'
+
+Value:
+* Float or null.
+
 === Unsupported Form Elements ===
 Any form elements that are not supported (yet) will show the name and a warning, that the form element type is not supported. Any data set to the element will be kept, as internally a JSON form element will be used.
 
