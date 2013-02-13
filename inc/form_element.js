@@ -109,6 +109,8 @@ form_element.prototype.show_element=function() {
 }
 
 form_element.prototype.errors=function(list) {
+  this.get_data();
+
   if((this.def.req)&&((!this.data)||(this.data=="")))
     list.push(this.path_name()+": Wert muss angegeben werden.");
 

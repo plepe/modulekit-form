@@ -52,6 +52,8 @@ class form_element {
   }
 
   function errors($errors) {
+    $this->get_data();
+
     if(isset($this->def['req'])&&($this->def['req'])&&(!$this->data))
       $errors[]=$this->path_name().": Wert muss angegeben werden.";
 
