@@ -88,9 +88,6 @@ class form_element_array extends form_element {
       $data=array();
     $this->orig_data=$data;
 
-    $element_class="form_element_{$this->def['def']['type']}";
-    $element_def=$this->def['def'];
-
     foreach($data as $k=>$v) {
       if(isset($this->elements[$k])) {
 	$this->elements[$k]->set_orig_data($v);
