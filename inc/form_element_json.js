@@ -56,7 +56,14 @@ form_element_json.prototype.get_data=function() {
     this.data=this.dom_element.value;
   }
 
-  return JSON.parse(this.data);
+  try {
+    data=JSON.parse(this.data);
+  }
+  catch(err) {
+    data=null;
+  }
+
+  return data;
 }
 
 form_element_json.prototype.refresh=function() {
