@@ -44,7 +44,7 @@ class form_element {
   }
 
   function set_request_data($data) {
-    $this->set_data($data);
+    $this->data=$data;
   }
 
   function get_data() {
