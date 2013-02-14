@@ -121,7 +121,7 @@ function form_check($def, $data) {
   unset($error);
 
   foreach($def as $key=>$conf) {
-    if($conf["req"]&&(!$data[$key]))
+    if($conf["req"]&&($data[$key]==null))
       $error[]="'$conf[name]' muss angegeben werden.";
 
     $e=form_element_check($key, $conf, $data);
