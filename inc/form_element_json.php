@@ -37,6 +37,19 @@ class form_element_json extends form_element {
     parent::set_data(json_encode($data));
   }
 
+  function errors($errors) {
+    parent::errors(&$errors);
+
+    if($this->data=="null")
+      return;
+
+    if((($this->data!="")||($this->data!=null))&&
+       json_decode($this->data)===null) {
+
+      $errors[]=$this->path_name().": Ungültiger Wert";
+    }
+  }
+
   function is_modified() {
     return json_encode($this->get_data())!==json_encode($this->get_orig_data());
   }

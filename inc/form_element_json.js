@@ -1,5 +1,6 @@
 form_element_json.inherits_from(form_element);
 function form_element_json() {
+  this._errors=[];
 }
 
 form_element_json.prototype.init=function(id, def, options, form_parent) {
@@ -56,14 +57,24 @@ form_element_json.prototype.get_data=function() {
     this.data=this.dom_element.value;
   }
 
+  this._errors=[];
+
   try {
     data=JSON.parse(this.data);
   }
   catch(err) {
     data=null;
+    this._errors.push(err.message);
   }
 
   return data;
+}
+
+form_element_json.prototype.errors=function(list) {
+  this.parent("form_element_json").errors.call(this, list);
+
+  for(var i=0; i<this._errors.length; i++)
+    list.push(this.path_name()+": "+this._errors[i]);
 }
 
 form_element_json.prototype.refresh=function() {
