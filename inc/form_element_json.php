@@ -23,14 +23,18 @@ class form_element_json extends form_element {
     $input=$this->create_element($document);
     $input->setAttribute("class", $class);
     $input->setAttribute("name", $this->options['var_name']);
-    $input->setAttribute("value", json_encode($this->data));
+    $input->setAttribute("value", $this->data);
 
     $div->appendChild($input);
     return $div;
   }
 
-  function set_request_data($data) {
-    $this->data=json_decode($data, true);
+  function get_data() {
+    return json_decode(parent::get_data(), true);
+  }
+
+  function set_data($data) {
+    parent::set_data(json_encode($data));
   }
 
   function is_modified() {

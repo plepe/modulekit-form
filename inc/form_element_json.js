@@ -40,21 +40,23 @@ form_element_json.prototype.show_element=function() {
 }
 
 form_element_json.prototype.set_data=function(data) {
-  this.parent("form_element_json").set_data.call(this, data);
+  this.parent("form_element_json").set_data.call(this, JSON.stringify(data));
 
   if(this.dom_element)
-    this.dom_element.value=JSON.stringify(this.data);
+    this.dom_element.value=this.data;
 }
 
 form_element_json.prototype.get_data=function() {
-  if(!this.dom_element)
-    return this.data;
+  var data;
 
-  if(!this.dom_element.value)
-    return null;
+  if(this.dom_element) {
+    if(!this.dom_element.value)
+      return null;
 
-  this.data=JSON.parse(this.dom_element.value);
-  return this.data;
+    this.data=this.dom_element.value;
+  }
+
+  return JSON.parse(this.data);
 }
 
 form_element_json.prototype.refresh=function() {
