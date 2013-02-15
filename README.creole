@@ -54,6 +54,7 @@ Definition:
 * name: Name of the element (e.g. "Birthday")
 * desc: Description (usually written below Name in smaller letters); accepts full HTML (in contrast to 'name').
 * count: We internally be converted to a form element of type array using the options of this key. E.g. array('default'=>2) resp. { 'default': 2 }. See 'Form Element Array' for more information.
+* default: Specify a default value, which is shown if no value is set.
 * req: A value is required.
 * check: Evaluate validity of input. Defined as array("type", parameters). Will call function "check_type" inside form element, will be passed parameters. Example: "regexp" for Form Element Text (will call function "check_regexp").
 ** 'and': combine several checks, e.g. array("and", array("regexp", ...), array("foo", ...)) - all sub-checks need to resolve positive.

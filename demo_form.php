@@ -60,6 +60,7 @@ $form_def=array(
       'age'	=>array(
         'name'	=>"Age",
 	'type'	=>"integer",
+	'default'=>5,
       ),
     ),
   ),

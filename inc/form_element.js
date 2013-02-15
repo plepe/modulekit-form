@@ -13,6 +13,9 @@ form_element.prototype.init=function(id, def, options, form_parent) {
   else
     this.form_root=form_parent.form_root;
   this.data=null;
+
+  if('default' in this.def)
+    this.set_data.call(this, this.def.default);
 }
 
 form_element.prototype.name=function() {
