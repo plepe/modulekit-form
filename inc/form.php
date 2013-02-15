@@ -860,6 +860,9 @@ function form_get_data($def, $data) {
           break;
 	case "file":
 	  // find path to variable
+	  if(is_string($v))
+	    $v=array('var'=>$v);
+
 	  $path=preg_match("/^([a-zA-Z0-9_]+)\[([_a-zA-Z0-9\[\]]+)*\]$/", $v['var'], $m);
 	  $var1=$m[1];
 	  $varp=explode("][", $m[2]);
