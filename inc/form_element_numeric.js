@@ -6,12 +6,23 @@ function form_element_numeric() {
 }
 
 form_element_numeric.prototype.get_data=function() {
-  var data=this.parent("form_element_numeric").get_data.call(this);
+  this.parent("form_element_numeric").get_data.call(this);
 
-  if(data=="")
-    this.data=null;
-  else
-    this.data=parseFloat(data);
+  if(this.data=="")
+    return null;
 
-  return this.data;
+  switch(this.def.type) {
+    case 'integer':
+      return parseInt(this.data);
+    default:
+      return parseFloat(this.data);
+  }
+}
+
+form_element_numeric.prototype.set_data=function(data) {
+  var d="";
+  if(data!==null)
+    d=data.toString();
+
+  this.parent("form_element_numeric").set_data.call(this, d);
 }

@@ -8,13 +8,20 @@ class form_element_numeric extends form_element_text {
   }
 
   function get_data() {
-    $data=parent::get_data();
+    parent::get_data();
 
-    if($data=="")
-      $this->data=null;
-    else
-      $this->data=(float)$data;
+    if($this->data=="")
+      return null;
 
-    return $this->data;
+    switch($this->def['type']) {
+      case 'integer':
+        return (int)$this->data;
+      default:
+        return (float)$this->data;
+    }
+  }
+
+  function set_data($data) {
+    parent::set_data((string)$data);
   }
 }
