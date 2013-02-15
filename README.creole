@@ -250,7 +250,7 @@ Example:
 
 Changes the form element 'sex' to 'f', but leaves (in the above example) 'name' untouched.
 
-=== get_data(data) ===
+=== get_data() ===
 PHP/JS: Returns data of all elements.
 
 Example:
