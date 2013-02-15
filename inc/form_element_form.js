@@ -66,13 +66,12 @@ form_element_form.prototype.get_data=function(data) {
 }
 
 form_element_form.prototype.set_data=function(data) {
-  for(var k in this.elements) {
-    if(!data)
-      this.elements[k].set_data(null);
-    else if(data[k])
+  if(!data)
+    return;
+
+  for(var k in data) {
+    if(typeof this.elements[k]!="undefined")
       this.elements[k].set_data(data[k]);
-    else
-      this.elements[k].set_data(null);
   }
 }
 

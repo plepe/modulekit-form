@@ -42,12 +42,11 @@ class form_element_form extends form_element {
   }
 
   function set_data($data) {
-    foreach($this->elements as $k=>$element) {
-      if(isset($data[$k]))
-	$element->set_data($data[$k]);
-      else
-	$element->set_data(null);
-    }
+    if($data)
+      foreach($data as $k=>$d) {
+	if(isset($this->elements[$k]))
+	  $this->elements[$k]->set_data($d);
+      }
   }
 
   function set_request_data($data) {

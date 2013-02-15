@@ -117,14 +117,11 @@ form_element_array.prototype.set_data=function(data) {
   this.data=data;
   this.build_form();
 
-  for(var k in this.elements) {
-    if(!data)
-      this.elements[k].set_data(null);
-    else if(data[k])
-      this.elements[k].set_data(data[k]);
-    else
-      this.elements[k].set_data(null);
-  }
+  if(data)
+    for(var k in data) {
+      if(typeof this.elements[k]!="undefined")
+	this.elements[k].set_data(data[k]);
+    }
 
   var p=this.dom.parentNode;
   p.removeChild(this.dom);
