@@ -227,3 +227,34 @@ array(
   )
 )
 }}}
+
+== Functions of form ==
+=== Constructor ===
+Creates a form.
+
+Synopsis:
+* PHP/JS: new form(id, def, options)
+
+Parameters:
+* id: a string which will be used to identify elements of this form. By default, the name of HTML input elements will be prefixed with this value.
+* def: a hash defining the form, see the Example code above and the Elements definition.
+* options: influence workings of the form, possible options:
+** var_name: override default html input element prefix
+
+=== set_data(data) ===
+PHP/JS: Change data to supplied values. If data doesn't contain a key existing in the form, these values are not changed.
+
+Example:
+* PHP: f->set_data(array('sex'=>'f'))
+* JS: f.set_data({'sex': 'f'})
+
+Changes the form element 'sex' to 'f', but leaves (in the above example) 'name' untouched.
+
+=== get_data(data) ===
+PHP/JS: Returns data of all elements.
+
+Example:
+* PHP: f->get_data()
+* JS: f.get_data()
+
+Returns array('name'=>"Alice", 'sex'=>"f") resp. { 'name': "Alice", 'sex': "f" }
