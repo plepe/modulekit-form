@@ -26,3 +26,26 @@ form_element_numeric.prototype.set_data=function(data) {
 
   this.parent("form_element_numeric").set_data.call(this, d);
 }
+
+form_element_numeric.prototype.errors=function(list) {
+  var data=this.parent("form_element_numeric").errors.call(this, list);
+
+  if((this.data===null)||(this.data===""))
+    return;
+
+  var regexp=null;
+  switch(this.def.type) {
+    case 'integer':
+      regexp=/^\s*[-+]?[0-9]+\s*$/;
+      break;
+    case 'float':
+    case 'numeric':
+      regexp=/^\s*[-+]?[0-9]*(\.[0-9]+)?([Ee][+-][0-9]+)?\s*$/;
+      break;
+    default:
+  }
+
+  if(!this.data.match(regexp)) {
+    list.push(this.path_name()+": Wert ungültig.");
+  }
+}
