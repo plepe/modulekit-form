@@ -231,7 +231,7 @@ class form_element {
   }
 
   function is_shown() {
-    if($this->def['show_depend']) {
+    if(isset($this->def['show_depend'])) {
       $errors=array();
 
       $this->check(&$errors, $this->def['show_depend']);
