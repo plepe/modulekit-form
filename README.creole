@@ -90,6 +90,7 @@ Basic form element with a single line text input.
 Definition:
 * type: 'text'
 * check: array("regexp", REGEXP, [MESSAGE]), e.g. array("regexp", "^A", "Value needs to start with an 'A'")
+* empty_value: Value to be returned if text field is empty (default: null)
 
 Value:
 * String. Will be stripped of additional slashes.
@@ -110,7 +111,7 @@ Definition (also see Form Element "Text"):
 * type: 'numeric'
 
 Value:
-* Float or null.
+* Float or the 'empty value'.
 
 === Unsupported Form Elements ===
 Any form elements that are not supported (yet) will show the name and a warning, that the form element type is not supported. Any data set to the element will be kept, as internally a JSON form element will be used.

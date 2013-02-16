@@ -56,6 +56,7 @@ $form_def=array(
       'name'	=>array(
         'name'	=>"Name",
 	'type'	=>"text",
+	'empty_value'=>"unnamed",
       ),
       'age'	=>array(
         'name'	=>"Age",

@@ -8,9 +8,9 @@ class form_element_numeric extends form_element_text {
   }
 
   function get_data() {
-    parent::get_data();
+    $data=parent::get_data();
 
-    if($this->data=="")
+    if($data===null)
       return null;
 
     switch($this->def['type']) {

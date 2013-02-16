@@ -39,6 +39,19 @@ form_element_text.prototype.show_element=function() {
   return div;
 }
 
+form_element_text.prototype.get_data=function(data) {
+  var data=this.parent("form_element_text").get_data.call(this);
+
+  if((data==="")||(data===null)) {
+    if('empty_value' in this.def)
+      return this.def.empty_value;
+
+    return null;
+  }
+
+  return data;
+}
+
 form_element_text.prototype.set_data=function(data) {
   this.parent("form_element_text").set_data.call(this, data);
 

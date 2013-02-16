@@ -42,4 +42,17 @@ class form_element_text extends form_element {
 	$errors[]=$param[1];
     }
   }
+
+  function get_data() {
+    $data=parent::get_data();
+
+    if(($data==="")||($data===null)) {
+      if(array_key_exists('empty_value', $this->def))
+	return $this->def['empty_value'];
+
+      return null;
+    }
+
+    return $data;
+  }
 }
