@@ -95,7 +95,7 @@ class form {
     return $this->element->is_complete();
   }
 
-  function show_errors($errors) {
+  function show_errors($errors=null) {
     if(!$errors)
       $errors=$this->errors();
 
