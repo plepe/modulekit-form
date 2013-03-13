@@ -252,6 +252,8 @@ form_element.prototype.notify_change=function() {
       alert(text.join("\n"));
     }
   }
+
+  this.form_root.form.notify_change();
 }
 
 form_element.prototype.is_shown=function() {
