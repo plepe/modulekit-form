@@ -573,7 +573,7 @@ function form_get_inputstr($def, $f, $data, $maxcount, $varname, $moreparam) {
 	if($v['orig_name']) {
 	  $ret.="<span id='{$thisvarname}-oldfile'>\n";
 	  if(isset($conf['web_path'])) {
-	    $link=strtr($conf['web_path'], array("[file_name]"=>$v['name']));
+	    $link=strtr($conf['web_path'], array("[file_name]"=>urlencode($v['name'])));
 	    $ret.="<a href='{$link}'>{$v['orig_name']}</a>";
 	  }
 	  else
