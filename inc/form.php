@@ -729,6 +729,8 @@ function form_save_data($def, $data) {
     }
 
     for($i=0;$i<$count;$i++) {
+      $new_error=array();
+
       if($def[$k]["count"])
         $v=$data[$k][$i];
       else
@@ -736,7 +738,11 @@ function form_save_data($def, $data) {
 
       switch($def[$k]["type"]) {
         case "form":
-          $v=form_save_data($def[$k]["values"], $v);
+          $v=form_save_data($def[$k]["values"], $v, $new_error);
+	  if(isset($v['__error'])) {
+	    $new_error=$v['__error'];
+	    unset($v['__error']);
+	  }
           break;
 	case "file":
 	  if(isset($v['tmp_name'])) {
@@ -745,7 +751,7 @@ function form_save_data($def, $data) {
 	    // error avoidance
             if(!$v['name']) {
 	      $v['name']=uniqid();
-	      $v['error'].="Dateiname fehlt! Verwende {$v['name']} als Dateiname.";
+	      $new_error[]="Dateiname fehlt! Verwende {$v['name']} als Dateiname.";
 	    }
 
 	    // save file to directory (under new name)
@@ -753,21 +759,30 @@ function form_save_data($def, $data) {
 
 	    // check if file has been written
 	    if(!file_exists("{$def[$k]['path']}/{$v['name']}"))
-	      $v['error'].="Achtung Fehler! Datei wurde nicht gespeichert!";
+	      $new_error[]="Achtung Fehler! Datei wurde nicht gespeichert!";
 	    elseif(($s=filesize("{$def[$k]['path']}/{$v['name']}"))!=$v['size'])
-	      $v['error'].="Achtung Fehler! Datei wurde nicht korrekt gespeichert, Dateigröße ($s) stimmt nicht!";
+	      $new_error[]="Achtung Fehler! Datei wurde nicht korrekt gespeichert, Dateigröße ($s) stimmt nicht!";
 
 	    unset($v['new_name']);
 	    unset($v['tmp_name']);
 	  }
       }
 
-      if($def[$k]["count"])
+      if($def[$k]["count"]) {
         $data[$k][$i]=$v;
-      else
+	foreach($new_error as $e)
+	  $error[]="{$def[$k]['name']}/$i: $e";
+      }
+      else {
         $data[$k]=$v;
+	foreach($new_error as $e)
+	  $error[]="{$def[$k]['name']}: $e";
+      }
     }
   }
+
+  if(sizeof($error))
+    $data['__error']=$error;
 
   return $data;
 }
