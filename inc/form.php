@@ -580,8 +580,9 @@ function form_get_inputstr($def, $f, $data, $maxcount, $varname, $moreparam) {
 	    $ret.="{$v['orig_name']}";
 	  $ret.=" <a href='javascript:form_file_overwrite(\"$thisvarname\")'>Change File</a>";
 	  $ret.="</span>\n";
-	  foreach(array("orig_name", "name", "size", "ext") as $k)
-	    $ret.="<input type='hidden' name='{$thisvarname}[$k]' value=\"".htmlspecialchars($v[$k])."\">\n";
+	  foreach(array("orig_name", "tmp_name", "new_name", "name", "size", "ext") as $k)
+	    if(isset($v[$k]))
+	      $ret.="<input type='hidden' name='{$thisvarname}[$k]' value=\"".htmlspecialchars($v[$k])."\">\n";
 	}
 	$ret.="<input type='hidden' name='{$thisvarname}[var]' value='{$thisvarname}'>\n";
 
@@ -742,7 +743,7 @@ function form_save_data($def, $data) {
 	    $v['name']=$v['new_name'];
 
 	    // save file to directory (under new name)
-	    move_uploaded_file($v['tmp_name'], "{$def[$k]['path']}/{$v['name']}");
+	    rename($v['tmp_name'], "{$def[$k]['path']}/{$v['name']}");
 
 	    unset($v['new_name']);
 	    unset($v['tmp_name']);
@@ -904,7 +905,12 @@ function form_get_data($def, $data) {
 	    $ev['size']=$x;
 
 	    if($error===false) {
-	      $ev['tmp_name']=$tmp_name;
+	      // move to a new temporary location (in case of reload, e.g. due
+	      // to missing other values, we might reload, then the file would
+	      // be removed.
+	      $ev['tmp_name']=tempnam("/tmp", "form-upload-".uniqid());
+	      move_uploaded_file($tmp_name, $ev['tmp_name']);
+
 	      // build a new filename from the template
 	      if(!$template=$def[$k]['template'])
 		$template="[orig_name]";
