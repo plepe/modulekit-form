@@ -742,8 +742,20 @@ function form_save_data($def, $data) {
 	  if(isset($v['tmp_name'])) {
 	    $v['name']=$v['new_name'];
 
+	    // error avoidance
+            if(!$v['name']) {
+	      $v['name']=uniqid();
+	      $v['error'].="Dateiname fehlt! Verwende {$v['name']} als Dateiname.";
+	    }
+
 	    // save file to directory (under new name)
 	    rename($v['tmp_name'], "{$def[$k]['path']}/{$v['name']}");
+
+	    // check if file has been written
+	    if(!file_exists("{$def[$k]['path']}/{$v['name']}"))
+	      $v['error'].="Achtung Fehler! Datei wurde nicht gespeichert!";
+	    elseif(($s=filesize("{$def[$k]['path']}/{$v['name']}"))!=$v['size'])
+	      $v['error'].="Achtung Fehler! Datei wurde nicht korrekt gespeichert, Dateigröße ($s) stimmt nicht!";
 
 	    unset($v['new_name']);
 	    unset($v['tmp_name']);
