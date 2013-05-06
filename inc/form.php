@@ -756,12 +756,13 @@ function form_save_data($def, $data) {
 
 	    // save file to directory (under new name)
 	    rename($v['tmp_name'], "{$def[$k]['path']}/{$v['name']}");
+	    clearstatcache("{$def[$k]['path']}/{$v['name']}");
 
 	    // check if file has been written
 	    if(!file_exists("{$def[$k]['path']}/{$v['name']}"))
 	      $new_error[]="Achtung Fehler! Datei wurde nicht gespeichert!";
 	    elseif(($s=filesize("{$def[$k]['path']}/{$v['name']}"))!=$v['size'])
-	      $new_error[]="Achtung Fehler! Datei wurde nicht korrekt gespeichert, Dateigröße ($s) stimmt nicht!";
+	      $new_error[]="Achtung Fehler! Datei wurde nicht korrekt gespeichert, Dateigröße ($s statt {$v['size']}) stimmt nicht!";
 
 	    unset($v['new_name']);
 	    unset($v['tmp_name']);
