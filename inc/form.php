@@ -755,7 +755,8 @@ function form_save_data($def, $data) {
 	    }
 
 	    // save file to directory (under new name)
-	    rename($v['tmp_name'], "{$def[$k]['path']}/{$v['name']}");
+	    rename("{$def[$k]['path']}/{$v['tmp_name']}",
+	           "{$def[$k]['path']}/{$v['name']}");
 	    clearstatcache("{$def[$k]['path']}/{$v['name']}");
 
 	    // check if file has been written
@@ -935,9 +936,9 @@ function form_get_data($def, $data) {
 	    if($error===false) {
 	      // move to a new temporary location (in case of reload, e.g. due
 	      // to missing other values, we might reload, then the file would
-	      // be removed.
-	      $ev['tmp_name']=tempnam("/tmp", "form-upload-".uniqid());
-	      move_uploaded_file($tmp_name, $ev['tmp_name']);
+	      // be removed).
+	      $ev['tmp_name']=".form-upload-".uniqid();
+	      move_uploaded_file($tmp_name, "{$def[$k]['path']}/{$ev['tmp_name']}");
 
 	      // build a new filename from the template
 	      if(!$template=$def[$k]['template'])
