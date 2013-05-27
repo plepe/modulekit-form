@@ -285,6 +285,12 @@ function form_element_check(ob) {
       if(ob.value!="")
 	val=parseInt(ob.value);
       break;
+    case "float":
+      if(!(val=ob.value.match(/^\-?[0-9]*(\.[0-9]+)?$/)))
+        return form_element_error(ob, "Bitte eine Ganz-/Kommazahl angeben!");
+      if(ob.value!="")
+	val=parseFloat(ob.value);
+      break;
     case "person":
       if(form_autocomp_blur_state) { // ist true, wenn sich die maus nicht ueberm form_autocomp-dingens befindet
         if(val!="") {

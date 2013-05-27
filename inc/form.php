@@ -167,6 +167,7 @@ function form_element_check($field, $conf, $data, $rek=1) {
     switch($conf[type]) {
       case "text":
       case "integer":
+      case "float":
         if($conf["values"]) {
           if(!ereg($conf["values"], $data[$field], $m)) {
             return $conf["valueserror"];
@@ -476,6 +477,7 @@ function form_get_inputstr($def, $f, $data, $maxcount, $varname, $moreparam) {
         $ret.="$ev<br>\n";
         break;
       case "integer":
+      case "float":
       case "text":
         $ret.="<input type='text' name='$thisvarname' $more_param onChange='form_element_changed(this)' onKeyUp='form_element_typing(this)' ".
               "value=\"".htmlspecialchars($ev)."\" /><br>\n";
@@ -814,6 +816,7 @@ function form_get_data($def, $data) {
       switch($def[$k]["type"]) {
         case "text":
         case "integer":
+        case "float":
         case "textarea":
         case "password":
         case "select":
