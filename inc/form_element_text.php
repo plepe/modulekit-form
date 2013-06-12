@@ -21,6 +21,12 @@ class form_element_text extends form_element {
       $class="form_modified";
 
     $input=$this->create_element($document);
+
+    if(isset($this->def['html_attributes']))
+      foreach($this->def['html_attributes'] as $k=>$v) {
+        $input->setAttribute($k, $v);
+      }
+
     $input->setAttribute("class", $class);
     $input->setAttribute("name", $this->options['var_name']);
     $input->setAttribute("value", $this->data);

@@ -5,6 +5,7 @@ $form_def=array(
     'desc'	=>"Please enter a name",
     'type'	=>"text",
     'req'	=>true,
+    'html_attributes'   =>array("style"=>"border: 2px solid black;"),
   ),
   'sex'		=>array(
     'name'	=>"Sex",

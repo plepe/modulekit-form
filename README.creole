@@ -91,6 +91,7 @@ Definition:
 * type: 'text'
 * check: array("regexp", REGEXP, [MESSAGE]), e.g. array("regexp", "^A", "Value needs to start with an 'A'")
 * empty_value: Value to be returned if text field is empty (default: null)
+* html_attributes: Assoc. Array, e.g. array("style"=>"text-weight: bold;", "autofocus=>true)
 
 Value:
 * String. Will be stripped of additional slashes.

@@ -28,6 +28,11 @@ form_element_text.prototype.show_element=function() {
     cls="form_modified";
 
   var input=this.create_element();
+
+  if(this.def.html_attributes)
+    for(var i in this.def.html_attributes)
+      input.setAttribute(i, this.def.html_attributes[i]);
+
   input.className=cls;
   input.name=this.options.var_name;
   if(this.data)
