@@ -62,16 +62,16 @@ form_element_select.prototype.show_element=function() {
   this.dom_element=select;
 
   for(var k in this.def.values) {
-    var input=document.createElement("option");
-    input.value=k;
+    var option=document.createElement("option");
+    option.value=k;
     // TODO: indexOf not supported in IE8 and earlier
     if(this.data==k)
-      input.selected=true;
-    select.appendChild(input);
-    this.dom_values[k]=input;
+      option.selected=true;
+    select.appendChild(option);
+    this.dom_values[k]=option;
 
     var text=document.createTextNode(this.def.values[k]);
-    input.appendChild(text);
+    option.appendChild(text);
   }
 
   return div;

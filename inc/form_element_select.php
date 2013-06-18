@@ -14,17 +14,14 @@ class form_element_select extends form_element {
     $select->setAttribute("id", $this->id);
 
     foreach($this->def['values'] as $k=>$v) {
-      $input=$document->createElement("option");
-      $input->setAttribute("type", "radio");
-      $input->setAttribute("id", $id);
-      $input->setAttribute("name", "{$this->options['var_name']}");
-      $input->setAttribute("value", $k);
+      $option=$document->createElement("option");
+      $option->setAttribute("value", $k);
       if($k==$this->data)
-	$input->setAttribute("selected", "selected");
-      $select->appendChild($input);
+	$option->setAttribute("selected", "selected");
+      $select->appendChild($option);
       
       $text=$document->createTextNode($v);
-      $input->appendChild($text);
+      $option->appendChild($text);
     }
 
     $div->appendChild($select);
