@@ -109,3 +109,14 @@ form_element_text.prototype.check_regexp=function(list, param) {
       list.push(param[1]);
   }
 }
+
+form_element_text.prototype.errors=function(list) {
+  this.parent("form_element_text").errors.call(this, list);
+
+  if((this.data!="")&&(this.data!=null)) {
+    if(this.def.force_values&&this.def.values) {
+      if(!in_array(this.data, this.def.values))
+        list.push(this.path_name()+": Ungültiger Wert");
+    }
+  }
+}

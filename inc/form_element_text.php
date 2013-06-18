@@ -80,4 +80,17 @@ class form_element_text extends form_element {
 
     return $data;
   }
+
+  function errors($errors) {
+    parent::errors(&$errors);
+
+    if(($this->data!="")||($this->data!=null)) {
+      if(isset($this->def['force_values'])&&($this->def['force_values'])&&
+         isset($this->def['values'])) {
+        if(!in_array($this->data, $this->def['values'])) {
+          $errors[]=$this->path_name().": Ungültiger Wert";
+        }
+      }
+    }
+  }
 }

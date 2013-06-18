@@ -41,6 +41,7 @@ $form_def=array(
     'name'	=>"Supervisor(s)",
     'type'	=>"text",
     'values'	=>array("Mr. Smith", "Mrs. Meyer", "Stephen Whoever", "Susan Somebody"),
+    'force_values'=>true,
     'count'     =>array("default"=>1),
   ),
 /*  'residence'	=>array(
