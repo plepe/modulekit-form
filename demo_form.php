@@ -37,6 +37,12 @@ $form_def=array(
     'type'	=>"select",
     'values'	=>array("Austria", "Australia", "Germany", "Great Britian", "USA"),
   ),
+  'supervisor'	=>array(
+    'name'	=>"Supervisor(s)",
+    'type'	=>"text",
+    'values'	=>array("Mr. Smith", "Mrs. Meyer", "Stephen Whoever", "Susan Somebody"),
+    'count'     =>array("default"=>1),
+  ),
 /*  'residence'	=>array(
     'name'	=>"Where do you live",
     'type'	=>"inputselect",

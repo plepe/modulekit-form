@@ -33,6 +33,24 @@ form_element_text.prototype.show_element=function() {
     for(var i in this.def.html_attributes)
       input.setAttribute(i, this.def.html_attributes[i]);
 
+  if(this.def.values) {
+    input.setAttribute("list", this.id+"-datalist");
+
+    var datalist=document.createElement("datalist");
+    datalist.setAttribute("id", this.id+"-datalist");
+
+    for(var k in this.def.values) {
+      var option=document.createElement("option");
+      option.setAttribute("value", this.def.values[k]);
+      datalist.appendChild(option);
+
+      var text=document.createTextNode(this.def.values[k]);
+      option.appendChild(text);
+    }
+
+    div.appendChild(datalist);
+  }
+
   input.className=cls;
   input.name=this.options.var_name;
   if(this.data)

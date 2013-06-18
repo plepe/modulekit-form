@@ -92,6 +92,7 @@ Definition:
 * check: array("regexp", REGEXP, [MESSAGE]), e.g. array("regexp", "^A", "Value needs to start with an 'A'")
 * empty_value: Value to be returned if text field is empty (default: null)
 * html_attributes: Assoc. Array, e.g. array("style"=>"text-weight: bold;", "autofocus=>true)
+* values: array of recommendated values
 
 Value:
 * String. Will be stripped of additional slashes.
@@ -99,7 +100,7 @@ Value:
 === Form Element "Textarea" ===
 Similar to Form Element "Text", but provides a multi line text input.
 
-Definition (also see Form Element "Text"):
+Definition (also see Form Element "Text", except 'values'):
 * type: 'textarea'
 
 Value:

@@ -31,6 +31,25 @@ class form_element_text extends form_element {
     $input->setAttribute("name", $this->options['var_name']);
     $input->setAttribute("value", $this->data);
 
+    if(isset($this->def['values'])) {
+      $input->setAttribute("list", $this->id."-datalist");
+
+      $datalist=$document->createElement("datalist");
+      $datalist->setAttribute("id", $this->id."-datalist");
+
+      foreach($this->def['values'] as $k=>$v) {
+        $option=$document->createElement("option");
+        $option->setAttribute("value", $v);
+        $datalist->appendChild($option);
+
+        $text=$document->createTextNode($v);
+        $option->appendChild($text);
+      }
+
+      $div->appendChild($datalist);
+    }
+
+
     $this->dom_element=$input;
 
     $div->appendChild($input);
