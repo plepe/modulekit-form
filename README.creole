@@ -142,6 +142,16 @@ Definition:
 Value:
 * Index of the chosen option, e.g. 'm'.
 
+=== Form Element "Select" ===
+A dropdown box were an entry can be selected.
+
+Definition:
+* type: 'select'
+* values: array of options, e.g. array("male", "female")
+
+Value:
+* Value of chosen option (e.g. "male")
+
 === Form Element "Password" ===
 Like Form Element "Text", but hides the password.
 
