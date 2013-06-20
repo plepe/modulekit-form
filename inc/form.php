@@ -592,7 +592,7 @@ function form_get_inputstr($def, $f, $data, $maxcount, $varname, $moreparam) {
 	  $ret.="<span id='{$thisvarname}-newfile' style='display: none'>";
 	$ret.="<span class='form_orig'><input type='file' name='{$thisvarname}' $more_param";
 	$more_ret.="<span class='form_orig'><input type='file' name='{$morevarname}' $more_more_param";
-	$ret.=" onChange='form_element_changed(this)' />$t</span>";
+	$ret.=" onChange='form_element_changed(this)' />$t <small>(max. Dateigröße: ".ini_get("upload_max_filesize")."B)</small></span>";
 	if($v['orig_name'])
 	  $ret.="</span>";
 	$ret.="<br />\n";
