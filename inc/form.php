@@ -147,6 +147,22 @@ function form_check($def, $data) {
         foreach($err as $e) {
           $error[]="'$conf[name]': $e";
         }
+      case "file":
+	// TODO: path to variable hard-coded!
+	$err=$_FILES['data']['error'][$key];
+	switch($err) {
+	  case 1:
+	  case 2:
+	    $error[]="'{$conf['name']}': Datei '{$_FILES['data']['name'][$key]}' ist zu groß!";
+	    break;
+	  case 3:
+	    $error[]="'{$conf['name']}': Datei wurde nur teilweise raufgeladen.";
+	    break;
+	  case 7:
+	    $error[]="'{$conf['name']}': Beim speichern der Datei ist ein Fehler aufgetreten. Bitte Übungsleitung kontaktieren!";
+	    break;
+	}
+	break;
       default:
     }
   }
