@@ -149,10 +149,11 @@ A dropdown box were an entry can be selected.
 
 Definition:
 * type: 'select'
-* values: array of options, e.g. array("male", "female")
+* values: array of values, e.g. array("male", "female") or array("m"=>"male", "f"=>"female")
+* mode: 'keys' (default when a hash array is used) or 'values' (default when a simple array is used)
 
 Value:
-* Value of chosen option (e.g. "male")
+* In 'keys' mode the key of the chosen value is returned (e.g. "m"); in 'values' mode the value is returned (e.g. "male")
 
 === Form Element "Password" ===
 Like Form Element "Text", but hides the password.

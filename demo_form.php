@@ -35,6 +35,11 @@ $form_def=array(
   'nationality'	=>array(
     'name'	=>"Nationality",
     'type'	=>"select",
+    'values'	=>array("at"=>"Austria", "au"=>"Australia", "de"=>"Germany", "gb"=>"Great Britian", "us"=>"USA"),
+  ),
+  'residence'	=>array(
+    'name'	=>"Where do you live",
+    'type'	=>"select",
     'values'	=>array("Austria", "Australia", "Germany", "Great Britian", "USA"),
   ),
   'supervisor'	=>array(
@@ -44,11 +49,6 @@ $form_def=array(
     'force_values'=>true,
     'count'     =>array("default"=>1),
   ),
-/*  'residence'	=>array(
-    'name'	=>"Where do you live",
-    'type'	=>"inputselect",
-    'values'	=>array("Austria", "Australia", "Germany", "Great Britian", "USA"),
-  ), */
   'os'	=>array(
     'name'	=>"What operating systems do you use",
     'desc'	=>"You can select several values",
@@ -105,7 +105,8 @@ $default_data=array(
   "comment"=>"Foo Bar\nBlablabla\n",
   "hobbies"=>array(0=>"Linux", 2=>"PHP", 5=>"Cycling"),
   "languages"=>array("php", "js"),
-  "nationality"=>"Austria",
+  "nationality"=>"de",
+  "residence"=>"Germany",
   "os"=>array("Ubuntu Linux", "Debian Linux"),
   "tags"=>array("Foo", "Bar"),
   "json"=>array(1, 2, "foo", "bar"=>array("b", "a", "r")),

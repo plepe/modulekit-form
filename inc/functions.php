@@ -14,3 +14,12 @@ function DOM_createHTMLElement($text, $document) {
   $dom->loadHTML("<?xml encoding='UTF-8'><html><span>{$text}</span></html>");
   return $document->importNode($dom->lastChild, true);
 }
+
+// Source: http://www.benjaminkeen.com/function-is_hash/
+function is_hash($var)
+{
+  if (!is_array($var))
+    return false;
+
+  return array_keys($var) !== range(0,sizeof($var)-1);
+}
