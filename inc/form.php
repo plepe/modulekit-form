@@ -93,6 +93,56 @@
 $form_orig_data=$_REQUEST[form_orig_data];
 $form_errors=array();
 
+class form {
+  public $def;
+  public $id;
+  public $options;
+  public $data;
+
+  function __construct($id, $def, $options=array()) {
+    $this->id=$id;
+    $this->def=$def;
+    $this->options=$options;
+    if(!$this->options['var_name'])
+      $this->options['var_name']=$this->id;
+
+    if($_REQUEST[$this->options['var_name']])
+      $this->data=form_get_data($this->def, $_REQUEST[$this->options['var_name']]);
+  }
+
+  function get_data() {
+    return $this->data;
+  }
+
+  function set_data($data) {
+    $this->data=$data;
+  }
+
+  function errors() {
+    return form_check($this->def, $this->data);
+  }
+
+  function show_errors() {
+    return form_print_errors($this->errors());
+  }
+
+  function reset() {
+    return form_reset($this->def, $this->data, $this->options['var_name']);
+  }
+
+  function show() {
+    return form_show($this->def, $this->data, $this->options['var_name'], $this->options);
+  }
+}
+
+function html_export_var($data) {
+  print "<script type='text/javascript'>\n";
+  foreach($data as $k=>$v) {
+    print "var $k=".json_encode($v).";\n";
+  }
+  print "</script>\n";
+}
+
 function form_reset($form, $data, $varname) {
   global $form_orig_data;
   unset($form_orig_data[$varname]);
