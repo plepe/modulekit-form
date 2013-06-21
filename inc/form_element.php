@@ -247,6 +247,33 @@ class form_element {
   function is_modified() {
     return $this->get_data()!==$this->get_orig_data();
   }
+
+  function get_values() {
+    $ret=array();
+
+    if(!isset($this->def['values'])||!is_array($this->def['values']))
+      return $ret;
+
+    // check values_mode
+    if(!isset($this->def['values_mode']))
+      $this->def['values_mode']=is_hash($this->def['values'])?"keys":"values";
+
+    foreach($this->def['values'] as $k=>$v) {
+      switch($this->def['values_mode']) {
+	case "keys":
+	  $ret[$k]=$v;
+	  break;
+	case "values":
+	  $ret[$v]=$v;
+	  break;
+	default:
+	  // invalid mode
+	  break;
+      }
+    }
+
+    return $ret;
+  }
 }
 
 function get_form_element_class($def) {

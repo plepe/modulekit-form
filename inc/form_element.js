@@ -285,6 +285,33 @@ form_element.prototype.is_modified=function() {
   return this.get_data()!==this.get_orig_data();
 }
 
+form_element.prototype.get_values=function() {
+  var ret={};
+
+  if(!this.def.values||(typeof this.def.values!="object"))
+    return ret;
+
+  // check mode
+  if(!this.def.values_mode)
+    this.def.values_mode=this.def.values.length?"values":"keys";
+
+  for(var k in this.def.values) {
+    var val;
+    switch(this.def.values_mode) {
+      case "keys":
+	ret[k]=this.def.values[k];
+	break;
+      case "values":
+        ret[this.def.values[k]]=this.def.values[k];
+	break;
+      default:
+        // invalid mode
+    }
+  }
+
+  return ret;
+}
+
 function get_form_element_class(def) {
   var type=def.type;
 

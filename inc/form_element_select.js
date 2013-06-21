@@ -4,8 +4,6 @@ function form_element_select() {
 
 form_element_select.prototype.init=function(id, def, options, form_parent) {
   this.parent("form_element_select").init.call(this, id, def, options, form_parent);
-  if(!this.def.mode)
-    this.def.mode=this.def.values.length?"values":"keys";
 
   this.data=null;
 }
@@ -63,28 +61,17 @@ form_element_select.prototype.show_element=function() {
 
   this.dom_element=select;
 
-  for(var k in this.def.values) {
-    var val;
-    switch(this.def.mode) {
-      case "keys":
-	val=k;
-	break;
-      case "values":
-        val=this.def.values[k];
-	break;
-      default:
-        // invalid mode
-    }
-
+  var values=this.get_values();
+  for(var k in values) {
     var option=document.createElement("option");
-    option.value=val;
+    option.value=k;
     // TODO: indexOf not supported in IE8 and earlier
-    if(this.data==val)
+    if(this.data==k)
       option.selected=true;
     select.appendChild(option);
     this.dom_values[k]=option;
 
-    var text=document.createTextNode(this.def.values[k]);
+    var text=document.createTextNode(values[k]);
     option.appendChild(text);
   }
 

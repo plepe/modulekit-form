@@ -66,7 +66,8 @@ form_element_checkbox.prototype.show_element=function() {
   this.get_data();
   this.dom_values={};
 
-  for(var k in this.def.values) {
+  var values=this.get_values();
+  for(var k in values) {
     var id=this.id+"-"+k;
 
     var cls="form_orig";
@@ -91,7 +92,7 @@ form_element_checkbox.prototype.show_element=function() {
 
     var label=document.createElement("label");
     label.setAttribute("for", id);
-    var text=document.createTextNode(this.def.values[k]);
+    var text=document.createTextNode(values[k]);
     label.appendChild(text);
     span.appendChild(label);
 
@@ -108,7 +109,8 @@ form_element_checkbox.prototype.refresh=function() {
   if(!this.dom_values)
     return;
 
-  for(var k in this.def.values) {
+  var values=this.get_values();
+  for(var k in values) {
     var cls="form_orig";
 
     if(this.orig_data&&

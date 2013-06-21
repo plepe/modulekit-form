@@ -130,30 +130,33 @@ A list of checkboxes where a random count of boxes may be checked.
 
 Definition:
 * type: 'checkbox'
-* values: hash array of options, e.g. array('php'=>"PHP", 'js'=>"Javascript', 'cpp'=>"C++")
+* values: hash array of values, e.g. array("php"=>"PHP", "cpp"=>"C++", "js"=>"Javascript") or simple array of values, e.g. array("PHP", "C++", "Javascript")
+* values_mode: 'keys' (default when a hash array is used) or 'values' (default when a simple array is used)
 
 Value:
-* Array of indexes of the chosen option(s). E.g. array('php', 'js')
+* In 'keys' values_mode an array of the keys of the chosen values is returned (e.g. array("php", "cpp"); in 'values' mode an array of the the keys of the chosen values is returned (e.g. array("PHP", "C++"))
+
 === Form Element "Radio" ===
 A list of radio boxes where a maximum of one of boxes may be checked.
 
 Definition:
 * type: 'radio'
-* values: hash array of options, e.g. array('m'=>"male", 'f'=>"female")
+* values: hash array of values, e.g. array("m"=>"male", "f"=>"female") or simple array of values, e.g. array("male", "female")
+* values_mode: 'keys' (default when a hash array is used) or 'values' (default when a simple array is used)
 
 Value:
-* Index of the chosen option, e.g. 'm'.
+* In 'keys' values_mode the key of the chosen value is returned (e.g. "m"); in 'values' mode the value is returned (e.g. "male")
 
 === Form Element "Select" ===
 A dropdown box were an entry can be selected.
 
 Definition:
 * type: 'select'
-* values: array of values, e.g. array("male", "female") or array("m"=>"male", "f"=>"female")
-* mode: 'keys' (default when a hash array is used) or 'values' (default when a simple array is used)
+* values: hash array of values, e.g. array("m"=>"male", "f"=>"female") or simple array of values array("male", "female")
+* values_mode: 'keys' (default when a hash array is used) or 'values' (default when a simple array is used)
 
 Value:
-* In 'keys' mode the key of the chosen value is returned (e.g. "m"); in 'values' mode the value is returned (e.g. "male")
+* In 'keys' values_mode the key of the chosen value is returned (e.g. "m"); in 'values' mode the value is returned (e.g. "male")
 
 === Form Element "Password" ===
 Like Form Element "Text", but hides the password.

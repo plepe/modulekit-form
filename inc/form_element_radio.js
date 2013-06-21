@@ -56,7 +56,8 @@ form_element_radio.prototype.show_element=function() {
   this.get_data();
   this.dom_values={};
 
-  for(var k in this.def.values) {
+  var values=this.get_values();
+  for(var k in values) {
     var id=this.id+"-"+k;
 
     var cls="form_orig";
@@ -81,7 +82,7 @@ form_element_radio.prototype.show_element=function() {
 
     var label=document.createElement("label");
     label.setAttribute("for", id);
-    var text=document.createTextNode(this.def.values[k]);
+    var text=document.createTextNode(values[k]);
     label.appendChild(text);
     span.appendChild(label);
 

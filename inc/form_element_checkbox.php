@@ -3,7 +3,7 @@ class form_element_checkbox extends form_element {
   function show_element($document) {
     $div=parent::show_element($document);
 
-    foreach($this->def['values'] as $k=>$v) {
+    foreach($this->get_values() as $k=>$v) {
       $id="{$this->id}-$k";
 
       // check for changes
