@@ -41,6 +41,7 @@ $include_js=array(
   "inc/form_element_unsupported.js",
   "inc/form_element_select.js",
   "inc/form_element_numeric.js",
+  "inc/form_element_file.js",
 );
 $include_css=array(
   "inc/form.css",
