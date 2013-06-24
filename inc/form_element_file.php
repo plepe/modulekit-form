@@ -13,19 +13,33 @@ class form_element_file extends form_element {
       ($this->data!=$this->orig_data))
       $class="form_modified";
 
-    $input=$document->createElement("input");
-    $input->setAttribute("type", "file");
-    $input->setAttribute("class", $class);
-    $input->setAttribute("name", $this->options['var_name']."[file]");
-    $div->appendChild($input);
-
     if($this->data) {
+      // create hidden input for data
       $input=$document->createElement("input");
       $input->setAttribute("type", "hidden");
       $input->setAttribute("value", json_encode($this->data));
       $input->setAttribute("name", $this->options['var_name']."[data]");
       $div->appendChild($input);
+
+      // create div for text of old file
+      $span=$document->createElement("div");
+      $span->setAttribute("id", $this->id."-oldfile");
+      $div->appendChild($span);
+
+      $txt=$document->createTextNode($this->data['orig_name']);
+      $span->appendChild($txt);
     }
+
+    // create input field for new file
+    $span=$document->createElement("div");
+    $span->setAttribute("id", $this->id."-newfile");
+    $div->appendChild($span);
+
+    $input=$document->createElement("input");
+    $input->setAttribute("type", "file");
+    $input->setAttribute("class", $class);
+    $input->setAttribute("name", $this->options['var_name']."[file]");
+    $span->appendChild($input);
 
     return $div;
   }

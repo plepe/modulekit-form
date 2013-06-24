@@ -34,4 +34,24 @@ form_element_file.prototype.connect=function(dom_parent) {
 
   if(this.dom_element)
     this.dom_element.onchange=this.notify_change.bind(this);
+
+  var span;
+  if(span=document.getElementById(this.id+"-oldfile")) {
+    var input=document.createElement("input");
+    input.type="button";
+    input.value="Ändern";
+    input.onclick=this.input_change.bind(this);
+    span.appendChild(input);
+
+    span=document.getElementById(this.id+"-newfile");
+    span.style.display="none";
+  }
+}
+
+form_element_file.prototype.input_change=function() {
+  var span=document.getElementById(this.id+"-oldfile");
+  span.style.display="none";
+
+  span=document.getElementById(this.id+"-newfile");
+  span.style.display="block";
 }
