@@ -16,9 +16,17 @@ class form_element_file extends form_element {
     $input=$document->createElement("input");
     $input->setAttribute("type", "file");
     $input->setAttribute("class", $class);
-    $input->setAttribute("name", $this->options['var_name']);
-
+    $input->setAttribute("name", $this->options['var_name']."[file]");
     $div->appendChild($input);
+
+    if($this->data) {
+      $input=$document->createElement("input");
+      $input->setAttribute("type", "hidden");
+      $input->setAttribute("value", json_encode($this->data));
+      $input->setAttribute("name", $this->options['var_name']."[data]");
+      $div->appendChild($input);
+    }
+
     return $div;
   }
 
@@ -56,9 +64,17 @@ class form_element_file extends form_element {
 
     $m=explode("][", substr($var_name, $p1+1, strlen($var_name)-$p1-2));
     $var_path=array_merge($var_path, $m);
+    $var_path[]="file";
 
-    if($this->_FILES_value($var_path, "tmp_name")===null)
+    if($this->_FILES_value($var_path, "tmp_name")==null) {
+      if(isset($data['data'])) {
+	$data=json_decode($data['data'], true);
+
+	parent::set_request_data($data);
+      }
+
       return;
+    }
 
     $data=array();
     foreach(array("name", "type", "tmp_name", "error", "size") as $k)
@@ -82,11 +98,19 @@ class form_element_file extends form_element {
       '[timestamp]'	=>Date("Y-m-d-H-i-s"),
     ));
 
+    // move to a new temporary location (in case of reload, e.g. due to
+    // missing other values, we might reload, then the file would be
+    // removed).
+    $tmp_name=$data['tmp_name'];
+    $data['tmp_name']=".form-upload-".uniqid();
+    move_uploaded_file($tmp_name, "{$this->def['path']}/{$data['tmp_name']}");
+
     parent::set_request_data($data);
   }
 
   function save_data() {
-    move_uploaded_file($this->data['tmp_name'], "{$this->def['path']}/{$this->data['new_name']}");
+    rename("{$this->def['path']}/{$this->data['tmp_name']}",
+           "{$this->def['path']}/{$this->data['new_name']}");
 
     $this->data['name']=$this->data['new_name'];
     unset($this->data['tmp_name']);

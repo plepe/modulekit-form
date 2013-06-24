@@ -22,6 +22,7 @@ $include_php=array(
   "inc/form_element_file.php",
   "inc/form_element_directory.php",
   "inc/form_element_numeric.php",
+  "inc/form_element_file.php",
 );
 $include_js=array(
   "inc/functions.js",
