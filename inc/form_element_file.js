@@ -48,6 +48,55 @@ form_element_file.prototype.connect=function(dom_parent) {
   }
 }
 
+form_element_file.prototype.show_element=function() {
+  var div=this.parent("form_element_file").show_element.call(this);
+
+  var cls="form_orig";
+  if(this.is_modified())
+    cls="form_modified";
+
+  if(this.data) {
+    // create hidden input for data
+    var input=document.createElement("input");
+    input.setAttribute("type", "hidden");
+    input.setAttribute("value", JSON.stringify(this.data));
+    input.setAttribute("name", this.options.var_name+"[data]");
+    div.appendChild(input);
+
+    // create div for text of old file
+    var span=document.createElement("div");
+    span.setAttribute("id", this.id+"-oldfile");
+    div.appendChild(span);
+
+    var txt=document.createTextNode(this.data.orig_name);
+    span.appendChild(txt);
+
+    var input=document.createElement("input");
+    input.type="button";
+    input.value="Ändern";
+    input.onclick=this.input_change.bind(this);
+    span.appendChild(input);
+  }
+
+  // create input field for new file
+  var span=document.createElement("div");
+  span.setAttribute("id", this.id+"-newfile");
+  if(this.data)
+    span.style.display="none";
+  div.appendChild(span);
+
+  var input=document.createElement("input");
+  input.setAttribute("type", "file");
+  input.setAttribute("class", cls);
+  input.setAttribute("name", this.options.var_name+"[file]");
+  span.appendChild(input);
+
+  this.dom_element=input;
+  this.dom_element.onchange=this.notify_change.bind(this);
+
+  return div;
+}
+
 form_element_file.prototype.input_change=function() {
   var span=document.getElementById(this.id+"-oldfile");
   span.style.display="none";
