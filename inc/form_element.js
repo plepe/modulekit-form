@@ -115,7 +115,7 @@ form_element.prototype.errors=function(list) {
   this.get_data();
 
   if((this.def.req)&&((!this.data)||(this.data=="")))
-    list.push(this.path_name()+": Wert muss angegeben werden.");
+    list.push(this.path_name()+": "+lang("form:require_value"));
 
   if(this.def.check) {
     var check_errors=[];
@@ -197,7 +197,7 @@ form_element.prototype.check_not=function(list, param) {
     return;
 
   if(param.length<2)
-    list.push("Ungültiger Wert");
+    list.push(lang('form:invalid_value'));
   else
     list.push(param[1]);
 }
@@ -228,7 +228,7 @@ form_element.prototype.check_is=function(list, param) {
 
   if(this.get_data()!=param[0]) {
     if(param.length<2)
-      list.push("Ungültiger Wert");
+      list.push(lang('form:invalid_value'));
     else
       list.push(param[1]);
   }

@@ -17,7 +17,7 @@ class form_element_unsupported extends form_element_json {
     $warning=$document->createElement("div");
     $warning->setAttribute("class", "warning");
     $warning->appendChild($document->createTextNode(
-      "Form Element type '{$this->def['type']}' not supported!"));
+      lang('form:not_supported', 0, $this->def['type'])));
 
     $div->appendChild($warning);
 

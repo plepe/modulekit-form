@@ -19,7 +19,7 @@ form_element_unsupported.prototype.show_element=function() {
   var warning=document.createElement("div");
   warning.className="warning";
   warning.appendChild(document.createTextNode(
-    "Form Element type '"+this.def.type+"' not supported!"));
+    lang('form:not_supported', 0, this.def.type)));
 
   div.appendChild(warning);
 

@@ -198,7 +198,7 @@ form_element_array.prototype.show_element=function() {
   var input=document.createElement("input");
   input.type="submit";
   input.name=this.options.var_name+"[__new]";
-  input.value="Element hinzufügen";
+  input.value=lang('form:add_element');
   input.onclick=this.add_element.bind(this);
   el_div.appendChild(input);
 

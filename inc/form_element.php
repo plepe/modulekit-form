@@ -58,7 +58,7 @@ class form_element {
     $this->get_data();
 
     if(isset($this->def['req'])&&($this->def['req'])&&(!$this->data))
-      $errors[]=$this->path_name().": Wert muss angegeben werden.";
+      $errors[]=$this->path_name().": ".lang("form:require_value");
 
     if(isset($this->def['check'])) {
       $check_errors=array();
@@ -194,7 +194,7 @@ class form_element {
       return;
 
     if(sizeof($param)<2)
-      $errors[]="Ungültiger Wert";
+      $errors[]=lang('form:invalid_value');
     else
       $errors[]=$param[1];
   }
@@ -224,7 +224,7 @@ class form_element {
 
     if($this->get_data()!=$param[0]) {
       if(sizeof($param)<2)
-	$errors[]="Ungültiger Wert";
+	$errors[]=lang('form:invalid_value');
       else
 	$errors[]=$param[1];
     }

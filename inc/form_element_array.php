@@ -161,7 +161,7 @@ class form_element_array extends form_element {
     $input=$document->createElement("input");
     $input->setAttribute("type", "submit");
     $input->setAttribute("name", "{$this->options['var_name']}[__new]");
-    $input->setAttribute("value", "Element hinzufügen");
+    $input->setAttribute("value", lang("form:add_element"));
     $el_div->appendChild($input);
 
     return $div;
