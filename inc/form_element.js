@@ -19,10 +19,18 @@ form_element.prototype.init=function(id, def, options, form_parent) {
 }
 
 form_element.prototype.name=function() {
-  if(this.def._name)
-    return this.def._name();
+  var name;
 
-  return this.def.name;
+  if(this.def._name)
+    name=this.def._name();
+
+  name=this.def.name;
+
+  if(typeof name=="object") {
+    return lang(name);
+  }
+
+  return name;
 }
 
 form_element.prototype.path_name=function() {
@@ -83,7 +91,7 @@ form_element.prototype.show=function() {
     if(this.def.name) {
       var div=document.createElement("div");
       div.className="form_name";
-      var text=document.createTextNode(this.def.name+":");
+      var text=document.createTextNode(this.name()+":");
       div.appendChild(text);
       td.appendChild(div);
     }
@@ -91,7 +99,7 @@ form_element.prototype.show=function() {
     if(this.def.desc) {
       var div=document.createElement("div");
       div.className="form_desc";
-      div.innerHTML=this.def.desc;
+      div.innerHTML=(typeof this.def.desc=="object"?lang(this.def.desc):this.def.desc);
       td.appendChild(div);
     }
   }

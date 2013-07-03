@@ -20,10 +20,15 @@ class form_element {
   }
 
   function name() {
-    if(isset($this->def['_name']))
-      return $this->def['_name'];
+    $name=$this->def['name'];
 
-    return $this->def['name'];
+    if(isset($this->def['_name']))
+      $name=$this->def['_name'];
+
+    if(is_array($name))
+      return lang($name);
+
+    return $name;
   }
 
   function type() {
@@ -106,7 +111,7 @@ class form_element {
       if(isset($this->def['name'])) {
 	$div=$document->createElement("div");
 	$div->setAttribute("class", "form_name");
-	$text=$document->createTextNode($this->def['name'].":");
+	$text=$document->createTextNode($this->name().":");
 	$div->appendChild($text);
 	$td->appendChild($div);
       }
@@ -114,7 +119,7 @@ class form_element {
       if(isset($this->def['desc'])) {
 	$div=$document->createElement("div");
 	$div->setAttribute("class", "form_desc");
-        $text=DOM_createHTMLElement($this->def['desc'], $document);
+        $text=DOM_createHTMLElement((is_array($this->def['desc'])?lang($this->def['desc']):$this->def['desc']), $document);
 	$div->appendChild($text);
 	$td->appendChild($div);
       }

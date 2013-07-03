@@ -51,8 +51,8 @@ All form elements share some options.
 
 Definition:
 * type: defines type of form element (e.g. 'text')
-* name: Name of the element (e.g. "Birthday")
-* desc: Description (usually written below Name in smaller letters); accepts full HTML (in contrast to 'name').
+* name: Name of the element (e.g. "Birthday"). This key may be translated (see below)
+* desc: Description (usually written below Name in smaller letters); accepts full HTML (in contrast to 'name'). This key may be translated (see below)
 * count: We internally be converted to a form element of type array using the options of this key. E.g. array('default'=>2) resp. { 'default': 2 }. See 'Form Element Array' for more information.
 * default: Specify a default value, which is shown if no value is set.
 * req: A value is required.
@@ -62,6 +62,9 @@ Definition:
 ** 'not': inverse check, e.g. array("not", array("regexp", ...)) - the sub-check need to resolve negative.
 ** 'check': Call check on a sibling form element.
 ** 'is': Compare to a specific value, array("is", VALUE, [MESSAGE]), e.g. array("is", 5, "Value '5' required")
+
+Translation of name, desc, ...:
+To translate the options you may supply an array with the language codes as keys, e.g. array("en"=>"English text", "de"=>"German text"); if translation is missing, the first translation will be used.
 
 === Form Element "Form" ===
 A form inside the form. E.g. if you have several cats, and want to record the same properties for every cat, like Name, Age and Race.
