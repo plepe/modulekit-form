@@ -2,11 +2,13 @@
 Header("content-type: text/html; charset=utf-8");
 include "modulekit/loader.php"; /* loads all php-includes */
 include "demo_form.php";
+call_hooks("init");
 ?>
 <html>
 <head>
 <?php print modulekit_include_js(); /* prints all js-includes */ ?>
 <?php print modulekit_include_css(); /* prints all css-includes */ ?>
+<?php print_add_html_headers(); ?>
 <link rel='stylesheet' type='text/css' href='demo.css'/>
 <script type='text/javascript' src='demo_combined.js'></script>
 </head>

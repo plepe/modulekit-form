@@ -2,6 +2,7 @@
 Header("content-type: text/html; charset=utf-8");
 include "modulekit/loader.php"; /* loads all php-includes */
 include "demo_form.php";
+call_hooks("init");
 
 if($_REQUEST['q']) {
   $form_def=json_decode($_REQUEST['q'], true);
@@ -16,6 +17,7 @@ if($_REQUEST['d']) {
 <head>
 <?php print modulekit_include_js(); /* prints all js-includes */ ?>
 <?php print modulekit_include_css(); /* prints all css-includes */ ?>
+<?php print_add_html_headers(); ?>
 <link rel='stylesheet' type='text/css' href='demo.css'/>
 <script type='text/javascript' src='demo_jsonly.js'></script>
 </head>
@@ -26,7 +28,7 @@ if($_REQUEST['d']) {
 <form id='form'>
 <?
 form_process_def($form_def);
-html_export_var(array("form_def"=>$form_def, "default_data"=>$default_data));
+print html_export_var(array("form_def"=>$form_def, "default_data"=>$default_data));
 
 // show form
 
