@@ -26,4 +26,20 @@ foreach(array("phponly"=>"PHP Only", "combined"=>"PHP/JS combined", "jsonly"=>"J
 }
 
 print implode(" |\n", $text);
+
+print " Language: ";
+print "<form action='demo_{$current_variant}.php' method='get'>\n";
+print "<input type='hidden' name='q' value=\"".htmlspecialchars($_REQUEST['q'])."\">\n";
+print "<input type='hidden' name='d' value=\"".htmlspecialchars($_REQUEST['d'])."\">\n";
+print "<select name='ui_lang' onchange='this.form.submit()'>\n";
+$data=modulekit_loaded("");
+foreach($data['languages'] as $lang_id) {
+  print "  <option value='{$lang_id}'";
+  if($lang_id==$ui_lang)
+    print " selected";
+  print ">".lang("lang_native:$lang_id")." (".lang("lang:$lang_id").")</option>\n";
+}
+print "</select>\n";
+print "</form>\n";
+
 print "</div>\n";
