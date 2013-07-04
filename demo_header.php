@@ -1,4 +1,8 @@
 <?
+$current_variant="combined";
+if(preg_match("/demo_([a-zA-Z0-9_]*)\.php/", $_SERVER['SCRIPT_NAME'], $m))
+  $current_variant=$m[1];
+
 print "<div class='demo_header'>\n";
 print "Variants: ";
 $text=array();
@@ -13,7 +17,12 @@ foreach(array("phponly"=>"PHP Only", "combined"=>"PHP/JS combined", "jsonly"=>"J
   if(sizeof($url_param))
     $url.="?".implode("&amp;", $url_param);
 
-  $text[]="<a href='{$url}'>{$variant_name}</a>\n";
+  $t ="<a href='{$url}'";
+  if($current_variant==$variant)
+    $t.=" class='current'";
+  $t.=">{$variant_name}</a>\n";
+
+  $text[]=$t;
 }
 
 print implode(" |\n", $text);
