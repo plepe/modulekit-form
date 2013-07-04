@@ -264,6 +264,9 @@ class form_element {
       $this->def['values_mode']=is_hash($this->def['values'])?"keys":"values";
 
     foreach($this->def['values'] as $k=>$v) {
+      if(is_array($v))
+	$v=lang($v);
+
       switch($this->def['values_mode']) {
 	case "keys":
 	  $ret[$k]=$v;

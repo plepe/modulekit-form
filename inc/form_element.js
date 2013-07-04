@@ -304,13 +304,17 @@ form_element.prototype.get_values=function() {
     this.def.values_mode=this.def.values.length?"values":"keys";
 
   for(var k in this.def.values) {
-    var val;
+    var val=this.def.values[k];
+
+    if(typeof val=="object")
+      val=lang(val);
+
     switch(this.def.values_mode) {
       case "keys":
-	ret[k]=this.def.values[k];
+	ret[k]=val;
 	break;
       case "values":
-        ret[this.def.values[k]]=this.def.values[k];
+        ret[val]=val;
 	break;
       default:
         // invalid mode
