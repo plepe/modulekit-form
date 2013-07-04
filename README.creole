@@ -125,6 +125,18 @@ Definition (also see Form Element "Text"):
 Value:
 * Returns a value in the specified numeric type or the 'empty value' (default null).
 
+=== Form Element "date", "datetime", "datetime-local" ===
+The element is based on the Form Element "Text", therefore you can use all options specified there.
+
+Definition (also see Form Element "Text"):
+* type: 'date', 'datetime', 'datetime-local'
+
+Value:
+* Returns a value in the specified type:
+** 'date': e.g. '2013-12-24'
+** 'datetime': e.g. '2013-12-24T19:00:00Z' or '2013-12-24T19:00:00.123+02:00'
+** 'datetime-local': e.g. '2013-12-24T19:00:00'
+
 === Unsupported Form Elements ===
 Any form elements that are not supported (yet) will show the name and a warning, that the form element type is not supported. Any data set to the element will be kept, as internally a JSON form element will be used.
 
