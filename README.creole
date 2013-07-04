@@ -225,6 +225,8 @@ array(
 )
 }}}
 
+STATE: It's not possible yet to read file content in JavaScript mode
+
 === Form Element "Directory" ===
 Upload multiple files. Files are moved to a newly created directory in the specified path, as value an array will be returned.
 
@@ -248,6 +250,8 @@ array(
   )
 )
 }}}
+
+STATE: Currently disabled
 
 == Functions of form ==
 === Constructor ===
