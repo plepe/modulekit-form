@@ -22,6 +22,7 @@ if($_REQUEST['q']) {
 if($_REQUEST['d']) {
   $default_data=json_decode($_REQUEST['d'], true);
 }
+include "demo_header.php";
 
 $form=new form("data", $form_def);
 
