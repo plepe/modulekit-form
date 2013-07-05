@@ -46,7 +46,7 @@ class form_element_json extends form_element {
     if((($this->data!="")||($this->data!=null))&&
        json_decode($this->data)===null) {
 
-      $errors[]=$this->path_name().": Ungültiger Wert";
+      $errors[]=$this->path_name().": ".lang("form:invalid_value");
     }
   }
 

@@ -19,10 +19,18 @@ form_element.prototype.init=function(id, def, options, form_parent) {
 }
 
 form_element.prototype.name=function() {
-  if(this.def._name)
-    return this.def._name();
+  var name;
 
-  return this.def.name;
+  if(this.def._name)
+    name=this.def._name();
+
+  name=this.def.name;
+
+  if(typeof name=="object") {
+    return lang(name);
+  }
+
+  return name;
 }
 
 form_element.prototype.path_name=function() {
@@ -83,7 +91,7 @@ form_element.prototype.show=function() {
     if(this.def.name) {
       var div=document.createElement("div");
       div.className="form_name";
-      var text=document.createTextNode(this.def.name+":");
+      var text=document.createTextNode(this.name()+":");
       div.appendChild(text);
       td.appendChild(div);
     }
@@ -91,7 +99,7 @@ form_element.prototype.show=function() {
     if(this.def.desc) {
       var div=document.createElement("div");
       div.className="form_desc";
-      div.innerHTML=this.def.desc;
+      div.innerHTML=(typeof this.def.desc=="object"?lang(this.def.desc):this.def.desc);
       td.appendChild(div);
     }
   }
@@ -105,7 +113,7 @@ form_element.prototype.show=function() {
 }
 
 form_element.prototype.show_element=function() {
-  this.dom=document.createElement("div");
+  this.dom=document.createElement("span");
   this.dom.className="form_element_"+this.type();
   this.dom.id=this.id;
   return this.dom;
@@ -115,7 +123,7 @@ form_element.prototype.errors=function(list) {
   this.get_data();
 
   if((this.def.req)&&((!this.data)||(this.data=="")))
-    list.push(this.path_name()+": Wert muss angegeben werden.");
+    list.push(this.path_name()+": "+lang("form:require_value"));
 
   if(this.def.check) {
     var check_errors=[];
@@ -197,7 +205,7 @@ form_element.prototype.check_not=function(list, param) {
     return;
 
   if(param.length<2)
-    list.push("Ungültiger Wert");
+    list.push(lang('form:invalid_value'));
   else
     list.push(param[1]);
 }
@@ -228,7 +236,7 @@ form_element.prototype.check_is=function(list, param) {
 
   if(this.get_data()!=param[0]) {
     if(param.length<2)
-      list.push("Ungültiger Wert");
+      list.push(lang('form:invalid_value'));
     else
       list.push(param[1]);
   }
@@ -296,13 +304,17 @@ form_element.prototype.get_values=function() {
     this.def.values_mode=this.def.values.length?"values":"keys";
 
   for(var k in this.def.values) {
-    var val;
+    var val=this.def.values[k];
+
+    if(typeof val=="object")
+      val=lang(val);
+
     switch(this.def.values_mode) {
       case "keys":
-	ret[k]=this.def.values[k];
+	ret[k]=val;
 	break;
       case "values":
-        ret[this.def.values[k]]=this.def.values[k];
+        ret[val]=val;
 	break;
       default:
         // invalid mode

@@ -8,10 +8,10 @@ $form_def=array(
     'html_attributes'   =>array("style"=>"border: 2px solid black;"),
   ),
   'sex'		=>array(
-    'name'	=>"Sex",
-    'desc'	=>"Choose your <a href='http://en.wikipedia.org/wiki/Gender'>gender</a>",
+    'name'	=>array("en"=>"Sex", "de"=>"Geschlecht"),
+    'desc'	=>array("en"=>"Choose your <a href='http://en.wikipedia.org/wiki/Gender'>gender</a>", "de"=>"Wähle Dein Geschlecht"),
     'type'	=>"radio",
-    'values'	=>array('m'=>"male", 'f'=>"female"),
+    'values'	=>array('m'=>array("en"=>"male", "de"=>"männlich"), 'f'=>array("en"=>"female", "de"=>"weiblich")),
   ),
   'hobbies'	=>array(
     'name'	=>"Hobbies",

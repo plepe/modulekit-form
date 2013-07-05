@@ -3,6 +3,10 @@ $name="Form";
 
 $id="modulekit-form";
 
+$depend=array("lang");
+
+$languages=array("en", "de");
+
 $include_php=array(
   "inc/form.php",
   "inc/functions.php",
@@ -19,8 +23,6 @@ $include_php=array(
   "inc/form_element_json.php",
   "inc/form_element_unsupported.php",
   "inc/form_element_select.php",
-  "inc/form_element_file.php",
-  "inc/form_element_directory.php",
   "inc/form_element_numeric.php",
   "inc/form_element_file.php",
 );

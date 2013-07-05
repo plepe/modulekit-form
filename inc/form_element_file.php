@@ -65,7 +65,7 @@ class form_element_file extends form_element {
 
     $data=$this->get_data();
     if($data['error']) {
-      $errors[]=$this->path_name().": Datei '{$data['orig_name']}' konnte nicht raufgeladen werden, Fehler {$data['error']}.";
+      $errors[]=$this->path_name().": "+lang('form:file_upload_error', 0, $data['orig_name'], $data['error']);
     }
   }
 

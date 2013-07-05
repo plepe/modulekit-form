@@ -20,10 +20,15 @@ class form_element {
   }
 
   function name() {
-    if(isset($this->def['_name']))
-      return $this->def['_name'];
+    $name=$this->def['name'];
 
-    return $this->def['name'];
+    if(isset($this->def['_name']))
+      $name=$this->def['_name'];
+
+    if(is_array($name))
+      return lang($name);
+
+    return $name;
   }
 
   function type() {
@@ -58,7 +63,7 @@ class form_element {
     $this->get_data();
 
     if(isset($this->def['req'])&&($this->def['req'])&&(!$this->data))
-      $errors[]=$this->path_name().": Wert muss angegeben werden.";
+      $errors[]=$this->path_name().": ".lang("form:require_value");
 
     if(isset($this->def['check'])) {
       $check_errors=array();
@@ -99,6 +104,7 @@ class form_element {
       $tr->setAttribute("style", "display: none;");
 
     $td=$document->createElement("td");
+    $td->setAttribute("valign", "top");
     $td->setAttribute("class", "field_desc");
     $tr->appendChild($td);
 
@@ -106,7 +112,7 @@ class form_element {
       if(isset($this->def['name'])) {
 	$div=$document->createElement("div");
 	$div->setAttribute("class", "form_name");
-	$text=$document->createTextNode($this->def['name'].":");
+	$text=$document->createTextNode($this->name().":");
 	$div->appendChild($text);
 	$td->appendChild($div);
       }
@@ -114,7 +120,7 @@ class form_element {
       if(isset($this->def['desc'])) {
 	$div=$document->createElement("div");
 	$div->setAttribute("class", "form_desc");
-        $text=DOM_createHTMLElement($this->def['desc'], $document);
+        $text=DOM_createHTMLElement((is_array($this->def['desc'])?lang($this->def['desc']):$this->def['desc']), $document);
 	$div->appendChild($text);
 	$td->appendChild($div);
       }
@@ -130,7 +136,7 @@ class form_element {
   }
 
   function show_element($document) {
-    $div=$document->createElement("div");
+    $div=$document->createElement("span");
     $div->setAttribute("class", "form_element_".$this->type());
     $div->setAttribute("id", $this->id);
     return $div;
@@ -194,7 +200,7 @@ class form_element {
       return;
 
     if(sizeof($param)<2)
-      $errors[]="Ungültiger Wert";
+      $errors[]=lang('form:invalid_value');
     else
       $errors[]=$param[1];
   }
@@ -224,7 +230,7 @@ class form_element {
 
     if($this->get_data()!=$param[0]) {
       if(sizeof($param)<2)
-	$errors[]="Ungültiger Wert";
+	$errors[]=lang('form:invalid_value');
       else
 	$errors[]=$param[1];
     }
@@ -259,6 +265,9 @@ class form_element {
       $this->def['values_mode']=is_hash($this->def['values'])?"keys":"values";
 
     foreach($this->def['values'] as $k=>$v) {
+      if(is_array($v))
+	$v=lang($v);
+
       switch($this->def['values_mode']) {
 	case "keys":
 	  $ret[$k]=$v;

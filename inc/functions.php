@@ -11,8 +11,8 @@ if(!function_exists("html_export_var")) {
 
 function DOM_createHTMLElement($text, $document) {
   $dom=new DOMDocument();
-  $dom->loadHTML("<?xml encoding='UTF-8'><html><span>{$text}</span></html>");
-  return $document->importNode($dom->lastChild, true);
+  $dom->loadHTML("<?xml encoding='UTF-8'><html><body><span>{$text}</span></body></html>");
+  return $document->importNode($dom->lastChild->lastChild->lastChild, true);
 }
 
 // Source: http://www.benjaminkeen.com/function-is_hash/

@@ -1,11 +1,16 @@
 <?
 Header("content-type: text/html; charset=utf-8");
+// create file .nocache to disable caching
+$modulekit_nocache=file_exists(".nocache");
 include "modulekit/loader.php"; /* loads all php-includes */
 include "demo_form.php";
+call_hooks("init");
 ?>
+<!DOCTYPE HTML>
 <html>
 <head>
 <?php print modulekit_include_css(); /* prints all css-includes */ ?>
+<?php print_add_html_headers(); ?>
 <link rel='stylesheet' type='text/css' href='demo.css'/>
 </head>
 <body>
@@ -18,6 +23,7 @@ if($_REQUEST['q']) {
 if($_REQUEST['d']) {
   $default_data=json_decode($_REQUEST['d'], true);
 }
+include "demo_header.php";
 
 $form=new form("data", $form_def);
 

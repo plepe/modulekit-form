@@ -39,7 +39,7 @@ form_element_file.prototype.connect=function(dom_parent) {
   if(span=document.getElementById(this.id+"-oldfile")) {
     var input=document.createElement("input");
     input.type="button";
-    input.value="Ändern";
+    input.value=lang("change");
     input.onclick=this.input_change.bind(this);
     span.appendChild(input);
 
@@ -73,7 +73,7 @@ form_element_file.prototype.show_element=function() {
 
     var input=document.createElement("input");
     input.type="button";
-    input.value="Ändern";
+    input.value=lang("change");
     input.onclick=this.input_change.bind(this);
     span.appendChild(input);
   }

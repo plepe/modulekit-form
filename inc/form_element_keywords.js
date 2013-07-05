@@ -29,7 +29,7 @@ form_element_keywords.prototype.create_interaction=function() {
   var button=document.createElement("input");
   button.type="button";
   button.value=(typeof this.def.text_add!="undefined"?
-    this.def.text_add:"neu");
+    this.def.text_add:lang('new'));
   button.onclick=this.add_keyword.bind(this);
   this.actions.appendChild(button);
   this.dom_actions.add=button;
@@ -37,7 +37,7 @@ form_element_keywords.prototype.create_interaction=function() {
   var button=document.createElement("input");
   button.type="button";
   button.value=(typeof this.def.text_edit!="undefined"?
-    this.def.text_edit:"editieren");
+    this.def.text_edit:lang('edit'));
   button.onclick=this.edit.bind(this);
   this.actions.appendChild(button);
   this.dom_actions.edit=button;
@@ -250,14 +250,14 @@ form_element_keywords.prototype.edit=function() {
     var button=document.createElement("input");
     button.type="button";
     button.value=(typeof this.def.text_save!="undefined"?
-      this.def.text_save:"Ok");
+      this.def.text_save:lang('ok'));
     button.onclick=this.edit_save.bind(this);
     this.edit_actions.appendChild(button);
 
     var button=document.createElement("input");
     button.type="button";
     button.value=(typeof this.def.text_cancel!="undefined"?
-      this.def.text_cancel:"Abbrechen");
+      this.def.text_cancel:lang('cancel'));
     button.onclick=this.edit_cancel.bind(this);
     this.edit_actions.appendChild(button);
 

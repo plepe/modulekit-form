@@ -116,7 +116,7 @@ form_element_text.prototype.errors=function(list) {
   if((this.data!="")&&(this.data!=null)) {
     if(this.def.force_values&&this.def.values) {
       if(!in_array(this.data, this.def.values))
-        list.push(this.path_name()+": Ungültiger Wert");
+        list.push(this.path_name()+": "+lang('form:invalid_value'));
     }
   }
 }

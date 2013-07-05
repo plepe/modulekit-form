@@ -46,6 +46,6 @@ form_element_numeric.prototype.errors=function(list) {
   }
 
   if(!this.data.match(regexp)) {
-    list.push(this.path_name()+": Wert ungültig.");
+    list.push(this.path_name()+": "+lang('form:invalid_value'));
   }
 }

@@ -16,3 +16,13 @@
 .form_data {
   right: 1%;
 }
+.demo_header {
+  padding-bottom: 4px;
+  border-bottom: 1px solid black;
+}
+.demo_header .current {
+  font-weight: bold;
+}
+.demo_header form {
+  display: inline;
+}
