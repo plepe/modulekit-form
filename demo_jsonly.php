@@ -16,6 +16,7 @@ if($_REQUEST['d']) {
 include "demo_header.php";
 
 ?>
+<!DOCTYPE HTML>
 <html>
 <head>
 <?php print modulekit_include_js(); /* prints all js-includes */ ?>

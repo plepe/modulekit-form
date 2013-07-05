@@ -6,6 +6,7 @@ include "modulekit/loader.php"; /* loads all php-includes */
 include "demo_form.php";
 call_hooks("init");
 ?>
+<!DOCTYPE HTML>
 <html>
 <head>
 <?php print modulekit_include_css(); /* prints all css-includes */ ?>
