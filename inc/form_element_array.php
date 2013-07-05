@@ -124,7 +124,7 @@ class form_element_array extends form_element {
     $div->setAttribute("class", "form_element_array_part");
 
     // element #k
-    $el_div=$document->createElement("div");
+    $el_div=$document->createElement("span");
     $el_div->setAttribute("form_element_num", $k);
     $el_div->setAttribute("class", "form_element_array_part_element");
     $div->appendChild($el_div);
@@ -132,7 +132,7 @@ class form_element_array extends form_element {
     $el_div->appendChild($element->show_element($document));
 
     // Actions #k
-    $el_div=$document->createElement("div");
+    $el_div=$document->createElement("span");
     $el_div->setAttribute("form_element_num", $k);
     $el_div->setAttribute("class", "form_element_array_part_element_actions");
     $div->appendChild($el_div);

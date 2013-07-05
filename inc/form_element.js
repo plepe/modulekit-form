@@ -113,7 +113,7 @@ form_element.prototype.show=function() {
 }
 
 form_element.prototype.show_element=function() {
-  this.dom=document.createElement("div");
+  this.dom=document.createElement("span");
   this.dom.className="form_element_"+this.type();
   this.dom.id=this.id;
   return this.dom;

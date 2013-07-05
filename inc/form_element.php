@@ -104,6 +104,7 @@ class form_element {
       $tr->setAttribute("style", "display: none;");
 
     $td=$document->createElement("td");
+    $td->setAttribute("valign", "top");
     $td->setAttribute("class", "field_desc");
     $tr->appendChild($td);
 
@@ -135,7 +136,7 @@ class form_element {
   }
 
   function show_element($document) {
-    $div=$document->createElement("div");
+    $div=$document->createElement("span");
     $div->setAttribute("class", "form_element_".$this->type());
     $div->setAttribute("id", $this->id);
     return $div;

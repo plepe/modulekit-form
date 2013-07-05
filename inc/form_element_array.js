@@ -159,7 +159,7 @@ form_element_array.prototype.show_element_part=function(k, element) {
   div.className="form_element_array_part";
 
   // element #k
-  var el_div=document.createElement("div");
+  var el_div=document.createElement("span");
   el_div.setAttribute("form_element_num", k);
   el_div.className="form_element_array_part_element";
   div.appendChild(el_div);
@@ -167,7 +167,7 @@ form_element_array.prototype.show_element_part=function(k, element) {
   el_div.appendChild(element.show_element());
 
   // Actions #k
-  var el_div=document.createElement("div");
+  var el_div=document.createElement("span");
   el_div.setAttribute("form_element_num", k);
   el_div.className="form_element_array_part_element_actions";
   div.appendChild(el_div);
