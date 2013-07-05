@@ -1,5 +1,8 @@
+table.form {
+  width: 100%;
+}
 table.form td.field_desc {
-  max-width: 256px;
+  width: 256px;
   vertical-align: top;
   padding-bottom: 2px;
 }
@@ -8,11 +11,12 @@ table.form td.field_desc .form_desc {
   font-style: italic;
 }
 table.form td.field_value {
+  width: auto;
 }
 table.form td.field_value input[type=text],
 table.form td.field_value input[type=password],
 table.form td.field_value textarea {
-  width: 400px;
+  width: 100%;
 }
 table.form label:hover {
   text-decoration: underline;
