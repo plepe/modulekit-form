@@ -3,7 +3,6 @@
 .form_element_array_part_element {
   display: inline-block;
   vertical-align: top;
-  border-bottom: 1px solid #c0c0c0;
   width: calc(100% - 30px);
 }
 .form_element_array_part_element_actions {

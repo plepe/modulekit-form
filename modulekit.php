@@ -48,5 +48,6 @@ $include_js=array(
 $include_css=array(
   "inc/form.css",
   "inc/form_element_array.css",
+  "inc/form_element_form.css",
   "inc/form_element_keywords.css",
 );
