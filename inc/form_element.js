@@ -15,7 +15,7 @@ form_element.prototype.init=function(id, def, options, form_parent) {
   this.data=null;
 
   if('default' in this.def)
-    this.set_data.call(this, this.def.default);
+    this.set_data.call(this, this.def['default']);
 }
 
 form_element.prototype.name=function() {
@@ -284,9 +284,9 @@ form_element.prototype.refresh=function() {
     return;
 
   if(this.is_shown())
-    this.tr.style.display=null;
+    this.tr.setAttribute("style", "");
   else
-    this.tr.style.display="none";
+    this.tr.setAttribute("style", "display: none;");
 }
 
 form_element.prototype.is_modified=function() {

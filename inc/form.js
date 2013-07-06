@@ -142,7 +142,7 @@ function form_resize() {
 
     // calculate height of M
     var em=document.createElement("div");
-    em.style="display:inline-block; padding:0; line-height:1; position:absolute; visibility:hidden; font-size:1em;";
+    em.setAttribute("style", "display:inline-block; padding:0; line-height:1; position:absolute; visibility:hidden; font-size:1em;");
     em.appendChild(document.createTextNode("M"));
     ob.appendChild(em);
     var em_height=em.offsetHeight;
@@ -158,5 +158,11 @@ function form_resize() {
   }
 }
 
-window.addEventListener('load', form_resize);
-window.addEventListener('resize', form_resize);
+if(window.addEventListener) {
+  window.addEventListener('load', form_resize);
+  window.addEventListener('resize', form_resize);
+}
+else {
+  window.attachEvent('onload', form_resize);
+  window.attachEvent('onresize', form_resize);
+}
