@@ -3,13 +3,14 @@
 .form_element_array_part_element {
   display: inline-block;
   vertical-align: top;
-  width: calc(100% - 30px);
+  width: calc(100% - 35px);
 }
 .form_element_array_part_element_actions {
   display: inline-block;
   vertical-align: top;
 }
 .form_element_array_part_element_actions input {
+  margin-left: 5px;
   width: 30px;
 }
 .form_element_array_part_actions {
