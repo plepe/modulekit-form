@@ -24,7 +24,7 @@ $form_def=array(
     'type'	=>"date",
   ),
   'languages'	=>array(
-    'name'	=>"What languages to you speak?",
+    'name'	=>"What languages do you speak?",
     'type'	=>"checkbox",
     'values'	=>array("php"=>"PHP", "perl"=>"Perl", "c"=>"C", "cpp"=>"C++", "java"=>"Java", "js"=>"Javascript"),
   ),
