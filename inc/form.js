@@ -98,6 +98,9 @@ form.prototype.show=function(dom_parent) {
   this.table=this.element.show_element();
 
   dom_parent.appendChild(this.table);
+
+  form_resize();
+
   return this.table;
 }
 

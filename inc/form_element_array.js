@@ -229,6 +229,8 @@ form_element_array.prototype.add_element=function() {
     current=current.nextSibling;
   }
 
+  form_resize();
+
   return false;
 }
 
@@ -243,6 +245,8 @@ form_element_array.prototype.remove_element=function(k) {
 
     current=current.nextSibling;
   }
+
+  form_resize();
 
   return false;
 }
