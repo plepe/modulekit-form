@@ -1,10 +1,22 @@
+table.form td.field_desc,
+table.form td.field_value,
+table.form td.field_value span,
+table.form td.field_value span *
+{
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
 table.form {
   width: 100%;
+  border-collapse: collapse;
+  border: none;
 }
 table.form td.field_desc {
   width: 256px;
   vertical-align: top;
   padding-bottom: 2px;
+  padding-right: 0.5em;
 }
 table.form td.field_desc .form_desc {
   font-size: 0.75em;
@@ -12,6 +24,7 @@ table.form td.field_desc .form_desc {
 }
 table.form td.field_value {
   width: auto;
+  padding: 0px;
 }
 table.form td.field_value input[type=text],
 table.form td.field_value input[type=password],
