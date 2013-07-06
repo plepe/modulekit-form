@@ -12,6 +12,7 @@ call_hooks("init");
 <?php print modulekit_include_js(); /* prints all js-includes */ ?>
 <?php print modulekit_include_css(); /* prints all css-includes */ ?>
 <?php print_add_html_headers(); ?>
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel='stylesheet' type='text/css' href='demo.css'/>
 <script type='text/javascript' src='demo_combined.js'></script>
 </head>
