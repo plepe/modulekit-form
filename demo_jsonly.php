@@ -6,15 +6,6 @@ include "modulekit/loader.php"; /* loads all php-includes */
 include "demo_form.php";
 call_hooks("init");
 
-if($_REQUEST['q']) {
-  $form_def=json_decode($_REQUEST['q'], true);
-  $default_data=null;
-}
-if($_REQUEST['d']) {
-  $default_data=json_decode($_REQUEST['d'], true);
-}
-include "demo_header.php";
-
 ?>
 <!DOCTYPE HTML>
 <html>
@@ -27,7 +18,17 @@ include "demo_header.php";
 <script type='text/javascript' src='demo_jsonly.js'></script>
 </head>
 <body>
+<?
 
+if($_REQUEST['q']) {
+  $form_def=json_decode($_REQUEST['q'], true);
+  $default_data=null;
+}
+if($_REQUEST['d']) {
+  $default_data=json_decode($_REQUEST['d'], true);
+}
+include "demo_header.php";
+?>
 <div id='errors'>
 </div>
 <form id='form'>
