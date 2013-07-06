@@ -49,3 +49,29 @@ table.form label:hover {
   color: #ffffff;
   background: #ff0000;
 }
+
+/* adapt to screen sizes */
+/*   <640px   */
+table.form.medium td.field_desc {
+  width: 128px;
+}
+
+/*   <400px   */
+table.form.small,
+table.form.small thead,
+table.form.small tbody,
+table.form.small tr,
+table.form.small th,
+table.form.small td
+{
+  display: block;
+}
+table.form.small td.field_desc {
+  width: 100%;
+}
+table.form.small td.field_value {
+  padding-left: 1em;
+}
+table.form.small tr {
+  padding-bottom: 0.5em;
+}
