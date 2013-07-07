@@ -169,10 +169,9 @@ class form {
 function form_process_def(&$def) {
   foreach($def as $k=>$element_def) {
     if(isset($element_def['count'])&&($element_def['type']!="array")) {
-      $def[$k]=array(
-	'type'		=>"array",
-	'count'		=>$element_def['count'],
-      );
+      $def[$k]=$element_def['count'];
+      $def[$k]['type']="array";
+
       if(isset($element_def['name']))
 	$def[$k]['name']=$element_def['name'];
       if(isset($element_def['desc']))
@@ -181,11 +180,12 @@ function form_process_def(&$def) {
       unset($element_def['name']);
       unset($element_def['desc']);
       unset($element_def['count']);
+
       $def[$k]['def']=$element_def;
     }
 
-    if(($element_def['type']=="array")||($element_def['type']=="form")) {
-      form_process_def($def[$k]['def']['def']);
-    }
+    if((($element_def['type']=="array")||($element_def['type']=="form"))&&
+      isset($def[$k]['def']['def']))
+	form_process_def($def[$k]['def']['def']);
   }
 }

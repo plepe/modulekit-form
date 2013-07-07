@@ -13,7 +13,7 @@ form_element_array.prototype.build_form=function() {
 
   if(!this.data) {
     this.data={};
-    for(var k=0; k<this.def.count['default']; k++) {
+    for(var k=0; k<this.def['default']; k++) {
       this.data[k]=null;
     }
   }
@@ -129,10 +129,12 @@ form_element_array.prototype.set_data=function(data) {
 	this.elements[k].set_data(data[k]);
     }
 
-  var p=this.dom.parentNode;
-  p.removeChild(this.dom);
-  var div=this.show_element();
-  p.appendChild(div);
+  if(this.dom) {
+    var p=this.dom.parentNode;
+    p.removeChild(this.dom);
+    var div=this.show_element();
+    p.appendChild(div);
+  }
 
   this.data=null;
 }

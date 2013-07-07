@@ -41,7 +41,7 @@ class form_element_array extends form_element {
     $this->data=$data;
     $this->build_form();
 
-    if($data)
+    if($data&&is_array($data))
       foreach($data as $k=>$d) {
 	if(isset($this->elements[$k]))
 	  $this->elements[$k]->set_data($d);
@@ -155,8 +155,8 @@ class form_element_array extends form_element {
   function build_form() {
     $this->elements=array();
 
-    $data=array_fill(0, $this->def['count']['default'], null);
-    if(isset($this->data))
+    $data=array_fill(0, $this->def['default'], null);
+    if(isset($this->data)&&is_array($this->data))
       $data=$this->data;
 
     $element_class=get_form_element_class($this->def['def']);
