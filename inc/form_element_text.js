@@ -36,6 +36,9 @@ form_element_text.prototype.show_element=function() {
   if(this.def.values) {
     input.setAttribute("list", this.id+"-datalist");
 
+    var datalist_container=document.createElement("span");
+    datalist_container.setAttribute("class", "form_datalist_container");
+
     var datalist=document.createElement("datalist");
     datalist.setAttribute("id", this.id+"-datalist");
 
@@ -48,7 +51,8 @@ form_element_text.prototype.show_element=function() {
       option.appendChild(text);
     }
 
-    div.appendChild(datalist);
+    div.appendChild(datalist_container);
+    datalist_container.appendChild(datalist);
   }
 
   input.className=cls;

@@ -34,6 +34,10 @@ class form_element_text extends form_element {
     if(isset($this->def['values'])) {
       $input->setAttribute("list", $this->id."-datalist");
 
+      // Compatibility HTML4 browsers (i.e. IE8)
+      $datalist_container=$document->createElement("span");
+      $datalist_container->setAttribute("class", "form_datalist_container");
+
       $datalist=$document->createElement("datalist");
       $datalist->setAttribute("id", $this->id."-datalist");
 
@@ -46,7 +50,8 @@ class form_element_text extends form_element {
         $option->appendChild($text);
       }
 
-      $div->appendChild($datalist);
+      $div->appendChild($datalist_container);
+      $datalist_container->appendChild($datalist);
     }
 
 

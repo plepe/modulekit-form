@@ -101,6 +101,12 @@ Definition:
 Value:
 * String. Will be stripped of additional slashes.
 
+Compatibility Issues:
+* Non-CSS browsers will show the "values" list in the page content.
+
+TODO:
+* If an element with "values" is used in an array, the datalist will be included for every member. A workaround is to generate the datalist manually and include "html_attributes" instead with <tt>list=id of datalist</tt>.
+
 === Form Element "Textarea" ===
 Similar to Form Element "Text", but provides a multi line text input.
 
