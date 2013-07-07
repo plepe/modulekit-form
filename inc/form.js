@@ -1,6 +1,7 @@
 function form(id, def, options) {
   this.id=id;
   this.def=def;
+  form_process_def(this.def);
   if(!options)
     options={};
   this.options=options;
@@ -155,6 +156,32 @@ function form_resize() {
       ob.className="form medium";
     else
       ob.className="form";
+  }
+}
+
+function form_process_def(def) {
+  for(var k in def) {
+    var element_def=new clone(def[k]);
+
+    if(element_def.count&&(element_def.type!="array")) {
+      def[k]=element_def.count;
+      def[k].type="array";
+
+      if(element_def.name)
+	def[k].name=element_def.name;
+      if(element_def.desc)
+	def[k].desc=element_def.desc;
+
+      delete(element_def.name);
+      delete(element_def.desc);
+      delete(element_def.count);
+
+      def[k].def=element_def;
+    }
+
+    if(((element_def.type=="array")||(element_def.type=="form"))&&
+       def[k].def.def)
+      form_process_def(def[k].def.def);
   }
 }
 

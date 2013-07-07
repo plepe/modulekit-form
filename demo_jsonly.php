@@ -33,7 +33,6 @@ include "demo_header.php";
 </div>
 <form id='form'>
 <?
-form_process_def($form_def);
 print html_export_var(array("form_def"=>$form_def, "default_data"=>$default_data));
 
 // show form

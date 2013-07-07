@@ -15,8 +15,11 @@ $form_def=array(
   ),
   'hobbies'	=>array(
     'name'	=>"Hobbies",
-    'type'	=>"text",
-    'count'	=>array('default'=>2),
+    'type'	=>"array",
+    'default'	=>2,
+    'def'	=>array(
+      'type'	=>"text",
+    ),
     'req'	=>true,
   ),
   'birthday'	=>array(
