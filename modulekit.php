@@ -7,6 +7,8 @@ $depend=array("lang");
 
 $languages=array("en", "de");
 
+$version="2.0.0-alpha";
+
 $include_php=array(
   "inc/form.php",
   "inc/functions.php",
