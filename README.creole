@@ -130,6 +130,7 @@ The element is based on the Form Element "Text", therefore you can use all optio
 
 Definition (also see Form Element "Text"):
 * type: 'date', 'datetime', 'datetime-local'
+* format: How date is displayed resp. entered in input field. Default: "j.n.Y G:i:s" (see PHP function 'Date' for details). Supported keys: Y, y, m, n, d, j, g, G, h, H, h, i, s, O, P, a, A.
 
 Value:
 * Returns a value in the specified type:
