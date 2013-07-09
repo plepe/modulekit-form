@@ -55,6 +55,7 @@ calendar.prototype.fill=function() {
       tr.appendChild(td);
 
       td.innerHTML=curr_day.getDate();
+      td.onclick=this.choose_date.bind(this, curr_day);
 
       if(date_format("Ymd", curr_day)==date_format("Ymd", this.date))
         td.className="chosen_date";
@@ -85,4 +86,14 @@ calendar.prototype.nav_month=function(offset) {
   this.show_date.setMonth(m);
 
   this.fill();
+}
+
+calendar.prototype.choose_date=function(day) {
+  this.date=day;
+  this.show_date=new Date(day);
+  this.show_date.setDate(1);
+
+  this.fill();
+
+  this.callback(date_format("Y-m-d", day));
 }
