@@ -1,0 +1,9 @@
+<?
+$include=array(
+  'js'=>array(
+    "calendar.js",
+  ),
+  'css'=>array(
+    "calendar.css",
+  ),
+);
