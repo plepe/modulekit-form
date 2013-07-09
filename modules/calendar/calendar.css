@@ -1,4 +1,24 @@
 div.calendar {
+  border: 1px solid black;
   background: #ffffff;
   position: absolute;
+}
+div.calendar span.year_month {
+  width: 12em;
+  display: inline-block;
+  text-align: center;
+}
+div.calendar table {
+  width: 100%;
+}
+div.calendar td{
+  width: 14.2857%;
+  text-align: center;
+}
+div.calendar td.wrong_month {
+  color: #707070;
+}
+div.calendar td.chosen_date {
+  color: #ffffff;
+  background: #000000;
 }
