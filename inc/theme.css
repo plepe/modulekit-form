@@ -1,0 +1,85 @@
+/* buttons */
+input[type=submit],
+input[type=button],
+button {
+  border: 2px outset #000000;
+  border-radius: 3px;
+  background: #d0d0d0;
+}
+
+/* general form elements */
+input[type=text],
+textarea,
+select {
+  background: #e0e0e0;
+  border: 1px inset #000000;
+  border-radius: 3px;
+  padding: 2px;
+  margin-top: 2px;
+  margin-bottom: 2px;
+}
+
+.form_modified {
+  background: none;
+}
+input.form_modified,
+textarea.form_modified,
+select.form_modified
+{
+  background: #c0c0c0;
+}
+
+/* checkboxes */
+.form_element_checkbox input[type=checkbox] {
+  display: none;
+}
+.form_element_checkbox label:before {
+  content: "\00A0";
+  display: inline-block;
+  margin-right: 0.5em;
+  width: 1em;
+  height: 1em;
+  background: #e0e0e0;
+  border: 1px inset #000000;
+  border-radius: 3px;
+}
+.form_element_checkbox input:checked + label:before {
+  content: "\2713";
+  color: #000000;
+  text-align: center;
+}
+.form_element_checkbox span.form_modified label:before {
+  background: #c0c0c0;
+}
+
+/* radio */
+.form_element_radio input[type=radio] {
+  display: none;
+}
+.form_element_radio label:before {
+  content: "\00A0";
+  display: inline-block;
+  margin-right: 0.5em;
+  width: 1em;
+  height: 1em;
+  background: #e0e0e0;
+  border: 1px inset #000000;
+  border-radius: 0.5em;
+}
+.form_element_radio input:checked + label:before {
+  content: "\2022";
+  color: #000000;
+  text-align: center;
+}
+.form_element_radio span.form_modified label:before {
+  background: #c0c0c0;
+}
+
+/* embedded form */
+.form_element_form.form_element_array_part_element {
+  border: 1px inset black;
+  border-radius: 3px;
+}
+.form_element_form table.form {
+  border: none;
+}
