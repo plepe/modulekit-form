@@ -16,8 +16,7 @@ class form_element_keywords extends form_element {
 
     // check for changes
     $class="form_orig";
-    if(isset($this->orig_data)&&
-      ($this->data!=$this->orig_data))
+    if($this->is_modified())
       $class="form_modified";
 
     $input=$this->create_element($document);
