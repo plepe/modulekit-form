@@ -6,6 +6,18 @@ function pad(n, width, z) {
 
 // accepts date as read from date_parse_from_format
 function date_format(format, date) {
+  if(typeof date.getTime!="undefined") {
+    date={
+      'year': date.getFullYear(),
+      'month': date.getMonth()+1,
+      'day': date.getDate(),
+      'hour': date.getHours(),
+      'minute': date.getMinutes(),
+      'second': date.getSeconds(),
+      'timezone': date.getTimezoneOffset()
+    };
+  }
+
   var value_format={
     'Y': function(v) { return pad(v.year, 4); },
     'y': function(v) { return pad(v.year%100, 2); },
