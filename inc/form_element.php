@@ -15,8 +15,13 @@ class form_element {
     $this->options=$options;
     $this->parent=$parent;
 
-    if(array_key_exists('default', $this->def))
+    $this->data=null;
+    $this->orig_data=null;
+
+    if(array_key_exists('default', $this->def)) {
       $this->set_data($this->def['default']);
+      $this->set_orig_data($this->def['default']);
+    }
   }
 
   function name() {
