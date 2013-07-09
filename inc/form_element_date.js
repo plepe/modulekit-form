@@ -28,6 +28,15 @@ form_element_date.prototype.create_element=function() {
   var input=document.createElement("input");
   input.type="text";
 
+  input.onfocus=function() {
+    if(typeof this.calendar=="undefined")
+      this.calendar=new calendar(
+	this.dom_element,
+	this.get_data(),
+	this.set_data.bind(this)
+      );
+  }.bind(this);
+
   return input;
 }
 
