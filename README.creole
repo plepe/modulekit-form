@@ -133,7 +133,7 @@ Definition (also see Form Element "Text"):
 * format: How date is displayed resp. entered in input field. Default: "j.n.Y G:i:s" (see PHP function 'Date' for details). Supported keys: Y, y, m, n, d, j, g, G, h, H, h, i, s, O, P, a, A.
 
 Value:
-* Returns a value in the specified type:
+* Returns a value in the specified type (see RFC 3339 for details):
 ** 'date': e.g. '2013-12-24'
 ** 'datetime': e.g. '2013-12-24T19:00:00Z' or '2013-12-24T19:00:00.123+02:00'
 ** 'datetime-local': e.g. '2013-12-24T19:00:00'
