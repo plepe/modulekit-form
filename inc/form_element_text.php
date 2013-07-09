@@ -98,4 +98,14 @@ class form_element_text extends form_element {
       }
     }
   }
+
+  function is_modified() {
+    $this->get_data();
+
+    if( (($this->orig_data==="")||($this->orig_data===null))
+      &&(($this->data==="")||($this->data===null)))
+      return false;
+
+    return parent::is_modified();
+  }
 }

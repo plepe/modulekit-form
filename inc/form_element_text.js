@@ -124,3 +124,13 @@ form_element_text.prototype.errors=function(list) {
     }
   }
 }
+
+form_element_text.prototype.is_modified=function() {
+  this.get_data();
+
+  if( ((this.orig_data==="")||(this.orig_data===null))
+    &&((this.data==="")||(this.data===null)))
+    return false;
+
+  return this.parent("form_element_text").is_modified.call(this);
+}
