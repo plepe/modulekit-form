@@ -68,3 +68,11 @@ form_element_date.prototype.set_data=function(data) {
 
   this.parent("form_element_date").set_data.call(this, d);
 }
+
+form_element_date.prototype.notify_change=function() {
+  this.parent("form_element_date").notify_change.call(this);
+
+  if(this.calendar) {
+    this.calendar.set_date(this.get_data());
+  }
+}
