@@ -19,17 +19,24 @@ var calendar_types={
 
 function calendar(options) {
   this.options=options;
+  this.options.timezone=0;
 
   if(!this.options.type)
     for(var k in calendar_types) {
       var d;
       if(d=date_parse_from_format(calendar_types[k], this.options.date)) {
 	this.options.type=k;
+	this.options.timezone=(typeof d.timezone=="undefined"?0:d.timezone);
       }
     }
 
+  // load 'date' from options
   this.date=new Date(this.options.date);
-  this.show_date=new Date(this.options.date);
+  // let's ignore timezone offset
+  var tz_offset=this.date.getTimezoneOffset()*60;
+  this.date=new Date(this.date.getTime()+(tz_offset+this.options.timezone)*1000);
+
+  this.show_date=new Date(this.date);
   this.show_date.setDate(1);
 
   this.div=document.createElement("div");
@@ -75,7 +82,7 @@ calendar.prototype.avoid_close=function(event) {
 }
 
 calendar.prototype.get_date=function() {
-  return date_format(calendar_types[this.options.type], this.date);
+  return date_format(calendar_types[this.options.type], this.date, this.options.timezone);
 }
 
 calendar.prototype.close=function() {
