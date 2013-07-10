@@ -5,6 +5,10 @@ var calendars=[];
 //   date:    current date; will be highlighted
 //   callback: JS function which will be called when a date is chosen; will be
 //     passed RFC 3339 date
+//   close_callback: JS function which will be called when calendar is being
+//     closed; will be passed chosen date (if it has been selected) in RFC
+//     3339 format
+
 function calendar(options) {
   this.options=options;
 
@@ -68,6 +72,10 @@ calendar.prototype.close=function() {
     calendars=calendars.slice(0, p).concat(calendars.slice(p+1));
 
   this.div.parentNode.removeChild(this.div);
+
+  if(this.options.close_callback) {
+    this.options.close_callback(date_format("Y-m-d", this.date));
+  }
 
   return true;
 }

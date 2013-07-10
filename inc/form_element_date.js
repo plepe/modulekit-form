@@ -33,7 +33,10 @@ form_element_date.prototype.create_element=function() {
       this.calendar=new calendar({
 	element:  this.dom_element,
 	date:	  this.get_data(),
-	callback: this.set_data.bind(this)
+	callback: this.set_data.bind(this),
+	close_callback: function() {
+	  delete(this.calendar);
+	}.bind(this)
       });
   }.bind(this);
 
