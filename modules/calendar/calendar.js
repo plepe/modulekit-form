@@ -32,25 +32,6 @@ function range(start, end, step) {
 
 function calendar(options) {
   this.options=options;
-  this.options.timezone=0;
-
-  if(!this.options.type)
-    for(var k in calendar_types) {
-      var d;
-      if(d=date_parse_from_format(calendar_types[k], this.options.date)) {
-	this.options.type=k;
-	this.options.timezone=(typeof d.timezone=="undefined"?0:d.timezone);
-      }
-    }
-
-  // load 'date' from options
-  this.date=new Date(this.options.date);
-  // let's ignore timezone offset
-  var tz_offset=this.date.getTimezoneOffset()*60;
-  this.date=new Date(this.date.getTime()+(tz_offset+this.options.timezone)*1000);
-
-  this.show_date=new Date(this.date);
-  this.show_date.setDate(1);
 
   this.div=document.createElement("div");
   this.div.className="calendar";
@@ -92,15 +73,14 @@ function calendar(options) {
       }
     });
     this.time_form.show(this.div_time);
-    this.time_form.set_data({
-      'hour': this.date.getHours(),
-      'minute': this.date.getMinutes()
-    });
 
     this.time_form.onchange=this.form_change.bind(this);
   }
 
-  this.fill();
+  if(this.options.date)
+    this.set_date(this.options.date)
+  else
+    this.set_date(date_format(calendar_types[this.options.type], new Date()));
 
   this.options.element.parentNode.appendChild(this.div);
 
@@ -121,6 +101,36 @@ calendar.prototype.avoid_close=function(event) {
 
 calendar.prototype.get_date=function() {
   return date_format(calendar_types[this.options.type], this.date, this.options.timezone);
+}
+
+calendar.prototype.set_date=function(date) {
+  this.options.timezone=0;
+
+  if(!this.options.type)
+    for(var k in calendar_types) {
+      var d;
+      if(d=date_parse_from_format(calendar_types[k], this.options.date)) {
+	this.options.type=k;
+	this.options.timezone=(typeof d.timezone=="undefined"?0:d.timezone);
+      }
+    }
+
+  // load 'date' from options
+  this.date=new Date(date);
+  // let's ignore timezone offset
+  var tz_offset=this.date.getTimezoneOffset()*60;
+  this.date=new Date(this.date.getTime()+(tz_offset+this.options.timezone)*1000);
+
+  this.show_date=new Date(this.date);
+  this.show_date.setDate(1);
+
+  if(this.time_form)
+    this.time_form.set_data({
+      'hour': this.date.getHours(),
+      'minute': this.date.getMinutes()
+    });
+
+  this.fill();
 }
 
 calendar.prototype.close=function() {
