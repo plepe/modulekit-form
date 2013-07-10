@@ -1,3 +1,5 @@
+var calendars=[];
+
 function calendar(element, date, callback) {
   this.date=new Date(date);
   this.show_date=new Date(date);
@@ -30,6 +32,19 @@ function calendar(element, date, callback) {
   this.fill();
 
   element.parentNode.appendChild(this.div);
+
+  calendars.push(this);
+}
+
+calendar.prototype.close=function() {
+  var p=null;
+  for(var i=0; i<calendars.length; i++) {
+    if(calendars[i]===this)
+      p=i;
+  }
+
+  if(p!==null)
+    calendars=calendars.slice(0, p).concat(calendars.slice(p+1));
 }
 
 calendar.prototype.fill=function() {
