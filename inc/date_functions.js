@@ -29,8 +29,8 @@ function date_format(format, date) {
     'h': function(v) { return pad(v.hour%12==0?12:v.hour%12, 2); },
     'G': function(v) { return v.hour; },
     'g': function(v) { return v.hour%12==0?12:v.hour%12; },
-    'i': function(v) { return v.minute; },
-    's': function(v) { return v.second; },
+    'i': function(v) { return pad(v.minute, 2); },
+    's': function(v) { return pad(v.second, 2); },
     'O': function(v) {
         return (v.timezone<0?"-":"+")+
 	  pad(Math.abs(v.timezone)/3600, 2)+
