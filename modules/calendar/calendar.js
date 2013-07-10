@@ -17,6 +17,19 @@ var calendar_types={
   'datetime': "Y-m-d\\TH:i:sP"
 };
 
+function range(start, end, step) {
+  var ret=[];
+
+  if(!step)
+    step=1;
+
+  for(var i=start; i<=end; i+=step) {
+    ret.push(i);
+  }
+
+  return ret;
+}
+
 function calendar(options) {
   this.options=options;
   this.options.timezone=0;
@@ -61,6 +74,31 @@ function calendar(options) {
 
   this.div_days=document.createElement("div");
   this.div.appendChild(this.div_days);
+
+  if((this.options.type=="datetime")||(this.options.type=="datetime-local")) {
+    this.div_time=document.createElement("div");
+    this.div.appendChild(this.div_time);
+
+    this.time_form=new form(null, {
+      'hour': {
+	'name': "Hour",
+	'type': "select",
+        'values': range(0, 23)
+      },
+      'minute': {
+	'name': "Minute",
+	'type': "select",
+        'values': range(0, 59, 5)
+      }
+    });
+    this.time_form.show(this.div_time);
+    this.time_form.set_data({
+      'hour': this.date.getHours(),
+      'minute': this.date.getMinutes()
+    });
+
+    this.time_form.onchange=this.form_change.bind(this);
+  }
 
   this.fill();
 
@@ -169,6 +207,15 @@ calendar.prototype.choose_date=function(day) {
   this.show_date.setDate(1);
 
   this.fill();
+
+  this.options.callback(this.get_date());
+}
+
+calendar.prototype.form_change=function() {
+  var d=this.time_form.get_data();
+
+  this.date.setHours(d.hour);
+  this.date.setMinutes(d.minute);
 
   this.options.callback(this.get_date());
 }
