@@ -74,6 +74,10 @@ calendar.prototype.avoid_close=function(event) {
   event.stopPropagation();
 }
 
+calendar.prototype.get_date=function() {
+  return date_format(calendar_types[this.options.type], this.date);
+}
+
 calendar.prototype.close=function() {
   if((new Date().getTime()-this.age)<100)
     return false;
@@ -90,7 +94,7 @@ calendar.prototype.close=function() {
   this.div.parentNode.removeChild(this.div);
 
   if(this.options.close_callback) {
-    this.options.close_callback(date_format(calendar_types[this.options.type], this.date));
+    this.options.close_callback(this.get_date())
   }
 
   return true;
@@ -159,7 +163,7 @@ calendar.prototype.choose_date=function(day) {
 
   this.fill();
 
-  this.options.callback(date_format(calendar_types[this.options.type], day));
+  this.options.callback(this.get_date());
 }
 
 function calendars_cleanup() {
