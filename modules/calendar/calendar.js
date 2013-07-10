@@ -33,10 +33,25 @@ function calendar(element, date, callback) {
 
   element.parentNode.appendChild(this.div);
 
+  this.age=new Date().getTime();
   calendars.push(this);
+
+  if(window.addEventListener) {
+    this.div.addEventListener('click', this.avoid_close.bind(this));
+  }
+  else {
+    this.div.attachEvent('onclick', this.avoid_close.bind(this));
+  }
+}
+
+calendar.prototype.avoid_close=function(event) {
+  event.stopPropagation();
 }
 
 calendar.prototype.close=function() {
+  if((new Date().getTime()-this.age)<100)
+    return false;
+
   var p=null;
   for(var i=0; i<calendars.length; i++) {
     if(calendars[i]===this)
@@ -45,6 +60,10 @@ calendar.prototype.close=function() {
 
   if(p!==null)
     calendars=calendars.slice(0, p).concat(calendars.slice(p+1));
+
+  this.div.parentNode.removeChild(this.div);
+
+  return true;
 }
 
 calendar.prototype.fill=function() {
@@ -111,4 +130,20 @@ calendar.prototype.choose_date=function(day) {
   this.fill();
 
   this.callback(date_format("Y-m-d", day));
+}
+
+function calendars_cleanup() {
+  for(var i=0; i<calendars.length; i++) {
+    var r=calendars[i].close();
+
+    if(i===true)
+      i--;
+  }
+}
+
+if(window.addEventListener) {
+  document.addEventListener('click', calendars_cleanup);
+}
+else {
+  document.attachEvent('onclick', calendars_cleanup);
 }
