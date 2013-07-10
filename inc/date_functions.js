@@ -5,7 +5,10 @@ function pad(n, width, z) {
 }
 
 // accepts date as read from date_parse_from_format
-function date_format(format, date) {
+function date_format(format, date, tz) {
+  if(typeof tz=="undefined")
+    tz=null;
+
   if(typeof date.getTime!="undefined") {
     date={
       'year': date.getFullYear(),
@@ -14,7 +17,7 @@ function date_format(format, date) {
       'hour': date.getHours(),
       'minute': date.getMinutes(),
       'second': date.getSeconds(),
-      'timezone': date.getTimezoneOffset()
+      'timezone': (tz===null?-date.getTimezoneOffset()*60:tz)
     };
   }
 
