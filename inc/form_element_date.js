@@ -34,6 +34,7 @@ form_element_date.prototype.create_element=function() {
 	element:  this.dom_element,
 	date:	  this.get_data(),
 	callback: this.set_data.bind(this),
+	type:	  this.type(),
 	close_callback: function() {
 	  delete(this.calendar);
 	}.bind(this)

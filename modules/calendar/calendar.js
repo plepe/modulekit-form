@@ -8,9 +8,25 @@ var calendars=[];
 //   close_callback: JS function which will be called when calendar is being
 //     closed; will be passed chosen date (if it has been selected) in RFC
 //     3339 format
+//   type: date, datetime or datetime-local (default: chosen from format of
+//     'date' parameter)
+
+var calendar_types={
+  'date': "Y-m-d",
+  'datetime-local': "Y-m-d\\TH:i:s",
+  'datetime': "Y-m-d\\TH:i:sP"
+};
 
 function calendar(options) {
   this.options=options;
+
+  if(!this.options.type)
+    for(var k in calendar_types) {
+      var d;
+      if(d=date_parse_from_format(calendar_types[k], this.options.date)) {
+	this.options.type=k;
+      }
+    }
 
   this.date=new Date(this.options.date);
   this.show_date=new Date(this.options.date);
@@ -74,7 +90,7 @@ calendar.prototype.close=function() {
   this.div.parentNode.removeChild(this.div);
 
   if(this.options.close_callback) {
-    this.options.close_callback(date_format("Y-m-d", this.date));
+    this.options.close_callback(date_format(calendar_types[this.options.type], this.date));
   }
 
   return true;
@@ -143,7 +159,7 @@ calendar.prototype.choose_date=function(day) {
 
   this.fill();
 
-  this.options.callback(date_format("Y-m-d", day));
+  this.options.callback(date_format(calendar_types[this.options.type], day));
 }
 
 function calendars_cleanup() {
