@@ -133,10 +133,17 @@ calendar.prototype.set_date=function(date) {
   this.fill();
 }
 
-calendar.prototype.close=function() {
+calendar.prototype.check_close=function(ev) {
   if((new Date().getTime()-this.age)<100)
     return false;
 
+  if(ev.target==this.options.element)
+    return false;
+
+  return this.close();
+}
+
+calendar.prototype.close=function() {
   var p=null;
   for(var i=0; i<calendars.length; i++) {
     if(calendars[i]===this)
@@ -230,9 +237,12 @@ calendar.prototype.form_change=function() {
   this.options.callback(this.get_date());
 }
 
-function calendars_cleanup() {
+function calendars_cleanup(ev) {
+  if(typeof event!="undefined")
+    ev=event;
+
   for(var i=0; i<calendars.length; i++) {
-    var r=calendars[i].close();
+    var r=calendars[i].check_close(ev);
 
     if(i===true)
       i--;
