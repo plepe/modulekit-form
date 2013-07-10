@@ -1,10 +1,16 @@
 var calendars=[];
 
-function calendar(element, date, callback) {
-  this.date=new Date(date);
-  this.show_date=new Date(date);
+// options:
+//   element: dom node after which calendar should be shown
+//   date:    current date; will be highlighted
+//   callback: JS function which will be called when a date is chosen; will be
+//     passed RFC 3339 date
+function calendar(options) {
+  this.options=options;
+
+  this.date=new Date(this.options.date);
+  this.show_date=new Date(this.options.date);
   this.show_date.setDate(1);
-  this.callback=callback;
 
   this.div=document.createElement("div");
   this.div.className="calendar";
@@ -31,7 +37,7 @@ function calendar(element, date, callback) {
 
   this.fill();
 
-  element.parentNode.appendChild(this.div);
+  this.options.element.parentNode.appendChild(this.div);
 
   this.age=new Date().getTime();
   calendars.push(this);
@@ -129,7 +135,7 @@ calendar.prototype.choose_date=function(day) {
 
   this.fill();
 
-  this.callback(date_format("Y-m-d", day));
+  this.options.callback(date_format("Y-m-d", day));
 }
 
 function calendars_cleanup() {

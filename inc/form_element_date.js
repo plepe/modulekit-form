@@ -30,11 +30,11 @@ form_element_date.prototype.create_element=function() {
 
   input.onfocus=function() {
     if(typeof this.calendar=="undefined")
-      this.calendar=new calendar(
-	this.dom_element,
-	this.get_data(),
-	this.set_data.bind(this)
-      );
+      this.calendar=new calendar({
+	element:  this.dom_element,
+	date:	  this.get_data(),
+	callback: this.set_data.bind(this)
+      });
   }.bind(this);
 
   return input;
