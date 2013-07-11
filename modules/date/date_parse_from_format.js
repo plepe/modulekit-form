@@ -93,7 +93,15 @@ function date_parse_from_format(format, date) {
   if(!date_array)
     return null;
 
-  var ret={};
+  var ret={
+    'year':	new Date().getFullYear(),
+    'month':	0,
+    'day':	0,
+    'hour':	0,
+    'minute':	0,
+    'second':	0,
+    'timezone': null
+  };
   var pos=1;
   var esc=false;
   for(var i=0; i<format.length; i++) {
