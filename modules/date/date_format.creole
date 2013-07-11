@@ -29,3 +29,4 @@ This function is similar to http://php.net/manual/en/function.date.php
 ||**TIMEZONE**||
 |O|Difference to Greenwich time (GMT) in hours|Example: +0200|
 |P|Difference to Greenwich time (GMT) with colon between hours and minutes|Example: +02:00|
+|Z|Timezone offset in seconds. The offset for timezones west of UTC is always negative, and for those east of UTC is always positive.|-43200 through 50400|

@@ -50,6 +50,7 @@ function date_format(format, date, tz) {
 	  pad(Math.abs(v.timezone)/3600, 2)+":"+
 	  pad(Math.abs(v.timezone)/60%60, 2);
       },
+    'Z': function(v) { return v.timezone; },
     // Day Period (AM/PM)
     'a': function(v) { return v.hour<12?"am":"pm"; },
     'A': function(v) { return v.hour<12?"AM":"PM"; }
