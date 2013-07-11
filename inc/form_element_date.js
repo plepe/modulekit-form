@@ -50,7 +50,7 @@ form_element_date.prototype.get_data=function() {
   if(data===null)
     return null;
 
-  data=date_parse_from_format(form_element_date_display_format[this.type()], data);
+  data=date_parse_from_format(this.date_format(), data);
   if(data)
     data=date_format(form_element_date_value_format[this.type()], data);
 
@@ -63,7 +63,7 @@ form_element_date.prototype.set_data=function(data) {
   if(data!==null) {
     d=date_parse_from_format(form_element_date_value_format[this.type()], data);
     if(d)
-      d=date_format(form_element_date_display_format[this.type()], d);
+      d=date_format(this.date_format(), d);
   }
 
   this.parent("form_element_date").set_data.call(this, d);
