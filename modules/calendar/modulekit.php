@@ -1,5 +1,5 @@
 <?
-$depend=array("modulekit-form");
+$depend=array("modulekit-form", "date");
 
 $include=array(
   'js'=>array(

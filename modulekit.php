@@ -3,7 +3,7 @@ $name="Form";
 
 $id="modulekit-form";
 
-$depend=array("lang", "calendar");
+$depend=array("lang", "calendar", "date");
 
 $languages=array("en", "de");
 
@@ -47,7 +47,6 @@ $include_js=array(
   "inc/form_element_select.js",
   "inc/form_element_numeric.js",
   "inc/form_element_file.js",
-  "inc/date_functions.js",
   "inc/form_element_date.js",
 );
 $include_css=array(
