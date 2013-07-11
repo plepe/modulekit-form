@@ -122,7 +122,6 @@ calendar.prototype.set_date=function(date) {
   this.date=new Date(this.date.getTime()+(tz_offset+this.options.timezone)*1000);
 
   this.show_date=new Date(this.date);
-  this.show_date.setDate(1);
 
   if(this.time_form)
     this.time_form.set_data({
@@ -184,8 +183,12 @@ calendar.prototype.fill=function() {
     td.innerHTML=lang("date:weekday_short:"+((i+1)%7));
   }
 
-  var curr_day=new Date(this.show_date.getTime()-
-                        (this.show_date.getDay()-1)*86400000);
+  // Calculate first day of month
+  var curr_day=new Date(this.show_date);
+  curr_day.setDate(1);
+  // and now monday before the first
+  curr_day=new Date(curr_day.getTime()-
+		    (curr_day.getDay()-1)*86400000);
 
   for(var week=0; week<6; week++) {
     var tr=document.createElement("tr");
@@ -232,7 +235,6 @@ calendar.prototype.nav_month=function(offset) {
 calendar.prototype.choose_date=function(day) {
   this.date=day;
   this.show_date=new Date(day);
-  this.show_date.setDate(1);
 
   this.fill();
 
