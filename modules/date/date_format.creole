@@ -10,7 +10,9 @@ This function is similar to http://php.net/manual/en/function.date.php
 |w|Numeric representation of the day of the week|0 (Sunday) through 6 (Saturday)|
 ||**WEEK**||
 ||**MONTH**||
+|F|A full textual representation of a month, such as January or March|January through December|
 |m|Numeric representation of a month, with leading zeros|01 through 12|
+|M|A short textual representation of a month|Jan through Dec|
 |n|Numeric representation of a month, without leading zeros|1 through 12|
 ||**YEAR**||
 |Y|A full numeric representation of a year, 4 digits|Examples: 1999 or 2003|

@@ -22,6 +22,8 @@ function date_format(format, date, tz) {
     // Month
     'm': function(v) { return pad(v.month, 2); },
     'n': function(v) { return parseInt(v.month); },
+    'F': function(v) { return lang("date:month:"+parseInt(v.month)); },
+    'M': function(v) { return lang("date:month_short:"+parseInt(v.month)); },
     // Day
     'd': function(v) { return pad(v.day, 2); },
     'D': function(v) { return lang("date:weekday_short:"+date_to_jsdate(v).getDay()); },
