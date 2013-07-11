@@ -162,6 +162,11 @@ function date_parse_from_format(format, date, options) {
     }
   }
 
+  if(options.sloppy)
+    format_regexp="^\\s*"+format_regexp+"\\s*$";
+  else
+    format_regexp="^"+format_regexp+"$";
+
   var date_array=date.match(format_regexp);
   if(!date_array)
     return null;
