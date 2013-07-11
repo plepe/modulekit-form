@@ -53,7 +53,9 @@ function date_format(format, date, tz) {
     'Z': function(v) { return v.timezone; },
     // Day Period (AM/PM)
     'a': function(v) { return v.hour<12?"am":"pm"; },
-    'A': function(v) { return v.hour<12?"AM":"PM"; }
+    'A': function(v) { return v.hour<12?"AM":"PM"; },
+    // Full Date/Time
+    'c': function(v) { return date_format("Y-m-d\TH:i:sP", v); }
   };
 
   var ret="";
