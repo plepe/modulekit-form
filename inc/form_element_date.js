@@ -50,7 +50,7 @@ form_element_date.prototype.get_data=function() {
   if(data===null)
     return null;
 
-  data=date_parse_from_format(this.date_format(), data);
+  data=date_parse_from_format(this.date_format(), data, { 'sloppy': true });
   if(data)
     data=date_format(form_element_date_value_format[this.type()], data);
 
