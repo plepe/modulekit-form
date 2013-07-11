@@ -16,22 +16,28 @@ function date_format(format, date, tz) {
   }
 
   var value_format={
+    // Year
     'Y': function(v) { return pad(v.year, 4); },
     'y': function(v) { return pad(v.year%100, 2); },
+    // Month
     'm': function(v) { return pad(v.month, 2); },
     'n': function(v) { return parseInt(v.month); },
+    // Day
     'd': function(v) { return pad(v.day, 2); },
     'D': function(v) { return lang("date:weekday_short:"+date_to_jsdate(v).getDay()); },
     'l': function(v) { return lang("date:weekday:"+date_to_jsdate(v).getDay()); },
     'w': function(v) { return date_to_jsdate(v).getDay(); },
     'N': function(v) { v1=date_to_jsdate(v).getDay(); return (v1==0?1:v1); },
     'j': function(v) { return parseInt(v.day); },
+    // Hour
     'H': function(v) { return pad(v.hour, 2); },
     'h': function(v) { return pad(v.hour%12==0?12:v.hour%12, 2); },
     'G': function(v) { return v.hour; },
     'g': function(v) { return v.hour%12==0?12:v.hour%12; },
+    // Minute
     'i': function(v) { return pad(v.minute, 2); },
     's': function(v) { return pad(v.second, 2); },
+    // Timezone
     'O': function(v) {
         return (v.timezone<0?"-":"+")+
 	  pad(Math.abs(v.timezone)/3600, 2)+
@@ -42,6 +48,7 @@ function date_format(format, date, tz) {
 	  pad(Math.abs(v.timezone)/3600, 2)+":"+
 	  pad(Math.abs(v.timezone)/60%60, 2);
       },
+    // Day Period (AM/PM)
     'a': function(v) { return v.hour<12?"am":"pm"; },
     'A': function(v) { return v.hour<12?"AM":"PM"; }
   };
