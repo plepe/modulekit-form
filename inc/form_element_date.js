@@ -33,7 +33,7 @@ form_element_date.prototype.create_element=function() {
       this.calendar=new calendar({
 	element:  this.dom_element,
 	date:	  this.get_data(),
-	callback: this.set_data.bind(this),
+	callback: this.set_data_from_calendar.bind(this),
 	type:	  this.type(),
 	close_callback: function() {
 	  delete(this.calendar);
@@ -67,6 +67,12 @@ form_element_date.prototype.set_data=function(data) {
   }
 
   this.parent("form_element_date").set_data.call(this, d);
+}
+
+form_element_date.prototype.set_data_from_calendar=function(data) {
+  this.set_data(data);
+
+  this.notify_change();
 }
 
 form_element_date.prototype.notify_change=function() {
