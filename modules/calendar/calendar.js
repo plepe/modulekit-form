@@ -173,6 +173,17 @@ calendar.prototype.fill=function() {
     current=n;
   }
 
+  // print weekdays
+  var tr=document.createElement("tr");
+  table.appendChild(tr);
+
+  for(var i=0; i<7; i++) {
+    var td=document.createElement("th");
+    tr.appendChild(td);
+
+    td.innerHTML=lang("date:weekday_short:"+((i+1)%7));
+  }
+
   var curr_day=new Date(this.show_date.getTime()-
                         (this.show_date.getDay()-1)*86400000);
 
