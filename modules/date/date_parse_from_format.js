@@ -4,6 +4,8 @@ function date_parse_from_format(format, date) {
     'y': 'year',
     'm': 'month',
     'n': 'month',
+    'M': 'month',
+    'F': 'month',
     'd': 'day',
     'j': 'day',
     'H': 'hour',
@@ -15,7 +17,12 @@ function date_parse_from_format(format, date) {
     'a': 'day_period',
     'A': 'day_period',
     'O': 'timezone',
-    'P': 'timezone'
+    'P': 'timezone',
+    'Z': 'timezone',
+    'D': 'weekday',
+    'l': 'weekday',
+    'N': 'weekday',
+    'w': 'weekday'
   };
 
   var regexp={
@@ -23,7 +30,13 @@ function date_parse_from_format(format, date) {
     'y': '([0-9]{2})',
     'm': '(1[012]|0[0-9])',
     'n': '(1[012]|[0-9])',
+    'M': '(.+)',
+    'F': '(.+)',
     'd': '(3[01]|[012][0-9])',
+    'D': '(.+)',
+    'l': '(.+)',
+    'N': '([1-7])',
+    'w': '([0-6])',
     'j': '(3[01]|[12][0-9]|[0-9])',
     'H': '(2[0-3]|[01][0-9])',
     'h': '(2[0-3]|[01][0-9])',
@@ -35,12 +48,37 @@ function date_parse_from_format(format, date) {
     'A': '(AM|PM)',
     'O': '(Z|[+\\-][01][0-9][0-5][0-9])',
     'P': '(Z|[+\\-][01][0-9]:[0-5][0-9])',
+    'Z': '(\\-?[0-9]+)',
     // other characters
     '.': '\\.'
   };
 
   var fix_format={
     'y': function(v) { v.year=(v.year<70?2000:1900)+parseInt(v.year); },
+    'M': function(v) {
+        for(var i=1; i<=12; i++)
+	  if(v.month==lang("date:month_short:"+i))
+	    v.month=i;
+      },
+    'F': function(v) {
+        for(var i=1; i<=12; i++)
+	  if(v.month==lang("date:month:"+i))
+	    v.month=i;
+      },
+    'D': function(v) {
+        for(var i=0; i<7; i++)
+	  if(v.weekday==lang("date:weekday_short:"+i))
+	    v.weekday=i;
+      },
+    'l': function(v) {
+        for(var i=0; i<7; i++)
+	  if(v.weekday==lang("date:weekday:"+i))
+	    v.weekday=i;
+      },
+    'N': function(v) {
+	if(v.weekday==7)
+	  v.weekday=0;
+      },
     'a': function(v) {
 	v.hour=(v.hour==12?0:parseInt(v.hour));
 	v.hour=(v.day_period=="pm"?v.hour+12:v.hour);
