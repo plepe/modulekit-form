@@ -34,8 +34,8 @@ function date_format(format, date, tz) {
     // Hour
     'H': function(v) { return pad(v.hour, 2); },
     'h': function(v) { return pad(v.hour%12==0?12:v.hour%12, 2); },
-    'G': function(v) { return v.hour; },
-    'g': function(v) { return v.hour%12==0?12:v.hour%12; },
+    'G': function(v) { return parseInt(v.hour); },
+    'g': function(v) { return parseInt(v.hour)%12==0?12:parseInt(v.hour)%12; },
     // Minute
     'i': function(v) { return pad(v.minute, 2); },
     's': function(v) { return pad(v.second, 2); },
