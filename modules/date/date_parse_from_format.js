@@ -1,4 +1,7 @@
-function date_parse_from_format(format, date) {
+function date_parse_from_format(format, date, options) {
+  if(!options)
+    options={};
+
   var value={
     'Y': 'year',
     'y': 'year',
@@ -51,6 +54,35 @@ function date_parse_from_format(format, date) {
     'Z': '(\\-?[0-9]+)',
     // other characters
     '.': '\\.'
+  };
+
+  var regexp_sloppy={
+    'Y': '([0-9]{4})',
+    'y': '([0-9]{2})',
+    'm': '(0?[0-9]|1[012])',
+    'n': '(0?[0-9]|1[012])',
+    'M': '(.+)',
+    'F': '(.+)',
+    'd': '(3[01]|[012][0-9]|[0-9])',
+    'D': '(.+)',
+    'l': '(.+)',
+    'N': '([1-7])',
+    'w': '([0-6])',
+    'j': '(3[01]|[012][0-9]|[0-9])',
+    'H': '(2[0-3]|[01][0-9]|[0-9])',
+    'h': '(2[0-3]|[01][0-9]|[0-9])',
+    'G': '(2[0-3]|[01][0-9]|[0-9])',
+    'g': '(2[0-3]|[01][0-9]|[0-9])',
+    'i': '([0-5][0-9]|[0-9])',
+    's': '(6[01]|[0-5][0-9]|[0-9])',
+    'a': '(am|pm)',
+    'A': '(AM|PM)',
+    'O': '(Z|[+\\-][01][0-9]:?[0-5][0-9])',
+    'P': '(Z|[+\\-][01][0-9]:?[0-5][0-9])',
+    'Z': '([\\-+]?[0-9]+)',
+    // other characters
+    '.': '\\.',
+    ' ': '\\s+'
   };
 
   var fix_format={
@@ -109,6 +141,9 @@ function date_parse_from_format(format, date) {
 
   var format_regexp="";
   var esc=false;
+
+  if(options.sloppy)
+    regexp=regexp_sloppy;
 
   for(var i=0; i<format.length; i++) {
     if(!esc) {
