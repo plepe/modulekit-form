@@ -138,6 +138,8 @@ Value:
 ** 'datetime': e.g. '2013-12-24T19:00:00Z' or '2013-12-24T19:00:00.123+02:00'
 ** 'datetime-local': e.g. '2013-12-24T19:00:00'
 
+TODO: The format in JavaScript is much more flexible than the PHP format (esp. concerning string representations of weekday/month). So, currently it's not advisable to use string representations.
+
 === Unsupported Form Elements ===
 Any form elements that are not supported (yet) will show the name and a warning, that the form element type is not supported. Any data set to the element will be kept, as internally a JSON form element will be used.
 
