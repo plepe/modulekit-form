@@ -28,6 +28,18 @@ form_element_date.prototype.create_element=function() {
   var input=document.createElement("input");
   input.type="text";
 
+  this.activate_calendar(input);
+
+  return input;
+}
+
+form_element_date.prototype.connect=function(dom_parent) {
+  this.parent("form_element_date").connect.call(this, dom_parent);
+
+  this.activate_calendar(this.dom_element);
+}
+
+form_element_date.prototype.activate_calendar=function(input) {
   input.onfocus=function() {
     if(typeof this.calendar=="undefined")
       this.calendar=new calendar({
@@ -40,8 +52,6 @@ form_element_date.prototype.create_element=function() {
 	}.bind(this)
       });
   }.bind(this);
-
-  return input;
 }
 
 form_element_date.prototype.get_data=function() {
