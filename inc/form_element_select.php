@@ -15,7 +15,7 @@ class form_element_select extends form_element {
     foreach($this->get_values() as $k=>$v) {
       $option=$document->createElement("option");
       $option->setAttribute("value", $k);
-      if($val==$this->data)
+      if($k==$this->data)
 	$option->setAttribute("selected", "selected");
       $select->appendChild($option);
       
