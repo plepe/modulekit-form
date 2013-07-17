@@ -100,6 +100,11 @@ $form_def=array(
     'path'	=>"/tmp",
     'template'	=>"submission-[timestamp]",
   ),
+  'ready'	=>array(
+    'type'	=>"boolean",
+    'name'	=>"Ready",
+    'desc'	=>"Are you ready yet?",
+  ),
 );
 
 $default_data=array(

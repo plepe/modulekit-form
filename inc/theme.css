@@ -30,9 +30,11 @@ select.form_modified
 }
 
 /* checkboxes */
+.form_element_boolean input[type=checkbox],
 .form_element_checkbox input[type=checkbox] {
   display: none;
 }
+.form_element_boolean label:before,
 .form_element_checkbox label:before {
   content: "\00A0";
   display: inline-block;
@@ -43,11 +45,13 @@ select.form_modified
   border: 1px inset #000000;
   border-radius: 3px;
 }
+.form_element_boolean input:checked + label:before,
 .form_element_checkbox input:checked + label:before {
   content: "\2713";
   color: #000000;
   text-align: center;
 }
+.form_element_boolean span.form_modified label:before,
 .form_element_checkbox span.form_modified label:before {
   background: #c0c0c0;
 }

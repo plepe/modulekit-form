@@ -156,6 +156,15 @@ Definition:
 Value:
 * In 'keys' values_mode the key of the chosen value is returned (e.g. "m"); in 'values' mode the value is returned (e.g. "male")
 
+=== Form Element "Boolean" ===
+A single checkbox without label.
+
+Definition:
+* type: 'boolean'
+
+Value:
+* true/false
+
 === Form Element "Select" ===
 A dropdown box were an entry can be selected.
 
