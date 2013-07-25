@@ -124,9 +124,9 @@ form_element.prototype.show_element=function() {
 }
 
 form_element.prototype.errors=function(list) {
-  this.get_data();
+  var data=this.get_data();
 
-  if((this.def.req)&&((!this.data)||(this.data=="")))
+  if((this.def.req)&&((!this.data)||(data===null)))
     list.push(this.path_name()+": "+lang("form:require_value"));
 
   if(this.def.check) {

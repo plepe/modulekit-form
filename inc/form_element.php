@@ -65,9 +65,9 @@ class form_element {
   }
 
   function errors($errors) {
-    $this->get_data();
+    $data=$this->get_data();
 
-    if(isset($this->def['req'])&&($this->def['req'])&&(!$this->data))
+    if(isset($this->def['req'])&&($this->def['req'])&&($data===null))
       $errors[]=$this->path_name().": ".lang("form:require_value");
 
     if(isset($this->def['check'])) {
