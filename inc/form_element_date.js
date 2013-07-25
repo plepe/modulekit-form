@@ -24,6 +24,13 @@ form_element_date.prototype.date_format=function() {
   return form_element_date_display_format[this.type()];
 }
 
+form_element_date.prototype.value_format=function() {
+  if(this.def.value_format)
+    return this.def.value_format;
+
+  return form_element_date_value_format[this.type()];
+}
+
 form_element_date.prototype.create_element=function() {
   var input=document.createElement("input");
   input.type="text";
@@ -62,7 +69,7 @@ form_element_date.prototype.get_data=function() {
 
   data=date_parse_from_format(this.date_format(), data, { 'sloppy': true });
   if(data)
-    data=date_format(form_element_date_value_format[this.type()], data);
+    data=date_format(this.value_format(), data);
 
   return data;
 }
@@ -71,7 +78,7 @@ form_element_date.prototype.set_data=function(data) {
   var d="";
 
   if(data!==null) {
-    d=date_parse_from_format(form_element_date_value_format[this.type()], data);
+    d=date_parse_from_format(this.value_format(), data);
     if(d)
       d=date_format(this.date_format(), d);
   }

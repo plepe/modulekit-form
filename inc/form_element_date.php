@@ -34,18 +34,24 @@ class form_element_date extends form_element_text {
     return $form_element_date_display_format[$this->type()];
   }
 
-  function get_data() {
-    global $form_element_date_value_format;
+  function value_format() {
+    if(isset($this->def['value_format']))
+      return $this->def['value_format'];
 
+    global $form_element_date_value_format;
+    return $form_element_date_value_format[$this->type()];
+  }
+
+  function get_data() {
     // datetime can be stored internally either in value or display format
     $dt=DateTime::createFromFormat($this->date_format(), $this->data);
     if(!$dt) {
-      $dt=DateTime::createFromFormat($form_element_date_value_format[$this->type()], $this->data);
+      $dt=DateTime::createFromFormat($this->value_format(), $this->data);
       if(!$dt)
 	return null;
     }
 
-    return $dt->format($form_element_date_value_format[$this->type()]);
+    return $dt->format($this->value_format());
   }
 
   function show_element($document) {
