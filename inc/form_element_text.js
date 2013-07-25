@@ -33,7 +33,7 @@ form_element_text.prototype.show_element=function() {
     for(var i in this.def.html_attributes)
       input.setAttribute(i, this.def.html_attributes[i]);
 
-  if(this.def.values) {
+  if(this.def.values&&(typeof this.def.values=="object")) {
     input.setAttribute("list", this.id+"-datalist");
 
     var datalist_container=document.createElement("span");

@@ -30,7 +30,7 @@ class form_element_text extends form_element {
     $input->setAttribute("name", $this->options['var_name']);
     $input->setAttribute("value", $this->data);
 
-    if(isset($this->def['values'])) {
+    if(isset($this->def['values'])&&is_array($this->def['values'])) {
       $input->setAttribute("list", $this->id."-datalist");
 
       // Compatibility HTML4 browsers (i.e. IE8)
