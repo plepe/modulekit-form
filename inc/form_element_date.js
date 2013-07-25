@@ -12,6 +12,11 @@ var form_element_date_value_format={
   'datetime': "Y-m-d\\TH:i:sP",
   'datetime-local': "Y-m-d\\TH:i:s"
 };
+var form_element_date_calender_format={
+  'date': "Y-m-d",
+  'datetime': "Y-m-d\\TH:i:sP",
+  'datetime-local': "Y-m-d\\TH:i:s"
+};
 
 form_element_date.inherits_from(form_element_text);
 function form_element_date() {
@@ -51,7 +56,7 @@ form_element_date.prototype.activate_calendar=function(input) {
     if(typeof this.calendar=="undefined")
       this.calendar=new calendar({
 	element:  this.dom_element,
-	date:	  this.get_data(),
+	date:	  this.get_data(form_element_date_calender_format[this.type()]),
 	callback: this.set_data_from_calendar.bind(this),
 	type:	  this.type(),
 	close_callback: function() {
@@ -61,24 +66,30 @@ form_element_date.prototype.activate_calendar=function(input) {
   }.bind(this);
 }
 
-form_element_date.prototype.get_data=function() {
+form_element_date.prototype.get_data=function(format) {
   var data=this.parent("form_element_date").get_data.call(this);
 
   if(data===null)
     return null;
 
+  if(!format)
+    format=this.value_format();
+
   data=date_parse_from_format(this.date_format(), data, { 'sloppy': true });
   if(data)
-    data=date_format(this.value_format(), data);
+    data=date_format(format, data);
 
   return data;
 }
 
-form_element_date.prototype.set_data=function(data) {
+form_element_date.prototype.set_data=function(data, format) {
   var d="";
 
+  if(!format)
+    format=this.value_format();
+
   if(data!==null) {
-    d=date_parse_from_format(this.value_format(), data);
+    d=date_parse_from_format(format, data);
     if(d)
       d=date_format(this.date_format(), d);
   }
@@ -87,7 +98,7 @@ form_element_date.prototype.set_data=function(data) {
 }
 
 form_element_date.prototype.set_data_from_calendar=function(data) {
-  this.set_data(data);
+  this.set_data(data, form_element_date_calender_format[this.type()]);
 
   this.notify_change();
 }
@@ -96,6 +107,6 @@ form_element_date.prototype.notify_change=function() {
   this.parent("form_element_date").notify_change.call(this);
 
   if(this.calendar) {
-    this.calendar.set_date(this.get_data());
+    this.calendar.set_date(this.get_data(form_element_date_calender_format[this.type()]));
   }
 }
