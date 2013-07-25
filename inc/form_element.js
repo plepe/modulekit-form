@@ -12,10 +12,14 @@ form_element.prototype.init=function(id, def, options, form_parent) {
     this.form_root=this;
   else
     this.form_root=form_parent.form_root;
-  this.data=null;
 
-  if('default' in this.def)
-    this.set_data.call(this, this.def.default);
+  this.data=null;
+  this.orig_data=null;
+
+  if('default' in this.def) {
+    this.set_data.call(this, this.def['default']);
+    this.set_orig_data.call(this, this.def['default']);
+  }
 }
 
 form_element.prototype.name=function() {
@@ -284,9 +288,9 @@ form_element.prototype.refresh=function() {
     return;
 
   if(this.is_shown())
-    this.tr.style.display=null;
+    this.tr.setAttribute("style", "");
   else
-    this.tr.style.display="none";
+    this.tr.setAttribute("style", "display: none;");
 }
 
 form_element.prototype.is_modified=function() {

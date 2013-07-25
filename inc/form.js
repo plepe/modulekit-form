@@ -1,6 +1,7 @@
 function form(id, def, options) {
   this.id=id;
   this.def=def;
+  form_process_def(this.def);
   if(!options)
     options={};
   this.options=options;
@@ -98,6 +99,9 @@ form.prototype.show=function(dom_parent) {
   this.table=this.element.show_element();
 
   dom_parent.appendChild(this.table);
+
+  form_resize();
+
   return this.table;
 }
 
@@ -128,4 +132,64 @@ form.prototype.show_errors=function(div) {
 form.prototype.notify_change=function() {
   if(this.onchange)
     this.onchange();
+}
+
+function form_resize() {
+  var obs=document.getElementsByTagName("table");
+
+  for(var i=0; i<obs.length; i++) {
+    var ob=obs[i];
+    var width=ob.parentNode.offsetWidth;
+
+    // calculate height of M
+    var em=document.createElement("div");
+    em.setAttribute("style", "display:inline-block; padding:0; line-height:1; position:absolute; visibility:hidden; font-size:1em;");
+    em.appendChild(document.createTextNode("M"));
+    ob.appendChild(em);
+    var em_height=em.offsetHeight;
+    ob.removeChild(em);
+
+    // set class according to width
+    if(width/em_height<=25)
+      ob.className="form small";
+    else if(width/em_height<=40)
+      ob.className="form medium";
+    else
+      ob.className="form";
+  }
+}
+
+function form_process_def(def) {
+  for(var k in def) {
+    var element_def=new clone(def[k]);
+
+    if(element_def.count&&(element_def.type!="array")) {
+      def[k]=element_def.count;
+      def[k].type="array";
+
+      if(element_def.name)
+	def[k].name=element_def.name;
+      if(element_def.desc)
+	def[k].desc=element_def.desc;
+
+      delete(element_def.name);
+      delete(element_def.desc);
+      delete(element_def.count);
+
+      def[k].def=element_def;
+    }
+
+    if(((element_def.type=="array")||(element_def.type=="form"))&&
+       def[k].def.def)
+      form_process_def(def[k].def.def);
+  }
+}
+
+if(window.addEventListener) {
+  window.addEventListener('load', form_resize);
+  window.addEventListener('resize', form_resize);
+}
+else {
+  window.attachEvent('onload', form_resize);
+  window.attachEvent('onresize', form_resize);
 }

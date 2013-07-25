@@ -1,39 +1,39 @@
-div.form_element_keywords input.connected {
+.form_element_keywords input.connected {
   display: none;
 }
-div.form_element_keywords div.keywords {
+.form_element_keywords div.keywords {
   display: inline;
 }
-div.form_element_keywords div.actions {
+.form_element_keywords div.actions {
   display: inline;
 }
-div.form_element_keywords span.keyword {
+.form_element_keywords span.keyword {
   border: 1px solid #000000;
   padding: 0.125em;
   white-space: nowrap;
   line-height: 2em;
 }
-div.form_element_keywords span.keyword input[type=button] {
+.form_element_keywords span.keyword input[type=button] {
   border: 1px solid #707070;
   margin-left: 0.125em;
 }
-div.form_element_keywords div.keywords input {
+.form_element_keywords div.keywords input {
   border: none;
 }
-div.form_element_keywords div.edit_actions {
+.form_element_keywords div.edit_actions {
   display: none;
 }
 
 /* edit mode */
-div.form_element_keywords.edit input.connected {
+.form_element_keywords.edit input.connected {
   display: inline;
 }
-div.form_element_keywords.edit div.actions {
+.form_element_keywords.edit div.actions {
   display: none;
 }
-div.form_element_keywords.edit div.keywords {
+.form_element_keywords.edit div.keywords {
   display: none;
 }
-div.form_element_keywords.edit div.edit_actions {
+.form_element_keywords.edit div.edit_actions {
   display: inline;
 }

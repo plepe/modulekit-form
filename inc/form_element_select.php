@@ -5,8 +5,7 @@ class form_element_select extends form_element {
 
     // check for changes
     $class="form_orig";
-    if(isset($this->orig_data)&&
-       ($this->data!=$this->orig_data))
+    if($this->is_modified())
       $class="form_modified";
 
     $select=$document->createElement("select");
@@ -16,7 +15,7 @@ class form_element_select extends form_element {
     foreach($this->get_values() as $k=>$v) {
       $option=$document->createElement("option");
       $option->setAttribute("value", $k);
-      if($val==$this->data)
+      if($k==$this->data)
 	$option->setAttribute("selected", "selected");
       $select->appendChild($option);
       

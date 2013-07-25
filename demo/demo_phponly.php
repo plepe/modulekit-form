@@ -2,7 +2,7 @@
 Header("content-type: text/html; charset=utf-8");
 // create file .nocache to disable caching
 $modulekit_nocache=file_exists(".nocache");
-include "modulekit/loader.php"; /* loads all php-includes */
+include "../modulekit/loader.php"; /* loads all php-includes */
 include "demo_form.php";
 call_hooks("init");
 ?>
@@ -11,6 +11,7 @@ call_hooks("init");
 <head>
 <?php print modulekit_include_css(); /* prints all css-includes */ ?>
 <?php print_add_html_headers(); ?>
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel='stylesheet' type='text/css' href='demo.css'/>
 </head>
 <body>

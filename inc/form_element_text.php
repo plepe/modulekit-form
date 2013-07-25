@@ -16,8 +16,7 @@ class form_element_text extends form_element {
 
     // check for changes
     $class="form_orig";
-    if(isset($this->orig_data)&&
-      ($this->data!=$this->orig_data))
+    if($this->is_modified())
       $class="form_modified";
 
     $input=$this->create_element($document);
@@ -34,6 +33,10 @@ class form_element_text extends form_element {
     if(isset($this->def['values'])) {
       $input->setAttribute("list", $this->id."-datalist");
 
+      // Compatibility HTML4 browsers (i.e. IE8)
+      $datalist_container=$document->createElement("span");
+      $datalist_container->setAttribute("class", "form_datalist_container");
+
       $datalist=$document->createElement("datalist");
       $datalist->setAttribute("id", $this->id."-datalist");
 
@@ -46,7 +49,8 @@ class form_element_text extends form_element {
         $option->appendChild($text);
       }
 
-      $div->appendChild($datalist);
+      $div->appendChild($datalist_container);
+      $datalist_container->appendChild($datalist);
     }
 
 
@@ -92,5 +96,15 @@ class form_element_text extends form_element {
         }
       }
     }
+  }
+
+  function is_modified() {
+    $this->get_data();
+
+    if( (($this->orig_data==="")||($this->orig_data===null))
+      &&(($this->data==="")||($this->data===null)))
+      return false;
+
+    return parent::is_modified();
   }
 }

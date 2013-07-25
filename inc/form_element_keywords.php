@@ -16,8 +16,7 @@ class form_element_keywords extends form_element {
 
     // check for changes
     $class="form_orig";
-    if(isset($this->orig_data)&&
-      ($this->data!=$this->orig_data))
+    if($this->is_modified())
       $class="form_modified";
 
     $input=$this->create_element($document);
@@ -60,9 +59,16 @@ class form_element_keywords extends form_element {
   }
 
   function is_modified() {
-    if(sizeof(array_diff($this->get_data(), $this->get_orig_data()))!=0)
+    $data=$this->get_data();
+    if(!$data)
+      $data=array();
+    $orig_data=$this->get_orig_data();
+    if(!$orig_data)
+      $orig_data=array();
+
+    if(sizeof(array_diff($data, $orig_data))!=0)
       return true;
-    if(sizeof(array_diff($this->get_orig_data(), $this->get_data()))!=0)
+    if(sizeof(array_diff($orig_data, $data))!=0)
       return true;
 
     return false;

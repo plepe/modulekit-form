@@ -3,9 +3,11 @@ $name="Form";
 
 $id="modulekit-form";
 
-$depend=array("lang");
+$depend=array("lang", "calendar", "date");
 
 $languages=array("en", "de");
+
+$version="2.0.0-alpha";
 
 $include_php=array(
   "inc/form.php",
@@ -17,6 +19,7 @@ $include_php=array(
   "inc/form_element_radio.php",
   "inc/form_element_text.php",
   "inc/form_element_textarea.php",
+  "inc/form_element_boolean.php",
   "inc/form_element_color.php",
   "inc/form_element_password.php",
   "inc/form_element_keywords.php",
@@ -25,6 +28,7 @@ $include_php=array(
   "inc/form_element_select.php",
   "inc/form_element_numeric.php",
   "inc/form_element_file.php",
+  "inc/form_element_date.php",
 );
 $include_js=array(
   "inc/functions.js",
@@ -32,6 +36,7 @@ $include_js=array(
   "inc/form_element.js",
   "inc/form_element_text.js",
   "inc/form_element_textarea.js",
+  "inc/form_element_boolean.js",
   "inc/form_element_radio.js",
   "inc/form_element_form.js",
   "inc/form_element_checkbox.js",
@@ -44,9 +49,14 @@ $include_js=array(
   "inc/form_element_select.js",
   "inc/form_element_numeric.js",
   "inc/form_element_file.js",
+  "inc/form_element_date.js",
 );
 $include_css=array(
   "inc/form.css",
+  "inc/form_element_text.css",
   "inc/form_element_array.css",
+  "inc/form_element_form.css",
   "inc/form_element_keywords.css",
+
+  "inc/theme.css",
 );

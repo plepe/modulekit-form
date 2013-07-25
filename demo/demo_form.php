@@ -15,8 +15,11 @@ $form_def=array(
   ),
   'hobbies'	=>array(
     'name'	=>"Hobbies",
-    'type'	=>"text",
-    'count'	=>array('default'=>2),
+    'type'	=>"array",
+    'default'	=>2,
+    'def'	=>array(
+      'type'	=>"text",
+    ),
     'req'	=>true,
   ),
   'birthday'	=>array(
@@ -24,7 +27,7 @@ $form_def=array(
     'type'	=>"date",
   ),
   'languages'	=>array(
-    'name'	=>"What languages to you speak?",
+    'name'	=>"What languages do you speak?",
     'type'	=>"checkbox",
     'values'	=>array("php"=>"PHP", "perl"=>"Perl", "c"=>"C", "cpp"=>"C++", "java"=>"Java", "js"=>"Javascript"),
   ),
@@ -97,6 +100,11 @@ $form_def=array(
     'path'	=>"/tmp",
     'template'	=>"submission-[timestamp]",
   ),
+  'ready'	=>array(
+    'type'	=>"boolean",
+    'name'	=>"Ready",
+    'desc'	=>"Are you ready yet?",
+  ),
 );
 
 $default_data=array(
@@ -104,6 +112,7 @@ $default_data=array(
   "sex"=>"m",
   "comment"=>"Foo Bar\nBlablabla\n",
   "hobbies"=>array(0=>"Linux", 2=>"PHP", 5=>"Cycling"),
+  "birthday"=>"1879-03-14", // Albert Einstein
   "languages"=>array("php", "js"),
   "nationality"=>"de",
   "residence"=>"Germany",

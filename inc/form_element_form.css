@@ -1,0 +1,9 @@
+.form_element_array_part_element.form_element_form {
+  border: 1px solid #303030;
+  margin-bottom: 0.25em;
+  padding: 0.25em;
+
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}

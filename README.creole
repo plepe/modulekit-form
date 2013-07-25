@@ -101,6 +101,12 @@ Definition:
 Value:
 * String. Will be stripped of additional slashes.
 
+Compatibility Issues:
+* Non-CSS browsers will show the "values" list in the page content.
+
+TODO:
+* If an element with "values" is used in an array, the datalist will be included for every member. A workaround is to generate the datalist manually and include "html_attributes" instead with <tt>list=id of datalist</tt>.
+
 === Form Element "Textarea" ===
 Similar to Form Element "Text", but provides a multi line text input.
 
@@ -118,6 +124,21 @@ Definition (also see Form Element "Text"):
 
 Value:
 * Returns a value in the specified numeric type or the 'empty value' (default null).
+
+=== Form Element "date", "datetime", "datetime-local" ===
+The element is based on the Form Element "Text", therefore you can use all options specified there.
+
+Definition (also see Form Element "Text"):
+* type: 'date', 'datetime', 'datetime-local'
+* format: How date is displayed resp. entered in input field. Default: "j.n.Y G:i:s" (see PHP function 'Date' for details). Supported keys: Y, y, m, n, d, j, g, G, h, H, h, i, s, O, P, a, A.
+
+Value:
+* Returns a value in the specified type (see RFC 3339 for details):
+** 'date': e.g. '2013-12-24'
+** 'datetime': e.g. '2013-12-24T19:00:00Z' or '2013-12-24T19:00:00.123+02:00'
+** 'datetime-local': e.g. '2013-12-24T19:00:00'
+
+TODO: The format in JavaScript is much more flexible than the PHP format (esp. concerning string representations of weekday/month). So, currently it's not advisable to use string representations.
 
 === Unsupported Form Elements ===
 Any form elements that are not supported (yet) will show the name and a warning, that the form element type is not supported. Any data set to the element will be kept, as internally a JSON form element will be used.
@@ -149,6 +170,15 @@ Definition:
 
 Value:
 * In 'keys' values_mode the key of the chosen value is returned (e.g. "m"); in 'values' mode the value is returned (e.g. "male")
+
+=== Form Element "Boolean" ===
+A single checkbox without label.
+
+Definition:
+* type: 'boolean'
+
+Value:
+* true/false
 
 === Form Element "Select" ===
 A dropdown box were an entry can be selected.
