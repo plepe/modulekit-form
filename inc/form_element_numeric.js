@@ -8,7 +8,7 @@ function form_element_numeric() {
 form_element_numeric.prototype.get_data=function() {
   var data=this.parent("form_element_numeric").get_data.call(this);
 
-  if(data===null)
+  if((data===null)||(data===""))
     return null;
 
   switch(this.def.type) {
@@ -36,11 +36,11 @@ form_element_numeric.prototype.errors=function(list) {
   var regexp=null;
   switch(this.def.type) {
     case 'integer':
-      regexp=/^\s*[-+]?[0-9]+\s*$/;
+      regexp=/^\s*[\-+]?[0-9]+\s*$/;
       break;
     case 'float':
     case 'numeric':
-      regexp=/^\s*[-+]?[0-9]*(\.[0-9]+)?([Ee][+-][0-9]+)?\s*$/;
+      regexp=/^\s*[\-+]?[0-9]*(\.[0-9]+)?([Ee][+-][0-9]+)?\s*$/;
       break;
     default:
   }

@@ -10,7 +10,7 @@ class form_element_numeric extends form_element_text {
   function get_data() {
     $data=parent::get_data();
 
-    if($data===null)
+    if(($data===null)||($data===""))
       return null;
 
     switch($this->def['type']) {
@@ -34,11 +34,11 @@ class form_element_numeric extends form_element_text {
     $regexp=null;
     switch($this->def['type']) {
       case 'integer':
-        $regexp="/^\s*[-+]?[0-9]+\s*$/";
+        $regexp="/^\s*[\\-+]?[0-9]+\s*$/";
 	break;
       case 'float':
       case 'numeric':
-        $regexp="/^\s*[-+]?[0-9]*(\.[0-9]+)?([Ee][+-][0-9]+)?\s*$/";
+        $regexp="/^\s*[\\-+]?[0-9]*(\.[0-9]+)?([Ee][+-][0-9]+)?\s*$/";
         break;
       default:
     }
