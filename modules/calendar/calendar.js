@@ -115,6 +115,10 @@ calendar.prototype.set_date=function(date) {
       }
     }
 
+  if(this.options.type=="datetime-local") {
+    date+="Z";
+  }
+
   // load 'date' from options
   this.date=new Date(date);
   // let's ignore timezone offset
