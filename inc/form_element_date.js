@@ -107,6 +107,9 @@ form_element_date.prototype.notify_change=function() {
   this.parent("form_element_date").notify_change.call(this);
 
   if(this.calendar) {
-    this.calendar.set_date(this.get_data(form_element_date_calender_format[this.type()]));
+    var data=this.get_data(form_element_date_calender_format[this.type()]);
+
+    if(data)
+      this.calendar.set_date(data);
   }
 }
