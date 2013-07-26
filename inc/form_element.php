@@ -146,7 +146,35 @@ class form_element {
     $this->div_errors->setAttribute("class", "field_errors");
     $td->appendChild($this->div_errors);
 
+    // show errors
+    $opt=$this->form_root->form->options;
+    if(isset($opt['show_errors'])&&$opt['show_errors']) {
+      $this->show_errors($document);
+    }
+
     return $tr;
+  }
+
+  function show_errors($document) {
+    $check_errors=array();
+    $this->errors(&$check_errors);
+
+    if(!$this->tr)
+      return;
+
+    if(sizeof($check_errors)) {
+      $ul=$document->createElement("ul");
+
+      for($i=0; $i<sizeof($check_errors); $i++) {
+	$li=$document->createElement("li");
+	$li->appendChild($document->createTextNode($check_errors[$i]));
+	$ul->appendChild($li);
+      }
+
+      $this->div_errors->appendChild($ul);
+
+      $this->tr->setAttribute("class", $this->tr->getAttribute("class")." has_errors");
+    }
   }
 
   function show_element($document) {

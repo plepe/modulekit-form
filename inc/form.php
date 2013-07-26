@@ -99,19 +99,10 @@ class form {
     return $this->element->is_complete();
   }
 
-  function show_errors($errors=null) {
-    if(!$errors)
-      $errors=$this->errors();
+  function show_errors() {
+    $this->options['show_errors']=true;
 
-    $ret="";
-
-    $ret.="<ul class='form_errors'>\n";
-    foreach($errors as $e) {
-      $ret.="  <li> $e</li>\n";
-    }
-    $ret.="</ul>\n";
-
-    return $ret;
+    return "";
   }
 
   function reset() {
