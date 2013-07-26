@@ -7,13 +7,18 @@ class form_element {
   public $options;
   public $data;
   public $orig_data;
-  public $parent;
+  public $form_parent;
+  public $form_root;
 
-  function __construct($id, $def, $options, $parent) {
+  function __construct($id, $def, $options, $form_parent) {
     $this->id=$id;
     $this->def=$def;
     $this->options=$options;
-    $this->parent=$parent;
+    $this->form_parent=$form_parent;
+    if($form_parent==null)
+      $this->form_root=$this;
+    else
+      $this->form_root=$form_parent->form_root;
 
     $this->data=null;
     $this->orig_data=null;
@@ -44,7 +49,7 @@ class form_element {
   }
 
   function path_name() {
-    $parent_path=$this->parent->path_name();
+    $parent_path=$this->form_parent->path_name();
 
     if($parent_path===null)
       return $this->name();
@@ -218,7 +223,7 @@ class form_element {
   function check_check($errors, $param) {
     $check_errors=array();
 
-    $other=$this->parent->elements[$param[0]];
+    $other=$this->form_parent->elements[$param[0]];
     if(!$other)
       return;
 

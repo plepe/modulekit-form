@@ -4,14 +4,14 @@ class form_element_form extends form_element {
     return "form";
   }
 
-  function __construct($id, $def, $options, $parent) {
-    parent::__construct($id, $def, $options, $parent);
+  function __construct($id, $def, $options, $form_parent) {
+    parent::__construct($id, $def, $options, $form_parent);
 
     $this->build_form();
   }
 
   function path_name() {
-    if($this->parent===null)
+    if($this->form_parent===null)
       return null;
 
     return parent::path_name();

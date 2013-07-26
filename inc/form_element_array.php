@@ -2,8 +2,8 @@
 class form_element_array extends form_element {
   public $changed_count;
 
-  function __construct($id, $def, $options, $parent) {
-    parent::__construct($id, $def, $options, $parent);
+  function __construct($id, $def, $options, $form_parent) {
+    parent::__construct($id, $def, $options, $form_parent);
     $this->changed_count=false;
 
     $this->build_form();
