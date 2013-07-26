@@ -358,6 +358,33 @@ form_element.prototype.get_values=function() {
   return ret;
 }
 
+// replaces tags like [name] in str by the value of an element on the same
+// hierarchy, e.g.
+// parse_data("foo [name] bar") will return "foo Max bar" when
+// element 'name' has value "Max"
+form_element.prototype.parse_data=function(str) {
+  var offset=0;
+  var p1, p2;
+
+  while((p1=str.indexOf("[", offset))!=-1) {
+    p2=str.indexOf("]", p1);
+
+    var key=str.substr(p1+1, p2-p1-1);
+    var data=this.form_parent.get_data();
+
+    if(key in data)
+      data=data[key];
+    else
+      data="";
+
+    str=str.substr(0, p1) + data + str.substr(p2+1);
+
+    offset=p2;
+  }
+
+  return str;
+}
+
 function get_form_element_class(def) {
   var type=def.type;
 

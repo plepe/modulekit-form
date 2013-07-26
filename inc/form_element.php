@@ -325,6 +325,33 @@ class form_element {
 
     return $ret;
   }
+
+  // replaces tags like [name] in str by the value of an element on the same
+  // hierarchy, e.g.
+  // parse_data("foo [name] bar") will return "foo Max bar" when
+  // element 'name' has value "Max"
+  function parse_data($str) {
+    $offset=0;
+
+    while(($p1=strpos($str, "[", $offset))!==false) {
+      $p2=strpos($str, "]", $p1);
+
+      $key=substr($str, $p1+1, $p2-$p1-1);
+      $data=$this->form_parent->get_data();
+
+      if(isset($data[$key]))
+	$data=$data[$key];
+      else
+	$data="";
+
+      $str=substr($str, 0, $p1) . $data . substr($str, $p2+1);
+
+      $offset=$p2;
+    }
+
+    return $str;
+  }
+
 }
 
 function get_form_element_class($def) {
