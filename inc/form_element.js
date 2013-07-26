@@ -379,7 +379,7 @@ form_element.prototype.parse_data=function(str) {
 
     str=str.substr(0, p1) + data + str.substr(p2+1);
 
-    offset=p2;
+    offset=p1+data.length;
   }
 
   return str;

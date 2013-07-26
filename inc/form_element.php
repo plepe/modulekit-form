@@ -346,7 +346,7 @@ class form_element {
 
       $str=substr($str, 0, $p1) . $data . substr($str, $p2+1);
 
-      $offset=$p2;
+      $offset=$p1+strlen($data);
     }
 
     return $str;
