@@ -70,4 +70,14 @@ class form_element_date extends form_element_text {
 
     return $div;
   }
+
+  function check_after($list, $param) {
+    foreach($param as $i=>$p) {
+      if(is_string($p))
+	$param[$i]=$this->parse_data($p);
+    }
+
+    if($this->get_data()<=$param[0])
+      $list[]=$param[1];
+  }
 }

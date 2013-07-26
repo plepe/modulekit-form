@@ -103,6 +103,16 @@ form_element_date.prototype.set_data_from_calendar=function(data) {
   this.notify_change();
 }
 
+form_element_date.prototype.check_after=function(list, param) {
+  for(var i=0; i<param.length; i++) {
+    if(typeof param[i]=="string")
+      param[i]=this.parse_data(param[i]);
+  }
+
+  if(this.get_data()<=param[0])
+    list.push(param[1]);
+}
+
 form_element_date.prototype.notify_change=function() {
   this.parent("form_element_date").notify_change.call(this);
 
