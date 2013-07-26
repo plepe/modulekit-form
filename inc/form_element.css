@@ -1,0 +1,9 @@
+tr.has_errors td.field_value {
+}
+div.field_errors ul {
+  margin-top: 0px;
+  margin-bottom: 1em;
+}
+div.field_errors ul li {
+  color: red;
+}

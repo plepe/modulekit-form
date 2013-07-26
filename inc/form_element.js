@@ -50,6 +50,13 @@ form_element.prototype.connect=function(dom_parent) {
   this.dom_parent=dom_parent;
 
   this.tr=document.getElementById("tr-"+this.id);
+
+  if(this.tr) {
+    var divs=this.tr.getElementsByTagName("div");
+    for(var i=0; i<divs.length; i++)
+      if(divs[i].className=="field_errors")
+	this.div_errors=divs[i];
+  }
 }
 
 form_element.prototype.type=function() {
@@ -112,6 +119,10 @@ form_element.prototype.show=function() {
   td.className="field_value";
   tr.appendChild(td);
   td.appendChild(this.show_element());
+
+  this.div_errors=document.createElement("div");
+  this.div_errors.className="field_errors";
+  td.appendChild(this.div_errors);
 
   return tr;
 }
@@ -246,21 +257,44 @@ form_element.prototype.check_is=function(list, param) {
   }
 }
 
-form_element.prototype.notify_change=function(ev) {
-  this.form_root.refresh();
-
+form_element.prototype.show_errors=function() {
   var check_errors=[];
   this.errors.call(this, check_errors);
 
+  if(!this.tr)
+    return;
+
+  // remove old error indicator
+  if(!this.tr.className)
+    this.tr.className="";
+  this.tr.className=this.tr.className.replace(/ has_errors/, "");
+
+  // remove old error texts
+  if(this.div_errors)
+    while(this.div_errors.firstChild)
+      this.div_errors.removeChild(this.div_errors.firstChild);
+
+
+  // create an 'ul' in div_errors and print errors there
   if(check_errors.length) {
-    var text=[];
+    var ul=document.createElement("ul");
 
     for(var i=0; i<check_errors.length; i++) {
-      text.push(check_errors[i]);
+      var li=document.createElement("li");
+      li.appendChild(document.createTextNode(check_errors[i]));
+      ul.appendChild(li);
     }
-
-    alert(text.join("\n"));
+    
+    if(this.div_errors)
+      this.div_errors.appendChild(ul);
+    this.tr.className+=" has_errors";
   }
+}
+
+form_element.prototype.notify_change=function(ev) {
+  this.form_root.refresh();
+
+  this.show_errors.call(this);
 
   this.form_root.form.notify_change();
 }

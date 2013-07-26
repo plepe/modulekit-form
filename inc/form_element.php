@@ -137,6 +137,10 @@ class form_element {
 
     $td->appendChild($this->show_element($document));
 
+    $this->div_errors=$document->createElement("div");
+    $this->div_errors->setAttribute("class", "field_errors");
+    $td->appendChild($this->div_errors);
+
     return $tr;
   }
 
