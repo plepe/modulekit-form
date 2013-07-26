@@ -10,7 +10,7 @@ form_element_text.prototype.connect=function(dom_parent) {
   this.parent("form_element_text").connect.call(this, dom_parent);
   this.dom_element=this.dom_parent.getElementsByTagName("input")[0];
 
-  this.dom_element.onchange=this.notify_change.bind(this);
+  this.dom_element.onblur=this.notify_change.bind(this);
 }
 
 form_element_text.prototype.create_element=function() {
@@ -61,7 +61,7 @@ form_element_text.prototype.show_element=function() {
     input.value=this.data;
   div.appendChild(input);
   this.dom_element=input;
-  this.dom_element.onchange=this.notify_change.bind(this);
+  this.dom_element.onblur=this.notify_change.bind(this);
 
   return div;
 }

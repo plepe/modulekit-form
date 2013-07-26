@@ -10,7 +10,7 @@ form_element_keywords.prototype.connect=function(dom_parent) {
   this.parent("form_element_keywords").connect.call(this, dom_parent);
   this.dom_element=this.dom_parent.getElementsByTagName("input")[0];
 
-  this.dom_element.onchange=this.notify_change.bind(this);
+  this.dom_element.onblur=this.notify_change.bind(this);
 
   this.create_interaction();
 
@@ -67,7 +67,7 @@ form_element_keywords.prototype.show_element=function() {
     input.value=this.data.join(", ");
   div.appendChild(input);
   this.dom_element=input;
-  this.dom_element.onchange=this.notify_change.bind(this);
+  this.dom_element.onblur=this.notify_change.bind(this);
 
   if(this.def.values) {
     var datalist=document.createElement("datalist");

@@ -7,7 +7,7 @@ form_element_textarea.prototype.connect=function(dom_parent) {
 
   this.dom_element=dom_parent.getElementsByTagName("textarea")[0];
 
-  this.dom_element.onchange=this.notify_change.bind(this);
+  this.dom_element.onblur=this.notify_change.bind(this);
 
   this.set_data(this.get_data());
 }

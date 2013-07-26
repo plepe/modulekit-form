@@ -18,7 +18,7 @@ form_element_radio.prototype.connect=function(dom_parent) {
       var dom=current.firstChild;
       this.dom_values[dom.value]=dom;
 
-      dom.onchange=this.notify_change.bind(this);
+      dom.onblur=this.notify_change.bind(this);
     }
 
     current=current.nextSibling;
@@ -78,7 +78,7 @@ form_element_radio.prototype.show_element=function() {
     span.appendChild(input);
     this.dom_values[k]=input;
 
-    input.onchange=this.notify_change.bind(this);
+    input.onblur=this.notify_change.bind(this);
 
     var label=document.createElement("label");
     label.setAttribute("for", id);

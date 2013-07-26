@@ -12,7 +12,7 @@ form_element_select.prototype.connect=function(dom_parent) {
   this.parent("form_element_select").connect.call(this, dom_parent);
 
   this.dom_element=this.dom_parent.firstChild;
-  this.dom_element.onchange=this.notify_change.bind(this);
+  this.dom_element.onblur=this.notify_change.bind(this);
 
   var current=this.dom_element.firstChild;
   this.dom_values={};
@@ -56,7 +56,7 @@ form_element_select.prototype.show_element=function() {
   select.className=cls;
   select.id=this.id;
   select.name=this.options.var_name;
-  select.onchange=this.notify_change.bind(this);
+  select.onblur=this.notify_change.bind(this);
   div.appendChild(select);
 
   this.dom_element=select;

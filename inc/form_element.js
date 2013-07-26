@@ -246,7 +246,7 @@ form_element.prototype.check_is=function(list, param) {
   }
 }
 
-form_element.prototype.notify_change=function() {
+form_element.prototype.notify_change=function(ev) {
   this.form_root.refresh();
 
   var check_errors=[];

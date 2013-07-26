@@ -11,7 +11,7 @@ form_element_json.prototype.connect=function(dom_parent) {
   this.parent("form_element_json").connect.call(this, dom_parent);
   this.dom_element=this.dom_parent.getElementsByTagName("input")[0];
 
-  this.dom_element.onchange=this.notify_change.bind(this);
+  this.dom_element.onblur=this.notify_change.bind(this);
 }
 
 form_element_json.prototype.create_element=function() {
@@ -35,7 +35,7 @@ form_element_json.prototype.show_element=function() {
     input.value=JSON.stringify(this.data);
   div.appendChild(input);
   this.dom_element=input;
-  this.dom_element.onchange=this.notify_change.bind(this);
+  this.dom_element.onblur=this.notify_change.bind(this);
 
   return div;
 }
