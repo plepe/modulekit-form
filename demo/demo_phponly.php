@@ -30,7 +30,8 @@ $form=new form("data", $form_def);
 
 if($form->errors()) {
   // print errors
-  print "Errors in the form were found:";
+  print "Errors in the form were found!<br>";
+
   print $form->show_errors();
 }
 

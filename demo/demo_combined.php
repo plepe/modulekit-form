@@ -30,13 +30,12 @@ include "demo_header.php";
 
 $form=new form("data", $form_def);
 
-?> <div id='errors'> <?
 if($form->errors()) {
   // print errors
-  print "Errors in the form were found:";
-  print $form->show_errors();
+  print "Errors in the form were found!<br>";
+
+  $form->show_errors();
 }
-?> </div> <?
 
 if($form->is_complete()) {
   // save data to database
