@@ -274,7 +274,6 @@ form_element.prototype.show_errors=function() {
     while(this.div_errors.firstChild)
       this.div_errors.removeChild(this.div_errors.firstChild);
 
-
   // create an 'ul' in div_errors and print errors there
   if(check_errors.length) {
     var ul=document.createElement("ul");
