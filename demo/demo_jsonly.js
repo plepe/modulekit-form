@@ -13,10 +13,10 @@ function init() {
   div.appendChild(input);
 
   div.onsubmit=process;
-  process();
+  process(false);
 }
 
-function process() {
+function process(check_errors) {
   var div=document.getElementById("definition");
   while(div.firstChild)
     div.removeChild(div.firstChild);
@@ -31,11 +31,13 @@ function process() {
   var text=document.createTextNode(JSON.stringify(form_data.get_data(), null, "    "));
   div.appendChild(text);
 
-  var errors=form_data.errors();
-  var div=document.getElementById("errors");
-  while(div.firstChild)
-    div.removeChild(div.firstChild);
-  form_data.show_errors(div);
+  if(check_errors!==false) {
+    var errors=form_data.errors();
+    var div=document.getElementById("errors");
+    while(div.firstChild)
+      div.removeChild(div.firstChild);
+    form_data.show_errors(div);
+  }
 
   return false;
 }
