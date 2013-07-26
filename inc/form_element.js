@@ -249,20 +249,17 @@ form_element.prototype.check_is=function(list, param) {
 form_element.prototype.notify_change=function() {
   this.form_root.refresh();
 
-  if(this.def.check) {
-    var check_errors=[];
+  var check_errors=[];
+  this.errors.call(this, check_errors);
 
-    this.check(check_errors, this.def.check);
+  if(check_errors.length) {
+    var text=[];
 
-    if(check_errors.length) {
-      var text=[];
-
-      for(var i=0; i<check_errors.length; i++) {
-	text.push(this.path_name()+": "+check_errors[i]);
-      }
-
-      alert(text.join("\n"));
+    for(var i=0; i<check_errors.length; i++) {
+      text.push(check_errors[i]);
     }
+
+    alert(text.join("\n"));
   }
 
   this.form_root.form.notify_change();
