@@ -121,7 +121,9 @@ class form_element_file extends form_element {
     // removed).
     $tmp_name=$data['tmp_name'];
     $data['tmp_name']=".form-upload-".uniqid();
-    move_uploaded_file($tmp_name, "{$this->def['path']}/{$data['tmp_name']}");
+    if(move_uploaded_file($tmp_name, "{$this->def['path']}/{$data['tmp_name']}")===false) {
+      $data['error']=16;
+    }
 
     parent::set_request_data($data);
   }
