@@ -262,6 +262,9 @@ STATE: It's not possible yet to read file content in JavaScript mode
 
 * See http://www.php.net/manual/en/features.file-upload.errors.php for possible error codes. Additional error codes:
 ** Error 16: Can't move file from PHP temporary folder to temporary file in final folder
+** Error 17: Temporary file size differs from PHP upload data
+** Error 20: Can't rename temporary file to final file
+** Error 21: Final file size differs from PHP upload data
 
 === Form Element "Directory" ===
 Upload multiple files. Files are moved to a newly created directory in the specified path, as value an array will be returned.

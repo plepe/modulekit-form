@@ -125,15 +125,35 @@ class form_element_file extends form_element {
       $data['error']=16;
     }
 
+    else {
+      // Check file size of temporary file
+      clearstatcache("{$this->def['path']}/{$this->data['tmp_name']}");
+      if(filesize("{$this->def['path']}/{$this->data['tmp_name']}")!=$this->data['size']) {
+	$this->data['error']=17;
+      }
+    }
+
     parent::set_request_data($data);
   }
 
   function save_data() {
-    rename("{$this->def['path']}/{$this->data['tmp_name']}",
-           "{$this->def['path']}/{$this->data['new_name']}");
+    // rename to final file name
+    if(rename("{$this->def['path']}/{$this->data['tmp_name']}",
+	      "{$this->def['path']}/{$this->data['new_name']}")===true) {
 
-    $this->data['name']=$this->data['new_name'];
-    unset($this->data['tmp_name']);
-    unset($this->data['new_name']);
+      // save data
+      $this->data['name']=$this->data['new_name'];
+      unset($this->data['tmp_name']);
+      unset($this->data['new_name']);
+
+      // check if upload was successful
+      clearstatcache("{$this->def['path']}/{$this->data['new_name']}");
+      if(filesize("{$this->def['path']}/{$this->data['new_name']}")!=$this->data['size']) {
+	$this->data['error']=21;
+      }
+    }
+    else {
+      $this->data['error']=20;
+    }
   }
 }
