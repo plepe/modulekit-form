@@ -105,6 +105,7 @@ form_element_radio.prototype.refresh=function() {
     if(this.is_modified())
       cls="form_modified";
 
-    this.dom_values[k].parentNode.className=cls;
+    if(this.dom_values[k])
+      this.dom_values[k].parentNode.className=cls;
   }
 }
