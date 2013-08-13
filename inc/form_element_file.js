@@ -68,6 +68,16 @@ form_element_file.prototype.show_element=function() {
     span.setAttribute("id", this.id+"-oldfile");
     div.appendChild(span);
 
+    // enclose in a link if web_path is set
+    if(this.def.web_path) {
+      var a=document.createElement("a");
+      a.setAttribute("href", this.def.web_path.replace("[file_name]",
+        this.data.tmp_name?this.data.tmp_name:this.data.name));
+
+      span.appendChild(a);
+      span=a;
+    }
+
     var txt=document.createTextNode(this.data.orig_name);
     span.appendChild(txt);
 

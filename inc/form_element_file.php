@@ -25,6 +25,17 @@ class form_element_file extends form_element {
       $span->setAttribute("id", $this->id."-oldfile");
       $div->appendChild($span);
 
+      // enclose in a link if web_path is set
+      if(isset($this->def['web_path'])) {
+	$a=$document->createElement("a");
+	$a->setAttribute("href", strtr($this->def['web_path'], array(
+	  "[file_name]"=>($this->data['tmp_name']?$this->data['tmp_name']:$this->data['name'])
+	  )));
+
+	$span->appendChild($a);
+	$span=$a;
+      }
+
       $txt=$document->createTextNode($this->data['orig_name']);
       $span->appendChild($txt);
     }
