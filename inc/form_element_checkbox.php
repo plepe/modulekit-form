@@ -3,6 +3,14 @@ class form_element_checkbox extends form_element {
   function show_element($document) {
     $div=parent::show_element($document);
 
+    $data=$this->data;
+    if($data===null) {
+      if(isset($this->def['default']))
+	$data=$this->def['default'];
+      else
+	$data=array();
+    }
+
     foreach($this->get_values() as $k=>$v) {
       $id="{$this->id}-$k";
 
@@ -21,7 +29,8 @@ class form_element_checkbox extends form_element {
       $input->setAttribute("id", $id);
       $input->setAttribute("name", "{$this->options['var_name']}[]");
       $input->setAttribute("value", $k);
-      if(in_array($k, $this->data))
+
+      if(in_array($k, $data))
 	$input->setAttribute("checked", "checked");
       $span->appendChild($input);
       
