@@ -64,7 +64,12 @@ class form_element_file extends form_element {
 
     $data=$this->get_data();
     if($data['error']) {
-      $errors[]=$this->path_name().": "+lang('form:file_upload_error', 0, $data['orig_name'], $data['error']);
+      global $lang_str;
+
+      if(isset($lang_str["form:file_upload_error:{$data['error']}"]))
+	$errors[]=$this->path_name().": "+lang("form:file_upload_error:{$data['error']}", 0, $data['orig_name']);
+      else
+	$errors[]=$this->path_name().": "+lang('form:file_upload_error', 0, $data['orig_name'], $data['error']);
     }
   }
 
