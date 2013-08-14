@@ -234,6 +234,8 @@ calendar.prototype.nav_month=function(offset) {
   this.show_date.setMonth(m);
 
   this.fill();
+
+  return false;
 }
 
 calendar.prototype.choose_date=function(day) {
