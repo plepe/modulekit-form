@@ -139,23 +139,25 @@ function form_resize() {
 
   for(var i=0; i<obs.length; i++) {
     var ob=obs[i];
-    var width=ob.parentNode.offsetWidth;
+    if(in_array("form", ob.className.split(" "))) {
+      var width=ob.parentNode.offsetWidth;
 
-    // calculate height of M
-    var em=document.createElement("div");
-    em.setAttribute("style", "display:inline-block; padding:0; line-height:1; position:absolute; visibility:hidden; font-size:1em;");
-    em.appendChild(document.createTextNode("M"));
-    ob.appendChild(em);
-    var em_height=em.offsetHeight;
-    ob.removeChild(em);
+      // calculate height of M
+      var em=document.createElement("div");
+      em.setAttribute("style", "display:inline-block; padding:0; line-height:1; position:absolute; visibility:hidden; font-size:1em;");
+      em.appendChild(document.createTextNode("M"));
+      ob.appendChild(em);
+      var em_height=em.offsetHeight;
+      ob.removeChild(em);
 
-    // set class according to width
-    if(width/em_height<=25)
-      ob.className="form small";
-    else if(width/em_height<=40)
-      ob.className="form medium";
-    else
-      ob.className="form";
+      // set class according to width
+      if(width/em_height<=25)
+	ob.className="form small";
+      else if(width/em_height<=40)
+	ob.className="form medium";
+      else
+	ob.className="form";
+    }
   }
 }
 
