@@ -9,6 +9,7 @@ button {
 
 /* general form elements */
 input[type=text],
+input[type=password],
 textarea,
 select {
   background: #e0e0e0;
