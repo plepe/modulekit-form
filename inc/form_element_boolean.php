@@ -43,12 +43,10 @@ class form_element_boolean extends form_element {
   function get_data() {
     $data=parent::get_data();
 
-    if(($data===null)||($data===false))
+    if(($data===null)||($data===false)||($data===0))
       return false;
-    elseif(($data==="on")||($data===true))
-      return true;
 
-    return null;
+    return true;
   }
 
   function is_modified() {
