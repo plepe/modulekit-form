@@ -158,8 +158,8 @@ class form_element_file extends form_element {
       unset($this->data['new_name']);
 
       // check if upload was successful
-      clearstatcache("{$this->def['path']}/{$this->data['new_name']}");
-      if(filesize("{$this->def['path']}/{$this->data['new_name']}")!=$this->data['size']) {
+      clearstatcache("{$this->def['path']}/{$this->data['name']}");
+      if(filesize("{$this->def['path']}/{$this->data['name']}")!=$this->data['size']) {
 	$this->data['error']=21;
       }
     }
