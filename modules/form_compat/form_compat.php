@@ -54,3 +54,17 @@ function form_check($def, $data) {
 
    return $form->errors();
 }
+
+function form_print_errors($error) {
+  $ret="";
+
+  $ret.="<div class='form_errors'>\n";
+  $ret.="<ul>\n";
+  foreach($error as $e) {
+    $ret.="  <li> $e</li>\n";
+  }
+  $ret.="</ul>\n";
+  $ret.="</div>\n";
+
+  return $ret;
+}
