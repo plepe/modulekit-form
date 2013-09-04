@@ -15,7 +15,7 @@ class form {
     $this->build_form();
 
     $this->has_data=false;
-    if(isset($_REQUEST[$this->options['var_name']]))
+    if(isset($_REQUEST[$this->options['var_name']])||sizeof($_FILES))
       $this->set_request_data($_REQUEST[$this->options['var_name']]);
 
     $this->has_orig_data=false;
