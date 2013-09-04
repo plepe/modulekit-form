@@ -15,7 +15,6 @@ function form_compat_get_form($varname, $def) {
 
   foreach($form_compat as $f) {
     if($f['def']==$def) {
-      print "FOUND\n";
       return $f['form'];
     }
   }
