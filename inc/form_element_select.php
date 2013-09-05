@@ -11,7 +11,6 @@ class form_element_select extends form_element {
     $select=$document->createElement("select");
     $select->setAttribute("name", "{$this->options['var_name']}");
     $select->setAttribute("id", $this->id);
-
     foreach($this->get_values() as $k=>$v) {
       $option=$document->createElement("option");
       $option->setAttribute("value", $k);
@@ -26,5 +25,18 @@ class form_element_select extends form_element {
     $div->appendChild($select);
 
     return $div;
+  }
+
+  function get_data() {
+    $data=parent::get_data();
+
+    if(($data==="")||($data===null)) {
+      if(array_key_exists('empty_value', $this->def))
+	return $this->def['empty_value'];
+
+      return null;
+    }
+
+    return $data;
   }
 }

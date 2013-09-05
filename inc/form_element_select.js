@@ -29,7 +29,16 @@ form_element_select.prototype.get_data=function() {
   if(!this.dom_element)
     return this.data;
 
-  return this.dom_element.value;
+  var data = this.dom_element.value;
+
+  if((data==="")||(data===null)) {
+    if('empty_value' in this.def)
+      return this.def.empty_value;
+
+    return null;
+  }
+
+  return data;
 }
 
 form_element_select.prototype.set_data=function(data) {
