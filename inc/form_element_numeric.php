@@ -21,6 +21,20 @@ class form_element_numeric extends form_element_text {
     }
   }
 
+  function get_orig_data() {
+    $data=parent::get_orig_data();
+
+    if(($data===null)||($data===""))
+      return null;
+
+    switch($this->def['type']) {
+      case 'integer':
+        return (int)$data;
+      default:
+        return (float)$data;
+    }
+  }
+
   function set_data($data) {
     parent::set_data((string)$data);
   }
