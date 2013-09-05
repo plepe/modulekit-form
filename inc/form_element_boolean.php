@@ -27,7 +27,7 @@ class form_element_boolean extends form_element {
     $input->setAttribute("name", $this->options['var_name']);
     $input->setAttribute("id", $this->options['var_name']);
     $input->setAttribute("value", "on");
-    if(($this->data==="on")||($this->data===true))
+    if($this->get_data())
       $input->setAttribute("checked", "checked");
 
     $this->dom_element=$input;
@@ -43,7 +43,12 @@ class form_element_boolean extends form_element {
   function get_data() {
     $data=parent::get_data();
 
-    if(($data===null)||($data===false)||($data===0))
+    if(($data===null)   ||
+       ($data===false)  ||
+       ($data===0)      ||
+       ($data==="0")    ||
+       ($data==="false")||
+       ($data==="off"))
       return false;
 
     return true;
