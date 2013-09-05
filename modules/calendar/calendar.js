@@ -85,6 +85,12 @@ function calendar(options) {
   this.options.element.parentNode.appendChild(this.div);
 
   this.age=new Date().getTime();
+
+  // close old calendars
+  for(var i=0; i<calendars.length; i++)
+    calendars[i].close();
+
+  // add current calendar to calendars list
   calendars.push(this);
 
   if(window.addEventListener) {
