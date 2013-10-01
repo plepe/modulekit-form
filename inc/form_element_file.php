@@ -148,6 +148,9 @@ class form_element_file extends form_element {
   }
 
   function save_data() {
+    if(!isset($this->data['new_name']))
+      return;
+
     // rename to final file name
     if(rename("{$this->def['path']}/{$this->data['tmp_name']}",
 	      "{$this->def['path']}/{$this->data['new_name']}")===true) {
