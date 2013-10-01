@@ -320,10 +320,43 @@ form_element_array.prototype.order_down=function(k) {
 }
 
 form_element_array.prototype.refresh=function() {
+  var sum_heights = 0;
+  var count = 0;
+  var height_button = 15; // TODO: get height from DOM tree
   this.parent("form_element_array").refresh.call(this);
 
-  for(var i in this.elements)
+  for(var i in this.elements) {
     this.elements[i].refresh();
+
+    if(this.elements[i].dom_element) {
+      count ++;
+      sum_heights += this.elements[i].dom_element.clientHeight;
+    }
+/*
+      var input=current.firstChild;
+      while((input)&&(input.className!="form_element_array_part_element_actions")) input=input.nextSibling;
+      if(!input)
+	break;
+      input=input.firstChild;
+*/
+  }
+
+  if(sum_heights > 0) {
+    if(sum_heights > height_button * 3 * count) {
+      var x = this.dom_parent.className.split(" ");
+      if(!in_array("actions_stacked", x))
+	this.dom_parent.className = this.dom_parent.className + " actions_stacked";
+    }
+    else {
+      var x = this.dom_parent.className.split(" ");
+      var y = [];
+      for(var i=0; i<x.length; i++)
+	if(x[i] != "actions_stacked")
+	  y.push(x[i]);
+
+      this.dom_parent.className = y.join(" ");
+    }
+  }
 }
 
 form_element_array.prototype.is_modified=function() {

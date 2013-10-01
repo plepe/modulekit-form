@@ -16,3 +16,12 @@
 }
 .form_element_array_part_actions {
 }
+
+.actions_stacked .form_element_array_part_element {
+  width: 90%; /* fallback for browsers without support for calc() */
+  width: calc(100% - 35px);
+}
+.actions_stacked .form_element_array_part_element_actions input {
+  display: block;
+  margin-bottom: 5px;
+}
