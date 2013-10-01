@@ -19,6 +19,20 @@ form_element_numeric.prototype.get_data=function() {
   }
 }
 
+form_element_numeric.prototype.get_orig_data=function() {
+  var data=this.parent("form_element_numeric").get_orig_data.call(this);
+
+  if((data===null)||(data===""))
+    return null;
+
+  switch(this.def.type) {
+    case 'integer':
+      return parseInt(data);
+    default:
+      return parseFloat(data);
+  }
+}
+
 form_element_numeric.prototype.set_data=function(data) {
   var d="";
   if(data!==null)
