@@ -15,7 +15,12 @@ class form_element_textarea extends form_element_text {
 
     $this->dom_element->removeAttribute("value");
 
-    $value=$document->createTextNode($this->data);
+    $data = $this->data;
+    if(is_array($this->data)) {
+      $data = implode("\n\n", $data);
+    }
+
+    $value=$document->createTextNode($data);
     $this->dom_element->appendChild($value);
 
     return $div;
