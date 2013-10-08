@@ -83,6 +83,7 @@ Definition:
 * type: 'array'
 * def: Definition of the sub element.
 * default: default count of values
+* max: maximum count of values (currently just hides 'add element' button, no error message when maximum is overrun)
 
 Value:
 * Array of sub elements.

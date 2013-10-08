@@ -16,3 +16,7 @@
 }
 .form_element_array_part_actions {
 }
+
+.form_element_array .reached_max {
+  display: none;
+}

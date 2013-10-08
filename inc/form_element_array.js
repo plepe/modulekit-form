@@ -95,10 +95,11 @@ form_element_array.prototype.connect=function(dom_parent) {
 
     // modify actions
     if(current.className=="form_element_array_actions") {
-      var input=current.firstChild;
+      input=current.firstChild;
       while(input) {
 	if(input.name==this.options.var_name+"[__new]") {
-	  input.onclick=this.add_element.bind(this);
+	  this.action_add = input;
+	  this.action_add.onclick = this.add_element.bind(this);
 	}
 	input=input.nextSibling;
       }
@@ -217,12 +218,12 @@ form_element_array.prototype.show_element=function() {
   el_div.className="form_element_array_actions";
   div.appendChild(el_div);
 
-  var input=document.createElement("input");
-  input.type="submit";
-  input.name=this.options.var_name+"[__new]";
-  input.value=lang('form:add_element');
-  input.onclick=this.add_element.bind(this);
-  el_div.appendChild(input);
+  this.action_add=document.createElement("input");
+  this.action_add.type="submit";
+  this.action_add.name=this.options.var_name+"[__new]";
+  this.action_add.value=lang('form:add_element');
+  this.action_add.onclick=this.add_element.bind(this);
+  el_div.appendChild(this.action_add);
 
   return div;
 }
@@ -328,6 +329,15 @@ form_element_array.prototype.refresh=function() {
 
   for(var i in this.elements)
     this.elements[i].refresh();
+
+  var count = 0;
+  for(var k in this.elements)
+    count++;
+
+  if(this.def.max && (count >= this.def.max))
+    this.action_add.className = "reached_max";
+  else
+    this.action_add.className = "";
 }
 
 form_element_array.prototype.is_modified=function() {

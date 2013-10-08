@@ -230,6 +230,10 @@ class form_element_array extends form_element {
     $input->setAttribute("value", lang("form:add_element"));
     $el_div->appendChild($input);
 
+    if(isset($this->def['max']) && (sizeof($this->elements) >= $this->def['max'])) {
+      $input->setAttribute("class", "reached_max");
+    }
+
     return $div;
   }
 
