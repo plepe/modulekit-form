@@ -167,6 +167,14 @@ function form_process_def(def) {
 
     if(element_def.count&&(element_def.type!="array")) {
       def[k]=element_def.count;
+
+      if(typeof def[k] != "object") {
+	def[k] = {
+	  "default":	def[k],
+	  "max":	def[k]
+	};
+      }
+
       def[k].type="array";
 
       if(element_def.name)

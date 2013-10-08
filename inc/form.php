@@ -165,6 +165,14 @@ function form_process_def(&$def) {
   foreach($def as $k=>$element_def) {
     if(isset($element_def['count'])&&($element_def['type']!="array")) {
       $def[$k]=$element_def['count'];
+
+      if(!is_array($def[$k])) {
+	$def[$k] = array(
+	  "default"	=> $def[$k],
+	  "max"	=> $def[$k],
+	);
+      }
+
       $def[$k]['type']="array";
 
       if(isset($element_def['name']))
