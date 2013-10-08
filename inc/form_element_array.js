@@ -252,6 +252,7 @@ form_element_array.prototype.add_element=function() {
   }
 
   form_resize();
+  this.form_root.refresh();
 
   return false;
 }
@@ -269,6 +270,7 @@ form_element_array.prototype.remove_element=function(k) {
   }
 
   form_resize();
+  this.form_root.refresh();
 
   return false;
 }
@@ -292,6 +294,7 @@ form_element_array.prototype.order_up=function(k) {
   }
 
   form_resize();
+  this.form_root.refresh();
 
   return false;
 }
@@ -315,6 +318,7 @@ form_element_array.prototype.order_down=function(k) {
   }
 
   form_resize();
+  this.form_root.refresh();
 
   return false;
 }
