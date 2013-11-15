@@ -65,6 +65,9 @@ class form_element_numeric extends form_element_text {
   }
 
   function check_ge($errors, $param) {
+    if($this->get_data() === null)
+      return;
+
     if($this->get_data() < $param[0]) {
       if(sizeof($param) > 1)
 	$errors[] = $param[1];
@@ -74,6 +77,9 @@ class form_element_numeric extends form_element_text {
   }
 
   function check_le($errors, $param) {
+    if($this->get_data() === null)
+      return;
+
     if($this->get_data() > $param[0]) {
       if(sizeof($param) > 1)
 	$errors[] = $param[1];
@@ -83,6 +89,9 @@ class form_element_numeric extends form_element_text {
   }
 
   function check_gt($errors, $param) {
+    if($this->get_data() === null)
+      return;
+
     if($this->get_data() <= $param[0]) {
       if(sizeof($param) > 1)
 	$errors[] = $param[1];
@@ -92,6 +101,9 @@ class form_element_numeric extends form_element_text {
   }
 
   function check_lt($errors, $param) {
+    if($this->get_data() === null)
+      return;
+
     if($this->get_data() >= $param[0]) {
       if(sizeof($param) > 1)
 	$errors[] = $param[1];

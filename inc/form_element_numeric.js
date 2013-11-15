@@ -65,6 +65,9 @@ form_element_numeric.prototype.errors=function(list) {
 }
 
 form_element_numeric.prototype.check_ge=function(list, param) {
+  if(this.get_data() === null)
+    return;
+
   if(this.get_data() < param[0]) {
     if(param.length<2)
       list.push(lang('form:check_ge_failed', 0, param[0]));
@@ -74,6 +77,9 @@ form_element_numeric.prototype.check_ge=function(list, param) {
 }
 
 form_element_numeric.prototype.check_le=function(list, param) {
+  if(this.get_data() === null)
+    return;
+
   if(this.get_data() > param[0]) {
     if(param.length<2)
       list.push(lang('form:check_le_failed', 0, param[0]));
@@ -83,6 +89,9 @@ form_element_numeric.prototype.check_le=function(list, param) {
 }
 
 form_element_numeric.prototype.check_gt=function(list, param) {
+  if(this.get_data() === null)
+    return;
+
   if(this.get_data() <= param[0]) {
     if(param.length<2)
       list.push(lang('form:check_gt_failed', 0, param[0]));
@@ -92,6 +101,9 @@ form_element_numeric.prototype.check_gt=function(list, param) {
 }
 
 form_element_numeric.prototype.check_lt=function(list, param) {
+  if(this.get_data() === null)
+    return;
+
   if(this.get_data() >= param[0]) {
     if(param.length<2)
       list.push(lang('form:check_lt_failed', 0, param[0]));
