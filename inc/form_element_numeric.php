@@ -63,4 +63,40 @@ class form_element_numeric extends form_element_text {
       }
     }
   }
+
+  function check_ge($errors, $param) {
+    if($this->get_data() < $param[0]) {
+      if(sizeof($param) > 1)
+	$errors[] = $param[1];
+      else
+	$errors[] = lang('form:check_ge_failed', 0, $param[0]);
+    }
+  }
+
+  function check_le($errors, $param) {
+    if($this->get_data() > $param[0]) {
+      if(sizeof($param) > 1)
+	$errors[] = $param[1];
+      else
+	$errors[] = lang('form:check_le_failed', 0, $param[0]);
+    }
+  }
+
+  function check_gt($errors, $param) {
+    if($this->get_data() <= $param[0]) {
+      if(sizeof($param) > 1)
+	$errors[] = $param[1];
+      else
+	$errors[] = lang('form:check_gt_failed', 0, $param[0]);
+    }
+  }
+
+  function check_lt($errors, $param) {
+    if($this->get_data() >= $param[0]) {
+      if(sizeof($param) > 1)
+	$errors[] = $param[1];
+      else
+	$errors[] = lang('form:check_lt_failed', 0, $param[0]);
+    }
+  }
 }

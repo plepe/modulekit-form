@@ -13,3 +13,8 @@ $lang_str['form:file_upload_error:1']="Datei '%s' konnte nicht raufgeladen werde
 $lang_str['form:file_upload_error:2']="Datei '%s' konnte nicht raufgeladen werden, Datei ist zu groß!";
 $lang_str['form:file_upload_error:3']="Fehler! Datei '%s' wurde nur teilweise raufgeladen.";
 $lang_str['form:not_supported']="Formular Element Typ '%s' nicht unterstützt!";
+
+$lang_str['form:check_ge_failed']="Wert muss >= %s sein.";
+$lang_str['form:check_le_failed']="Wert muss <= %s sein.";
+$lang_str['form:check_gt_failed']="Wert muss > %s sein.";
+$lang_str['form:check_lt_failed']="Wert muss < %s sein.";

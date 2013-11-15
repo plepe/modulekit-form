@@ -122,6 +122,8 @@ In contrast to other elements you define this element as 'integer' or 'float', t
 Definition (also see Form Element "Text"):
 * type: 'integer' or 'float'
 
+Additional check types are available: gt (greater than), lt (less than), ge (greater or equal), le (less or equal). E.g. array("lt", 5, "Must be less than 5"). (Error message optional).
+
 Value:
 * Returns a value in the specified numeric type or the 'empty value' (default null).
 

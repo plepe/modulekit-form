@@ -13,3 +13,8 @@ $lang_str['form:file_upload_error:1']="File '%s' could not be uploaded, file is 
 $lang_str['form:file_upload_error:2']="File '%s' could not be uploaded, file is too large!";
 $lang_str['form:file_upload_error:3']="Error! Only parts of file '%s' were uploaded.";
 $lang_str['form:not_supported']="Form Element type '%s' not supported!";
+
+$lang_str['form:check_ge_failed']="Value must be >= %s";
+$lang_str['form:check_le_failed']="Value must be <= %s";
+$lang_str['form:check_gt_failed']="Value must be > %s";
+$lang_str['form:check_lt_failed']="Value must be < %s";
