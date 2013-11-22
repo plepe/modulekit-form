@@ -4,7 +4,8 @@ function form_element_checkbox() {
 
 form_element_checkbox.prototype.init=function(id, def, options, form_parent) {
   this.parent("form_element_checkbox").init.call(this, id, def, options, form_parent);
-  this.data=[];
+  if(this.data === null)
+    this.data=[];
   this.dom_values=null;
 }
 

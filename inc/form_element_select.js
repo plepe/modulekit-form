@@ -4,8 +4,6 @@ function form_element_select() {
 
 form_element_select.prototype.init=function(id, def, options, form_parent) {
   this.parent("form_element_select").init.call(this, id, def, options, form_parent);
-
-  this.data=null;
 }
 
 form_element_select.prototype.connect=function(dom_parent) {

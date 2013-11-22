@@ -4,8 +4,6 @@ function form_element_radio() {
 
 form_element_radio.prototype.init=function(id, def, options, form_parent) {
   this.parent("form_element_radio").init.call(this, id, def, options, form_parent);
-
-  this.data=null;
 }
 
 form_element_radio.prototype.connect=function(dom_parent) {
