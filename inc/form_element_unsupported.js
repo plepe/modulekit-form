@@ -7,8 +7,8 @@ form_element_unsupported.prototype.init=function(id, def, options, form_parent) 
 }
 
 form_element_unsupported.prototype.create_element=function() {
-  var input=document.createElement("input");
-  input.type="hidden";
+  var input=document.createElement("textarea");
+  input.setAttribute("style", "display: none;");
 
   return input;
 }

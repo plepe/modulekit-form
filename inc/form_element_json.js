@@ -9,14 +9,14 @@ form_element_json.prototype.init=function(id, def, options, form_parent) {
 
 form_element_json.prototype.connect=function(dom_parent) {
   this.parent("form_element_json").connect.call(this, dom_parent);
-  this.dom_element=this.dom_parent.getElementsByTagName("input")[0];
+  this.dom_element=this.dom_parent.getElementsByTagName("textarea")[0];
 
-  this.dom_element.onblur=this.notify_change.bind(this);
+  if(this.dom_element)
+    this.dom_element.onblur=this.notify_change.bind(this);
 }
 
 form_element_json.prototype.create_element=function() {
-  var input=document.createElement("input");
-  input.type="text";
+  var input=document.createElement("textarea");
 
   return input;
 }

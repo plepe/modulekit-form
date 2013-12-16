@@ -5,8 +5,7 @@ class form_element_json extends form_element {
   }
 
   function create_element($document) {
-    $input=$document->createElement("input");
-    $input->setAttribute("type", "text");
+    $input=$document->createElement("textarea");
 
     return $input;
   }
@@ -22,7 +21,9 @@ class form_element_json extends form_element {
     $input=$this->create_element($document);
     $input->setAttribute("class", $class);
     $input->setAttribute("name", $this->options['var_name']);
-    $input->setAttribute("value", $this->data);
+
+    $value=$document->createTextNode($this->data);
+    $input->appendChild($value);
 
     $div->appendChild($input);
     return $div;

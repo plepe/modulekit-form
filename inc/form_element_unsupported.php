@@ -5,8 +5,8 @@ class form_element_unsupported extends form_element_json {
   }
 
   function create_element($document) {
-    $input=$document->createElement("input");
-    $input->setAttribute("type", "hidden");
+    $input=$document->createElement("textarea");
+    $input->setAttribute("style", "display: none;");
 
     return $input;
   }
