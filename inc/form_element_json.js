@@ -11,8 +11,18 @@ form_element_json.prototype.connect=function(dom_parent) {
   this.parent("form_element_json").connect.call(this, dom_parent);
   this.dom_element=this.dom_parent.getElementsByTagName("textarea")[0];
 
-  if(this.dom_element)
+  if(this.dom_element) {
     this.dom_element.onblur=this.notify_change.bind(this);
+
+    // update element with formatted value
+    try {
+      var data = JSON.parse(this.dom_element.value);
+      this.dom_element.value = JSON.stringify(data, null, '  ');
+    }
+    catch(e) {
+      // ignore errors in parsing value
+    }
+  }
 }
 
 form_element_json.prototype.create_element=function() {
@@ -32,7 +42,7 @@ form_element_json.prototype.show_element=function() {
   input.className=cls;
   input.name=this.options.var_name;
   if(this.data)
-    input.value=JSON.stringify(this.data);
+    input.value=JSON.stringify(this.data, null, '  ');
   div.appendChild(input);
   this.dom_element=input;
   this.dom_element.onblur=this.notify_change.bind(this);
@@ -41,7 +51,7 @@ form_element_json.prototype.show_element=function() {
 }
 
 form_element_json.prototype.set_data=function(data) {
-  this.parent("form_element_json").set_data.call(this, JSON.stringify(data));
+  this.parent("form_element_json").set_data.call(this, JSON.stringify(data, null, '  '));
 
   if(this.dom_element)
     this.dom_element.value=this.data;
