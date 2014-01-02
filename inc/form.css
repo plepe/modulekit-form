@@ -18,7 +18,8 @@ table.form td.field_desc {
   padding-bottom: 2px;
   padding-right: 0.5em;
 }
-table.form td.field_desc .form_desc {
+table.form td.field_desc .form_desc,
+table.form div.description {
   font-size: 0.75em;
   font-style: italic;
 }

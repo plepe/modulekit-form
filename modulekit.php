@@ -61,6 +61,7 @@ $include_css=array(
   "inc/form_element_form.css",
   "inc/form_element_keywords.css",
   "inc/form_element_textarea.css",
+  "inc/form_element_select.css",
 
   "inc/theme.css",
 );
