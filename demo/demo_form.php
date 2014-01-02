@@ -38,7 +38,20 @@ $form_def=array(
   'nationality'	=>array(
     'name'	=>"Nationality",
     'type'	=>"select",
-    'values'	=>array("at"=>"Austria", "au"=>"Australia", "de"=>"Germany", "gb"=>"Great Britian", "us"=>"USA"),
+    'values'	=>array(
+      "at"=>array(
+	'en'=>"Austria",
+	'de'=>"Österreich",
+	'desc:en'=>"A small country in the middle of Europe (with no cangoroos)",
+	'desc:de'=>"Ein kleines Land im Herzen Europas (aber ohne Känguruhs)",
+      ),
+      "au"=>array(
+        'en'=>"Australia",
+        'de'=>"Australien",
+	'desc:en'=>"A continent on the Southern hemisphere (contains cangoroos)",
+	'desc:de'=>"Ein Kontinent auf der Südhalbkugel (enthält Känguruhs)",
+      ),
+      "de"=>"Germany", "gb"=>"Great Britian", "us"=>"USA"),
   ),
   'residence'	=>array(
     'name'	=>"Where do you live",

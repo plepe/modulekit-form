@@ -13,6 +13,9 @@ form_element_select.prototype.connect=function(dom_parent) {
   this.dom_element.onchange=this.notify_change.bind(this);
   this.dom_element.onblur=this.notify_change.bind(this);
 
+  if(this.dom_parent.firstChild.nextSibling)
+    this.div_desc=this.dom_parent.firstChild.nextSibling;
+
   var current=this.dom_element.firstChild;
   this.dom_values={};
   while(current) {
@@ -84,6 +87,10 @@ form_element_select.prototype.show_element=function() {
     option.appendChild(text);
   }
 
+  this.div_desc=document.createElement("div");
+  this.div_desc.className="description";
+  div.appendChild(this.div_desc);
+
   return div;
 }
 
@@ -97,6 +104,18 @@ form_element_select.prototype.refresh=function() {
     cls="form_modified";
   else
     cls="form_orig";
+
+  if('div_desc' in this) {
+    this.div_desc.innerHTML="";
+    for(var k in this.def.values)
+      if(this.data == k)
+	if(typeof this.def.values[k]=="object") {
+	  var desc = lang(this.def.values[k], "desc:");
+
+	  if(desc)
+	    this.div_desc.innerHTML = desc;
+	}
+  }
 
   this.dom_element.className=cls;
 }

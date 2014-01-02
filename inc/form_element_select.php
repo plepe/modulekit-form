@@ -24,6 +24,24 @@ class form_element_select extends form_element {
 
     $div->appendChild($select);
 
+    $all_descriptions = "<ul>";
+    foreach($this->def['values'] as $v)
+      if(is_array($v)) {
+	$name = lang($v);
+	$desc = lang($v, "desc:");
+
+	if($desc) {
+	  $all_descriptions .= "<li><b>{$name}</b>: {$desc}</li>";
+	}
+      }
+    $all_descriptions .= "</ul>\n";
+
+    $div_desc=$document->createElement("div");
+    $div_desc->setAttribute("class", "description");
+    $text=DOM_createHTMLElement($all_descriptions, $document);
+    $div_desc->appendChild($text);
+    $div->appendChild($div_desc);
+
     return $div;
   }
 
