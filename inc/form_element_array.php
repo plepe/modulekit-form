@@ -120,9 +120,9 @@ class form_element_array extends form_element {
 
     foreach($this->elements as $k=>$element) {
       if(isset($data[$k]))
-	$element->set_data($data[$k]);
+	$element->set_request_data($data[$k]);
       else
-	$element->set_data(null);
+	$element->set_request_data(null);
     }
 
     if(isset($remove)) {
