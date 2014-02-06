@@ -4,7 +4,9 @@ function modulekit_form_debug(element, span) {
 
   ret += 'Def:\n' + JSON.stringify(element.def, null, '  ') + '\n\n';
 
-  ret += 'Data:\n' + JSON.stringify(element.get_data(), null, '  ');
+  ret += 'Data:\n' + JSON.stringify(element.get_data(), null, '  ') + '\n\n';
+
+  ret += 'Orig data:\n' + JSON.stringify(element.get_orig_data(), null, '  ');
 
   alert(ret);
 }
