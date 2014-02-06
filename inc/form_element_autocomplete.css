@@ -10,3 +10,6 @@
   width: 100%;
   overflow: auto;
 }
+.form_element_autocomplete .select_box .selected {
+  background: #C0C0C0;
+}

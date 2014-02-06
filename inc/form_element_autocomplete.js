@@ -41,12 +41,96 @@ form_element_autocomplete.prototype.show_element=function() {
   this.dom_element=input;
   this.dom_element.onblur=this.notify_change.bind(this);
   this.dom_element.onfocus=this.onfocus.bind(this);
+
+  this.dom_element.onkeydown=this.onkeydown.bind(this);
+  this.dom_element.onkeyup=this.onkeyup.bind(this);
+  this.dom_element.onkeypress=this.onkeypress.bind(this);
+
   this.dom_values={};
 
   return div;
 }
 
-form_element_autocomplete.prototype.onfocus=function() {
+form_element_autocomplete.prototype.onkeydown=function(event) {
+  if(!event)
+    event = window.event;
+
+  if(event.keyCode == 13) {
+    if(!this.select_box.current)
+      return;
+
+    this.dom_element.value = this.select_box.current.value;
+    this.select_box_noblur = false;
+    this.notify_change();
+
+    return false;
+  }
+
+  if(event.keyCode == 40) {
+    if(!this.select_box) {
+      this.select_box_show();
+
+      if(this.select_box.current)
+	return false;
+    }
+
+    if(this.select_box.current) {
+      this.select_box.current.className = ""
+      this.select_box.current = this.select_box.current.nextSibling;
+    }
+
+    if(!this.select_box.current)
+      this.select_box.current = this.select_box.firstChild;
+
+    this.select_box.current.className = "selected"
+
+    return false;
+  }
+
+  if(event.keyCode == 38) {
+    if(!this.select_box) {
+      this.select_box_show();
+
+      if(this.select_box.current)
+	return false;
+    }
+
+    if(this.select_box.current) {
+      this.select_box.current.className = ""
+      this.select_box.current = this.select_box.current.previousSibling;
+    }
+
+    if(!this.select_box.current)
+      this.select_box.current = this.select_box.lastChild;
+
+    this.select_box.current.className = "selected"
+
+    return false;
+  }
+
+  if(event.keyCode == 27) {
+    if(!this.select_box)
+      return;
+
+    this.select_box_close();
+
+    return false;
+  }
+}
+
+form_element_autocomplete.prototype.onkeyup=function(event) {
+  if(!event)
+    event = window.event;
+
+}
+
+form_element_autocomplete.prototype.onkeypress=function(event) {
+  if(!event)
+    event = window.event;
+
+}
+
+form_element_autocomplete.prototype.select_box_show=function() {
   if(this.select_box)
     return;
 
@@ -59,8 +143,10 @@ form_element_autocomplete.prototype.onfocus=function() {
     var option=document.createElement("div");
     option.value=k;
     // TODO: indexOf not supported in IE8 and earlier
-    if(this.data==k)
+    if(this.data==k) {
       option.className="selected";
+      this.select_box.current = option;
+    }
     this.select_box.appendChild(option);
     this.dom_values[k]=option;
     option.onclick=this.select_box_select.bind(this, k);
@@ -82,6 +168,15 @@ form_element_autocomplete.prototype.onfocus=function() {
   }.bind(this);
 }
 
+form_element_autocomplete.prototype.select_box_close=function() {
+  this.select_box.parentNode.removeChild(this.select_box);
+  this.select_box = null;
+}
+
+form_element_autocomplete.prototype.onfocus=function() {
+  this.select_box_show();
+}
+
 form_element_autocomplete.prototype.select_box_select=function(k) {
   var values = this.get_values();
   this.dom_element.value = values[k];
@@ -92,10 +187,8 @@ form_element_autocomplete.prototype.select_box_select=function(k) {
 form_element_autocomplete.prototype.notify_change=function() {
   this.parent('form_element_autocomplete').notify_change.call(this);
   
-  if(this.select_box && !this.select_box_noblur) {
-    this.select_box.parentNode.removeChild(this.select_box);
-    this.select_box = null;
-  }
+  if(this.select_box && !this.select_box_noblur)
+    this.select_box_close();
 }
 
 form_element_autocomplete.prototype.get_data=function(data) {
