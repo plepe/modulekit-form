@@ -8,7 +8,9 @@ form_element_text.prototype.init=function(id, def, options, form_parent) {
 
 form_element_text.prototype.connect=function(dom_parent) {
   this.parent("form_element_text").connect.call(this, dom_parent);
-  this.dom_element=this.dom_parent.getElementsByTagName("input")[0];
+
+  if(!this.dom_element)
+    this.dom_element=this.dom_parent.getElementsByTagName("input")[0];
 
   this.dom_element.onblur=this.notify_change.bind(this);
 }

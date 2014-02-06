@@ -3,15 +3,14 @@ function form_element_textarea() {
 }
 
 form_element_textarea.prototype.connect=function(dom_parent) {
-  this.tr=document.getElementById("tr-"+this.id);
-
   this.dom_element=dom_parent.getElementsByTagName("textarea")[0];
 
-  this.dom_element.onblur=this.notify_change.bind(this);
   this.dom_element.oncut=this.delayed_resize.bind(this);
   this.dom_element.onpaste=this.delayed_resize.bind(this);
   this.dom_element.ondrop=this.delayed_resize.bind(this);
   this.dom_element.onkeydown=this.delayed_resize.bind(this);
+
+  this.parent("form_element_textarea").connect.call(this, dom_parent);
 
   this.set_data(this.get_data());
 }
