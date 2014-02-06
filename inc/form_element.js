@@ -72,7 +72,7 @@ form_element.prototype.get_data=function() {
   if(!this.dom_element)
     return this.data;
 
-  this.data=this.dom_element.value;
+  this.data=this.dom_element.value.replace(/\r\n/, "\n");
   return this.data;
 }
 

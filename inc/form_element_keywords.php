@@ -43,7 +43,7 @@ class form_element_keywords extends form_element {
   }
 
   function set_request_data($data) {
-    $this->data=$data;
+    parent::set_request_data($data);
 
     if(is_string($this->data)) {
       $this->data=explode(",", $this->data);

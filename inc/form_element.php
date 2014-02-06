@@ -62,6 +62,8 @@ class form_element {
   }
 
   function set_request_data($data) {
+    $data = preg_replace("/\r\n/", "\n", $data);
+
     $this->data=$data;
   }
 
