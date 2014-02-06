@@ -3,7 +3,7 @@ $name="Form";
 
 $id="modulekit-form";
 
-$depend=array("lang", "calendar", "date");
+$depend=array("lang", "calendar", "date", "hooks");
 
 $languages=array("en", "de");
 

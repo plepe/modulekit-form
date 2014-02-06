@@ -50,6 +50,8 @@ form.prototype.connect=function() {
 
   var element_dom_parent=document.getElementById(this.id);
   this.element.connect(element_dom_parent);
+
+  call_hooks('form_connected', this);
 }
 
 form.prototype.get_data=function() {
@@ -101,6 +103,8 @@ form.prototype.show=function(dom_parent) {
   dom_parent.appendChild(this.table);
 
   form_resize();
+
+  call_hooks('form_connected', this);
 
   return this.table;
 }

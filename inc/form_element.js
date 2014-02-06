@@ -57,6 +57,8 @@ form_element.prototype.connect=function(dom_parent) {
       if(divs[i].className=="field_errors")
 	this.div_errors=divs[i];
   }
+
+  call_hooks('form_element_connected', this);
 }
 
 form_element.prototype.type=function() {
@@ -123,6 +125,8 @@ form_element.prototype.show=function() {
   this.div_errors=document.createElement("div");
   this.div_errors.className="field_errors";
   td.appendChild(this.div_errors);
+
+  call_hooks('form_element_connected', this);
 
   return tr;
 }
