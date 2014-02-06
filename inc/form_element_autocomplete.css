@@ -1,0 +1,12 @@
+.form_element_autocomplete {
+  position: relative;
+}
+.form_element_autocomplete .select_box {
+  position: absolute;
+  border: 1px solid black;
+  background: #E0E0E0;
+  margin-top: -2px;
+  max-height: 8em;
+  width: 100%;
+  overflow: auto;
+}

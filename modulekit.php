@@ -52,6 +52,7 @@ $include_js=array(
   "inc/form_element_file.js",
   "inc/form_element_date.js",
   "inc/form_element_label.js",
+  "inc/form_element_autocomplete.js",
 );
 $include_css=array(
   "inc/form.css",
@@ -62,6 +63,7 @@ $include_css=array(
   "inc/form_element_keywords.css",
   "inc/form_element_textarea.css",
   "inc/form_element_select.css",
+  "inc/form_element_autocomplete.css",
 
   "inc/theme.css",
 );
