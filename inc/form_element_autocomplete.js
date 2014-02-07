@@ -254,6 +254,7 @@ form_element_autocomplete.prototype.select_box_close=function() {
 }
 
 form_element_autocomplete.prototype.onfocus=function() {
+  this.dom_element.select();
   this.select_box_show();
 }
 
