@@ -74,15 +74,17 @@ form_element_autocomplete.prototype.onkeydown=function(event) {
 	return false;
     }
 
-    if(this.select_box.current) {
-      this.select_box.current.className = ""
-      this.select_box.current = this.select_box.current.nextSibling;
+    current = this.select_box.current;
+
+    if(current) {
+      current.className = ""
+      current = current.nextSibling;
     }
 
-    if(!this.select_box.current)
-      this.select_box.current = this.select_box.firstChild;
+    if(!current)
+      current = this.select_box.firstChild;
 
-    this.select_box.current.className = "selected"
+    this.select_box_set_current(current);
 
     return false;
   }
@@ -95,15 +97,17 @@ form_element_autocomplete.prototype.onkeydown=function(event) {
 	return false;
     }
 
-    if(this.select_box.current) {
-      this.select_box.current.className = ""
-      this.select_box.current = this.select_box.current.previousSibling;
+    current = this.select_box.current;
+
+    if(current) {
+      current.className = ""
+      current = current.previousSibling;
     }
 
-    if(!this.select_box.current)
-      this.select_box.current = this.select_box.lastChild;
+    if(!current)
+      current = this.select_box.lastChild;
 
-    this.select_box.current.className = "selected"
+    this.select_box_set_current(current);
 
     return false;
   }
@@ -116,6 +120,18 @@ form_element_autocomplete.prototype.onkeydown=function(event) {
 
     return false;
   }
+}
+
+form_element_autocomplete.prototype.select_box_set_current=function(current) {
+  this.select_box.current = current;
+  this.select_box.current.className = "selected"
+
+  // make sure the highlighted object is visible
+  if(this.select_box.current.offsetTop + this.select_box.current.offsetHeight - this.select_box.scrollTop > this.select_box.offsetHeight)
+    this.select_box.scrollTop = this.select_box.current.offsetTop + this.select_box.current.offsetHeight - this.select_box.offsetHeight;
+
+  if(this.select_box.current.offsetTop - this.select_box.scrollTop < 0)
+    this.select_box.scrollTop = this.select_box.current.offsetTop;
 }
 
 form_element_autocomplete.prototype.onkeyup=function(event) {
@@ -139,13 +155,14 @@ form_element_autocomplete.prototype.select_box_show=function() {
   this.select_box.className="select_box";
 
   var values = this.get_values();
+  var current = null;
   for(var k in values) {
     var option=document.createElement("div");
     option.value=k;
     // TODO: indexOf not supported in IE8 and earlier
     if(this.data==k) {
       option.className="selected";
-      this.select_box.current = option;
+      current = option;
     }
     this.select_box.appendChild(option);
     this.dom_values[k]=option;
@@ -154,6 +171,9 @@ form_element_autocomplete.prototype.select_box_show=function() {
     var text=document.createTextNode(values[k]);
     option.appendChild(text);
   }
+
+  if(current)
+    this.select_box_set_current(current);
 
   // don't remove select box if we move over the select box
   this.select_box_noblur=false;
