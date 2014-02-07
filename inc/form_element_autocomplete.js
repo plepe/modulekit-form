@@ -135,10 +135,89 @@ form_element_autocomplete.prototype.select_box_set_current=function(current) {
     this.select_box.scrollTop = this.select_box.current.offsetTop;
 }
 
+form_element_autocomplete.prototype.build_regexps=function(v) {
+  if((v === null) || (v === ''))
+    return null;
+
+  var ret = [];
+  var parts = v.split(" ");
+
+  for(var i = 0; i < parts.length ; i++ ) {
+    part = parts[i];
+
+    if(part === '')
+      continue;
+
+    ret.push(new RegExp(part, 'i'));
+  }
+
+  return ret;
+}
+
+form_element_autocomplete.prototype.check_regexps=function(k, v, regexps) {
+  if(regexps === null)
+    return true;
+
+  for(var i = 0; i < regexps.length; i ++)
+    if(!v.match(regexps[i]))
+      return false;
+
+  return true;
+}
+
+form_element_autocomplete.prototype.select_box_show_matches=function() {
+  var values = this.get_values();
+  var current = null;
+  if(this.select_box&&this.select_box.current)
+    current = this.select_box.current.value;
+  var current_option = null;
+  var regexps = this.build_regexps(this.dom_element.value);
+
+  // clear select_box
+  var c = this.select_box.firstChild;
+  while(c != null) {
+    var n = c.nextSibling;
+    this.select_box.removeChild(c);
+    c = n;
+  }
+
+  // (re-)fill select_box
+  for(var k in values) {
+    if(this.check_regexps(k, values[k], regexps)) {
+      var option=document.createElement("div");
+      option.value=k;
+      this.select_box.appendChild(option);
+      this.dom_values[k]=option;
+      option.onclick=this.select_box_select.bind(this, k);
+
+      var text=document.createTextNode(values[k]);
+      option.appendChild(text);
+
+      if(current == k)
+	current_option = option;
+      else if(current_option === true) {
+	current_option = option;
+	current = k;
+      }
+    }
+    else {
+      if(current == k)
+	current_option = true;
+    }
+  }
+
+  if(current_option)
+    this.select_box_set_current(current_option);
+}
+
 form_element_autocomplete.prototype.onkeyup=function(event) {
   if(!event)
     event = window.event;
 
+  if (this.select_box_last_value != this.dom_element.value) {
+    this.select_box_show_matches();
+    this.select_box_last_value = this.dom_element.value;
+  }
 }
 
 form_element_autocomplete.prototype.onkeypress=function(event) {
@@ -155,27 +234,7 @@ form_element_autocomplete.prototype.select_box_show=function() {
   this.dom_element.parentNode.appendChild(this.select_box);
   this.select_box.className="select_box";
 
-  var values = this.get_values();
-  var current = null;
-  for(var k in values) {
-    var option=document.createElement("div");
-    option.value=k;
-    // TODO: indexOf not supported in IE8 and earlier
-    if(this.data==k) {
-      option.className="selected";
-      current = option;
-    }
-    this.select_box.appendChild(option);
-    this.dom_values[k]=option;
-    option.onclick=this.select_box_select.bind(this, k);
-
-    var text=document.createTextNode(values[k]);
-    option.appendChild(text);
-  }
-
-  if(current)
-    this.select_box_set_current(current);
-
+  this.select_box_show_matches();
   // don't remove select box if we move over the select box
   this.select_box_noblur=false;
   this.select_box.onmousemotion=function() {
