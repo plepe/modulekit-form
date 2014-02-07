@@ -59,7 +59,8 @@ form_element_autocomplete.prototype.onkeydown=function(event) {
     if(!this.select_box.current)
       return;
 
-    this.dom_element.value = this.select_box.current.value;
+    var values = this.get_values();
+    this.dom_element.value = values[this.select_box.current.value];
     this.select_box_noblur = false;
     this.notify_change();
 
@@ -199,7 +200,7 @@ form_element_autocomplete.prototype.onfocus=function() {
 
 form_element_autocomplete.prototype.select_box_select=function(k) {
   var values = this.get_values();
-  this.dom_element.value = k;
+  this.dom_element.value = values[k];
   this.select_box_noblur=false;
   this.notify_change();
 }
@@ -221,7 +222,12 @@ form_element_autocomplete.prototype.get_data=function(data) {
     return null;
   }
 
-  return data;
+  var values = this.get_values();
+  for(var k in values)
+    if(data == values[k])
+      return k;
+
+  return null;
 }
 
 form_element_autocomplete.prototype.set_data=function(data) {
@@ -262,13 +268,16 @@ form_element_autocomplete.prototype.check_regexp=function(list, param) {
 form_element_autocomplete.prototype.errors=function(list) {
   this.parent("form_element_autocomplete").errors.call(this, list);
 
-  if((this.data!="")&&(this.data!=null)) {
-    if(this.def.force_values&&this.def.values) {
-      if(!in_array(this.data, this.def.values))
+  var data=this.parent("form_element_autocomplete").get_data.call(this);
+
+  if((data!="")&&(data!=null)) {
+    if(this.def.values) {
+      if(!in_array(data, this.def.values))
         list.push(this.path_name()+": "+lang('form:invalid_value'));
     }
   }
 }
+
 
 form_element_autocomplete.prototype.is_modified=function() {
   this.get_data();
