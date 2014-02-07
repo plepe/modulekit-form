@@ -9,6 +9,7 @@
   max-height: 8em;
   width: 100%;
   overflow: auto;
+  z-index: 10000;
 }
 .form_element_autocomplete .select_box .selected {
   background: #C0C0C0;

@@ -199,7 +199,7 @@ form_element_autocomplete.prototype.onfocus=function() {
 
 form_element_autocomplete.prototype.select_box_select=function(k) {
   var values = this.get_values();
-  this.dom_element.value = values[k];
+  this.dom_element.value = k;
   this.select_box_noblur=false;
   this.notify_change();
 }
