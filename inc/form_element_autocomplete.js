@@ -183,13 +183,15 @@ form_element_autocomplete.prototype.check_regexps=function(k, v, regexps) {
   return true;
 }
 
-form_element_autocomplete.prototype.select_box_show_matches=function() {
+form_element_autocomplete.prototype.select_box_show_matches=function(all) {
   var values = this.get_values();
   var current = null;
   if(this.select_box&&this.select_box.current)
     current = this.select_box.current.value;
   var current_option = null;
-  var regexps = this.build_regexps(this.dom_visible.value);
+  var regexps = null;
+  if(!all)
+    regexps = this.build_regexps(this.dom_visible.value);
 
   // clear select_box
   var c = this.select_box.firstChild;
@@ -244,7 +246,7 @@ form_element_autocomplete.prototype.onkeypress=function(event) {
 
 }
 
-form_element_autocomplete.prototype.select_box_show=function() {
+form_element_autocomplete.prototype.select_box_show=function(all) {
   if(this.select_box)
     return;
 
@@ -252,7 +254,7 @@ form_element_autocomplete.prototype.select_box_show=function() {
   this.dom_visible.parentNode.appendChild(this.select_box);
   this.select_box.className="select_box";
 
-  this.select_box_show_matches();
+  this.select_box_show_matches(all);
   // don't remove select box if we move over the select box
   this.select_box_noblur=false;
   this.select_box.onmousemotion=function() {
@@ -273,7 +275,7 @@ form_element_autocomplete.prototype.select_box_close=function() {
 
 form_element_autocomplete.prototype.onfocus=function() {
   this.dom_visible.select();
-  this.select_box_show();
+  this.select_box_show(true);
 }
 
 form_element_autocomplete.prototype.select_box_select=function(k) {
