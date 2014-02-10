@@ -197,6 +197,18 @@ Definition:
 Value:
 * In 'keys' values_mode the key of the chosen value is returned (e.g. "m"); in 'values' mode the value is returned (e.g. "male")
 
+=== Form Element "Autocomplete" ===
+Similar to Form Element "Select", but in Combined or JS mode a text input is shown where a search for values is possible.
+
+Definition:
+* type: 'select'
+* values: hash array of values, e.g. array("m"=>"male", "f"=>"female") or simple array of values array("male", "female"); may be translated like: array('m'=>array("en"=>"male", "de"=>"männlich"), 'f'=>array("en"=>"female", "de"=>"weiblich")); optionally descriptions for values are possible too (with prefix 'desc:'), e.g. 'f'=>array("en"=>"female", "desc:en"=>"the female gender", "de"=>"weiblich", "desc:de"=>"Das weibliche Geschlecht")
+* values_mode: 'keys' (default when a hash array is used) or 'values' (default when a simple array is used)
+* empty_value: Value to be returned if key is empty (default: null)
+
+Value:
+* In 'keys' values_mode the key of the chosen value is returned (e.g. "m"); in 'values' mode the value is returned (e.g. "male")
+
 === Form Element "Password" ===
 Like Form Element "Text", but hides the password.
 
