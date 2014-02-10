@@ -6,21 +6,23 @@ form_element_autocomplete.prototype.init=function(id, def, options, form_parent)
   this.parent("form_element_autocomplete").init.call(this, id, def, options, form_parent);
 }
 
+// Remove <select> and replace by JS <input>
 form_element_autocomplete.prototype.connect=function(dom_parent) {
+  var value;
   this.parent("form_element_autocomplete").connect.call(this, dom_parent);
-  this.dom_element=this.dom_parent.getElementsByTagName("input")[0];
 
-  this.dom_element.onblur=this.notify_change.bind(this);
+  this.dom_element=this.dom_parent.getElementsByTagName("select")[0];
+  if(this.dom_element)
+    value = this.dom_element.value;
+
+  while(dom_parent.firstChild)
+    dom_parent.removeChild(dom_parent.firstChild);
+
+  this.create_element(dom_parent);
+  this.set_data(value);
 }
 
-form_element_autocomplete.prototype.create_element=function() {
-
-  return input;
-}
-
-form_element_autocomplete.prototype.show_element=function() {
-  var div=this.parent("form_element_autocomplete").show_element.call(this);
-
+form_element_autocomplete.prototype.create_element=function(div) {
   var cls="form_orig";
   if(this.is_modified())
     cls="form_modified";
@@ -52,6 +54,12 @@ form_element_autocomplete.prototype.show_element=function() {
   this.dom_visible.onkeypress=this.onkeypress.bind(this);
 
   this.dom_values={};
+}
+
+form_element_autocomplete.prototype.show_element=function() {
+  var div=this.parent("form_element_autocomplete").show_element.call(this);
+
+  this.create_element(div);
 
   return div;
 }
