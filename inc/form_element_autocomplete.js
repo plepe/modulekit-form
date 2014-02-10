@@ -48,7 +48,7 @@ form_element_autocomplete.prototype.create_element=function(div) {
     input.value=this.data;
   div.appendChild(input);
   this.dom_visible=input;
-  this.dom_visible.onblur=this.notify_change.bind(this);
+  this.dom_visible.onblur=this.onblur.bind(this);
   this.dom_visible.onfocus=this.onfocus.bind(this);
 
   this.dom_visible.onkeydown=this.onkeydown.bind(this);
@@ -280,6 +280,10 @@ form_element_autocomplete.prototype.select_box_select=function(k) {
   this.dom_visible.value = values[k];
   this.select_box_noblur=false;
   this.notify_change();
+}
+
+form_element_autocomplete.prototype.onblur=function() {
+  window.setTimeout(this.notify_change.bind(this), 1);
 }
 
 form_element_autocomplete.prototype.notify_change=function() {
