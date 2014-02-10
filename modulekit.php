@@ -30,6 +30,7 @@ $include_php=array(
   "inc/form_element_file.php",
   "inc/form_element_date.php",
   "inc/form_element_label.php",
+  "inc/form_element_autocomplete.php",
 );
 $include_js=array(
   "inc/functions.js",
