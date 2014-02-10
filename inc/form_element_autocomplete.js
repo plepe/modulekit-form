@@ -164,6 +164,21 @@ form_element_autocomplete.prototype.build_regexps=function(v) {
     if(part === '')
       continue;
 
+    part = strtr(part, {
+      '*': '\\*',
+      '.': '\\.',
+      '?': '\\?',
+      '+': '\\+',
+      '^': '\\^',
+      '$': '\\$',
+      '|': '\\|',
+      '(': '\\(',
+      ')': '\\)',
+      '[': '\\[',
+      ']': '\\]',
+      '\\': '\\\\'
+    });
+
     ret.push(new RegExp(part, 'i'));
   }
 
