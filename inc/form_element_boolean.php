@@ -46,6 +46,7 @@ class form_element_boolean extends form_element {
     if(($data===null)   ||
        ($data===false)  ||
        ($data===0)      ||
+       ($data==="")     ||
        ($data==="0")    ||
        ($data==="false")||
        ($data==="off"))
