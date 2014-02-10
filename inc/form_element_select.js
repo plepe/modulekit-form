@@ -55,6 +55,19 @@ form_element_select.prototype.set_data=function(data) {
   }
 }
 
+form_element_select.prototype.show_element_option=function(select, k, v) {
+  var option=document.createElement("option");
+  option.value=k;
+  // TODO: indexOf not supported in IE8 and earlier
+  if(this.data==k)
+    option.selected=true;
+  select.appendChild(option);
+  this.dom_values[k]=option;
+
+  var text=document.createTextNode(v);
+  option.appendChild(text);
+}
+
 form_element_select.prototype.show_element=function() {
   var div=this.parent("form_element_select").show_element.call(this);
   this.get_data();
@@ -74,17 +87,9 @@ form_element_select.prototype.show_element=function() {
   this.dom_element=select;
 
   var values=this.get_values();
+  this.show_element_option(select, "", lang("form_element:please_select"));
   for(var k in values) {
-    var option=document.createElement("option");
-    option.value=k;
-    // TODO: indexOf not supported in IE8 and earlier
-    if(this.data==k)
-      option.selected=true;
-    select.appendChild(option);
-    this.dom_values[k]=option;
-
-    var text=document.createTextNode(values[k]);
-    option.appendChild(text);
+    this.show_element_option(select, k, values[k]);
   }
 
   this.div_desc=document.createElement("div");

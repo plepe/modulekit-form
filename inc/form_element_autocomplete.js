@@ -19,7 +19,9 @@ form_element_autocomplete.prototype.connect=function(dom_parent) {
     dom_parent.removeChild(dom_parent.firstChild);
 
   this.create_element(dom_parent);
-  this.set_data(value);
+
+  if(value != "")
+    this.set_data(value);
 }
 
 form_element_autocomplete.prototype.create_element=function(div) {

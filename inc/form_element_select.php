@@ -11,7 +11,10 @@ class form_element_select extends form_element {
     $select=$document->createElement("select");
     $select->setAttribute("name", "{$this->options['var_name']}");
     $select->setAttribute("id", $this->id);
-    foreach($this->get_values() as $k=>$v) {
+
+    $values = $this->get_values();
+    $values = array_merge(array(''=>lang("form_element:please_select")), $values);
+    foreach($values as $k=>$v) {
       $option=$document->createElement("option");
       $option->setAttribute("value", $k);
       if($k==$this->data)

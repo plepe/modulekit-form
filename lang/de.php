@@ -18,3 +18,5 @@ $lang_str['form:check_ge_failed']="Wert muss >= %s sein.";
 $lang_str['form:check_le_failed']="Wert muss <= %s sein.";
 $lang_str['form:check_gt_failed']="Wert muss > %s sein.";
 $lang_str['form:check_lt_failed']="Wert muss < %s sein.";
+
+$lang_str['form_element:please_select'] = "-- bitte wählen --";
