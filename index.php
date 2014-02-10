@@ -25,7 +25,10 @@ This Forms library has the goal to easily create HTML forms. Configuration is do
 </ul>
 
 <h1>Documentation</h1>
-See the <a href='doc/'>Documentation</a>.
+<ul>
+<li>See the <a href='doc/'>Documentation</a>.
+<li>Fork me on <a href='https://github.com/plepe/modulekit-form'>GitHub</a>.
+</ul>
 
 </body>
 </html>
