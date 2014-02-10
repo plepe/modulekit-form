@@ -26,25 +26,30 @@ form_element_autocomplete.prototype.show_element=function() {
     cls="form_modified";
 
   var input=document.createElement("input");
-  input.type="text";
-  input.autocomplete="off";
-
+  input.type="hidden";
+  this.dom_element = input;
   if(this.def.html_attributes)
     for(var i in this.def.html_attributes)
       input.setAttribute(i, this.def.html_attributes[i]);
+  input.name=this.options.var_name;
+
+  div.appendChild(input);
+
+  var input=document.createElement("input");
+  input.type="text";
+  input.autocomplete="off";
 
   input.className=cls;
-  input.name=this.options.var_name;
   if(this.data)
     input.value=this.data;
   div.appendChild(input);
-  this.dom_element=input;
-  this.dom_element.onblur=this.notify_change.bind(this);
-  this.dom_element.onfocus=this.onfocus.bind(this);
+  this.dom_visible=input;
+  this.dom_visible.onblur=this.notify_change.bind(this);
+  this.dom_visible.onfocus=this.onfocus.bind(this);
 
-  this.dom_element.onkeydown=this.onkeydown.bind(this);
-  this.dom_element.onkeyup=this.onkeyup.bind(this);
-  this.dom_element.onkeypress=this.onkeypress.bind(this);
+  this.dom_visible.onkeydown=this.onkeydown.bind(this);
+  this.dom_visible.onkeyup=this.onkeyup.bind(this);
+  this.dom_visible.onkeypress=this.onkeypress.bind(this);
 
   this.dom_values={};
 
@@ -60,7 +65,8 @@ form_element_autocomplete.prototype.onkeydown=function(event) {
       return;
 
     var values = this.get_values();
-    this.dom_element.value = values[this.select_box.current.value];
+    this.dom_element.value = this.select_box.current.value;
+    this.dom_visible.value = values[this.select_box.current.value];
     this.select_box_noblur = false;
     this.notify_change();
 
@@ -171,7 +177,7 @@ form_element_autocomplete.prototype.select_box_show_matches=function() {
   if(this.select_box&&this.select_box.current)
     current = this.select_box.current.value;
   var current_option = null;
-  var regexps = this.build_regexps(this.dom_element.value);
+  var regexps = this.build_regexps(this.dom_visible.value);
 
   // clear select_box
   var c = this.select_box.firstChild;
@@ -214,9 +220,9 @@ form_element_autocomplete.prototype.onkeyup=function(event) {
   if(!event)
     event = window.event;
 
-  if (this.select_box_last_value != this.dom_element.value) {
+  if (this.select_box_last_value != this.dom_visible.value) {
     this.select_box_show_matches();
-    this.select_box_last_value = this.dom_element.value;
+    this.select_box_last_value = this.dom_visible.value;
   }
 }
 
@@ -231,7 +237,7 @@ form_element_autocomplete.prototype.select_box_show=function() {
     return;
 
   this.select_box = document.createElement("div");
-  this.dom_element.parentNode.appendChild(this.select_box);
+  this.dom_visible.parentNode.appendChild(this.select_box);
   this.select_box.className="select_box";
 
   this.select_box_show_matches();
@@ -254,13 +260,14 @@ form_element_autocomplete.prototype.select_box_close=function() {
 }
 
 form_element_autocomplete.prototype.onfocus=function() {
-  this.dom_element.select();
+  this.dom_visible.select();
   this.select_box_show();
 }
 
 form_element_autocomplete.prototype.select_box_select=function(k) {
+  this.dom_element.value = k;
   var values = this.get_values();
-  this.dom_element.value = values[k];
+  this.dom_visible.value = values[k];
   this.select_box_noblur=false;
   this.notify_change();
 }
@@ -282,12 +289,7 @@ form_element_autocomplete.prototype.get_data=function(data) {
     return null;
   }
 
-  var values = this.get_values();
-  for(var k in values)
-    if(data == values[k])
-      return k;
-
-  return null;
+  return data;
 }
 
 form_element_autocomplete.prototype.set_data=function(data) {
@@ -295,6 +297,10 @@ form_element_autocomplete.prototype.set_data=function(data) {
 
   if(this.dom_element)
     this.dom_element.value=this.data;
+
+  var values = this.get_values();
+  if(this.dom_visible)
+    this.dom_visible.value=values[this.data];
 }
 
 form_element_autocomplete.prototype.refresh=function() {
@@ -302,7 +308,7 @@ form_element_autocomplete.prototype.refresh=function() {
 
   this.parent("form_element_autocomplete").refresh.call(this);
 
-  if(!this.dom_element)
+  if(!this.dom_visible)
     return;
 
   if(this.is_modified())
@@ -310,7 +316,7 @@ form_element_autocomplete.prototype.refresh=function() {
   else
     cls="form_orig";
 
-  this.dom_element.className=cls;
+  this.dom_visible.className=cls;
 }
 
 form_element_autocomplete.prototype.check_regexp=function(list, param) {
@@ -332,7 +338,7 @@ form_element_autocomplete.prototype.errors=function(list) {
 
   if((data!="")&&(data!=null)) {
     if(this.def.values) {
-      if(!in_array(data, this.def.values))
+      if(!data in this.def.values)
         list.push(this.path_name()+": "+lang('form:invalid_value'));
     }
   }
