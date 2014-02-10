@@ -1,5 +1,16 @@
 <?
 class form_element_select extends form_element {
+  function show_element_option($select, $k, $v, $document) {
+    $option=$document->createElement("option");
+    $option->setAttribute("value", $k);
+    if(((string)$k) === ((string)$this->data))
+      $option->setAttribute("selected", "selected");
+    $select->appendChild($option);
+
+    $text=$document->createTextNode($v);
+    $option->appendChild($text);
+  }
+
   function show_element($document) {
     $div=parent::show_element($document);
 
@@ -13,16 +24,9 @@ class form_element_select extends form_element {
     $select->setAttribute("id", $this->id);
 
     $values = $this->get_values();
-    $values = array_merge(array(''=>lang("form_element:please_select")), $values);
+    $this->show_element_option($select, "", lang("form_element:please_select"), $document);
     foreach($values as $k=>$v) {
-      $option=$document->createElement("option");
-      $option->setAttribute("value", $k);
-      if($k==$this->data)
-	$option->setAttribute("selected", "selected");
-      $select->appendChild($option);
-      
-      $text=$document->createTextNode($v);
-      $option->appendChild($text);
+      $this->show_element_option($select, $k, $v, $document);
     }
 
     $div->appendChild($select);
