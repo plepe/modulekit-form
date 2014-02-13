@@ -31,7 +31,7 @@ class form_element_select extends form_element {
 
     $div->appendChild($select);
 
-    $all_descriptions = "<ul>";
+    $all_descriptions = "";
     foreach($this->def['values'] as $v)
       if(is_array($v)) {
 	$name = lang($v);
@@ -41,7 +41,8 @@ class form_element_select extends form_element {
 	  $all_descriptions .= "<li><b>{$name}</b>: {$desc}</li>";
 	}
       }
-    $all_descriptions .= "</ul>\n";
+    if($all_descriptions != "")
+      $all_descriptions = "<ul>{$all_descriptions}</ul>\n";
 
     $div_desc=$document->createElement("div");
     $div_desc->setAttribute("class", "description");
