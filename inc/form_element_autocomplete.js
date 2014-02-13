@@ -274,7 +274,10 @@ form_element_autocomplete.prototype.select_box_close=function() {
 }
 
 form_element_autocomplete.prototype.onfocus=function() {
-  this.dom_visible.select();
+  window.setTimeout(function(ob) {
+    ob.select();
+  }.bind(this, this.dom_visible), 1);
+
   this.select_box_show(true);
 }
 
