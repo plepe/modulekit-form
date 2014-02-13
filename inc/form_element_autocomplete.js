@@ -56,6 +56,10 @@ form_element_autocomplete.prototype.create_element=function(div) {
   this.dom_visible.onkeypress=this.onkeypress.bind(this);
 
   this.dom_values={};
+
+  this.div_desc=document.createElement("div");
+  this.div_desc.className="description";
+  div.appendChild(this.div_desc);
 }
 
 form_element_autocomplete.prototype.show_element=function() {
@@ -251,7 +255,7 @@ form_element_autocomplete.prototype.select_box_show=function(all) {
     return;
 
   this.select_box = document.createElement("div");
-  this.dom_visible.parentNode.appendChild(this.select_box);
+  this.dom_visible.parentNode.insertBefore(this.select_box, this.dom_visible.nextSibling);
   this.select_box.className="select_box";
 
   this.select_box_show_matches(all);
@@ -325,6 +329,18 @@ form_element_autocomplete.prototype.refresh=function() {
   var cls;
 
   this.parent("form_element_autocomplete").refresh.call(this);
+
+  if('div_desc' in this) {
+    this.div_desc.innerHTML="";
+    for(var k in this.def.values)
+      if(this.data == k)
+	if(typeof this.def.values[k]=="object") {
+	  var desc = lang(this.def.values[k], "desc:");
+
+	  if(desc)
+	    this.div_desc.innerHTML = desc;
+	}
+  }
 
   if(!this.dom_visible)
     return;

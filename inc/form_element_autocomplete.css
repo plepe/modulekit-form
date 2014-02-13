@@ -1,3 +1,6 @@
+.form_element_autocomplete .description ul {
+  margin: 0px;
+}
 .form_element_autocomplete {
   position: relative;
 }
