@@ -48,7 +48,7 @@ form_element_autocomplete.prototype.create_element=function(div) {
     input.value=this.data;
   div.appendChild(input);
   this.dom_visible=input;
-  this.dom_visible.onblur=this.notify_change.bind(this);
+  this.dom_visible.onblur=this.onblur.bind(this);
   this.dom_visible.onfocus=this.onfocus.bind(this);
 
   this.dom_visible.onkeydown=this.onkeydown.bind(this);
@@ -273,6 +273,9 @@ form_element_autocomplete.prototype.select_box_show=function(all) {
 }
 
 form_element_autocomplete.prototype.select_box_close=function() {
+  if(!this.select_box)
+    return;
+
   this.select_box.parentNode.removeChild(this.select_box);
   this.select_box = null;
 }
@@ -294,11 +297,37 @@ form_element_autocomplete.prototype.select_box_select=function(k) {
   this.notify_change();
 }
 
-form_element_autocomplete.prototype.notify_change=function() {
+form_element_autocomplete.prototype.onblur=function() {
+  var found = false;
+
+  if(this.select_box && this.select_box_noblur) {
+    return;
+  }
+  else if(this.dom_visible.value == "") {
+    this.dom_element.value = "";
+    this.select_box_last_value = null;
+    found = true;
+  }
+  else {
+    var values = this.get_values();
+    for(var k in values)
+      if(this.dom_visible.value == values[k]) {
+	this.dom_element.value = k;
+	this.dom_visible.value = values[k];
+	this.select_box_last_value = values[k];
+	found = true;
+      }
+  }
+
+  this.notify_change(found);
+}
+
+form_element_autocomplete.prototype.notify_change=function(found) {
+  this.data_illegal=(found === false);
+
   this.parent('form_element_autocomplete').notify_change.call(this);
   
-  if(this.select_box && !this.select_box_noblur)
-    this.select_box_close();
+  this.select_box_close();
 }
 
 form_element_autocomplete.prototype.get_data=function(data) {
@@ -369,6 +398,9 @@ form_element_autocomplete.prototype.errors=function(list) {
   this.parent("form_element_autocomplete").errors.call(this, list);
 
   var data=this.parent("form_element_autocomplete").get_data.call(this);
+
+  if(this.data_illegal)
+    list.push(this.path_name()+": "+lang('form:invalid_value'));
 
   if((data!="")&&(data!=null)) {
     if(this.def.values) {
