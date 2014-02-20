@@ -87,6 +87,13 @@ form_element_file.prototype.show_element=function() {
     input.onclick=this.input_change.bind(this);
     span.appendChild(input);
   }
+  else {
+    var input=document.createElement("input");
+    input.setAttribute("type", "hidden");
+    input.setAttribute("value", null);
+    input.setAttribute("name", this.options.var_name+"[data]");
+    div.appendChild(input);
+  }
 
   // create input field for new file
   var span=document.createElement("div");
