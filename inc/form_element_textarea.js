@@ -36,9 +36,16 @@ form_element_textarea.prototype.resize = function(ev, shrink) {
 
     // only if shrink is true (e.g. onblur), try to decrease size
     if(shrink) {
+      var height = parseInt(this.dom_element.style.height) || 0;
+      var last_height = null;
+
       // decrease in steps of 10px, to avoid page jumping
-      while(this.dom_element.clientHeight >= this.dom_element.scrollHeight) {
-	this.dom_element.style.height = (parseInt(this.dom_element.style.height) - 10) + "px";
+      while((this.dom_element.clientHeight >= this.dom_element.scrollHeight) &&
+            (last_height !== height)) {
+	this.dom_element.style.height = (height - 10) + "px";
+
+	last_height = height;
+        height = parseInt(this.dom_element.style.height) || 0;
       }
     }
 
