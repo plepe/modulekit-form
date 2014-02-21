@@ -27,16 +27,33 @@ form_element_textarea.prototype.refresh = function() {
   this.resize();
 }
 
-form_element_textarea.prototype.delayed_resize = function() {
-  window.setTimeout(this.resize.bind(this), 0);
+form_element_textarea.prototype.delayed_resize = function(ev, shrink) {
+  window.setTimeout(this.resize.bind(this, ev, shrink), 0);
 }
 
-form_element_textarea.prototype.resize = function() {
+form_element_textarea.prototype.resize = function(ev, shrink) {
   if(this.dom_element) {
-    this.dom_element.style.height = 0;
-    this.dom_element.style.height = this.dom_element.scrollHeight +
-      // as we use box-sizing 'border-box' we need to add the border height
-      (this.dom_element.offsetHeight - this.dom_element.clientHeight) +
-      "px";
+
+    // only if shrink is true (e.g. onblur), try to decrease size
+    if(shrink) {
+      // decrease in steps of 10px, to avoid page jumping
+      while(this.dom_element.clientHeight >= this.dom_element.scrollHeight) {
+	this.dom_element.style.height = (parseInt(this.dom_element.style.height) - 10) + "px";
+      }
+    }
+
+    // if textarea's content grew, resize
+    if(this.dom_element.clientHeight < this.dom_element.scrollHeight) {
+      this.dom_element.style.height = this.dom_element.scrollHeight +
+	// as we use box-sizing 'border-box' we need to add the border height
+	(this.dom_element.offsetHeight - this.dom_element.clientHeight) +
+	"px";
+    }
   }
+}
+
+form_element_textarea.prototype.notify_change = function() {
+  this.parent("form_element_textarea").notify_change.call(this);
+
+  this.delayed_resize(null, true);
 }
