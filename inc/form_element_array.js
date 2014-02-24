@@ -144,7 +144,7 @@ form_element_array.prototype.set_orig_data=function(data) {
   for(var k in this.elements) {
     if(!data)
       this.elements[k].set_orig_data(null);
-    else if(data[k])
+    else if(k in data)
       this.elements[k].set_orig_data(data[k]);
     else
       this.elements[k].set_orig_data(null);
