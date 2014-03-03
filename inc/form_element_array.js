@@ -236,9 +236,11 @@ form_element_array.prototype.errors=function(list) {
 form_element_array.prototype.add_element=function() {
   var highest_id=0;
 
-  for(var i in this.elements)
+  for(var i in this.elements) {
+    i = parseInt(i);
     if(i>highest_id)
       highest_id=i;
+  }
 
   highest_id=parseInt(highest_id)+1;
   this.create_element(highest_id);
