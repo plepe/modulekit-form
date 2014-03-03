@@ -24,7 +24,16 @@ class form_element_select extends form_element {
     $select->setAttribute("id", $this->id);
 
     $values = $this->get_values();
-    $this->show_element_option($select, "", lang("form_element:please_select"), $document);
+
+    if(array_key_exists('placeholder', $this->def))
+      if(is_array($this->def['placeholder']))
+	$placeholder = lang($this->def['placeholder']);
+      else
+	$placeholder = $this->def['placeholder'];
+    else
+      $placeholder = lang('form_element:please_select');
+
+    $this->show_element_option($select, "", $placeholder, $document);
     foreach($values as $k=>$v) {
       $this->show_element_option($select, $k, $v, $document);
     }

@@ -87,7 +87,16 @@ form_element_select.prototype.show_element=function() {
   this.dom_element=select;
 
   var values=this.get_values();
-  this.show_element_option(select, "", lang("form_element:please_select"));
+  var placeholder;
+  if('placeholder' in this.def)
+    if(typeof this.def.placeholder == 'object')
+      placeholder = lang(this.def.placeholder);
+    else
+      placeholder = this.def.placeholder;
+  else
+    placeholder = lang('form_element:please_select');
+
+  this.show_element_option(select, "", placeholder);
   for(var k in values) {
     this.show_element_option(select, k, values[k]);
   }
