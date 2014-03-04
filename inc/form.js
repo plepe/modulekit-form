@@ -83,6 +83,11 @@ form.prototype.refresh=function() {
   this.element.refresh();
 }
 
+form.prototype.reset=function() {
+  this.set_orig_data(this.get_data());
+  this.refresh();
+}
+
 form.prototype.get_orig_data=function(data) {
   if(!this.has_orig_data)
     return this.get_data();
