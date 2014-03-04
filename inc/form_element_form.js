@@ -102,6 +102,16 @@ form_element_form.prototype.errors=function(list) {
   }
 }
 
+
+form_element_form.prototype.is_complete=function() {
+  for(var i in this.elements) {
+    if(!this.elements[i].is_complete())
+      return false;
+  }
+
+  return true;
+}
+
 form_element_form.prototype.refresh=function() {
   this.parent("form_element_form").refresh.call(this);
 

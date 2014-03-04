@@ -120,6 +120,16 @@ form.prototype.errors=function() {
   return list;
 }
 
+form.prototype.is_complete=function() {
+  if(!this.has_data)
+    return false;
+
+  if(this.errors())
+    return false;
+
+  return this.element.is_complete();
+}
+
 form.prototype.show_errors=function(div) {
   this.element.show_errors();
 

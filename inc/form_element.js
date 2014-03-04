@@ -155,6 +155,10 @@ form_element.prototype.errors=function(list) {
   }
 }
 
+form_element.prototype.is_complete=function() {
+  return true;
+}
+
 form_element.prototype.check=function(list, param) {
   var check=param.slice(0);
   var check_fun="check_"+check.shift();

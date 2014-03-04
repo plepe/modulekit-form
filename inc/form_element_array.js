@@ -233,6 +233,19 @@ form_element_array.prototype.errors=function(list) {
     this.elements[k].errors(list);
 }
 
+form_element_array.prototype.is_complete=function() {
+// TODO?
+//  if(this.changed_count)
+//    return false;
+
+  for(var i in this.elements) {
+    if(!this.elements[i].is_complete())
+      return false;
+  }
+
+  return true;
+}
+
 form_element_array.prototype.add_element=function() {
   var highest_id=0;
 
