@@ -114,7 +114,7 @@ form.prototype.errors=function() {
 
   this.element.errors(list);
 
-  if(list.length==null)
+  if((list.length==null) || (list.length == 0))
     return false;
 
   return list;
