@@ -363,3 +363,10 @@ form_element_array.prototype.is_modified=function() {
 
   return false;
 }
+
+form_element_array.prototype.show_errors=function() {
+  this.parent("form_element_array").show_errors.call(this);
+
+  for(var i in this.elements)
+    this.elements[i].show_errors();
+}

@@ -121,6 +121,11 @@ form.prototype.errors=function() {
 }
 
 form.prototype.show_errors=function(div) {
+  this.element.show_errors();
+
+  if(!div)
+    return;
+
   var ul=document.createElement("ul");
   div.appendChild(ul);
 
