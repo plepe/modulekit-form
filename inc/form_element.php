@@ -77,7 +77,7 @@ class form_element {
     if(isset($this->def['req'])&&($this->def['req'])&&($data===null))
       $errors[]=$this->path_name().": ".lang("form:require_value");
 
-    if(isset($this->def['check'])) {
+    if(isset($this->def['check']) && ($data !== null)) {
       $check_errors=array();
 
       $this->check(&$check_errors, $this->def['check']);

@@ -144,7 +144,7 @@ form_element.prototype.errors=function(list) {
   if((this.def.req)&&((!this.data)||(data===null)))
     list.push(this.path_name()+": "+lang("form:require_value"));
 
-  if(this.def.check) {
+  if(this.def.check&&(data!==null)) {
     var check_errors=[];
 
     this.check(check_errors, this.def.check);
