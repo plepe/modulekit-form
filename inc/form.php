@@ -128,7 +128,7 @@ class form {
   }
 
   function show() {
-    if(!array_key_exists("show_errors", $this->options) and $this->has_data)
+    if(!array_key_exists("show_errors", $this->options) and $this->has_orig_data)
       $this->options['show_errors'] = true;
 
     $document=new DOMDocument();
