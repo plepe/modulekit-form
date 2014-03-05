@@ -1,5 +1,14 @@
 <?
 class form_element_checkbox extends form_element {
+  function get_data() {
+    $data = parent::get_data();
+
+    if($data === "")
+      return null;
+
+    return $data;
+  }
+
   function show_element($document) {
     $div=parent::show_element($document);
 
