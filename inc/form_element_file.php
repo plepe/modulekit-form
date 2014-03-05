@@ -74,6 +74,12 @@ class form_element_file extends form_element {
     parent::errors(&$errors);
 
     $data=$this->get_data();
+
+    if(array_key_exists('accept_ext', $this->def) && $data['ext'] &&
+       !in_array($data['ext'], $this->def['accept_ext'])) {
+      $errors[] = $this->path_name().": ".lang("form:file_not_accept_ext", 0, $data['ext']);
+    }
+
     if($data['error']) {
       global $lang_str;
 
