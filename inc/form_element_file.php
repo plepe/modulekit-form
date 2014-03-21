@@ -20,6 +20,10 @@ class form_element_file extends form_element {
       $input->setAttribute("name", $this->options['var_name']."[data]");
       $div->appendChild($input);
 
+    }
+
+    // if an upload error occured, don't show file info
+    if(($this->data) && (!$this->data['error'])) {
       // create div for text of old file
       $span=$document->createElement("div");
       $span->setAttribute("id", $this->id."-oldfile");
