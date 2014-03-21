@@ -133,6 +133,10 @@ class form_element_file extends form_element {
       '[timestamp]'	=>Date("Y-m-d-H-i-s"),
     ));
 
+    // an error occured -> no need to try to move file
+    if($data['error'])
+      return parent::set_request_data($data);
+
     // move to a new temporary location (in case of reload, e.g. due to
     // missing other values, we might reload, then the file would be
     // removed).
