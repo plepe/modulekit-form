@@ -21,6 +21,7 @@ form_element_file.prototype.refresh=function() {
 
   this.dom_element.className=cls;
   this.dom_element.onblur=this.notify_change.bind(this);
+  this.dom_element.onchange=this.notify_change.bind(this);
 }
 
 form_element_file.prototype.connect=function(dom_parent) {
@@ -32,8 +33,10 @@ form_element_file.prototype.connect=function(dom_parent) {
       this.dom_element=obs[i];
   }
 
-  if(this.dom_element)
+  if(this.dom_element) {
     this.dom_element.onblur=this.notify_change.bind(this);
+    this.dom_element.onchange=this.notify_change.bind(this);
+  }
 
   var span;
   if(span=document.getElementById(this.id+"-oldfile")) {
@@ -110,6 +113,7 @@ form_element_file.prototype.show_element=function() {
 
   this.dom_element=input;
   this.dom_element.onblur=this.notify_change.bind(this);
+  this.dom_element.onchange=this.notify_change.bind(this);
 
   return div;
 }
