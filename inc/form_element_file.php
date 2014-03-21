@@ -101,7 +101,7 @@ class form_element_file extends form_element {
     $var_path=array_merge($var_path, $m);
     $var_path[]="file";
 
-    if($this->_FILES_value($var_path, "tmp_name")==null) {
+    if($this->_FILES_value($var_path, "name")==null) {
       if(isset($data['data'])) {
 	$data=json_decode($data['data'], true);
 
