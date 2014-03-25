@@ -5,12 +5,17 @@ class form {
   public $options;
 
   function __construct($id, $def, $options=array()) {
+    if(!$id) {
+      $id = "_"; // TODO: check if id is unique?
+      $options['var_name'] = "";
+    }
+
     $this->id=$id;
     $this->def=$def;
     form_process_def($this->def);
     $this->options=$options;
     if(!isset($this->options['var_name']))
-      $this->options['var_name']=$this->id;
+      $this->options['var_name']=$this->id || '';
 
     $this->build_form();
 
