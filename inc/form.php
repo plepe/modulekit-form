@@ -15,7 +15,7 @@ class form {
     form_process_def($this->def);
     $this->options=$options;
     if(!isset($this->options['var_name']))
-      $this->options['var_name']=$this->id || '';
+      $this->options['var_name']=$this->id;
 
     $this->build_form();
 
