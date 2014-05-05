@@ -11,6 +11,7 @@
   margin-top: -2px;
   max-height: 8em;
   width: 100%;
+  min-width: 200px; /* needed for IE */
   overflow: auto;
   z-index: 10000;
 }
