@@ -14,6 +14,7 @@
   min-width: 200px; /* needed for IE */
   overflow: auto;
   z-index: 10000;
+  cursor: default;
 }
 .form_element_autocomplete .select_box .selected {
   background: #C0C0C0;
