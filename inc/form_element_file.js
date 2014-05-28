@@ -71,18 +71,22 @@ form_element_file.prototype.show_element=function() {
     span.setAttribute("id", this.id+"-oldfile");
     div.appendChild(span);
 
+    span_value=document.createElement("span");
+    span_value.setAttribute("class", "value");
+
     // enclose in a link if web_path is set
     if(this.def.web_path) {
       var a=document.createElement("a");
       a.setAttribute("href", this.def.web_path.replace("[file_name]",
         this.data.tmp_name?this.data.tmp_name:this.data.name));
 
-      span.appendChild(a);
-      span=a;
+      span_value.appendChild(a);
+      span_value=a;
     }
 
     var txt=document.createTextNode(this.data.orig_name);
-    span.appendChild(txt);
+    span_value.appendChild(txt);
+    span.appendChild(span_value);
 
     var input=document.createElement("input");
     input.type="button";
@@ -128,7 +132,10 @@ form_element_file.prototype.notify_change_file=function() {
   if(!span) {
     span = document.createElement("span");
     span.id = this.id + "-oldfile";
-    span.appendChild(document.createTextNode(""));
+
+    var span_value = document.createElement("span");
+    span_value.className = "value";
+    span.appendChild(span_value);
 
     var input=document.createElement("input");
     input.type="button";
@@ -139,10 +146,13 @@ form_element_file.prototype.notify_change_file=function() {
     this.dom.appendChild(span);
   }
 
-  if(span.firstChild)
-    span.removeChild(span.firstChild);
-  span.insertBefore(document.createTextNode(this.dom_element.value), span.firstChild);
+  var span_value = span.firstChild;
+  if(span_value.firstChild)
+    span_value.removeChild(span_value.firstChild);
+  span_value.insertBefore(document.createTextNode(this.dom_element.value), span_value.firstChild);
+
   span.style.display="block";
+  span.className = "form_modified";
 }
 
 form_element_file.prototype.input_change=function() {

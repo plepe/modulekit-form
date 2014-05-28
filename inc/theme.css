@@ -11,6 +11,7 @@ button {
 input[type=text],
 input[type=password],
 div.form_element_label,
+span.form_element_file span.value,
 textarea,
 select {
   background: #e0e0e0;
@@ -24,12 +25,17 @@ div.form_element_label {
   background: #ffffff;
 }
 
+span.form_element_file span.value {
+  margin-right: 5px;
+}
+
 .form_modified {
   background: none;
 }
 input.form_modified,
 textarea.form_modified,
-select.form_modified
+select.form_modified,
+span.form_element_file span.form_modified span.value
 {
   background: #c0c0c0;
 }

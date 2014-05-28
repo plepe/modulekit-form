@@ -29,6 +29,9 @@ class form_element_file extends form_element {
       $span->setAttribute("id", $this->id."-oldfile");
       $div->appendChild($span);
 
+      $span_value=$document->createElement("span");
+      $span_value->setAttribute("class", "value");
+
       // enclose in a link if web_path is set
       if(isset($this->def['web_path'])) {
 	$a=$document->createElement("a");
@@ -36,12 +39,13 @@ class form_element_file extends form_element {
 	  "[file_name]"=>($this->data['tmp_name']?$this->data['tmp_name']:$this->data['name'])
 	  )));
 
-	$span->appendChild($a);
-	$span=$a;
+	$span_value->appendChild($a);
+	$span_value=$a;
       }
 
       $txt=$document->createTextNode($this->data['orig_name']);
-      $span->appendChild($txt);
+      $span_value->appendChild($txt);
+      $span->appendChild($span_value);
     }
 
     // create input field for new file
