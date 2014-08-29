@@ -12,8 +12,8 @@ class form_element_json extends form_element_textarea {
     parent::set_data(json_encode($data));
   }
 
-  function errors($errors) {
-    parent::errors(&$errors);
+  function errors(&$errors) {
+    parent::errors($errors);
 
     if($this->data=="null")
       return;

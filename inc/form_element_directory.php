@@ -52,8 +52,8 @@ class form_element_directory extends form_element {
     return $m;
   }
 
-  function errors($errors) {
-    parent::errors(&$errors);
+  function errors(&$errors) {
+    parent::errors($errors);
 
     if(isset($this->errors))
       $errors=array_merge($errors, $this->errors);

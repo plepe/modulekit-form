@@ -39,8 +39,8 @@ class form_element_numeric extends form_element_text {
     parent::set_data((string)$data);
   }
 
-  function errors($errors) {
-    parent::errors(&$errors);
+  function errors(&$errors) {
+    parent::errors($errors);
 
     if(($this->data===null)||($this->data===""))
       return;
@@ -64,7 +64,7 @@ class form_element_numeric extends form_element_text {
     }
   }
 
-  function check_ge($errors, $param) {
+  function check_ge(&$errors, $param) {
     if($this->get_data() === null)
       return;
 
@@ -76,7 +76,7 @@ class form_element_numeric extends form_element_text {
     }
   }
 
-  function check_le($errors, $param) {
+  function check_le(&$errors, $param) {
     if($this->get_data() === null)
       return;
 
@@ -88,7 +88,7 @@ class form_element_numeric extends form_element_text {
     }
   }
 
-  function check_gt($errors, $param) {
+  function check_gt(&$errors, $param) {
     if($this->get_data() === null)
       return;
 
@@ -100,7 +100,7 @@ class form_element_numeric extends form_element_text {
     }
   }
 
-  function check_lt($errors, $param) {
+  function check_lt(&$errors, $param) {
     if($this->get_data() === null)
       return;
 

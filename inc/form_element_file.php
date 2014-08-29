@@ -78,8 +78,8 @@ class form_element_file extends form_element {
     return $m;
   }
 
-  function errors($errors) {
-    parent::errors(&$errors);
+  function errors(&$errors) {
+    parent::errors($errors);
 
     $data=$this->get_data();
 

@@ -83,7 +83,7 @@ class form {
     if(!$this->element->is_complete())
       return false;
 
-    $this->element->errors(&$errors);
+    $this->element->errors($errors);
 
     if(!sizeof($errors))
       return false;

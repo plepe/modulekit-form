@@ -60,7 +60,7 @@ class form_element_text extends form_element {
     return $div;
   }
 
-  function check_regexp($errors, $param) {
+  function check_regexp(&$errors, $param) {
     if(sizeof($param)<1)
       return;
 
@@ -85,8 +85,8 @@ class form_element_text extends form_element {
     return $data;
   }
 
-  function errors($errors) {
-    parent::errors(&$errors);
+  function errors(&$errors) {
+    parent::errors($errors);
 
     if(($this->data!="")||($this->data!=null)) {
       if(isset($this->def['force_values'])&&($this->def['force_values'])&&

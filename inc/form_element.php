@@ -71,7 +71,7 @@ class form_element {
     return $this->data;
   }
 
-  function errors($errors) {
+  function errors(&$errors) {
     $data=$this->get_data();
 
     if(isset($this->def['req'])&&($this->def['req'])&&($data===null))
@@ -80,18 +80,18 @@ class form_element {
     if(isset($this->def['check']) && ($data !== null)) {
       $check_errors=array();
 
-      $this->check(&$check_errors, $this->def['check']);
+      $this->check($check_errors, $this->def['check']);
 
       foreach($check_errors as $e)
 	$errors[]=$this->path_name().": {$e}";
     }
   }
 
-  function check($errors, $param) {
+  function check(&$errors, $param) {
     $check_fun="check_".array_shift($param);
 
     if(method_exists($this, $check_fun)) {
-      call_user_func(array($this, $check_fun), &$errors, $param);
+      call_user_func(array($this, $check_fun), $errors, $param);
     }
   }
 
@@ -159,7 +159,7 @@ class form_element {
 
   function show_errors($document) {
     $check_errors=array();
-    $this->errors(&$check_errors);
+    $this->errors($check_errors);
 
     if(!$this->tr)
       return;
@@ -191,7 +191,7 @@ class form_element {
 
   // call check() for all elements of the param-array
   // if last element is a string it wil be returned as error message (if any of the checks returned an error)
-  function check_and($errors, $param) {
+  function check_and(&$errors, $param) {
     $list_errors=array();
 
     foreach($param as $i=>$p) {
@@ -202,7 +202,7 @@ class form_element {
 	$list_errors=array();
       }
       else
-	$this->check(&$list_errors, $p);
+	$this->check($list_errors, $p);
     }
 
     $errors=array_merge($errors, $list_errors);
@@ -210,7 +210,7 @@ class form_element {
 
   // call check() for all elements of the param-array until one successful check is found
   // if last element is a string it wil be returned as error message (if all of the checks returned an error)
-  function check_or($errors, $param) {
+  function check_or(&$errors, $param) {
     $list_errors=array();
 
     foreach($param as $i=>$p) {
@@ -222,7 +222,7 @@ class form_element {
 	$list_errors=array();
       }
       else {
-	$this->check(&$check_errors, $p);
+	$this->check($check_errors, $p);
 
 	if(!sizeof($check_errors))
 	  return;
@@ -235,10 +235,10 @@ class form_element {
   }
 
   // call check() for the first element of the param-array, return second element as error message if check() returns successful
-  function check_not($errors, $param) {
+  function check_not(&$errors, $param) {
     $check_errors=array();
 
-    $this->check(&$check_errors, $param[0]);
+    $this->check($check_errors, $param[0]);
 
     if(sizeof($check_errors))
       return;
@@ -250,14 +250,14 @@ class form_element {
   }
 
   // call check() on another form element of the same hierarchy
-  function check_check($errors, $param) {
+  function check_check(&$errors, $param) {
     $check_errors=array();
 
     $other=$this->form_parent->elements[$param[0]];
     if(!$other)
       return;
 
-    $other->check(&$check_errors, $param[1]);
+    $other->check($check_errors, $param[1]);
 
     if(sizeof($check_errors)) {
       if(sizeof($param)>2)
@@ -268,7 +268,7 @@ class form_element {
     }
   }
 
-  function check_is($errors, $param) {
+  function check_is(&$errors, $param) {
     if(sizeof($param)<1)
       return;
 
@@ -284,7 +284,7 @@ class form_element {
     if(isset($this->def['show_depend'])) {
       $errors=array();
 
-      $this->check(&$errors, $this->def['show_depend']);
+      $this->check($errors, $this->def['show_depend']);
 
       if(sizeof($errors)) {
 	return false;

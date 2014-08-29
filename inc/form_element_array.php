@@ -23,7 +23,7 @@ class form_element_array extends form_element {
 
   function errors(&$errors) {
     foreach($this->elements as $k=>$element) {
-      $element->errors(&$errors);
+      $element->errors($errors);
     }
   }
 

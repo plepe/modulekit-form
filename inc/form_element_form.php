@@ -79,9 +79,9 @@ class form_element_form extends form_element {
     return $data;
   }
 
-  function errors($errors) {
+  function errors(&$errors) {
     foreach($this->elements as $k=>$element) {
-      $element->errors(&$errors);
+      $element->errors($errors);
     }
   }
 
