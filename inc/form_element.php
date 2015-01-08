@@ -107,6 +107,43 @@ class form_element {
     return $this->orig_data;
   }
 
+  function show_desc($document) {
+    $ret = $document->createElement("div");
+
+    if((!isset($this->def['hide_field_name']))||(!$this->def['hide_field_name'])) {
+      if(isset($this->def['name'])) {
+	$div=$document->createElement("div");
+	$div->setAttribute("class", "form_name");
+	$text=$document->createTextNode($this->name().":");
+	$div->appendChild($text);
+	$ret->appendChild($div);
+      }
+
+      if(isset($this->def['desc'])) {
+	$div=$document->createElement("div");
+	$div->setAttribute("class", "form_desc");
+        $text=DOM_createHTMLElement((is_array($this->def['desc'])?lang($this->def['desc']):$this->def['desc']), $document);
+	$div->appendChild($text);
+	$ret->appendChild($div);
+      }
+    }
+
+    return $ret;
+  }
+
+  function show_div_errors($document) {
+    $this->div_errors=$document->createElement("div");
+    $this->div_errors->setAttribute("class", "field_errors");
+
+    // show errors
+    $opt=$this->form_root->form->options;
+    if(isset($opt['show_errors'])&&$opt['show_errors']) {
+      $this->show_errors($document);
+    }
+
+    return $this->div_errors;
+  }
+
   function show($document) {
     $tr=$document->createElement("tr");
     $tr->setAttribute("id", "tr-".$this->id);
@@ -120,23 +157,7 @@ class form_element {
     $td->setAttribute("class", "field_desc");
     $tr->appendChild($td);
 
-    if((!isset($this->def['hide_field_name']))||(!$this->def['hide_field_name'])) {
-      if(isset($this->def['name'])) {
-	$div=$document->createElement("div");
-	$div->setAttribute("class", "form_name");
-	$text=$document->createTextNode($this->name().":");
-	$div->appendChild($text);
-	$td->appendChild($div);
-      }
-
-      if(isset($this->def['desc'])) {
-	$div=$document->createElement("div");
-	$div->setAttribute("class", "form_desc");
-        $text=DOM_createHTMLElement((is_array($this->def['desc'])?lang($this->def['desc']):$this->def['desc']), $document);
-	$div->appendChild($text);
-	$td->appendChild($div);
-      }
-    }
+    $td->appendChild($this->show_desc($document));
 
     $td=$document->createElement("td");
     $td->setAttribute("class", "field_value");
@@ -144,15 +165,7 @@ class form_element {
 
     $td->appendChild($this->show_element($document));
 
-    $this->div_errors=$document->createElement("div");
-    $this->div_errors->setAttribute("class", "field_errors");
-    $td->appendChild($this->div_errors);
-
-    // show errors
-    $opt=$this->form_root->form->options;
-    if(isset($opt['show_errors'])&&$opt['show_errors']) {
-      $this->show_errors($document);
-    }
+    $td->appendChild($this->show_div_errors($document));
 
     return $tr;
   }
@@ -160,9 +173,6 @@ class form_element {
   function show_errors($document) {
     $check_errors=array();
     $this->errors($check_errors);
-
-    if(!$this->tr)
-      return;
 
     if(sizeof($check_errors)) {
       $ul=$document->createElement("ul");
@@ -175,7 +185,8 @@ class form_element {
 
       $this->div_errors->appendChild($ul);
 
-      $this->tr->setAttribute("class", $this->tr->getAttribute("class")." has_errors");
+      if($this->tr)
+	$this->tr->setAttribute("class", $this->tr->getAttribute("class")." has_errors");
     }
   }
 
