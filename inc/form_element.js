@@ -50,10 +50,7 @@ form_element.prototype.connect=function(dom_parent) {
   this.dom_parent=dom_parent;
 
   this.tr=document.getElementById("tr-"+this.id);
-
-  var divs = this.dom_parent.getElementsByClassName("field_errors");
-  if(divs.length)
-    this.div_errors = divs[0];
+  this.div_errors=document.getElementById("errors-"+this.id);
 
   call_hooks('form_element_connected', this);
 }
@@ -113,6 +110,7 @@ form_element.prototype.show_desc=function() {
 form_element.prototype.show_div_errors=function() {
   this.div_errors=document.createElement("div");
   this.div_errors.className="field_errors";
+  this.div_errors.id="errors-"+this.id;
 
   return this.div_errors;
 }

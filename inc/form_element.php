@@ -134,6 +134,7 @@ class form_element {
   function show_div_errors($document) {
     $this->div_errors=$document->createElement("div");
     $this->div_errors->setAttribute("class", "field_errors");
+    $this->div_errors->setAttribute("id", "errors-".$this->id);
 
     // show errors
     $opt=$this->form_root->form->options;
