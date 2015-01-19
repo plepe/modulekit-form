@@ -51,12 +51,9 @@ form_element.prototype.connect=function(dom_parent) {
 
   this.tr=document.getElementById("tr-"+this.id);
 
-  if(this.tr) {
-    var divs=this.tr.getElementsByTagName("div");
-    for(var i=0; i<divs.length; i++)
-      if(divs[i].className=="field_errors")
-	this.div_errors=divs[i];
-  }
+  var divs = this.dom_parent.getElementsByClassName("field_errors");
+  if(divs.length)
+    this.div_errors = divs[0];
 
   call_hooks('form_element_connected', this);
 }
@@ -88,6 +85,38 @@ form_element.prototype.get_orig_data=function() {
   return this.orig_data;
 }
 
+form_element.prototype.show_desc=function() {
+  var ret = document.createElement("div");
+
+  if(!this.def.hide_field_name) {
+    if(this.def.name) {
+      var div=document.createElement("div");
+      div.className="form_name";
+      var text=document.createTextNode(this.name()+":");
+      div.appendChild(text);
+      ret.appendChild(div);
+    }
+
+    if(this.def.desc) {
+      var div=document.createElement("div");
+      div.className="form_desc";
+      div.innerHTML=(typeof this.def.desc=="object"?lang(this.def.desc):this.def.desc);
+      ret.appendChild(div);
+    }
+  }
+
+  call_hooks('form_element_connected', this);
+
+  return ret;
+}
+
+form_element.prototype.show_div_errors=function() {
+  this.div_errors=document.createElement("div");
+  this.div_errors.className="field_errors";
+
+  return this.div_errors;
+}
+
 form_element.prototype.show=function() {
   var tr=document.createElement("tr");
   tr.id="tr-"+this.id;
@@ -100,33 +129,15 @@ form_element.prototype.show=function() {
   td.className="field_desc";
   tr.appendChild(td);
 
-  if(!this.def.hide_field_name) {
-    if(this.def.name) {
-      var div=document.createElement("div");
-      div.className="form_name";
-      var text=document.createTextNode(this.name()+":");
-      div.appendChild(text);
-      td.appendChild(div);
-    }
-
-    if(this.def.desc) {
-      var div=document.createElement("div");
-      div.className="form_desc";
-      div.innerHTML=(typeof this.def.desc=="object"?lang(this.def.desc):this.def.desc);
-      td.appendChild(div);
-    }
-  }
+  td.appendChild(this.show_desc());
 
   var td=document.createElement("td");
   td.className="field_value";
   tr.appendChild(td);
+
   td.appendChild(this.show_element());
 
-  this.div_errors=document.createElement("div");
-  this.div_errors.className="field_errors";
-  td.appendChild(this.div_errors);
-
-  call_hooks('form_element_connected', this);
+  td.appendChild(this.show_div_errors());
 
   return tr;
 }
@@ -269,13 +280,12 @@ form_element.prototype.show_errors=function() {
   var check_errors=[];
   this.errors.call(this, check_errors);
 
-  if(!this.tr)
-    return;
-
   // remove old error indicator
-  if(!this.tr.className)
-    this.tr.className="";
-  this.tr.className=this.tr.className.replace(/ has_errors/, "");
+  if(this.tr) {
+    if(!this.tr.className)
+      this.tr.className="";
+    this.tr.className=this.tr.className.replace(/ has_errors/, "");
+  }
 
   // remove old error texts
   if(this.div_errors)
@@ -294,7 +304,8 @@ form_element.prototype.show_errors=function() {
     
     if(this.div_errors)
       this.div_errors.appendChild(ul);
-    this.tr.className+=" has_errors";
+    if(this.tr)
+      this.tr.className+=" has_errors";
   }
 }
 
