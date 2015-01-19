@@ -70,7 +70,7 @@ form_element_array.prototype.connect=function(dom_parent) {
       if(class_exists(element_class)) {
 	this.elements[k]=eval("new "+element_class+"()");
 	this.elements[k].init(element_id, element_def, element_options, this);
-	this.elements[k].connect(current);
+	this.elements[k].connect(current.firstChild.firstChild);
       }
 
       // modify part actions
