@@ -29,7 +29,8 @@ table.form td.field_value {
 }
 table.form td.field_value input[type=text],
 table.form td.field_value input[type=password],
-table.form td.field_value textarea {
+table.form td.field_value textarea,
+table.form td.field_value select {
   width: 100%;
 }
 table.form label:hover {
