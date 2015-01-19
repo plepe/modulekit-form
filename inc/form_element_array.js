@@ -162,6 +162,12 @@ form_element_array.prototype.get_orig_data=function() {
 }
 
 form_element_array.prototype.show_element_part=function(k, element) {
+  var order;
+  if(!('order' in this.def) || this.def.order)
+    order = 'order'
+  else
+    order = 'no_order';
+
   // wrapper #k
   var div=document.createElement("div");
   div.setAttribute("form_element_num", k);
@@ -170,7 +176,7 @@ form_element_array.prototype.show_element_part=function(k, element) {
   // element #k
   var el_div=document.createElement("span");
   el_div.setAttribute("form_element_num", k);
-  el_div.className="form_element_array_part_element form_element_"+element.type();
+  el_div.className="form_element_array_part_element form_element_"+element.type() + " form_element_array_" + order;
   div.appendChild(el_div);
 
   el_div.appendChild(element.show_element());
@@ -184,19 +190,21 @@ form_element_array.prototype.show_element_part=function(k, element) {
   el_div.className="form_element_array_part_element_actions";
   div.appendChild(el_div);
 
-  var input=document.createElement("input");
-  input.type="submit";
-  input.name=this.options.var_name+"[__order_up]["+k+"]";
-  input.value="↑";
-  input.onclick=this.order_up.bind(this, k);
-  el_div.appendChild(input);
+  if(order == 'order') {
+    var input=document.createElement("input");
+    input.type="submit";
+    input.name=this.options.var_name+"[__order_up]["+k+"]";
+    input.value="↑";
+    input.onclick=this.order_up.bind(this, k);
+    el_div.appendChild(input);
 
-  var input=document.createElement("input");
-  input.type="submit";
-  input.name=this.options.var_name+"[__order_down]["+k+"]";
-  input.value="↓";
-  input.onclick=this.order_down.bind(this, k);
-  el_div.appendChild(input);
+    var input=document.createElement("input");
+    input.type="submit";
+    input.name=this.options.var_name+"[__order_down]["+k+"]";
+    input.value="↓";
+    input.onclick=this.order_down.bind(this, k);
+    el_div.appendChild(input);
+  }
 
   var input=document.createElement("input");
   input.type="submit";

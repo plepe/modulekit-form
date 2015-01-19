@@ -172,6 +172,8 @@ class form_element_array extends form_element {
   }
 
   function show_element_part($k, $element, $document) {
+    $order = ((!array_key_exists("order", $this->def)) || ($this->def['order'] == true)) ? "order": "no_order";
+
     // wrapper #k
     $div=$document->createElement("div");
     $div->setAttribute("form_element_num", $k);
@@ -180,7 +182,7 @@ class form_element_array extends form_element {
     // element #k
     $el_div=$document->createElement("span");
     $el_div->setAttribute("form_element_num", $k);
-    $el_div->setAttribute("class", "form_element_array_part_element form_element_{$element->type()}");
+    $el_div->setAttribute("class", "form_element_array_part_element form_element_{$element->type()} form_element_array_{$order}");
     $div->appendChild($el_div);
 
     $el_div->appendChild($element->show_element($document));
@@ -194,17 +196,19 @@ class form_element_array extends form_element {
     $el_div->setAttribute("class", "form_element_array_part_element_actions");
     $div->appendChild($el_div);
 
-    $input=$document->createElement("input");
-    $input->setAttribute("type", "submit");
-    $input->setAttribute("name", "{$this->options['var_name']}[__order_up][{$k}]");
-    $input->setAttribute("value", "↑");
-    $el_div->appendChild($input);
+    if($order == "order") {
+      $input=$document->createElement("input");
+      $input->setAttribute("type", "submit");
+      $input->setAttribute("name", "{$this->options['var_name']}[__order_up][{$k}]");
+      $input->setAttribute("value", "↑");
+      $el_div->appendChild($input);
 
-    $input=$document->createElement("input");
-    $input->setAttribute("type", "submit");
-    $input->setAttribute("name", "{$this->options['var_name']}[__order_down][{$k}]");
-    $input->setAttribute("value", "↓");
-    $el_div->appendChild($input);
+      $input=$document->createElement("input");
+      $input->setAttribute("type", "submit");
+      $input->setAttribute("name", "{$this->options['var_name']}[__order_down][{$k}]");
+      $input->setAttribute("value", "↓");
+      $el_div->appendChild($input);
+    }
 
     $input=$document->createElement("input");
     $input->setAttribute("type", "submit");

@@ -84,6 +84,7 @@ Definition:
 * def: Definition of the sub element.
 * default: default count of values
 * max: maximum count of values (currently just hides 'add element' button, no error message when maximum is overrun)
+* order: whether the elements of the array shall be orderable. true (default) / false.
 
 Value:
 * Array of sub elements.

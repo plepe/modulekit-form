@@ -21,6 +21,7 @@ $form_def=array(
       'type'	=>"text",
     ),
     'req'	=>true,
+    'order'	=>false,
   ),
   'birthday'	=>array(
     'name'	=>"Birthday",
@@ -56,7 +57,7 @@ $form_def=array(
   'residence'	=>array(
     'name'	=>"Where do you live",
     'type'	=>"select",
-    'values'	=>array("Austria", "Australia", "Germany", "Great Britian", "USA"),
+    'values'	=>array("Austria", "Australia", "Germany", "Great Britian", "USA", "asdfjaksdfj klasdjfkas jdfkassjdk fjaksjdfka jsdfk jaskdfjlkas jdfkasdfj kasfjdk jaskdfjkas jdfkl ajsfkdjadjf kljadfljadf"),
   ),
   'supervisor'	=>array(
     'name'	=>"Supervisor(s)",

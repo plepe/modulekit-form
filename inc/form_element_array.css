@@ -4,7 +4,12 @@
   display: inline-block;
   vertical-align: top;
   width: 80%; /* fallback for browsers without support for calc() */
+}
+.form_element_array_part_element.form_element_array_order {
   width: calc(100% - 105px);
+}
+.form_element_array_part_element.form_element_array_no_order {
+  width: calc(100% - 35px);
 }
 .form_element_array_part_element_actions {
   display: inline-block;
