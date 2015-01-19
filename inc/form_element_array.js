@@ -175,6 +175,9 @@ form_element_array.prototype.show_element_part=function(k, element) {
 
   el_div.appendChild(element.show_element());
 
+  // errors #k
+  el_div.appendChild(element.show_div_errors());
+
   // Actions #k
   var el_div=document.createElement("span");
   el_div.setAttribute("form_element_num", k);
