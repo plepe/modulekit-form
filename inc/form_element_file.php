@@ -39,6 +39,7 @@ class form_element_file extends form_element {
 	$a->setAttribute("href", strtr($this->def['web_path'], array(
 	  "[file_name]"=>($this->data['tmp_name']?$this->data['tmp_name']:$this->data['name'])
 	  )));
+	$a->setAttribute("target", "_blank");
 
 	$span_value->appendChild($a);
 	$span_value=$a;
