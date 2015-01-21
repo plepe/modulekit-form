@@ -342,3 +342,9 @@ Example:
 * JS: f.get_data()
 
 Returns array('name'=>"Alice", 'sex'=>"f") resp. { 'name': "Alice", 'sex': "f" }
+
+=== is_empty() ===
+Ask, if the form has not been filled with data yet.
+
+=== clear() ===
+Let the form forget its data (is_empty() will return true).

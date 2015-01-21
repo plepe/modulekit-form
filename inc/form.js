@@ -125,6 +125,14 @@ form.prototype.errors=function() {
   return list;
 }
 
+form.prototype.is_empty=function() {
+  return !this.has_data;
+}
+
+form.prototype.clear=function() {
+  this.has_data = false;
+}
+
 form.prototype.is_complete=function() {
   if(!this.has_data)
     return false;

@@ -94,6 +94,10 @@ class form {
     return !$this->has_data;
   }
 
+  function clear() {
+    $this->has_data = false;
+  }
+
   function is_complete() {
     if(!$this->has_data)
       return false;
