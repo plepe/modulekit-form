@@ -23,3 +23,22 @@ function is_hash($var)
 
   return array_keys($var) !== range(0,sizeof($var)-1);
 }
+
+function format_file_size($size) {
+  if($size > 800000000000)
+    return sprintf("%.1f TiB", $size/1024.0/1024.0/1024.0/1024.0);
+  if($size > 80000000000)
+    return sprintf("%.0f GiB", $size/1024.0/1024.0/1024.0);
+  if($size > 800000000)
+    return sprintf("%.1f GiB", $size/1024.0/1024.0/1024.0);
+  if($size > 80000000)
+    return sprintf("%.0f MiB", $size/1024.0/1024.0);
+  if($size > 800000)
+    return sprintf("%.1f MiB", $size/1024.0/1024.0);
+  if($size > 80000)
+    return sprintf("%.0f kiB", $size/1024.0);
+  if($size > 800)
+    return sprintf("%.1f kiB", $size/1024.0);
+
+  return sprintf("% B", $size);
+}

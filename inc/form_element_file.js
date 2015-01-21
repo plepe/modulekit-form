@@ -99,6 +99,9 @@ form_element_file.prototype.show_element=function() {
     var txt=document.createTextNode(this.data.orig_name);
     span_value.appendChild(txt);
 
+    span_value.appendChild(document.createElement("br"));
+    span_value.appendChild(document.createTextNode(format_file_size(this.data.size)));
+
     var input=document.createElement("input");
     input.type="button";
     input.value=lang("change");

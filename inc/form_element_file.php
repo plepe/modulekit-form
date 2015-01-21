@@ -58,6 +58,9 @@ class form_element_file extends form_element {
 
       $txt=$document->createTextNode($this->data['orig_name']);
       $span_value->appendChild($txt);
+
+      $span_value->appendChild($document->createElement("br"));
+      $span_value->appendChild($document->createTextNode(format_file_size($this->data['size'])));
     }
 
     // create input field for new file
