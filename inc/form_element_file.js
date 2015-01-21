@@ -73,6 +73,7 @@ form_element_file.prototype.show_element=function() {
 
     span_value=document.createElement("span");
     span_value.setAttribute("class", "value");
+    span.appendChild(span_value);
 
     // enclose in a link if web_path is set
     if(this.def.web_path) {
@@ -86,7 +87,6 @@ form_element_file.prototype.show_element=function() {
 
     var txt=document.createTextNode(this.data.orig_name);
     span_value.appendChild(txt);
-    span.appendChild(span_value);
 
     var input=document.createElement("input");
     input.type="button";
