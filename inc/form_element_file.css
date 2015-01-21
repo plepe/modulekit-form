@@ -1,0 +1,8 @@
+.form_element_file_preview {
+  max-width: 64px;
+  max-height: 32px;
+  float: left;
+}
+.form_element_file .value {
+  display: inline-block;
+}

@@ -65,6 +65,7 @@ $include_css=array(
   "inc/form_element_textarea.css",
   "inc/form_element_select.css",
   "inc/form_element_autocomplete.css",
+  "inc/form_element_file.css",
 
   "inc/theme.css",
 );

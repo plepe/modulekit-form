@@ -35,14 +35,25 @@ class form_element_file extends form_element {
 
       // enclose in a link if web_path is set
       if(isset($this->def['web_path'])) {
-	$a=$document->createElement("a");
-	$a->setAttribute("href", strtr($this->def['web_path'], array(
+	$web_url = strtr($this->def['web_path'], array(
 	  "[file_name]"=>($this->data['tmp_name']?$this->data['tmp_name']:$this->data['name'])
-	  )));
+	));
+
+	$a=$document->createElement("a");
+	$a->setAttribute("href", $web_url);
 	$a->setAttribute("target", "_blank");
 
 	$span_value->appendChild($a);
 	$span_value=$a;
+
+	if(in_array($this->data['type'], array('image/gif', 'image/jpeg', 'image/pjpeg', 'image/png', 'image/svg+xml'))) {
+	  $img=$document->createElement("img");
+	  $img->setAttribute("src", $web_url);
+	  $img->setAttribute("class", "form_element_file_preview");
+	  $span_value->appendChild($img);
+
+	  $span_value->appendChild($document->createTextNode(" "));
+	}
       }
 
       $txt=$document->createTextNode($this->data['orig_name']);

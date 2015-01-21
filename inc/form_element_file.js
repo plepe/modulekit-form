@@ -77,12 +77,23 @@ form_element_file.prototype.show_element=function() {
 
     // enclose in a link if web_path is set
     if(this.def.web_path) {
+      var web_url=this.def.web_path.replace("[file_name]",
+        this.data.tmp_name?this.data.tmp_name:this.data.name);
+
       var a=document.createElement("a");
-      a.setAttribute("href", this.def.web_path.replace("[file_name]",
-        this.data.tmp_name?this.data.tmp_name:this.data.name));
+      a.setAttribute("href", web_url);
 
       span_value.appendChild(a);
       span_value=a;
+
+      if(in_array(this.data.type, ['image/gif', 'image/jpeg', 'image/pjpeg', 'image/png', 'image/svg+xml'])) {
+	var img=document.createElement("img");
+	img.setAttribute("src", web_url);
+	img.setAttribute("class", "form_element_file_preview");
+	span_value.appendChild(img);
+
+	span_value.appendChild(document.createTextNode(" "));
+      }
     }
 
     var txt=document.createTextNode(this.data.orig_name);
