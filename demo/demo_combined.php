@@ -1,4 +1,4 @@
-<?
+<?php
 Header("content-type: text/html; charset=utf-8");
 // create file .nocache to disable caching
 $modulekit_nocache=file_exists(".nocache");
@@ -18,7 +18,7 @@ call_hooks("init");
 <script type='text/javascript' src='demo_combined.js'></script>
 </head>
 <body>
-<?
+<?php
 
 if($_REQUEST['q']) {
   $form_def=json_decode($_REQUEST['q'], true);

@@ -1,4 +1,4 @@
-<?
+<?php
 class form {
   public $def;
   public $id;

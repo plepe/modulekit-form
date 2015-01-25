@@ -1,4 +1,4 @@
-<?
+<?php
 if(!function_exists("html_export_var")) {
   function html_export_var($data) {
     print "<script type='text/javascript'>\n";

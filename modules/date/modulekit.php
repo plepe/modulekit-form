@@ -1,4 +1,4 @@
-<?
+<?php
 $include=array(
   'js'=>array(
     'pad.js',

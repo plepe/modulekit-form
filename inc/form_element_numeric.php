@@ -1,4 +1,4 @@
-<?
+<?php
 $form_element_type_alias['integer']='numeric';
 $form_element_type_alias['float']='numeric';
 

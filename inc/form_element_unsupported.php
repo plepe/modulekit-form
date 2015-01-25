@@ -1,4 +1,4 @@
-<?
+<?php
 class form_element_unsupported extends form_element_json {
   function type() {
     return "unsupported";

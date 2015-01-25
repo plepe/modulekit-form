@@ -1,4 +1,4 @@
-<?
+<?php
 class form_element_radio extends form_element {
   function show_element($document) {
     $div=parent::show_element($document);

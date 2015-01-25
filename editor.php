@@ -1,4 +1,4 @@
-<?
+<?php
 Header("content-type: text/html; charset=utf-8");
 include "modulekit/loader.php"; /* loads all php-includes */
 
@@ -9,7 +9,7 @@ include "modulekit/loader.php"; /* loads all php-includes */
 <?php print modulekit_include_css(); /* prints all css-includes */ ?>
 </head>
 <body>
-<?
+<?php
 
 $form_types=array();
 foreach(get_declared_classes() as $cls) {

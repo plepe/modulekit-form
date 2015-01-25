@@ -1,4 +1,4 @@
-<?
+<?php
 $lang_str['date:month:1']="January";
 $lang_str['date:month:2']="February";
 $lang_str['date:month:3']="March";

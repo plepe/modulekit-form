@@ -1,4 +1,4 @@
-<?
+<?php
 $form_element_type_alias=array();
 
 class form_element {
