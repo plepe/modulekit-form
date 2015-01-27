@@ -160,6 +160,11 @@ class form_element_file extends form_element {
     if($data['error'])
       return parent::set_request_data($data);
 
+    // if destination directory does not exist, create
+    if(!file_exists($this->def['path'])) {
+      mkdir($this->def['path'], 0777, true);
+    }
+
     // move to a new temporary location (in case of reload, e.g. due to
     // missing other values, we might reload, then the file would be
     // removed).
@@ -183,6 +188,11 @@ class form_element_file extends form_element {
   function save_data() {
     if(!isset($this->data['new_name']))
       return;
+
+    // if destination directory does not exist, create
+    if(!file_exists($this->def['path'])) {
+      mkdir($this->def['path'], 0777, true);
+    }
 
     // rename to final file name
     if(rename("{$this->def['path']}/{$this->data['tmp_name']}",
