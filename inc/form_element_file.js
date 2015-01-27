@@ -140,6 +140,7 @@ form_element_file.prototype.notify_change_file=function() {
   this.parent("form_element_file").notify_change.call(this);
 
   var span=document.getElementById(this.id+"-newfile");
+  var div = span.parentNode;
   span.style.display="none";
 
   span=document.getElementById(this.id+"-oldfile");
@@ -157,7 +158,7 @@ form_element_file.prototype.notify_change_file=function() {
     input.onclick=this.input_change.bind(this);
     span.appendChild(input);
 
-    this.dom.appendChild(span);
+    div.appendChild(span);
   }
 
   var span_value = span.firstChild;
