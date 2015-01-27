@@ -96,7 +96,7 @@ form_element_file.prototype.show_element=function() {
       }
     }
 
-    var txt=document.createTextNode(this.data.orig_name);
+    var txt=document.createTextNode(this.data.orig_name || this.data.name);
     span_value.appendChild(txt);
 
     span_value.appendChild(document.createElement("br"));

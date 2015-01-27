@@ -56,7 +56,7 @@ class form_element_file extends form_element {
 	}
       }
 
-      $txt=$document->createTextNode($this->data['orig_name']);
+      $txt=$document->createTextNode($this->data['orig_name'] ?: $this->data['name']);
       $span_value->appendChild($txt);
 
       $span_value->appendChild($document->createElement("br"));
