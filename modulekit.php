@@ -1,4 +1,4 @@
-<?
+<?php
 $name="Form";
 
 $id="modulekit-form";

@@ -1,4 +1,4 @@
-<?
+<?php
 $form_element_type_alias['date']='date';
 $form_element_type_alias['datetime']='date';
 $form_element_type_alias['datetime-local']='date';

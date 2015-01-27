@@ -1,4 +1,4 @@
-<?
+<?php
 // Compatibility layer to the branch-1.0 version of the form library
 global $form_compat;
 $form_compat=array();

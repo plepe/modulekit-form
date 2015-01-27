@@ -1,4 +1,4 @@
-<?
+<?php
 $current_variant="combined";
 if(preg_match("/demo_([a-zA-Z0-9_]*)\.php/", $_SERVER['SCRIPT_NAME'], $m))
   $current_variant=$m[1];

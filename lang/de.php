@@ -1,4 +1,4 @@
-<?
+<?php
 $lang_str['ok']="Ok";
 $lang_str['cancel']="Abbrechen";
 $lang_str['new']="Neu";

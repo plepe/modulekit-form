@@ -1,4 +1,4 @@
-<?
+<?php
 class form_element_textarea extends form_element_text {
   function type() {
     return "textarea";

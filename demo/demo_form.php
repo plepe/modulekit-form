@@ -1,4 +1,4 @@
-<?
+<?php
 $form_def=array(
   'name'	=>array(
     'name'	=>"Name",

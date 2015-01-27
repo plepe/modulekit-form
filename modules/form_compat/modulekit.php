@@ -1,4 +1,4 @@
-<?
+<?php
 $id="form_compat";
 
 $include=array(

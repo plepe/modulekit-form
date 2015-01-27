@@ -1,4 +1,4 @@
-<?
+<?php
 class form_element_color extends form_element_text {
   function type() {
     return "color";

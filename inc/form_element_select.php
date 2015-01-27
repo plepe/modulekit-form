@@ -1,4 +1,4 @@
-<?
+<?php
 class form_element_select extends form_element {
   function show_element_option($select, $k, $v, $document) {
     $option=$document->createElement("option");

@@ -1,4 +1,4 @@
-<?
+<?php
 $id="modulekit-form-debug";
 
 $include=array(

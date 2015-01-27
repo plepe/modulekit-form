@@ -1,4 +1,4 @@
-<?
+<?php
 class form_element_directory extends form_element {
   function type() {
     return "directory";

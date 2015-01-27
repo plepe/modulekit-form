@@ -1,4 +1,4 @@
-<?
+<?php
 class form_element_json extends form_element_textarea {
   function type() {
     return "json";

@@ -1,4 +1,4 @@
-<?
+<?php
 class form_element_array extends form_element {
   public $changed_count;
 

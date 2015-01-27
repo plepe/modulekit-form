@@ -1,4 +1,4 @@
-<?
+<?php
 class form_element_checkbox extends form_element {
   function get_data() {
     $data = parent::get_data();
