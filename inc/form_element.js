@@ -150,8 +150,18 @@ form_element.prototype.show_element=function() {
 form_element.prototype.errors=function(list) {
   var data=this.get_data();
 
-  if((this.def.req)&&((!this.data)||(data===null)))
-    list.push(this.path_name()+": "+lang("form:require_value"));
+  if('req' in this.def) {
+    var req = this.def.req;
+    var req_test = [];
+
+    if(typeof req == 'object') {
+      this.check(req_test, req);
+      req = req_test.length == 0;
+    }
+
+    if(req && ((!this.data)||(data===null)))
+      list.push(this.path_name()+": "+lang("form:require_value"));
+  }
 
   if(this.def.check&&(data!==null)) {
     var check_errors=[];
