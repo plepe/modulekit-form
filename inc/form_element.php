@@ -91,7 +91,7 @@ class form_element {
     $check_fun="check_".array_shift($param);
 
     if(method_exists($this, $check_fun)) {
-      call_user_func(array($this, $check_fun), $errors, $param);
+      call_user_func_array(array($this, $check_fun), array(&$errors, $param));
     }
   }
 
