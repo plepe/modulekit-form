@@ -20,8 +20,14 @@ class form {
     $this->build_form();
 
     $this->has_data=false;
-    if(isset($_REQUEST[$this->options['var_name']])||sizeof($_FILES))
-      $this->set_request_data($_REQUEST[$this->options['var_name']]);
+    if($this->options['var_name'] === '') {
+      if(sizeof($_REQUEST)||sizeof($_FILES))
+	$this->set_request_data($_REQUEST);
+    }
+    else {
+      if(isset($_REQUEST[$this->options['var_name']])||sizeof($_FILES))
+	$this->set_request_data($_REQUEST[$this->options['var_name']]);
+    }
 
     $this->has_orig_data=false;
     if(isset($_REQUEST['form_orig_'.$this->options['var_name']])) {
