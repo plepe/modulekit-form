@@ -3,7 +3,7 @@ function demo_submit() {
   while(div.firstChild)
     div.removeChild(div.firstChild);
 
-  var text=document.createTextNode(JSON.stringify(form_data.get_data(), null, "    "));
+  var text=document.createTextNode(JSON.stringify(form_demo.get_data(), null, "    "));
   div.appendChild(text);
 
   var errors=form_data.errors();

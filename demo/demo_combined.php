@@ -57,6 +57,9 @@ print $form->show();
 print "<input type='submit' value='Ok - submit to PHP'>\n";
 print "<input type='button' value='Ok - submit to JS' onClick='demo_submit()'>\n";
 print "</form>\n";
+print "<script type='text/javascript'>\n";
+print "var form_demo = form_{$form->id};\n";
+print "</script>\n";
 
 print "<div class='demo'>\n";
 
