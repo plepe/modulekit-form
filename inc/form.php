@@ -150,11 +150,13 @@ class form {
 
     $orig_data=$this->get_orig_data();
 
-    $input_orig_data=$document->createElement("input");
-    $input_orig_data->setAttribute("type", "hidden");
-    $input_orig_data->setAttribute("name", "form_orig_{$this->options['var_name']}");
-    $input_orig_data->setAttribute("value", json_encode($orig_data));
-    $document->appendChild($input_orig_data);
+    if($this->has_orig_data) {
+      $input_orig_data=$document->createElement("input");
+      $input_orig_data->setAttribute("type", "hidden");
+      $input_orig_data->setAttribute("name", "form_orig_{$this->options['var_name']}");
+      $input_orig_data->setAttribute("value", json_encode($orig_data));
+      $document->appendChild($input_orig_data);
+    }
 
     $ret="";
 
