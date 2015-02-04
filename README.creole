@@ -164,7 +164,8 @@ Definition:
 * values_mode: 'keys' (default when a hash array is used) or 'values' (default when a simple array is used)
 
 Value:
-* In 'keys' values_mode an array of the keys of the chosen values is returned (e.g. array("php", "cpp"); in 'values' mode an array of the the keys of the chosen values is returned (e.g. array("PHP", "C++"))
+* In 'keys' values_mode an array of the keys of the chosen values is returned (e.g. array("php", "cpp"); in 'values' mode an array of the the keys of the chosen values is returned (e.g. array("PHP", "C++")).
+* If no element is checked, an empty array will be returned.
 
 === Form Element "Radio" ===
 A list of radio boxes where a maximum of one of boxes may be checked.

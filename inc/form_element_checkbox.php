@@ -3,8 +3,8 @@ class form_element_checkbox extends form_element {
   function get_data() {
     $data = parent::get_data();
 
-    if($data === "")
-      return null;
+    if(($data === "") or ($data === null))
+      return array();
 
     return $data;
   }
@@ -39,7 +39,7 @@ class form_element_checkbox extends form_element {
       $input->setAttribute("name", "{$this->options['var_name']}[]");
       $input->setAttribute("value", $k);
 
-      if(in_array($k, $data))
+      if(is_array($data)&&(in_array($k, $data)))
 	$input->setAttribute("checked", "checked");
       $span->appendChild($input);
       
