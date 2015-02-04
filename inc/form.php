@@ -46,9 +46,6 @@ class form {
   }
 
   function get_data() {
-    if(!$this->has_data)
-      return null;
-
     return $this->element->get_data();
   }
 
