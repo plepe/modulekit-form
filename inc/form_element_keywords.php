@@ -22,7 +22,8 @@ class form_element_keywords extends form_element {
     $input=$this->create_element($document);
     $input->setAttribute("class", $class);
     $input->setAttribute("name", $this->options['var_name']);
-    $input->setAttribute("value", implode(", ", $this->data));
+    if($this->data)
+      $input->setAttribute("value", implode(", ", $this->data));
 
     if(isset($this->def['values'])) {
       $datalist=$document->createElement("datalist");
@@ -45,11 +46,13 @@ class form_element_keywords extends form_element {
   function set_request_data($data) {
     parent::set_request_data($data);
 
-    if(is_string($this->data)) {
+    if(is_string($this->data) && ($this->data !== "")) {
       $this->data=explode(",", $this->data);
       foreach($this->data as $i=>$d)
         $this->data[$i]=trim($d);
     }
+    else
+      $this->data = array();
 
     $this->data=array_unique($this->data);
   }
