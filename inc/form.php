@@ -102,9 +102,6 @@ class form {
   }
 
   function is_complete() {
-    if(!$this->has_data)
-      return false;
-
     if($this->errors())
       return false;
 
