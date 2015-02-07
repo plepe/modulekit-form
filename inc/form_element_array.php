@@ -52,7 +52,7 @@ class form_element_array extends form_element {
 
   function set_request_data($data) {
     $this->data=$data;
-    if($this->data['__new']) {
+    if(isset($this->data['__new'])) {
       unset($this->data['__new']);
       $this->data[]=null;
       $this->changed_count=true;
@@ -155,7 +155,10 @@ class form_element_array extends form_element {
   function build_form() {
     $this->elements=array();
 
-    $data=array_fill(0, $this->def['default'], null);
+    $data = array();
+    if($this->def['default'] > 0)
+      $data=array_fill(0, $this->def['default'], null);
+
     if(isset($this->data)&&is_array($this->data))
       $data=$this->data;
 
