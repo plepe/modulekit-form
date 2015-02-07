@@ -232,7 +232,14 @@ form_element_array.prototype.show_element=function() {
   this.action_add=document.createElement("input");
   this.action_add.type="submit";
   this.action_add.name=this.options.var_name+"[__new]";
-  this.action_add.value=lang('form:add_element');
+  if("button:add_element" in this.def) {
+    if(typeof(this.def['button:add_element']) == "object")
+      this.action_add.value = lang(this.def['button:add_element']);
+    else
+      this.action_add.value = this.def['button:add_element'];
+  }
+  else
+    this.action_add.value=lang('form:add_element');
   this.action_add.onclick=this.add_element.bind(this);
   el_div.appendChild(this.action_add);
 

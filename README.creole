@@ -85,6 +85,7 @@ Definition:
 * default: default count of values
 * max: maximum count of values (currently just hides 'add element' button, no error message when maximum is overrun)
 * order: whether the elements of the array shall be orderable. true (default) / false.
+* button:add_element: override text of "Add Element" button (may be translated)
 
 Value:
 * Array of sub elements.
