@@ -53,7 +53,7 @@ class form {
     $this->element->set_data($data);
 
     if((!$this->has_data)&&(!$this->has_orig_data))
-      $this->element->set_orig_data($data);
+      $this->set_orig_data($data);
 
     $this->has_data=true;
   }
