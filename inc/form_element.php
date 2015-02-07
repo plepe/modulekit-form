@@ -30,7 +30,8 @@ class form_element {
   }
 
   function name() {
-    $name=$this->def['name'];
+    if(array_key_exists('name', $this->def))
+      $name=$this->def['name'];
 
     if(isset($this->def['_name']))
       $name=$this->def['_name'];
@@ -196,7 +197,7 @@ class form_element {
 
       $this->div_errors->appendChild($ul);
 
-      if($this->tr)
+      if(isset($this->tr))
 	$this->tr->setAttribute("class", $this->tr->getAttribute("class")." has_errors");
     }
   }
