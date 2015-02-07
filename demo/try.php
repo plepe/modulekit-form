@@ -1,4 +1,4 @@
-<?
+<?php
 if($_REQUEST['q']) {
   $params="?q=".urlencode($_REQUEST['q']);
 }
