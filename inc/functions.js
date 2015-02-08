@@ -413,3 +413,21 @@ function format_file_size(size) {
 
   return sprintf("% B", size);
 }
+
+// from: http://stackoverflow.com/a/5265175
+function elementCurrentStyle(element, styleName){
+    if (element.currentStyle){
+        var i = 0, temp = "", changeCase = false;
+        for (i = 0; i < styleName.length; i++)
+            if (styleName[i] != '-'){
+                temp += (changeCase ? styleName[i].toUpperCase() : styleName[i]);
+                changeCase = false;
+            } else {
+                changeCase = true;
+            }
+        styleName = temp;
+        return element.currentStyle[styleName];
+    } else {
+        return getComputedStyle(element, null).getPropertyValue(styleName);
+    }
+}

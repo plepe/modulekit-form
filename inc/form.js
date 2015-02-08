@@ -166,6 +166,24 @@ form.prototype.notify_change=function() {
     this.onchange();
 }
 
+var em_height_cache = {};
+function get_em_height(dom_el) {
+  var font_size = elementCurrentStyle(dom_el, "font-size");
+
+  if(!(font_size in em_height_cache)) {
+    // calculate height of M
+    var em=document.createElement("div");
+    em.setAttribute("style", "display:inline-block; padding:0; line-height:1; position:absolute; visibility:hidden; font-size:1em;");
+    em.appendChild(document.createTextNode("M"));
+    dom_el.appendChild(em);
+    em_height_cache[font_size] = em.offsetHeight;
+    dom_el.removeChild(em);
+
+  }
+
+  return em_height_cache[font_size];
+}
+
 function form_resize() {
   var obs=document.getElementsByTagName("table");
 
@@ -173,14 +191,7 @@ function form_resize() {
     var ob=obs[i];
     if(in_array("form", ob.className.split(" "))) {
       var width=ob.parentNode.offsetWidth;
-
-      // calculate height of M
-      var em=document.createElement("div");
-      em.setAttribute("style", "display:inline-block; padding:0; line-height:1; position:absolute; visibility:hidden; font-size:1em;");
-      em.appendChild(document.createTextNode("M"));
-      ob.appendChild(em);
-      var em_height=em.offsetHeight;
-      ob.removeChild(em);
+      var em_height = get_em_height(ob);
 
       // set class according to width
       if(width/em_height<=25)
