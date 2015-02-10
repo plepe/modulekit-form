@@ -195,6 +195,7 @@ Definition:
 * type: 'select'
 * values: hash array of values, e.g. array("m"=>"male", "f"=>"female") or simple array of values array("male", "female"); may be translated like: array('m'=>array("en"=>"male", "de"=>"männlich"), 'f'=>array("en"=>"female", "de"=>"weiblich")); optionally descriptions for values are possible too (with prefix 'desc:'), e.g. 'f'=>array("en"=>"female", "desc:en"=>"the female gender", "de"=>"weiblich", "desc:de"=>"Das weibliche Geschlecht")
 * values_mode: 'keys' (default when a hash array is used) or 'values' (default when a simple array is used)
+* values_func: A hash pointing to functions ('js', 'ajax', 'php') which will update the values parameter. E.g. { 'js': "update_function" }. The function will get passed a reference to the form element (1st parameter) and the form itself (2nd parameter). Currently only mode 'js' supported.
 * empty_value: Value to be returned if key is empty (default: null)
 * place_holder: Text which will be used, when no value is selected (default: '--- please select ---')
 

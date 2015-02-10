@@ -357,6 +357,18 @@ form_element.prototype.is_modified=function() {
 form_element.prototype.get_values=function() {
   var ret={};
 
+  if('values_func' in this.def) {
+    var fun = null;
+
+    if('js' in this.def.values_func)
+      fun = this.def.values_func['js'];
+
+    if(fun in window)
+      this.def.values = window[fun](this, this.form_root.form);
+    else
+      this.def.values = null;
+  }
+
   if(!this.def.values||(typeof this.def.values!="object"))
     return ret;
 
