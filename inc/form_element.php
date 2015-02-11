@@ -324,6 +324,18 @@ class form_element {
   function get_values() {
     $ret=array();
 
+    if(array_key_exists('values_func', $this->def)) {
+      $fun = null;
+
+      if(array_key_exists('php', $this->def['values_func']))
+	$fun = $this->def['values_func']['php'];
+
+      if($fun && (is_callable($fun) || (function_exists($fun))))
+	$this->def['values'] = call_user_func($fun, $this->get_data(), $this, $this->form_root->form);
+      else
+	$this->def['values'] = null;
+    }
+
     if(!isset($this->def['values'])||!is_array($this->def['values']))
       return $ret;
 
@@ -332,6 +344,8 @@ class form_element {
       $this->def['values_mode']=is_hash($this->def['values'])?"keys":"values";
 
     foreach($this->def['values'] as $k=>$v) {
+      if($v === null)
+	continue;
       if(is_array($v))
 	$v=lang($v);
 

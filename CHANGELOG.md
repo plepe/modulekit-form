@@ -1,3 +1,3 @@
-2015-02-10
+2015-02-11
 ----------
-Form Element Select: new options 'values_func' (only for 'js')
+Form Element Select: new option 'values_func' (get list of values from function)
