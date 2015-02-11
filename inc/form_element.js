@@ -364,9 +364,9 @@ form_element.prototype.get_values=function() {
       fun = this.def.values_func['js'];
 
     if(typeof fun == "function")
-      this.def.values = fun(this, this.form_root.form);
+      this.def.values = fun(this.get_data(), this, this.form_root.form);
     else if(fun in window)
-      this.def.values = window[fun](this, this.form_root.form);
+      this.def.values = window[fun](this.get_data(), this, this.form_root.form);
     else
       this.def.values = null;
   }
