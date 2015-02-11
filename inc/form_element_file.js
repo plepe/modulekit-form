@@ -1,3 +1,24 @@
+// only used with non-HTML5 browsers
+var form_element_file_types = {
+  'png': 'image/png',
+  'jpg': 'image/jpeg',
+  'gif': 'image/gif',
+  'bmp': 'image/bmp',
+  'tif': 'image/tiff',
+  'pdf': 'application/pdf',
+  'zip': 'application/zip',
+  'xml': 'application/xml',
+  'txt': 'text/plain',
+  'csv': 'text/plain',
+  'mp4': 'video/mp4',
+  'svg': 'image/svg+xml',
+  'ps' : 'application/postscript',
+  'php': 'text/x-php',
+  'flv': 'video/x-msvideo',
+  'ogg': 'application/ogg',
+  'ogv': 'application/ogg'
+};
+
 form_element_file.inherits_from(form_element);
 function form_element_file() {
 }
@@ -176,4 +197,42 @@ form_element_file.prototype.input_change=function() {
 
   span=document.getElementById(this.id+"-newfile");
   span.style.display="block";
+}
+
+form_element_file.prototype.get_data=function() {
+  if(!this.dom_element)
+    return this.data;
+
+  if(!this.dom_element.value)
+    return null;
+
+  var data = {};
+
+  if(this.dom_element.files) { // HTML5
+    var file = this.dom_element.files[0];
+    data.name = file['name'];
+    data.orig_name = file['name'];
+    data.type = file['type'];
+    data.size = file['size'];
+    data.error = 0;
+    data.ext = null;
+    if(file['name'].lastIndexOf(".") != -1)
+      data.ext = file['name'].substr(file['name'].lastIndexOf(".") + 1);
+  }
+  else {
+    data.name = this.dom_element.value;
+    data.orig_name = this.dom_element.value;
+    data.error = 0;
+    data.size = null;
+    data.ext = null;
+    if(data.orig_name.lastIndexOf(".") != -1)
+      data.ext = data.orig_name.substr(data.orig_name.lastIndexOf(".") + 1).toLowerCase();
+
+    if(data.ext in form_element_file_types)
+      data.type = form_element_file_types[data.ext];
+    else
+      data.type = "application/octet-stream";
+  }
+
+  return data;
 }
