@@ -363,7 +363,9 @@ form_element.prototype.get_values=function() {
     if('js' in this.def.values_func)
       fun = this.def.values_func['js'];
 
-    if(fun in window)
+    if(typeof fun == "function")
+      this.def.values = fun(this, this.form_root.form);
+    else if(fun in window)
       this.def.values = window[fun](this, this.form_root.form);
     else
       this.def.values = null;
