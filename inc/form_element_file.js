@@ -187,6 +187,20 @@ form_element_file.prototype.notify_change_file=function() {
     span_value.removeChild(span_value.firstChild);
 
   var data = this.get_data();
+
+  if(FileReader && data.file && data.type.match(/^image\//)) {
+    var img=document.createElement("img");
+    img.file = data.file;
+    img.className = "form_element_file_preview";
+    span_value.appendChild(img);
+
+    var reader = new FileReader();
+    reader.onload = (function(aImg) { return function(e) { aImg.src = e.target.result; }; })(img);
+    reader.readAsDataURL(data.file);
+
+    span_value.appendChild(document.createTextNode(" "));
+  }
+
   span_value.appendChild(document.createTextNode(data.orig_name || data.name));
 
   if(data.size) {
@@ -225,6 +239,8 @@ form_element_file.prototype.get_data=function() {
     data.ext = null;
     if(file['name'].lastIndexOf(".") != -1)
       data.ext = file['name'].substr(file['name'].lastIndexOf(".") + 1);
+
+    data.file = file;
   }
   else {
     data.orig_name = this.dom_element.value;
