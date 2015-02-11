@@ -35,28 +35,6 @@ form_element_text.prototype.show_element=function() {
     for(var i in this.def.html_attributes)
       input.setAttribute(i, this.def.html_attributes[i]);
 
-  if(this.def.values&&(typeof this.def.values=="object")) {
-    input.setAttribute("list", this.id+"-datalist");
-
-    var datalist_container=document.createElement("span");
-    datalist_container.setAttribute("class", "form_datalist_container");
-
-    var datalist=document.createElement("datalist");
-    datalist.setAttribute("id", this.id+"-datalist");
-
-    for(var k in this.def.values) {
-      var option=document.createElement("option");
-      option.setAttribute("value", this.def.values[k]);
-      datalist.appendChild(option);
-
-      var text=document.createTextNode(this.def.values[k]);
-      option.appendChild(text);
-    }
-
-    div.appendChild(datalist_container);
-    datalist_container.appendChild(datalist);
-  }
-
   input.className=cls;
   input.name=this.options.var_name;
   if(this.data)
@@ -65,7 +43,42 @@ form_element_text.prototype.show_element=function() {
   this.dom_element=input;
   this.dom_element.onblur=this.notify_change.bind(this);
 
+  this.update_options();
+
   return div;
+}
+
+form_element_text.prototype.update_options = function() {
+  var values = this.get_values();
+
+  if(values)
+    this.dom_element.setAttribute("list", this.id+"-datalist");
+  else {
+    this.dom_element.removeAttribute("list");
+    return;
+  }
+
+  if(!this.datalist_container) {
+    this.datalist_container=document.createElement("span");
+    this.datalist_container.setAttribute("class", "form_datalist_container");
+    this.dom.appendChild(this.datalist_container);
+
+    this.datalist=document.createElement("datalist");
+    this.datalist.setAttribute("id", this.id+"-datalist");
+    this.datalist_container.appendChild(this.datalist);
+  }
+
+  while(this.datalist.firstChild)
+    this.datalist.removeChild(this.datalist.firstChild);
+
+  for(var k in values) {
+    var option=document.createElement("option");
+    option.setAttribute("value", values[k]);
+    this.datalist.appendChild(option);
+
+    var text=document.createTextNode(values[k]);
+    option.appendChild(text);
+  }
 }
 
 form_element_text.prototype.get_data=function(data) {
@@ -95,6 +108,10 @@ form_element_text.prototype.refresh=function() {
 
   if(!this.dom_element)
     return;
+
+  if('values_func' in this.def) {
+    this.update_options();
+  }
 
   if(this.is_modified())
     cls="form_modified";

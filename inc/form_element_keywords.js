@@ -69,23 +69,31 @@ form_element_keywords.prototype.show_element=function() {
   this.dom_element=input;
   this.dom_element.onblur=this.notify_change.bind(this);
 
-  if(this.def.values) {
-    var datalist=document.createElement("datalist");
-    datalist.id=this.id+"-datalist";
+  this.datalist=document.createElement("datalist");
+  this.datalist.id=this.id+"-datalist";
+  this.dom.appendChild(this.datalist);
 
-    for(var i=0; i<this.def.values.length; i++) {
-      var option=document.createElement("option");
-      option.value=this.def.values[i];
-
-      datalist.appendChild(option);
-    }
-
-    div.appendChild(datalist);
-  }
+  this.update_options();
 
   this.create_interaction();
 
   return div;
+}
+
+form_element_keywords.prototype.update_options = function() {
+  while(this.datalist.firstChild)
+    this.datalist.removeChild(this.datalist.firstChild);
+
+  var values = this.get_values();
+
+  if(values) {
+    for(var k in values) {
+      var option=document.createElement("option");
+      option.value=k;
+
+      this.datalist.appendChild(option);
+    }
+  }
 }
 
 form_element_keywords.prototype.set_data=function(data) {
@@ -160,6 +168,10 @@ form_element_keywords.prototype.refresh=function() {
 
   if(!this.dom_element)
     return;
+
+  if('values_func' in this.def) {
+    this.update_options();
+  }
 
   if(this.orig_data&&this.data.join(",")!=this.orig_data.join(","))
     cls="form_modified";

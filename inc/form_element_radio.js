@@ -52,9 +52,19 @@ form_element_radio.prototype.set_data=function(data) {
 form_element_radio.prototype.show_element=function() {
   var div=this.parent("form_element_radio").show_element.call(this);
   this.get_data();
-  this.dom_values={};
 
+  this.update_options();
+
+  return div;
+}
+
+form_element_radio.prototype.update_options = function() {
+  while(this.dom.firstChild)
+    this.dom.removeChild(this.dom.firstChild);
+
+  this.dom_values={};
   var values=this.get_values();
+
   for(var k in values) {
     var id=this.id+"-"+k;
 
@@ -63,7 +73,7 @@ form_element_radio.prototype.show_element=function() {
 
     var span=document.createElement("span");
     span.className=cls;
-    div.appendChild(span);
+    this.dom.appendChild(span);
 
     var input=document.createElement("input");
     input.type="radio";
@@ -85,10 +95,8 @@ form_element_radio.prototype.show_element=function() {
     span.appendChild(label);
 
     var br=document.createElement("br");
-    div.appendChild(br);
+    this.dom.appendChild(br);
   }
-
-  return div;
 }
 
 form_element_radio.prototype.refresh=function() {
@@ -96,6 +104,10 @@ form_element_radio.prototype.refresh=function() {
 
   if(!this.dom_values)
     return;
+
+  if('values_func' in this.def) {
+    this.update_options();
+  }
 
   for(var k in this.def.values) {
     var cls="form_orig";

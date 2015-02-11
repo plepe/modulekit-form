@@ -62,9 +62,16 @@ form_element_checkbox.prototype.set_data=function(data) {
 form_element_checkbox.prototype.show_element=function() {
   var div=this.parent("form_element_checkbox").show_element.call(this);
   this.get_data();
-  this.dom_values={};
 
+  this.update_options();
+
+  return div;
+}
+
+form_element_checkbox.prototype.update_options = function() {
+  this.dom_values={};
   var values=this.get_values();
+
   for(var k in values) {
     var id=this.id+"-"+k;
 
@@ -73,7 +80,7 @@ form_element_checkbox.prototype.show_element=function() {
 
     var span=document.createElement("span");
     span.className=cls;
-    div.appendChild(span);
+    this.dom.appendChild(span);
 
     var input=document.createElement("input");
     input.type="checkbox";
@@ -81,7 +88,7 @@ form_element_checkbox.prototype.show_element=function() {
     input.name=this.options.var_name+"[]";
     input.value=k;
     // TODO: indexOf not supported in IE8 and earlier
-    if(this.data.indexOf(k)!=-1)
+    if(this.data && (this.data.indexOf(k)!=-1))
       input.checked=true;
     span.appendChild(input);
     this.dom_values[k]=input;
@@ -95,10 +102,10 @@ form_element_checkbox.prototype.show_element=function() {
     span.appendChild(label);
 
     var br=document.createElement("br");
-    div.appendChild(br);
+    this.dom.appendChild(br);
   }
 
-  return div;
+  return values;
 }
 
 form_element_checkbox.prototype.refresh=function() {
@@ -107,7 +114,14 @@ form_element_checkbox.prototype.refresh=function() {
   if(!this.dom_values)
     return;
 
-  var values=this.get_values();
+  var values;
+  if('values_func' in this.def) {
+    values = this.update_options();
+  }
+  else {
+    values=this.get_values();
+  }
+
   for(var k in values) {
     var cls="form_orig";
 

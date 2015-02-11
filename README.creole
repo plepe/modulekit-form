@@ -99,6 +99,7 @@ Definition:
 * empty_value: Value to be returned if text field is empty (default: null)
 * html_attributes: Assoc. Array, e.g. array("style"=>"text-weight: bold;", "autofocus=>true)
 * values: array of recommended values
+* values_func: function(s) which can update values list; see Form Element "Select" for details.
 * force_values: boolean; if true, value must be member of 'values' array (default: false).
 
 Value:
@@ -162,6 +163,7 @@ A list of checkboxes where a random count of boxes may be checked.
 Definition:
 * type: 'checkbox'
 * values: hash array of values, e.g. array("php"=>"PHP", "cpp"=>"C++", "js"=>"Javascript") or simple array of values, e.g. array("PHP", "C++", "Javascript"); may be translated like: array('m'=>array("en"=>"male", "de"=>"männlich"), 'f'=>array("en"=>"female", "de"=>"weiblich"))
+* values_func: function(s) which can update values list; see Form Element "Select" for details.
 * values_mode: 'keys' (default when a hash array is used) or 'values' (default when a simple array is used)
 
 Value:
@@ -174,6 +176,7 @@ A list of radio boxes where a maximum of one of boxes may be checked.
 Definition:
 * type: 'radio'
 * values: hash array of values, e.g. array("m"=>"male", "f"=>"female") or simple array of values, e.g. array("male", "female"); may be translated like: array('m'=>array("en"=>"male", "de"=>"männlich"), 'f'=>array("en"=>"female", "de"=>"weiblich"))
+* values_func: function(s) which can update values list; see Form Element "Select" for details.
 * values_mode: 'keys' (default when a hash array is used) or 'values' (default when a simple array is used)
 
 Value:
@@ -208,6 +211,7 @@ Similar to Form Element "Select", but in Combined or JS mode a text input is sho
 Definition:
 * type: 'select'
 * values: hash array of values, e.g. array("m"=>"male", "f"=>"female") or simple array of values array("male", "female"); may be translated like: array('m'=>array("en"=>"male", "de"=>"männlich"), 'f'=>array("en"=>"female", "de"=>"weiblich")); optionally descriptions for values are possible too (with prefix 'desc:'), e.g. 'f'=>array("en"=>"female", "desc:en"=>"the female gender", "de"=>"weiblich", "desc:de"=>"Das weibliche Geschlecht")
+* values_func: function(s) which can update values list; see Form Element "Select" for details.
 * values_mode: 'keys' (default when a hash array is used) or 'values' (default when a simple array is used)
 * empty_value: Value to be returned if key is empty (default: null)
 
@@ -247,6 +251,7 @@ Provide an interface to add/remove random keywords.
 Definition:
 * type: 'keywords'
 * values: List of common keywords from which the user can select while typing (HTML5 only; using a "datalist")
+* values_func: function(s) which can update values list; see Form Element "Select" for details.
 * link: Link each keyword to the specified URL, where % will be replaced by the current value, e.g. "search.php?keyword=%"
 * text_remove: Text to display on the remove-buttons (default: "X")
 * text_add: Text to display on the add-button (default: "neu")
