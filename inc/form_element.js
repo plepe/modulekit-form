@@ -381,6 +381,8 @@ form_element.prototype.get_values=function() {
   for(var k in this.def.values) {
     var val=this.def.values[k];
 
+    if(val === null)
+      continue;
     if(typeof val=="object")
       val=lang(val);
 
