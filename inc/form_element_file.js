@@ -183,9 +183,16 @@ form_element_file.prototype.notify_change_file=function() {
   }
 
   var span_value = span.firstChild;
-  if(span_value.firstChild)
+  while(span_value.firstChild)
     span_value.removeChild(span_value.firstChild);
-  span_value.insertBefore(document.createTextNode(this.dom_element.value), span_value.firstChild);
+
+  var data = this.get_data();
+  span_value.appendChild(document.createTextNode(data.orig_name || data.name));
+
+  if(data.size) {
+    span_value.appendChild(document.createElement("br"));
+    span_value.appendChild(document.createTextNode(format_file_size(data.size)));
+  }
 
   span.style.display="block";
   span.className = "form_modified";
