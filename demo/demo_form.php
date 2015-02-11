@@ -23,6 +23,13 @@ $form_def=array(
     'req'	=>true,
     'order'	=>false,
   ),
+  'fav_hobby'   =>array(
+    'type'      => 'select',
+    'values'    => array(),
+    'values_func'=>array("js"=>"fav_hobby_list", "php"=>"fav_hobby_list"),
+    'values_mode'=>"values",
+    'name'      =>array("en"=>"Favorite hobby", "de"=>"Lieblingshobby"),
+  ),
   'birthday'	=>array(
     'name'	=>"Birthday",
     'type'	=>"date",
