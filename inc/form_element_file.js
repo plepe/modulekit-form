@@ -217,8 +217,8 @@ form_element_file.prototype.get_data=function() {
 
   if(this.dom_element.files) { // HTML5
     var file = this.dom_element.files[0];
-    data.name = file['name'];
     data.orig_name = file['name'];
+    data.name = data.orig_name;
     data.type = file['type'];
     data.size = file['size'];
     data.error = 0;
@@ -227,8 +227,13 @@ form_element_file.prototype.get_data=function() {
       data.ext = file['name'].substr(file['name'].lastIndexOf(".") + 1);
   }
   else {
-    data.name = this.dom_element.value;
     data.orig_name = this.dom_element.value;
+    // Chrome prefixes the file name by "C:\fakepath\" -> remove
+    var m;
+    if(m = data.orig_name.match(/^C:\\fakepath\\(.*)$/))
+      data.orig_name = m[1];
+
+    data.name = data.orig_name;
     data.error = 0;
     data.size = null;
     data.ext = null;
