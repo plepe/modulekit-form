@@ -224,8 +224,21 @@ form_element_file.prototype.get_data=function() {
   if(!this.dom_element)
     return this.data;
 
-  if(!this.dom_element.value)
+  // no new file -> check if there's data of an uploaded file
+  if(!this.dom_element.value) {
+    var obs;
+    var ob = null;
+    obs = document.getElementsByTagName("input");
+
+    for(var i=0; i<obs.length; i++)
+      if(obs[i].name == this.options.var_name+"[data]")
+	ob = obs[i];
+
+    if(ob)
+      return JSON.parse(ob.value);
+
     return null;
+  }
 
   var data = {};
 
