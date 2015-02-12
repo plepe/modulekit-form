@@ -246,7 +246,6 @@ form_element_file.prototype.get_data=function() {
   if(this.dom_element.files) { // HTML5
     var file = this.dom_element.files[0];
     data.orig_name = file['name'];
-    data.name = data.orig_name;
     data.type = file['type'];
     data.size = file['size'];
     data.error = 0;
@@ -263,7 +262,6 @@ form_element_file.prototype.get_data=function() {
     if(m = data.orig_name.match(/^C:\\fakepath\\(.*)$/))
       data.orig_name = m[1];
 
-    data.name = data.orig_name;
     data.error = 0;
     data.size = null;
     data.ext = null;
@@ -275,6 +273,27 @@ form_element_file.prototype.get_data=function() {
     else
       data.type = "application/octet-stream";
   }
+
+  if(this.def.template) {
+    function zero_pad(num, places) {
+      return ("00000000".substr(0, places)  + num).slice(-places);
+    }
+
+    data.name = this.def.template;
+
+    data.name = data.name.replace("[orig_name]", data.name);
+    data.name = data.name.replace("[ext]", data.ext);
+    var d = new Date();
+    data.name = data.name.replace("[timestamp]",
+      d.getFullYear() + "-" +
+      zero_pad(d.getMonth() + 1, 2) +"-" +
+      zero_pad(d.getDate(), 2) + "-" +
+      zero_pad(d.getHours(), 2) + "-" +
+      zero_pad(d.getMinutes(), 2) + "-" +
+      zero_pad(d.getSeconds(), 2));
+  }
+  else
+    data.name = data.orig_name;
 
   return data;
 }
