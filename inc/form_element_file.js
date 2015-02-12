@@ -188,15 +188,15 @@ form_element_file.prototype.notify_change_file=function() {
 
   var data = this.get_data();
 
-  if(FileReader && data.file && data.type.match(/^image\//)) {
+  if(FileReader && this.js_file && data.type.match(/^image\//)) {
     var img=document.createElement("img");
-    img.file = data.file;
+    img.file = this.js_file;
     img.className = "form_element_file_preview";
     span_value.appendChild(img);
 
     var reader = new FileReader();
     reader.onload = (function(aImg) { return function(e) { aImg.src = e.target.result; }; })(img);
-    reader.readAsDataURL(data.file);
+    reader.readAsDataURL(this.js_file);
 
     span_value.appendChild(document.createTextNode(" "));
   }
@@ -241,6 +241,7 @@ form_element_file.prototype.get_data=function() {
   }
 
   var data = {};
+  this.js_file = null;
 
   if(this.dom_element.files) { // HTML5
     var file = this.dom_element.files[0];
@@ -253,7 +254,7 @@ form_element_file.prototype.get_data=function() {
     if(file['name'].lastIndexOf(".") != -1)
       data.ext = file['name'].substr(file['name'].lastIndexOf(".") + 1);
 
-    data.file = file;
+    this.js_file = file;
   }
   else {
     data.orig_name = this.dom_element.value;
