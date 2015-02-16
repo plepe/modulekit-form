@@ -129,10 +129,12 @@ form_element_select.prototype.refresh=function() {
 
   if('div_desc' in this) {
     this.div_desc.innerHTML="";
-    for(var k in this.def.values)
+    var values = this.get_values();
+
+    for(var k in values)
       if(this.data == k)
-	if(typeof this.def.values[k]=="object") {
-	  var desc = lang(this.def.values[k], "desc:");
+	if(typeof values[k]=="object") {
+	  var desc = lang(values[k], "desc:");
 
 	  if(desc)
 	    this.div_desc.innerHTML = desc;

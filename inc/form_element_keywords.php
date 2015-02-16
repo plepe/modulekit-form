@@ -25,11 +25,13 @@ class form_element_keywords extends form_element {
     if($this->data)
       $input->setAttribute("value", implode(", ", $this->data));
 
-    if(isset($this->def['values'])) {
+    $values = $this->get_values();
+
+    if($values) {
       $datalist=$document->createElement("datalist");
       $datalist->setAttribute("id", "{$this->id}-datalist");
 
-      foreach($this->def['values'] as $value) {
+      foreach($values as $value) {
 	$option=$document->createElement("option");
 	$option->setAttribute("value", $value);
 

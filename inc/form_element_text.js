@@ -137,8 +137,10 @@ form_element_text.prototype.errors=function(list) {
   this.parent("form_element_text").errors.call(this, list);
 
   if((this.data!="")&&(this.data!=null)) {
-    if(this.def.force_values&&this.def.values) {
-      if(!in_array(this.data, this.def.values))
+    if(this.def.force_values) {
+      var values = this.get_values();
+
+      if((!values) || (!in_array(this.data, values)))
         list.push(this.path_name()+": "+lang('form:invalid_value'));
     }
   }
