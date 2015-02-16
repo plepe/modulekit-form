@@ -360,11 +360,13 @@ form_element_autocomplete.prototype.refresh=function() {
   this.parent("form_element_autocomplete").refresh.call(this);
 
   if('div_desc' in this) {
+    var values = this.get_values();
+
     this.div_desc.innerHTML="";
-    for(var k in this.def.values)
+    for(var k in values)
       if(this.data == k)
-	if(typeof this.def.values[k]=="object") {
-	  var desc = lang(this.def.values[k], "desc:");
+	if(typeof values[k]=="object") {
+	  var desc = lang(values[k], "desc:");
 
 	  if(desc)
 	    this.div_desc.innerHTML = desc;
@@ -403,8 +405,10 @@ form_element_autocomplete.prototype.errors=function(list) {
     list.push(this.path_name()+": "+lang('form:invalid_value'));
 
   if((data!="")&&(data!=null)) {
-    if(this.def.values) {
-      if(!data in this.def.values)
+    var values = this.get_values();
+
+    if(values) {
+      if(!data in values)
         list.push(this.path_name()+": "+lang('form:invalid_value'));
     }
   }

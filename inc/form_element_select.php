@@ -41,7 +41,7 @@ class form_element_select extends form_element {
     $div->appendChild($select);
 
     $all_descriptions = "";
-    foreach($this->def['values'] as $v)
+    foreach($values as $v)
       if(is_array($v)) {
 	$name = lang($v);
 	$desc = lang($v, "desc:");

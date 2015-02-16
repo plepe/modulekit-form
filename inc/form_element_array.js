@@ -367,7 +367,7 @@ form_element_array.prototype.refresh=function() {
   for(var k in this.elements)
     count++;
 
-  if(this.def.max && (count >= this.def.max))
+  if('max' in this.def && (count >= this.def.max))
     this.action_add.className = "reached_max";
   else
     this.action_add.className = "";

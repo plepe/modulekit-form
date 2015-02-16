@@ -123,14 +123,18 @@ form_element.prototype.show=function() {
   if(!this.is_shown())
     tr.style.display="none";
 
-  var td=document.createElement("td");
-  td.className="field_desc";
-  tr.appendChild(td);
+  if(!this.def.hide_label) {
+    var td=document.createElement("td");
+    td.className="field_desc";
+    tr.appendChild(td);
 
-  td.appendChild(this.show_desc());
+    td.appendChild(this.show_desc());
+  }
 
   var td=document.createElement("td");
   td.className="field_value";
+  if(this.def.hide_label)
+    td.setAttribute("colspan", 2);
   tr.appendChild(td);
 
   td.appendChild(this.show_element());

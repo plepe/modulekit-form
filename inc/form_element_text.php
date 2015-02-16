@@ -30,7 +30,9 @@ class form_element_text extends form_element {
     $input->setAttribute("name", $this->options['var_name']);
     $input->setAttribute("value", $this->data);
 
-    if(isset($this->def['values'])&&is_array($this->def['values'])) {
+    $values = $this->get_values();
+
+    if($values) {
       $input->setAttribute("list", $this->id."-datalist");
 
       // Compatibility HTML4 browsers (i.e. IE8)
@@ -40,7 +42,7 @@ class form_element_text extends form_element {
       $datalist=$document->createElement("datalist");
       $datalist->setAttribute("id", $this->id."-datalist");
 
-      foreach($this->def['values'] as $k=>$v) {
+      foreach($values as $k=>$v) {
         $option=$document->createElement("option");
         $option->setAttribute("value", $v);
         $datalist->appendChild($option);
@@ -88,10 +90,12 @@ class form_element_text extends form_element {
   function errors(&$errors) {
     parent::errors($errors);
 
+    $values = $this->get_values();
+
     if(($this->data!="")||($this->data!=null)) {
       if(isset($this->def['force_values'])&&($this->def['force_values'])&&
-         isset($this->def['values'])) {
-        if(!in_array($this->data, $this->def['values'])) {
+         ($values)) {
+        if(!in_array($this->data, $values)) {
           $errors[]=$this->path_name().": ".lang('form:invalid_value');
         }
       }

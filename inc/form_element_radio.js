@@ -109,7 +109,8 @@ form_element_radio.prototype.refresh=function() {
     this.update_options();
   }
 
-  for(var k in this.def.values) {
+  var values = this.get_values();
+  for(var k in values) {
     var cls="form_orig";
 
     if(this.is_modified())
