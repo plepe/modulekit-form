@@ -62,6 +62,7 @@ Definition:
 ** 'not': inverse check, e.g. array("not", array("regexp", ...)) - the sub-check need to resolve negative.
 ** 'check': Call check on a sibling form element.
 ** 'is': Compare to a specific value, array("is", VALUE, [MESSAGE]), e.g. array("is", 5, "Value '5' required")
+* hide_label: if true, hides the left column with label and description and stretches the form element to the full content width.
 
 Translation of name, desc, ...:
 To translate the options you may supply an array with the language codes as keys, e.g. array("en"=>"English text", "de"=>"German text"); if translation is missing, the first translation will be used.

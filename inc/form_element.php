@@ -164,15 +164,20 @@ class form_element {
     if(!$this->is_shown())
       $tr->setAttribute("style", "display: none;");
 
-    $td=$document->createElement("td");
-    $td->setAttribute("valign", "top");
-    $td->setAttribute("class", "field_desc");
-    $tr->appendChild($td);
+    if((!array_key_exists("hide_label", $this->def)) || ($this->def['hide_label'] == false)) {
+      $td=$document->createElement("td");
+      $td->setAttribute("valign", "top");
+      $td->setAttribute("class", "field_desc");
+      $tr->appendChild($td);
 
-    $td->appendChild($this->show_desc($document));
+      $td->appendChild($this->show_desc($document));
+    }
 
     $td=$document->createElement("td");
     $td->setAttribute("class", "field_value");
+    if((array_key_exists("hide_label", $this->def)) && ($this->def['hide_label'] == true)) {
+      $td->setAttribute("colspan", 2);
+    }
     $tr->appendChild($td);
 
     $td->appendChild($this->show_element($document));
