@@ -31,6 +31,7 @@ $include_php=array(
   "inc/form_element_date.php",
   "inc/form_element_label.php",
   "inc/form_element_autocomplete.php",
+  "inc/form_element_display.php",
 );
 $include_js=array(
   "inc/functions.js",
@@ -54,6 +55,7 @@ $include_js=array(
   "inc/form_element_date.js",
   "inc/form_element_label.js",
   "inc/form_element_autocomplete.js",
+  "inc/form_element_display.js",
 );
 $include_css=array(
   "inc/form.css",

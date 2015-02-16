@@ -321,6 +321,12 @@ array(
 
 STATE: Currently disabled
 
+=== Form Element "Display" ===
+A non-editable field. It just shows the value. In opposition to other elements, this may contain HTML for formatting.
+
+Definition:
+* type: 'display'
+
 == Functions of form ==
 === Constructor ===
 Creates a form.
