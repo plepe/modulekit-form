@@ -19,7 +19,7 @@ form_element_checkbox.prototype.connect=function(dom_parent) {
       var dom=current.firstChild;
       this.dom_values[dom.value]=dom;
 
-      dom.onblur=this.notify_change.bind(this);
+      dom.onchange=this.notify_change.bind(this);
     }
 
     current=current.nextSibling;
@@ -93,7 +93,7 @@ form_element_checkbox.prototype.update_options = function() {
     span.appendChild(input);
     this.dom_values[k]=input;
 
-    input.onblur=this.notify_change.bind(this);
+    input.onchange=this.notify_change.bind(this);
 
     var label=document.createElement("label");
     label.setAttribute("for", id);
