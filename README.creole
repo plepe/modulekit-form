@@ -237,6 +237,15 @@ Definition:
 Value:
 * A mixed value which is supported by JSON.
 
+=== Form Element "Hidden" ===
+A hidden input, which can be used for data which should be available in the form but not be visible to the user. Remember, that the data of such a field may be modified by the user anyway.
+
+Definition:
+* type: 'hidden'
+
+Value:
+* Mixed value (internally, the data will be saved in JSON format)
+
 === Form Element "Color" ===
 An input of type 'color'. You may want to load the Spectrum Colorpicker: http://bgrins.github.com/spectrum/ 
 
