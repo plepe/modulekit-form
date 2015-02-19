@@ -34,7 +34,7 @@ form_element_json.prototype.show_element=function() {
   var div=this.parent("form_element_json").show_element.call(this);
 
   if(this.data)
-    this.dom_element.value=JSON.stringify(this.data, null, '  ');
+    this.dom_element.value=this.data;
 
   return div;
 }
