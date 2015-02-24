@@ -51,6 +51,11 @@ class form_element_array extends form_element {
   }
 
   function set_request_data($data) {
+    // request data empty? -> empty array
+    if($data === null) {
+      $data = array();
+    }
+
     $this->data=$data;
     if(isset($this->data['__new'])) {
       unset($this->data['__new']);
