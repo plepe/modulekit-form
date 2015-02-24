@@ -61,6 +61,9 @@ class form {
   function set_request_data($data) {
     $this->has_data=true;
 
+    if(!array_key_exists("show_errors", $this->options))
+      $this->options['show_errors']=true;
+
     $this->element->set_request_data($data);
   }
 
@@ -140,9 +143,6 @@ class form {
   }
 
   function show() {
-    if(!array_key_exists("show_errors", $this->options) and $this->has_orig_data)
-      $this->options['show_errors'] = true;
-
     $document=new DOMDocument();
 
     $div=$this->element->show_element($document);
