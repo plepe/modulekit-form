@@ -99,9 +99,11 @@ form_element_form.prototype.get_orig_data=function() {
   return ret;
 }
 
-form_element_form.prototype.errors=function(list) {
+form_element_form.prototype.all_errors=function(list) {
+  this.parent("form_element_form").all_errors.call(this, list);
+
   for(var i in this.elements) {
-    this.elements[i].errors(list);
+    this.elements[i].all_errors(list);
   }
 }
 

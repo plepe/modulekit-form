@@ -21,9 +21,11 @@ class form_element_array extends form_element {
     return true;
   }
 
-  function errors(&$errors) {
+  function all_errors(&$errors) {
+    parent::all_errors($errors);
+
     foreach($this->elements as $k=>$element) {
-      $element->errors($errors);
+      $element->all_errors($errors);
     }
   }
 

@@ -178,6 +178,10 @@ form_element.prototype.errors=function(list) {
   }
 }
 
+form_element.prototype.all_errors=function(list) {
+  this.errors(list);
+}
+
 form_element.prototype.is_complete=function() {
   return true;
 }

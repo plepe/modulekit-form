@@ -117,7 +117,7 @@ form.prototype.show=function(dom_parent) {
 form.prototype.errors=function() {
   var list=[];
 
-  this.element.errors(list);
+  this.element.all_errors(list);
 
   if((list.length==null) || (list.length == 0))
     return false;

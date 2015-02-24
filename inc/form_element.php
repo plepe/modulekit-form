@@ -98,6 +98,10 @@ class form_element {
     }
   }
 
+  function all_errors(&$errors) {
+    $this->errors($errors);
+  }
+
   function check(&$errors, $param) {
     $check_fun="check_".array_shift($param);
 

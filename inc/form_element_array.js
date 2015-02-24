@@ -246,9 +246,11 @@ form_element_array.prototype.show_element=function() {
   return div;
 }
 
-form_element_array.prototype.errors=function(list) {
+form_element_array.prototype.all_errors=function(list) {
+  this.parent("form_element_array").all_errors.call(this, list);
+
   for(var k in this.elements)
-    this.elements[k].errors(list);
+    this.elements[k].all_errors(list);
 }
 
 form_element_array.prototype.is_complete=function() {
