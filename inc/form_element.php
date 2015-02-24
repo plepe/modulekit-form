@@ -103,7 +103,7 @@ class form_element {
     $this->errors($this_errors);
 
     foreach($this_errors as $i=>$v)
-      $errors[$i] = $this->path_name() . ": " . $v;
+      $errors[] = $this->path_name() . ": " . $v;
   }
 
   function check(&$errors, $param) {
