@@ -402,14 +402,14 @@ form_element_autocomplete.prototype.errors=function(list) {
   var data=this.parent("form_element_autocomplete").get_data.call(this);
 
   if(this.data_illegal)
-    list.push(this.path_name()+": "+lang('form:invalid_value'));
+    list.push(lang('form:invalid_value'));
 
   if((data!="")&&(data!=null)) {
     var values = this.get_values();
 
     if(values) {
       if(!data in values)
-        list.push(this.path_name()+": "+lang('form:invalid_value'));
+        list.push(lang('form:invalid_value'));
     }
   }
 }

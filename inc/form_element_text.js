@@ -141,7 +141,7 @@ form_element_text.prototype.errors=function(list) {
       var values = this.get_values();
 
       if((!values) || (!in_array(this.data, values)))
-        list.push(this.path_name()+": "+lang('form:invalid_value'));
+        list.push(lang('form:invalid_value'));
     }
   }
 }

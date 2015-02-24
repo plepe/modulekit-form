@@ -100,16 +100,16 @@ class form_element_file extends form_element {
 
     if(array_key_exists('accept_ext', $this->def) && $data['ext'] &&
        !in_array($data['ext'], $this->def['accept_ext'])) {
-      $errors[] = $this->path_name().": ".lang("form:file_not_accept_ext", 0, $data['ext']);
+      $errors[] = lang("form:file_not_accept_ext", 0, $data['ext']);
     }
 
     if($data['error']) {
       global $lang_str;
 
       if(isset($lang_str["form:file_upload_error:{$data['error']}"]))
-	$errors[]=$this->path_name().": ".lang("form:file_upload_error:{$data['error']}", 0, $data['orig_name']);
+	$errors[]=lang("form:file_upload_error:{$data['error']}", 0, $data['orig_name']);
       else
-	$errors[]=$this->path_name().": ".lang('form:file_upload_error', 0, $data['orig_name'], $data['error']);
+	$errors[]=lang('form:file_upload_error', 0, $data['orig_name'], $data['error']);
     }
   }
 

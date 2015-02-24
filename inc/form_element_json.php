@@ -21,7 +21,7 @@ class form_element_json extends form_element_textarea {
     if((($this->data!="")||($this->data!=null))&&
        json_decode($this->data)===null) {
 
-      $errors[]=$this->path_name().": ".lang("form:invalid_value");
+      $errors[]=lang("form:invalid_value");
     }
   }
 

@@ -84,7 +84,7 @@ class form_element_directory extends form_element {
     $this->errors=array();
     foreach($data['list'] as $i=>$d) {
       if($d['error']) {
-	$this->errors[]=$this->path_name().": Datei '{$d['name']}' konnte nicht raufgeladen werden, Fehler {$d['error']}.";
+	$this->errors[]="Datei '{$d['name']}' konnte nicht raufgeladen werden, Fehler {$d['error']}.";
 	unset($data['list'][$i]);
       }
     }

@@ -164,7 +164,7 @@ form_element.prototype.errors=function(list) {
     }
 
     if(req && ((!this.data)||(data===null)))
-      list.push(this.path_name()+": "+lang("form:require_value"));
+      list.push(lang("form:require_value"));
   }
 
   if(this.def.check&&(data!==null)) {
@@ -173,13 +173,18 @@ form_element.prototype.errors=function(list) {
     this.check(check_errors, this.def.check);
 
     for(var i=0; i<check_errors.length; i++)
-      list.push(this.path_name()+": "+check_errors[i]);
+      list.push(check_errors[i]);
 
   }
 }
 
 form_element.prototype.all_errors=function(list) {
-  this.errors(list);
+  var new_list = []
+
+  this.errors(new_list);
+
+  for(var i=0; i<new_list.length; i++)
+    list.push(this.path_name() + ": " + new_list[i]);
 }
 
 form_element.prototype.is_complete=function() {

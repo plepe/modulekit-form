@@ -96,7 +96,7 @@ class form_element_text extends form_element {
       if(isset($this->def['force_values'])&&($this->def['force_values'])&&
          ($values)) {
         if(!in_array($this->data, $values)) {
-          $errors[]=$this->path_name().": ".lang('form:invalid_value');
+          $errors[]=lang('form:invalid_value');
         }
       }
     }

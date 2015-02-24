@@ -59,7 +59,7 @@ class form_element_numeric extends form_element_text {
 
     if($regexp) {
       if(!preg_match($regexp, $this->data)) {
-	$errors[]=$this->path_name().": ".lang('form:invalid_value');
+	$errors[]=lang('form:invalid_value');
       }
     }
   }

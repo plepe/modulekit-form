@@ -85,7 +85,7 @@ class form_element {
       }
 
       if(($req)&&($data===null))
-	$errors[]=$this->path_name().": ".lang("form:require_value");
+	$errors[]=lang("form:require_value");
     }
 
     if(isset($this->def['check']) && ($data !== null)) {
@@ -94,12 +94,16 @@ class form_element {
       $this->check($check_errors, $this->def['check']);
 
       foreach($check_errors as $e)
-	$errors[]=$this->path_name().": {$e}";
+	$errors[]=$e;
     }
   }
 
   function all_errors(&$errors) {
-    $this->errors($errors);
+    $this_errors = array();
+    $this->errors($this_errors);
+
+    foreach($this_errors as $i=>$v)
+      $errors[$i] = $this->path_name() . ": " . $v;
   }
 
   function check(&$errors, $param) {
