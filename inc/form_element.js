@@ -27,8 +27,8 @@ form_element.prototype.name=function() {
 
   if(this.def._name)
     name=this.def._name();
-
-  name=this.def.name;
+  else
+    name=this.def.name;
 
   if(typeof name=="object") {
     return lang(name);
