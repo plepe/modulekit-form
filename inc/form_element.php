@@ -72,9 +72,7 @@ class form_element {
     return $this->data;
   }
 
-  function errors(&$errors) {
-    $data=$this->get_data();
-
+  function required() {
     if(isset($this->def['req'])) {
       $req = $this->def['req'];
       $req_test = array();
@@ -84,9 +82,17 @@ class form_element {
 	$req = count($req_test) == 0;
       }
 
-      if(($req)&&($data===null))
-	$errors[]=lang("form:require_value");
+      return $req;
     }
+
+    return false;
+  }
+
+  function errors(&$errors) {
+    $data=$this->get_data();
+
+    if($this->required() && ($data===null))
+      $errors[]=lang("form:require_value");
 
     if(isset($this->def['check']) && ($data !== null)) {
       $check_errors=array();
@@ -165,34 +171,36 @@ class form_element {
   }
 
   function show($document) {
-    $tr=$document->createElement("tr");
-    $tr->setAttribute("id", "tr-".$this->id);
-    $this->tr=$tr;
+    $req = $this->required() ? " required": "";
+
+    $this->tr=$document->createElement("tr");
+    $this->tr->setAttribute("id", "tr-".$this->id);
+    $this->tr->setAttribute("class", "" . $req);
 
     if(!$this->is_shown())
-      $tr->setAttribute("style", "display: none;");
+      $this->tr->setAttribute("style", "display: none;");
 
     if((!array_key_exists("hide_label", $this->def)) || ($this->def['hide_label'] == false)) {
-      $td=$document->createElement("td");
-      $td->setAttribute("valign", "top");
-      $td->setAttribute("class", "field_desc");
-      $tr->appendChild($td);
+      $this->td_desc=$document->createElement("td");
+      $this->td_desc->setAttribute("valign", "top");
+      $this->td_desc->setAttribute("class", "field_desc" . $req);
+      $this->tr->appendChild($this->td_desc);
 
-      $td->appendChild($this->show_desc($document));
+      $this->td_desc->appendChild($this->show_desc($document));
     }
 
-    $td=$document->createElement("td");
-    $td->setAttribute("class", "field_value");
+    $this->td_value=$document->createElement("td");
+    $this->td_value->setAttribute("class", "field_value" . $req);
     if((array_key_exists("hide_label", $this->def)) && ($this->def['hide_label'] == true)) {
-      $td->setAttribute("colspan", 2);
+      $this->td_value->setAttribute("colspan", 2);
     }
-    $tr->appendChild($td);
+    $this->tr->appendChild($this->td_value);
 
-    $td->appendChild($this->show_element($document));
+    $this->td_value->appendChild($this->show_element($document));
 
-    $td->appendChild($this->show_div_errors($document));
+    $this->td_value->appendChild($this->show_div_errors($document));
 
-    return $tr;
+    return $this->tr;
   }
 
   function show_errors($document) {
@@ -216,10 +224,13 @@ class form_element {
   }
 
   function show_element($document) {
-    $div=$document->createElement("span");
-    $div->setAttribute("class", "form_element_".$this->type());
-    $div->setAttribute("id", $this->id);
-    return $div;
+    $req = $this->required() ? " required": "";
+
+    $this->dom=$document->createElement("span");
+    $this->dom->setAttribute("class", "form_element_".$this->type() . $req);
+    $this->dom->setAttribute("id", $this->id);
+
+    return $this->dom;
   }
 
   function save_data() {

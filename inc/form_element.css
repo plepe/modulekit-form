@@ -7,3 +7,6 @@ div.field_errors ul {
 div.field_errors ul li {
   color: red;
 }
+td.field_desc.required .form_name::before {
+  content: "* ";
+}
