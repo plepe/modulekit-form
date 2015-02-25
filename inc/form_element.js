@@ -133,8 +133,11 @@ form_element.prototype.show_div_errors=function() {
 }
 
 form_element.prototype.show=function() {
+  var req = this.required();
+
   this.tr=document.createElement("tr");
   this.tr.id="tr-"+this.id;
+  this.tr.className = "";
 
   if(!this.is_shown())
     this.tr.style.display="none";
@@ -384,6 +387,29 @@ form_element.prototype.refresh=function() {
     this.tr.setAttribute("style", "");
   else
     this.tr.setAttribute("style", "display: none;");
+
+  var req = this.required();
+
+  if(req) {
+    if(this.tr)
+      add_class(this.tr, "required");
+    if(this.td_desc)
+      add_class(this.td_desc, "required");
+    if(this.td_value)
+      add_class(this.td_value, "required");
+    if(this.dom)
+      add_class(this.dom, "required");
+  }
+  else {
+    if(this.tr)
+      remove_class(this.tr, "required");
+    if(this.td_desc)
+      remove_class(this.td_desc, "required");
+    if(this.td_value)
+      remove_class(this.td_value, "required");
+    if(this.dom)
+      remove_class(this.dom, "required");
+  }
 }
 
 form_element.prototype.is_modified=function() {

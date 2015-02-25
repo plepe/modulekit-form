@@ -171,8 +171,11 @@ class form_element {
   }
 
   function show($document) {
+    $req = $this->required() ? " required": "";
+
     $this->tr=$document->createElement("tr");
     $this->tr->setAttribute("id", "tr-".$this->id);
+    $this->tr->setAttribute("class", "" . $req);
 
     if(!$this->is_shown())
       $this->tr->setAttribute("style", "display: none;");
@@ -180,14 +183,14 @@ class form_element {
     if((!array_key_exists("hide_label", $this->def)) || ($this->def['hide_label'] == false)) {
       $this->td_desc=$document->createElement("td");
       $this->td_desc->setAttribute("valign", "top");
-      $this->td_desc->setAttribute("class", "field_desc");
+      $this->td_desc->setAttribute("class", "field_desc" . $req);
       $this->tr->appendChild($this->td_desc);
 
       $this->td_desc->appendChild($this->show_desc($document));
     }
 
     $this->td_value=$document->createElement("td");
-    $this->td_value->setAttribute("class", "field_value");
+    $this->td_value->setAttribute("class", "field_value" . $req);
     if((array_key_exists("hide_label", $this->def)) && ($this->def['hide_label'] == true)) {
       $this->td_value->setAttribute("colspan", 2);
     }
@@ -221,8 +224,10 @@ class form_element {
   }
 
   function show_element($document) {
+    $req = $this->required() ? " required": "";
+
     $this->dom=$document->createElement("span");
-    $this->dom->setAttribute("class", "form_element_".$this->type());
+    $this->dom->setAttribute("class", "form_element_".$this->type() . $req);
     $this->dom->setAttribute("id", $this->id);
 
     return $this->dom;

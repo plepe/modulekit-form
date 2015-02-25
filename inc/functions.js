@@ -431,3 +431,20 @@ function elementCurrentStyle(element, styleName){
         return getComputedStyle(element, null).getPropertyValue(styleName);
     }
 }
+
+function add_class(dom, cls) {
+  var classes = dom.className.split(" ");
+
+  if(classes.indexOf(cls) == -1)
+    dom.className += " " + cls;
+}
+
+function remove_class(dom, cls) {
+  var classes = dom.className.split(" ");
+  var p = classes.indexOf(cls);
+
+  if(p != -1) {
+    classes.splice(p, 1);
+    dom.className = classes.join(" ");
+  }
+}
