@@ -151,9 +151,7 @@ form_element.prototype.show_element=function() {
   return this.dom;
 }
 
-form_element.prototype.errors=function(list) {
-  var data=this.get_data();
-
+form_element.prototype.required=function() {
   if('req' in this.def) {
     var req = this.def.req;
     var req_test = [];
@@ -163,9 +161,17 @@ form_element.prototype.errors=function(list) {
       req = req_test.length == 0;
     }
 
-    if(req && ((!this.data)||(data===null)))
-      list.push(lang("form:require_value"));
+    return req;
   }
+
+  return false;
+}
+
+form_element.prototype.errors=function(list) {
+  var data=this.get_data();
+
+  if(this.required() && ((!this.data)||(data===null)))
+    list.push(lang("form:require_value"));
 
   if(this.def.check&&(data!==null)) {
     var check_errors=[];

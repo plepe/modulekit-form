@@ -72,9 +72,7 @@ class form_element {
     return $this->data;
   }
 
-  function errors(&$errors) {
-    $data=$this->get_data();
-
+  function required() {
     if(isset($this->def['req'])) {
       $req = $this->def['req'];
       $req_test = array();
@@ -84,9 +82,17 @@ class form_element {
 	$req = count($req_test) == 0;
       }
 
-      if(($req)&&($data===null))
-	$errors[]=lang("form:require_value");
+      return $req;
     }
+
+    return false;
+  }
+
+  function errors(&$errors) {
+    $data=$this->get_data();
+
+    if($this->required() && ($data===null))
+      $errors[]=lang("form:require_value");
 
     if(isset($this->def['check']) && ($data !== null)) {
       $check_errors=array();
