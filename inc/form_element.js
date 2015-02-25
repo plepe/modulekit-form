@@ -51,6 +51,23 @@ form_element.prototype.connect=function(dom_parent) {
 
   this.tr=document.getElementById("tr-"+this.id);
   this.div_errors=document.getElementById("errors-"+this.id);
+  this.dom=document.getElementById(this.id);
+
+  var current;
+  if(this.tr)
+    current = this.tr.firstChild;
+
+  while(current) {
+    if(current.className) {
+      var classes = current.className.split(" ");
+      if(classes.indexOf("field_desc") != -1)
+	this.td_desc = current;
+      if(classes.indexOf("field_value") != -1)
+	this.td_value = current;
+    }
+
+    current = current.nextSibling;
+  }
 
   call_hooks('form_element_connected', this);
 }
@@ -116,38 +133,38 @@ form_element.prototype.show_div_errors=function() {
 }
 
 form_element.prototype.show=function() {
-  var tr=document.createElement("tr");
-  tr.id="tr-"+this.id;
-  this.tr=tr;
+  this.tr=document.createElement("tr");
+  this.tr.id="tr-"+this.id;
 
   if(!this.is_shown())
-    tr.style.display="none";
+    this.tr.style.display="none";
 
   if(!this.def.hide_label) {
-    var td=document.createElement("td");
-    td.className="field_desc";
-    tr.appendChild(td);
+    this.td_desc=document.createElement("td");
+    this.td_desc.className="field_desc";
+    this.tr.appendChild(this.td_desc);
 
-    td.appendChild(this.show_desc());
+    this.td_desc.appendChild(this.show_desc());
   }
 
-  var td=document.createElement("td");
-  td.className="field_value";
+  this.td_value=document.createElement("td");
+  this.td_value.className="field_value";
   if(this.def.hide_label)
-    td.setAttribute("colspan", 2);
-  tr.appendChild(td);
+    this.td_value.setAttribute("colspan", 2);
+  this.tr.appendChild(this.td_value);
 
-  td.appendChild(this.show_element());
+  this.td_value.appendChild(this.show_element());
 
-  td.appendChild(this.show_div_errors());
+  this.td_value.appendChild(this.show_div_errors());
 
-  return tr;
+  return this.tr;
 }
 
 form_element.prototype.show_element=function() {
   this.dom=document.createElement("span");
   this.dom.className="form_element_"+this.type();
   this.dom.id=this.id;
+
   return this.dom;
 }
 
