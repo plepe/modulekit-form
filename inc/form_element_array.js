@@ -287,8 +287,7 @@ form_element_array.prototype.add_element=function() {
     current=current.nextSibling;
   }
 
-  form_resize();
-  this.form_root.refresh();
+  this.form_root.form.resize();
 
   return false;
 }
@@ -305,8 +304,7 @@ form_element_array.prototype.remove_element=function(k) {
     current=current.nextSibling;
   }
 
-  form_resize();
-  this.form_root.refresh();
+  this.form_root.form.resize();
 
   return false;
 }
@@ -329,8 +327,7 @@ form_element_array.prototype.order_up=function(k) {
     current=current.nextSibling;
   }
 
-  form_resize();
-  this.form_root.refresh();
+  this.form_root.form.resize();
 
   return false;
 }
@@ -353,8 +350,7 @@ form_element_array.prototype.order_down=function(k) {
     current=current.previousSibling;
   }
 
-  form_resize();
-  this.form_root.refresh();
+  this.form_root.form.resize();
 
   return false;
 }

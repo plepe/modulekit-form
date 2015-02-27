@@ -29,6 +29,35 @@ function form(id, def, options) {
     if(orig_data)
       this.set_orig_data(orig_data);
   }
+
+  if(window.addEventListener) {
+    window.addEventListener('load', this.resize.bind(this));
+    window.addEventListener('resize', this.resize.bind(this));
+  }
+  else {
+    window.attachEvent('onload', this.resize.bind(this));
+    window.attachEvent('onresize', this.resize.bind(this));
+  }
+}
+
+form.prototype.resize=function() {
+  var obs=this.table.getElementsByTagName("table");
+
+  for(var i=0; i<obs.length; i++) {
+    var ob=obs[i];
+    if(in_array("form", ob.className.split(" "))) {
+      var width=ob.parentNode.offsetWidth;
+      var em_height = get_em_height(ob);
+
+      // set class according to width
+      if(width/em_height<=25)
+	ob.className="form small";
+      else if(width/em_height<=40)
+	ob.className="form medium";
+      else
+	ob.className="form";
+    }
+  }
 }
 
 form.prototype.build_form=function() {
@@ -107,7 +136,7 @@ form.prototype.show=function(dom_parent) {
 
   dom_parent.appendChild(this.table);
 
-  form_resize();
+  this.resize();
 
   call_hooks('form_connected', this);
 
@@ -184,26 +213,6 @@ function get_em_height(dom_el) {
   return em_height_cache[font_size];
 }
 
-function form_resize() {
-  var obs=document.getElementsByTagName("table");
-
-  for(var i=0; i<obs.length; i++) {
-    var ob=obs[i];
-    if(in_array("form", ob.className.split(" "))) {
-      var width=ob.parentNode.offsetWidth;
-      var em_height = get_em_height(ob);
-
-      // set class according to width
-      if(width/em_height<=25)
-	ob.className="form small";
-      else if(width/em_height<=40)
-	ob.className="form medium";
-      else
-	ob.className="form";
-    }
-  }
-}
-
 function form_process_def(def) {
   for(var k in def) {
     var element_def=new clone(def[k]);
@@ -236,13 +245,4 @@ function form_process_def(def) {
        def[k].def.def)
       form_process_def(def[k].def.def);
   }
-}
-
-if(window.addEventListener) {
-  window.addEventListener('load', form_resize);
-  window.addEventListener('resize', form_resize);
-}
-else {
-  window.attachEvent('onload', form_resize);
-  window.attachEvent('onresize', form_resize);
 }
