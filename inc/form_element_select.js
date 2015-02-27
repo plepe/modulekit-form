@@ -116,8 +116,8 @@ form_element_select.prototype.update_options=function() {
   }
 }
 
-form_element_select.prototype.refresh=function() {
-  this.parent("form_element_select").refresh.call(this);
+form_element_select.prototype.refresh=function(force) {
+  this.parent("form_element_select").refresh.call(this, force);
 
   if(!this.dom_element)
     return;

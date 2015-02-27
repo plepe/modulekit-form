@@ -79,8 +79,8 @@ form.prototype.is_modified=function() {
   return this.element.is_modified();
 }
 
-form.prototype.refresh=function() {
-  this.element.refresh();
+form.prototype.refresh=function(force) {
+  this.element.refresh(force);
 }
 
 form.prototype.reset=function() {

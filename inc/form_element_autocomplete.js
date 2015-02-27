@@ -354,10 +354,10 @@ form_element_autocomplete.prototype.set_data=function(data) {
     this.dom_visible.value=values[this.data];
 }
 
-form_element_autocomplete.prototype.refresh=function() {
+form_element_autocomplete.prototype.refresh=function(force) {
   var cls;
 
-  this.parent("form_element_autocomplete").refresh.call(this);
+  this.parent("form_element_autocomplete").refresh.call(this, force);
 
   if('div_desc' in this) {
     var values = this.get_values();

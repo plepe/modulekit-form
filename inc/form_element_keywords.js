@@ -161,10 +161,10 @@ form_element_keywords.prototype.get_data=function() {
   return this.data;
 }
 
-form_element_keywords.prototype.refresh=function() {
+form_element_keywords.prototype.refresh=function(force) {
   var cls;
 
-  this.parent("form_element_keywords").refresh.call(this);
+  this.parent("form_element_keywords").refresh.call(this, force);
 
   if(!this.dom_element)
     return;

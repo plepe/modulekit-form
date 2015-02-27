@@ -21,10 +21,10 @@ form_element_textarea.prototype.create_element=function() {
   return input;
 }
 
-form_element_textarea.prototype.refresh = function() {
-  this.parent("form_element_textarea").refresh.call(this);
+form_element_textarea.prototype.refresh = function(force) {
+  this.parent("form_element_textarea").refresh.call(this, force);
 
-  this.resize();
+  this.resize(null, force);
 }
 
 form_element_textarea.prototype.delayed_resize = function(ev, shrink) {

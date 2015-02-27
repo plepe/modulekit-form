@@ -101,10 +101,10 @@ form_element_text.prototype.set_data=function(data) {
     this.dom_element.value=this.data;
 }
 
-form_element_text.prototype.refresh=function() {
+form_element_text.prototype.refresh=function(force) {
   var cls;
 
-  this.parent("form_element_text").refresh.call(this);
+  this.parent("form_element_text").refresh.call(this, force);
 
   if(!this.dom_element)
     return;

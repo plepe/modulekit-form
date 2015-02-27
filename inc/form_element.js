@@ -377,7 +377,7 @@ form_element.prototype.is_shown=function() {
   return true;
 }
 
-form_element.prototype.refresh=function() {
+form_element.prototype.refresh=function(force) {
   this.data=this.get_data();
 
   if(!this.tr)

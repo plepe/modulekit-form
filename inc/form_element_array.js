@@ -359,11 +359,11 @@ form_element_array.prototype.order_down=function(k) {
   return false;
 }
 
-form_element_array.prototype.refresh=function() {
-  this.parent("form_element_array").refresh.call(this);
+form_element_array.prototype.refresh=function(force) {
+  this.parent("form_element_array").refresh.call(this, force);
 
   for(var i in this.elements)
-    this.elements[i].refresh();
+    this.elements[i].refresh(force);
 
   var count = 0;
   for(var k in this.elements)

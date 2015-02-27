@@ -62,10 +62,10 @@ form_element_boolean.prototype.set_data=function(data) {
     this.dom_element.checked=data;
 }
 
-form_element_boolean.prototype.refresh=function() {
+form_element_boolean.prototype.refresh=function(force) {
   var cls;
 
-  this.parent("form_element_boolean").refresh.call(this);
+  this.parent("form_element_boolean").refresh.call(this, force);
 
   if(!this.dom_element)
     return;

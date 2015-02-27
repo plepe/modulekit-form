@@ -108,8 +108,8 @@ form_element_checkbox.prototype.update_options = function() {
   return values;
 }
 
-form_element_checkbox.prototype.refresh=function() {
-  this.parent("form_element_checkbox").refresh.call(this);
+form_element_checkbox.prototype.refresh=function(force) {
+  this.parent("form_element_checkbox").refresh.call(this, force);
 
   if(!this.dom_values)
     return;

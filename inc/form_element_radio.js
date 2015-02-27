@@ -99,8 +99,8 @@ form_element_radio.prototype.update_options = function() {
   }
 }
 
-form_element_radio.prototype.refresh=function() {
-  this.parent("form_element_radio").refresh.call(this);
+form_element_radio.prototype.refresh=function(force) {
+  this.parent("form_element_radio").refresh.call(this, force);
 
   if(!this.dom_values)
     return;

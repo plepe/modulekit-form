@@ -117,11 +117,11 @@ form_element_form.prototype.is_complete=function() {
   return true;
 }
 
-form_element_form.prototype.refresh=function() {
-  this.parent("form_element_form").refresh.call(this);
+form_element_form.prototype.refresh=function(force) {
+  this.parent("form_element_form").refresh.call(this, force);
 
   for(var i in this.elements)
-    this.elements[i].refresh();
+    this.elements[i].refresh(force);
 }
 
 form_element_form.prototype.is_modified=function() {
