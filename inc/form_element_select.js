@@ -129,20 +129,21 @@ form_element_select.prototype.refresh=function(force) {
 
   if('div_desc' in this) {
     this.div_desc.innerHTML="";
-    var values = this.get_values();
 
-    for(var k in values)
+    var old_values = this.values;
+    this.values = this.get_values();
+
+    if(!array_compare(this.values, old_values))
+      this.update_options();
+
+    for(var k in this.values)
       if(this.data == k)
-	if(typeof values[k]=="object") {
-	  var desc = lang(values[k], "desc:");
+	if(typeof this.values[k]=="object") {
+	  var desc = lang(this.values[k], "desc:");
 
 	  if(desc)
 	    this.div_desc.innerHTML = desc;
 	}
-  }
-
-  if('values_func' in this.def) {
-    this.update_options();
   }
 
   this.dom_element.className=cls;

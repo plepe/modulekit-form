@@ -373,8 +373,18 @@ class form_element {
     foreach($this->def['values'] as $k=>$v) {
       if($v === null)
 	continue;
-      if(is_array($v))
+
+      if(is_array($v)) {
+	if(array_key_exists("show_depend", $v)) {
+	  $errors = array();
+	  $this->check($errors, $v['show_depend']);
+
+	  if(sizeof($errors))
+	    continue;
+	}
+
 	$v=lang($v);
+      }
 
       switch($this->def['values_mode']) {
 	case "keys":

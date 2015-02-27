@@ -105,12 +105,13 @@ form_element_radio.prototype.refresh=function(force) {
   if(!this.dom_values)
     return;
 
-  if('values_func' in this.def) {
-    this.update_options();
-  }
+  var old_values = this.values;
+  this.values = this.get_values();
 
-  var values = this.get_values();
-  for(var k in values) {
+  if(!array_compare(this.values, old_values))
+    this.update_options();
+
+  for(var k in this.values) {
     var cls="form_orig";
 
     if(this.is_modified())

@@ -114,15 +114,13 @@ form_element_checkbox.prototype.refresh=function(force) {
   if(!this.dom_values)
     return;
 
-  var values;
-  if('values_func' in this.def) {
-    values = this.update_options();
-  }
-  else {
-    values=this.get_values();
-  }
+  var old_values = this.values;
+  this.values = this.get_values();
 
-  for(var k in values) {
+  if(!array_compare(this.values, old_values))
+    this.update_options();
+
+  for(var k in this.values) {
     var cls="form_orig";
 
     if(this.orig_data&&

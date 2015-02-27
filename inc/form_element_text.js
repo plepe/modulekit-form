@@ -109,9 +109,11 @@ form_element_text.prototype.refresh=function(force) {
   if(!this.dom_element)
     return;
 
-  if('values_func' in this.def) {
+  var old_values = this.values;
+  this.values = this.get_values();
+
+  if(!array_compare(this.values, old_values))
     this.update_options();
-  }
 
   if(this.is_modified())
     cls="form_modified";

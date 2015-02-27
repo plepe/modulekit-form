@@ -169,9 +169,11 @@ form_element_keywords.prototype.refresh=function(force) {
   if(!this.dom_element)
     return;
 
-  if('values_func' in this.def) {
+  var old_values = this.values;
+  this.values = this.get_values();
+
+  if(!array_compare(this.values, old_values))
     this.update_options();
-  }
 
   if(this.orig_data&&this.data.join(",")!=this.orig_data.join(","))
     cls="form_modified";

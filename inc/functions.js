@@ -395,6 +395,10 @@ function array_compare_values(arr1, arr2) {
   return false;
 }
 
+function array_compare(arr1, arr2) {
+  return JSON.stringify(arr1) === JSON.stringify(arr2);
+}
+
 function format_file_size(size) {
   if(size > 800000000000)
     return sprintf("%.1f TiB", size/1024.0/1024.0/1024.0/1024.0);

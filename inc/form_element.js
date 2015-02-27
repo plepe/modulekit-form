@@ -448,8 +448,17 @@ form_element.prototype.get_values=function() {
 
     if(val === null)
       continue;
-    if(typeof val=="object")
+    if(typeof val=="object") {
+      if('show_depend' in val) {
+	var check_errors=[];
+	this.check(check_errors, val.show_depend);
+
+	if(check_errors.length)
+	  continue;
+      }
+
       val=lang(val);
+    }
 
     switch(this.def.values_mode) {
       case "keys":

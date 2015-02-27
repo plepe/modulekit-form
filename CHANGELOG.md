@@ -1,3 +1,7 @@
+2015-02-27
+----------
+* Values (for Checkbox, Select, ...) may contain 'show_depend' (then this value is only available when the check is successful)
+
 2015-02-25
 ----------
 * Highlight required fields by prefixing label with '*'
