@@ -299,11 +299,22 @@ class form_element {
       $errors[]=$param[1];
   }
 
+  function resolve_other_element($path) {
+    $parent = $this->form_parent;
+
+    while(substr($path, 0, 3) == "../") {
+      $parent = $parent->form_parent;
+      $path = substr($path, 3);
+    }
+
+    return $parent->elements[$path];
+  }
+
   // call check() on another form element of the same hierarchy
   function check_check(&$errors, $param) {
     $check_errors=array();
 
-    $other=$this->form_parent->elements[$param[0]];
+    $other = $this->resolve_other_element($param[0]);
     if(!$other)
       return;
 

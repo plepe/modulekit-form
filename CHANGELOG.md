@@ -1,6 +1,7 @@
 2015-02-27
 ----------
 * Values (for Checkbox, Select, ...) may contain 'show_depend' (then this value is only available when the check is successful)
+* Checks on parent elements.
 
 2015-02-25
 ----------

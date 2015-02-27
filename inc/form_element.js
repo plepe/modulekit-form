@@ -294,11 +294,22 @@ form_element.prototype.check_not=function(list, param) {
     list.push(param[1]);
 }
 
+form_element.prototype.resolve_other_element=function(path) {
+  var curr_parent = this.form_parent;
+
+  while(path.substr(0, 3) == "../") {
+    curr_parent = curr_parent.form_parent;
+    path = path.substr(3);
+  }
+
+  return curr_parent.elements[path];
+}
+
 // call check() on another form element of the same hierarchy
 form_element.prototype.check_check=function(list, param) {
   var check_errors=[];
 
-  other=this.form_parent.elements[param[0]];
+  other=this.resolve_other_element(param[0]);
   if(!other)
     return;
 

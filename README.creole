@@ -60,7 +60,7 @@ Definition:
 ** 'and': combine several checks, e.g. array("and", array("regexp", ...), array("foo", ...)) - all sub-checks need to resolve positive.
 ** 'or': combine several checks, e.g. array("and", array("regexp", ...), array("foo", ...)) - at least one sub-check need to resolve positive.
 ** 'not': inverse check, e.g. array("not", array("regexp", ...)) - the sub-check need to resolve negative.
-** 'check': Call check on a sibling form element.
+** 'check': Call check on a sibling element or parent element, e.g. array("check", "name", array("is", "foo")) -> call the check array("is", "foo") on element "name". The Path can be prefixed by "../" to query parent elements. If you have a form within an array, you need "../../".
 ** 'is': Compare to a specific value, array("is", VALUE, [MESSAGE]), e.g. array("is", 5, "Value '5' required")
 * hide_label: if true, hides the left column with label and description and stretches the form element to the full content width.
 
