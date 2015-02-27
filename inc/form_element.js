@@ -252,6 +252,9 @@ form_element.prototype.check_and=function(list, param) {
 form_element.prototype.check_or=function(list, param) {
   var list_errors=[];
 
+  if(param.length == 0)
+    list_errors.push(lang('form:check_empty_or'));
+
   for(var i=0; i<param.length; i++) {
     var check_errors=[];
 

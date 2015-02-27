@@ -260,6 +260,9 @@ class form_element {
   function check_or(&$errors, $param) {
     $list_errors=array();
 
+    if(sizeof($param) == 0)
+      $errors[] = lang('form:check_empty_or');
+
     foreach($param as $i=>$p) {
       $check_errors=array();
 
