@@ -58,6 +58,8 @@ form.prototype.resize=function() {
 	ob.className="form";
     }
   }
+
+  this.refresh(true);
 }
 
 form.prototype.build_form=function() {
