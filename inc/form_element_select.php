@@ -7,7 +7,7 @@ class form_element_select extends form_element {
       $option->setAttribute("selected", "selected");
     $select->appendChild($option);
 
-    $text=$document->createTextNode($v);
+    $text=$document->createTextNode(get_value_string($v));
     $option->appendChild($text);
   }
 
@@ -43,8 +43,8 @@ class form_element_select extends form_element {
     $all_descriptions = "";
     foreach($values as $v)
       if(is_array($v)) {
-	$name = lang($v);
-	$desc = lang($v, "desc:");
+	$name = get_value_string($v);
+	$desc = get_value_string($v, "desc");
 
 	if($desc) {
 	  $all_descriptions .= "<li><b>{$name}</b>: {$desc}</li>";

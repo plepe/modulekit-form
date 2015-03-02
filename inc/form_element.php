@@ -412,8 +412,6 @@ class form_element {
 	  if(sizeof($errors))
 	    continue;
 	}
-
-	$v=lang($v);
       }
 
       switch($this->def['values_mode']) {
@@ -421,7 +419,7 @@ class form_element {
 	  $ret[$k]=$v;
 	  break;
 	case "values":
-	  $ret[$v]=$v;
+	  $ret[$v]=array('name' => $v);
 	  break;
 	default:
 	  // invalid mode

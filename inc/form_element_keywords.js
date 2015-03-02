@@ -89,7 +89,7 @@ form_element_keywords.prototype.update_options = function() {
   if(values) {
     for(var k in values) {
       var option=document.createElement("option");
-      option.value=k;
+      option.value=get_value_string(k);
 
       this.datalist.appendChild(option);
     }

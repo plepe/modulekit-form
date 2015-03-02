@@ -489,8 +489,6 @@ form_element.prototype.get_values=function() {
 	if(check_errors.length)
 	  continue;
       }
-
-      val=lang(val);
     }
 
     switch(this.def.values_mode) {
@@ -498,7 +496,7 @@ form_element.prototype.get_values=function() {
 	ret[k]=val;
 	break;
       case "values":
-        ret[val]=val;
+        ret[val]={ 'name': val };
 	break;
       default:
         // invalid mode

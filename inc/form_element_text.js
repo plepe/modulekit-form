@@ -73,10 +73,10 @@ form_element_text.prototype.update_options = function() {
 
   for(var k in values) {
     var option=document.createElement("option");
-    option.setAttribute("value", values[k]);
+    option.setAttribute("value", get_value_string(values[k]));
     this.datalist.appendChild(option);
 
-    var text=document.createTextNode(values[k]);
+    var text=document.createTextNode(get_value_string(values[k]));
     option.appendChild(text);
   }
 }

@@ -44,10 +44,10 @@ class form_element_text extends form_element {
 
       foreach($values as $k=>$v) {
         $option=$document->createElement("option");
-        $option->setAttribute("value", $v);
+        $option->setAttribute("value", get_value_string($v));
         $datalist->appendChild($option);
 
-        $text=$document->createTextNode($v);
+        $text=$document->createTextNode(get_value_string($v));
         $option->appendChild($text);
       }
 

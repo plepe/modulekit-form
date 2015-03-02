@@ -42,3 +42,26 @@ function format_file_size($size) {
 
   return sprintf("% B", $size);
 }
+
+function get_value_string($v, $key="name") {
+  if(is_array($v) == "object") {
+    if(array_key_exists($key, $v))
+      return $v[$key];
+
+    else if($key == 'name')
+      return lang($v);
+
+    else {
+      $v1 = array();
+      foreach($v as $k=>$x)
+	if(substr($k, 0, strlen($key) + 1) == $key . ':')
+	  $v1[substr($k, strlen($key) + 1)] = $v[$k];
+
+      return lang($v1);
+    }
+  }
+  else if($key == 'name')
+    return $v;
+
+  return null;
+}

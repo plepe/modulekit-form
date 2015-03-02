@@ -90,7 +90,7 @@ form_element_radio.prototype.update_options = function() {
 
     var label=document.createElement("label");
     label.setAttribute("for", id);
-    var text=document.createTextNode(values[k]);
+    var text=document.createTextNode(get_value_string(values[k]));
     label.appendChild(text);
     span.appendChild(label);
 

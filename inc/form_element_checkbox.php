@@ -47,7 +47,7 @@ class form_element_checkbox extends form_element {
       
       $label=$document->createElement("label");
       $label->setAttribute("for", $id);
-      $text=$document->createTextNode($v);
+      $text=$document->createTextNode(get_value_string($v));
       $label->appendChild($text);
       $span->appendChild($label);
 

@@ -33,7 +33,7 @@ class form_element_keywords extends form_element {
 
       foreach($values as $value) {
 	$option=$document->createElement("option");
-	$option->setAttribute("value", $value);
+	$option->setAttribute("value", get_value_string($value));
 
 	$datalist->appendChild($option);
       }

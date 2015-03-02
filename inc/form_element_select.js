@@ -64,7 +64,8 @@ form_element_select.prototype.show_element_option=function(select, k, v) {
   select.appendChild(option);
   this.dom_values[k]=option;
 
-  var text=document.createTextNode(v);
+  var text=document.createTextNode(get_value_string(v));
+
   option.appendChild(text);
 }
 
@@ -137,13 +138,12 @@ form_element_select.prototype.refresh=function(force) {
       this.update_options();
 
     for(var k in this.values)
-      if(this.data == k)
-	if(typeof this.values[k]=="object") {
-	  var desc = lang(this.values[k], "desc:");
+      if(this.data == k) {
+	var desc = get_value_string(this.values[k], 'desc');
 
-	  if(desc)
-	    this.div_desc.innerHTML = desc;
-	}
+	if(desc)
+	  this.div_desc.innerHTML = desc;
+      }
   }
 
   this.dom_element.className=cls;

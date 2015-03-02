@@ -452,3 +452,29 @@ function remove_class(dom, cls) {
     dom.className = classes.join(" ");
   }
 }
+
+function get_value_string(v, key) {
+  if(!key)
+    key = 'name';
+
+  if(typeof v == "object") {
+    if(key in v)
+      return v[key];
+
+    else if(key == 'name')
+      return lang(v);
+
+    else {
+      var v1 = {};
+      for(var k in v)
+	if(k.substr(0, key.length + 1) == key + ':')
+	  v1[k.substr(key.length +1)] = v[k];
+
+      return lang(v1);
+    }
+  }
+  else if(key == 'name')
+    return v;
+
+  return null;
+}

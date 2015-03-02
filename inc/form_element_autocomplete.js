@@ -214,7 +214,7 @@ form_element_autocomplete.prototype.select_box_show_matches=function(all) {
       this.dom_values[k]=option;
       option.onclick=this.select_box_select.bind(this, k);
 
-      var text=document.createTextNode(values[k]);
+      var text=document.createTextNode(get_value_string(values[k]));
       option.appendChild(text);
 
       if(current == k)
@@ -291,7 +291,7 @@ form_element_autocomplete.prototype.onfocus=function() {
 form_element_autocomplete.prototype.select_box_select=function(k) {
   this.dom_element.value = k;
   var values = this.get_values();
-  this.dom_visible.value = values[k];
+  this.dom_visible.value = get_value_string(values[k]);
   this.select_box_last_value = this.dom_visible.value;
   this.select_box_noblur=false;
   this.notify_change();
