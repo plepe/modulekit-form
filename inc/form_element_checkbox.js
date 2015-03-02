@@ -69,6 +69,9 @@ form_element_checkbox.prototype.show_element=function() {
 }
 
 form_element_checkbox.prototype.update_options = function() {
+  while(this.dom.firstChild)
+    this.dom.removeChild(this.dom.firstChild);
+
   this.dom_values={};
   var values=this.get_values();
 
