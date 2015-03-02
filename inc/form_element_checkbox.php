@@ -19,6 +19,8 @@ class form_element_checkbox extends form_element {
       else
 	$data=array();
     }
+    if($data==="")
+      $data=array();
 
     foreach($this->get_values() as $k=>$v) {
       $id="{$this->id}-$k";
@@ -26,7 +28,7 @@ class form_element_checkbox extends form_element {
       // check for changes
       $class="form_orig";
       if(isset($this->orig_data)&&
-         (in_array($k, $this->orig_data)!=in_array($k, $this->data)))
+         (in_array($k, $this->orig_data)!=in_array($k, $data)))
 	$class="form_modified";
 
       $span=$document->createElement("span");
