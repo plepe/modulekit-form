@@ -341,6 +341,25 @@ class form_element {
     }
   }
 
+  function check_contains(&$errors, $param) {
+    if(sizeof($param)<1)
+      return;
+
+    if(is_array($param[0])) {
+      if(sizeof(array_intersect($param[0], $this->get_data())))
+	return;
+    }
+    else {
+      if(in_array($param[0], $this->get_data()))
+	return;
+    }
+
+    if(sizeof($param)<2)
+      $errors[]=lang('form:invalid_value');
+    else
+      $errors[]=$param[1];
+  }
+
   function is_shown() {
     if(isset($this->def['show_depend'])) {
       $errors=array();

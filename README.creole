@@ -62,6 +62,7 @@ Definition:
 ** 'not': inverse check, e.g. array("not", array("regexp", ...)) - the sub-check need to resolve negative.
 ** 'check': Call check on a sibling element or parent element, e.g. array("check", "name", array("is", "foo")) -> call the check array("is", "foo") on element "name". The Path can be prefixed by "../" to query parent elements. If you have a form within an array, you need "../../".
 ** 'is': Compare to a specific value, array("is", VALUE, [MESSAGE]), e.g. array("is", 5, "Value '5' required")
+** 'contains': For arrays and elements which return arrays (e.g. checkbox, keywords, ...). Checks if the value is contained within the data. Optionally the value may be an array, than one of the elements of this array must be contained within the resulting array. array("contains", VALUE, [MESSAGE]).
 * hide_label: if true, hides the left column with label and description and stretches the form element to the full content width.
 
 Translation of name, desc, ...:

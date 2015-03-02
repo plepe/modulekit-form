@@ -337,6 +337,28 @@ form_element.prototype.check_is=function(list, param) {
   }
 }
 
+form_element.prototype.check_contains=function(list, param) {
+  if(param.length<1)
+    return;
+
+  var data = this.get_data();
+
+  if(typeof param[0] == "object") {
+    for(var i=0; i<param[0].length; i++)
+      if(data.indexOf(param[0][i]) != -1)
+	return;
+  }
+  else {
+    if(data.indexOf(param[0]) != -1)
+      return;
+  }
+
+  if(param.length<2)
+    list.push(lang('form:invalid_value'));
+  else
+    list.push(param[1]);
+}
+
 form_element.prototype.show_errors=function() {
   var check_errors=[];
   this.errors.call(this, check_errors);
