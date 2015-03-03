@@ -9,6 +9,16 @@ class form_element_checkbox extends form_element {
     return $data;
   }
 
+  function set_request_data(&$data) {
+    if(array_key_exists("__check_all", $data))
+      $data = array_keys($this->get_values());
+
+    if(array_key_exists("__uncheck_all", $data))
+      $data = array();
+
+    parent::set_request_data($data);
+  }
+
   function show_element($document) {
     $div=parent::show_element($document);
 
@@ -53,6 +63,22 @@ class form_element_checkbox extends form_element {
 
       $br=$document->createElement("br");
       $div->appendChild($br);
+    }
+
+    if(array_key_exists('check_all', $this->def) && $this->def['check_all']) {
+      $this->input_check_all = $document->createElement("input");
+      $this->input_check_all->setAttribute("type", "submit");
+      $this->input_check_all->setAttribute("name", "{$this->options['var_name']}[__check_all]");
+      $this->input_check_all->setAttribute("value", lang("form:check_all"));
+      $div->appendChild($this->input_check_all);
+    }
+
+    if(array_key_exists('uncheck_all', $this->def) && $this->def['uncheck_all']) {
+      $this->input_uncheck_all = $document->createElement("input");
+      $this->input_uncheck_all->setAttribute("type", "submit");
+      $this->input_uncheck_all->setAttribute("name", "{$this->options['var_name']}[__uncheck_all]");
+      $this->input_uncheck_all->setAttribute("value", lang("form:uncheck_all"));
+      $div->appendChild($this->input_uncheck_all);
     }
 
     return $div;

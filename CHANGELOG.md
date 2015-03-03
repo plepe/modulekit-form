@@ -1,3 +1,7 @@
+2015-03-03
+----------
+* Form Element Checkbox: options check_all and uncheck_all
+
 2015-03-02
 ----------
 * New check: 'contains'

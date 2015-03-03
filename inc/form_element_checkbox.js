@@ -108,6 +108,34 @@ form_element_checkbox.prototype.update_options = function() {
     this.dom.appendChild(br);
   }
 
+  if(('check_all' in this.def) && (this.def.check_all)) {
+    this.input_check_all = document.createElement("input");
+    this.input_check_all.setAttribute("type", "button");
+    this.input_check_all.setAttribute("name", this.options.var_name + "[__check_all]");
+    this.input_check_all.setAttribute("value", lang("form:check_all"));
+    this.input_check_all.onclick = function() {
+      for(k in this.dom_values)
+	this.dom_values[k].checked = true;
+
+      this.notify_change();
+    }.bind(this);
+    this.dom.appendChild(this.input_check_all);
+  }
+
+  if(('uncheck_all' in this.def) && (this.def.uncheck_all)) {
+    this.input_uncheck_all = document.createElement("input");
+    this.input_uncheck_all.setAttribute("type", "button");
+    this.input_uncheck_all.setAttribute("name", this.options.var_name + "[__uncheck_all]");
+    this.input_uncheck_all.setAttribute("value", lang("form:uncheck_all"));
+    this.input_uncheck_all.onclick = function() {
+      for(k in this.dom_values)
+	this.dom_values[k].checked = false;
+
+      this.notify_change();
+    }.bind(this);
+    this.dom.appendChild(this.input_uncheck_all);
+  }
+
   return values;
 }
 

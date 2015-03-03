@@ -167,6 +167,8 @@ Definition:
 * values: hash array of values, e.g. array("php"=>"PHP", "cpp"=>"C++", "js"=>"Javascript") or simple array of values, e.g. array("PHP", "C++", "Javascript"); may be translated like: array('m'=>array("en"=>"male", "de"=>"männlich"), 'f'=>array("en"=>"female", "de"=>"weiblich"))
 * values_func: function(s) which can update values list; see Form Element "Select" for details.
 * values_mode: 'keys' (default when a hash array is used) or 'values' (default when a simple array is used)
+* check_all: if true, include a button "check all" which will check all checkboxes
+* uncheck_all: like 'check_all', but for unchecking
 
 Value:
 * In 'keys' values_mode an array of the keys of the chosen values is returned (e.g. array("php", "cpp"); in 'values' mode an array of the the keys of the chosen values is returned (e.g. array("PHP", "C++")).
