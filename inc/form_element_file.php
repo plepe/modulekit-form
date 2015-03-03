@@ -182,7 +182,7 @@ class form_element_file extends form_element {
       }
     }
 
-    parent::set_request_data($data);
+    return parent::set_request_data($data);
   }
 
   function save_data() {

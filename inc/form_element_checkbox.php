@@ -10,13 +10,24 @@ class form_element_checkbox extends form_element {
   }
 
   function set_request_data(&$data) {
-    if(array_key_exists("__check_all", $data))
+    $ret = true;
+
+    if(array_key_exists("__check_all", $data)) {
       $data = array_keys($this->get_values());
+      $ret = false;
+    }
 
-    if(array_key_exists("__uncheck_all", $data))
+    if(array_key_exists("__uncheck_all", $data)) {
       $data = array();
+      $ret = false;
+    }
 
-    parent::set_request_data($data);
+    $r = parent::set_request_data($data);
+
+    if($r === false)
+      return false;
+
+    return $ret;
   }
 
   function show_element($document) {

@@ -64,7 +64,7 @@ class form {
     if(!array_key_exists("show_errors", $this->options))
       $this->options['show_errors']=true;
 
-    $this->element->set_request_data($data);
+    $this->options['complete'] = $this->element->set_request_data($data);
   }
 
   function set_orig_data($data) {
@@ -109,6 +109,9 @@ class form {
       return false;
 
     if($this->errors())
+      return false;
+
+    if($this->options['complete'] === false)
       return false;
 
     return $this->element->is_complete();

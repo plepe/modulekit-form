@@ -53,6 +53,8 @@ class form_element_array extends form_element {
   }
 
   function set_request_data($data) {
+    $ret = true;
+
     // request data empty? -> empty array
     if($data === null) {
       $data = array();
@@ -63,18 +65,22 @@ class form_element_array extends form_element {
       unset($this->data['__new']);
       $this->data[]=null;
       $this->changed_count=true;
+      $ret = false;
     }
     if(isset($this->data['__remove'])) {
       $remove=$this->data['__remove'];
       unset($this->data['__remove']);
+      $ret = false;
     }
     if(isset($this->data['__order_up'])) {
       $order_up=$this->data['__order_up'];
       unset($this->data['__order_up']);
+      $ret = false;
     }
     if(isset($this->data['__order_down'])) {
       $order_down=$this->data['__order_down'];
       unset($this->data['__order_down']);
+      $ret = false;
     }
 
     $this->build_form();
@@ -127,9 +133,12 @@ class form_element_array extends form_element {
 
     foreach($this->elements as $k=>$element) {
       if(isset($data[$k]))
-	$element->set_request_data($data[$k]);
+	$r = $element->set_request_data($data[$k]);
       else
-	$element->set_request_data(null);
+	$r = $element->set_request_data(null);
+
+      if($r === false)
+	$ret = false;
     }
 
     if(isset($remove)) {
@@ -141,6 +150,8 @@ class form_element_array extends form_element {
     }
 
     unset($this->data);
+
+    return $ret;
   }
 
   function set_orig_data($data) {

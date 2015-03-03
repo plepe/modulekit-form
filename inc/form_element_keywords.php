@@ -46,7 +46,7 @@ class form_element_keywords extends form_element {
   }
 
   function set_request_data($data) {
-    parent::set_request_data($data);
+    $ret = parent::set_request_data($data);
 
     if(is_string($this->data) && ($this->data !== "")) {
       $this->data=explode(",", $this->data);
@@ -57,6 +57,8 @@ class form_element_keywords extends form_element {
       $this->data = array();
 
     $this->data=array_unique($this->data);
+
+    return $ret;
   }
 
   function get_data() {

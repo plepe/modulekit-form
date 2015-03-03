@@ -102,7 +102,7 @@ class form_element_directory extends form_element {
       '[timestamp]'	=>Date("Y-m-d-H-i-s"),
     ));
 
-    parent::set_request_data($data);
+    return parent::set_request_data($data);
   }
 
   function save_data() {

@@ -62,10 +62,16 @@ class form_element {
     $this->data=$data;
   }
 
+  // returns:
+  // true: this form element might be complete (if there are no errors)
+  // false: this form element is not complete (e.g. because a button was
+  // clicked to add/remove elements)
   function set_request_data($data) {
     $data = preg_replace("/\r\n/", "\n", $data);
 
     $this->data=$data;
+
+    return true;
   }
 
   function get_data() {

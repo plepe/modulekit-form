@@ -53,12 +53,19 @@ class form_element_form extends form_element {
   }
 
   function set_request_data($data) {
+    $ret = true;
+
     foreach($this->elements as $k=>$element) {
       if(isset($data[$k]))
-	$element->set_request_data($data[$k]);
+	$r = $element->set_request_data($data[$k]);
       else
-	$element->set_request_data(null);
+	$r = $element->set_request_data(null);
+
+      if($r === false)
+	$ret = false;
     }
+
+    return $ret;
   }
 
   function set_orig_data($data) {
