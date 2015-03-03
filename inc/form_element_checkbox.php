@@ -12,12 +12,12 @@ class form_element_checkbox extends form_element {
   function set_request_data(&$data) {
     $ret = true;
 
-    if(array_key_exists("__check_all", $data)) {
+    if($data && array_key_exists("__check_all", $data)) {
       $data = array_keys($this->get_values());
       $ret = false;
     }
 
-    if(array_key_exists("__uncheck_all", $data)) {
+    if($data && array_key_exists("__uncheck_all", $data)) {
       $data = array();
       $ret = false;
     }
