@@ -56,10 +56,10 @@ class form_element_form extends form_element {
     $ret = true;
 
     foreach($this->elements as $k=>$element) {
-      if(isset($data[$k]))
-	$r = $element->set_request_data($data[$k]);
-      else
-	$r = $element->set_request_data(null);
+      if(!isset($data[$k]))
+	$data[$k] = null;
+
+      $r = $element->set_request_data($data[$k]);
 
       if($r === false)
 	$ret = false;
