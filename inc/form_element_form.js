@@ -27,6 +27,14 @@ form_element_form.prototype.connect=function(dom_parent) {
   }
 }
 
+form_element_form.prototype.finish_connect=function() {
+  this.parent("form_element_form").finish_connect.call(this);
+
+  for(var k in this.def.def) {
+    this.elements[k].finish_connect();
+  }
+}
+
 form_element_form.prototype.build_form=function() {
   this.elements={};
 

@@ -68,7 +68,9 @@ form_element.prototype.connect=function(dom_parent) {
 
     current = current.nextSibling;
   }
+}
 
+form_element.prototype.finish_connect=function(dom_parent) {
   call_hooks('form_element_connected', this);
 }
 

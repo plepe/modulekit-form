@@ -81,6 +81,7 @@ form.prototype.connect=function() {
 
   var element_dom_parent=document.getElementById(this.id);
   this.element.connect(element_dom_parent);
+  this.element.finish_connect();
 
   call_hooks('form_connected', this);
 }

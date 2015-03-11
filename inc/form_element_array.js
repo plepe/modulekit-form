@@ -109,6 +109,14 @@ form_element_array.prototype.connect=function(dom_parent) {
   }
 }
 
+form_element_array.prototype.finish_connect=function() {
+  this.parent("form_element_array").finish_connect.call(this);
+
+  for(var k in this.elements) {
+    this.elements[k].finish_connect();
+  }
+}
+
 form_element_array.prototype.get_data=function() {
   var ret={};
 

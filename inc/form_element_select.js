@@ -25,6 +25,8 @@ form_element_select.prototype.connect=function(dom_parent) {
 
     current=current.nextSibling;
   }
+
+  this.parent("form_element_select").finish_connect.call(this, dom_parent);
 }
 
 form_element_select.prototype.get_data=function() {
