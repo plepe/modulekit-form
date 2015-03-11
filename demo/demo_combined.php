@@ -19,6 +19,10 @@ call_hooks("init");
 </head>
 <body>
 <?php
+function fav_hobby_list($value, $form_element, $form) {
+  $values = $form->get_data();
+  return $values['hobbies'];
+}
 
 if($_REQUEST['q']) {
   $form_def=json_decode($_REQUEST['q'], true);

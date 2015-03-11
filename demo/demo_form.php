@@ -133,6 +133,7 @@ $default_data=array(
   "sex"=>"m",
   "comment"=>"Foo Bar\nBlablabla\n",
   "hobbies"=>array(0=>"Linux", 2=>"PHP", 5=>"Cycling"),
+  "fav_hobby"=>"Cycling",
   "birthday"=>"1879-03-14", // Albert Einstein
   "languages"=>array("php", "js"),
   "nationality"=>"de",
