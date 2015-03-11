@@ -72,6 +72,8 @@ form_element.prototype.connect=function(dom_parent) {
 
 form_element.prototype.finish_connect=function(dom_parent) {
   call_hooks('form_element_connected', this);
+
+  this.data = this.get_data();
 }
 
 form_element.prototype.type=function() {
@@ -85,8 +87,8 @@ form_element.prototype.get_data=function() {
   if(!this.dom_element)
     return this.data;
 
-  this.data=this.dom_element.value.replace(/\r\n/, "\n");
-  return this.data;
+  var data=this.dom_element.value.replace(/\r\n/, "\n");
+  return data;
 }
 
 form_element.prototype.set_data=function(data) {
@@ -397,6 +399,8 @@ form_element.prototype.show_errors=function() {
 form_element.prototype.notify_change=function(ev) {
   this.form_root.refresh();
 
+  this.data=this.get_data();
+
   this.show_errors.call(this);
 
   this.form_root.form.notify_change();
@@ -416,8 +420,6 @@ form_element.prototype.is_shown=function() {
 }
 
 form_element.prototype.refresh=function(force) {
-  this.data=this.get_data();
-
   if(!this.tr)
     return;
 
