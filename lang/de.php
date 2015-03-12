@@ -25,3 +25,4 @@ $lang_str['form_element:please_select'] = "-- bitte wählen --";
 
 $lang_str['form:check_all'] = "alle markieren";
 $lang_str['form:uncheck_all'] = "keine markieren";
+$lang_str['form:duplicate'] = [ "Wert %s kommt mehrfach vor.", "Werte %s kommen mehrfach vor." ];

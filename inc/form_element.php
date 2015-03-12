@@ -383,6 +383,28 @@ class form_element {
       $list[] = $ret;
   }
 
+  function check_unique(&$list, $param) {
+    if((sizeof($param) == 0) || ($param[0] == null)) {
+      $data = $this->get_data();
+      $done = array();
+      $dupl = array();
+
+      foreach($data as $k=>$v) {
+	if(in_array($v, $done))
+	  $dupl[] = json_encode($v, JSON_PRETTY_PRINT);
+
+	$done[] = $v;
+      }
+
+      if(sizeof($dupl)) {
+	if(sizeof($param) > 1)
+	  $list[] = lang($param[1], sizeof($dupl), implode(", ", $dupl));
+	else
+	  $list[] = lang("form:duplicate", sizeof($dupl), implode(", ", $dupl));
+      }
+    }
+  }
+
   function is_shown() {
     if(isset($this->def['show_depend'])) {
       $errors=array();

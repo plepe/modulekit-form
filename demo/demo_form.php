@@ -22,6 +22,7 @@ $form_def=array(
       'type'	=>"text",
     ),
     'req'	=>true,
+    'check'	=>array("unique"),
     'order'	=>false,
   ),
   'fav_hobby'   =>array(

@@ -379,6 +379,28 @@ form_element.prototype.check_fun=function(list, param) {
     list.push(ret);
 }
 
+form_element.prototype.check_unique=function(list, param) {
+  if((param.length == 0) || (param[0] == null)) {
+    var data = this.get_data();
+    var done = [];
+    var dupl = [];
+
+    for(var k in data) {
+      if(done.indexOf(data[k]) != -1)
+	dupl.push(JSON.stringify(data[k]));
+
+      done.push(data[k]);
+    }
+
+    if(dupl.length) {
+      if(param.length > 1)
+	list.push(lang(param[1], dupl.length, dupl.join(", ")));
+      else
+	list.push(lang("form:duplicate", dupl.length, dupl.join(", ")));
+    }
+  }
+}
+
 form_element.prototype.show_errors=function() {
   var check_errors=[];
   this.errors.call(this, check_errors);
