@@ -12,6 +12,8 @@ form_element_keywords.prototype.connect=function(dom_parent) {
 
   this.dom_element.onblur=this.notify_change.bind(this);
 
+  this.datalist=document.getElementById(this.id+"-datalist");
+
   this.create_interaction();
 
   this.set_data(this.get_data());
@@ -81,6 +83,9 @@ form_element_keywords.prototype.show_element=function() {
 }
 
 form_element_keywords.prototype.update_options = function() {
+  if(!this.datalist)
+    return;
+
   while(this.datalist.firstChild)
     this.datalist.removeChild(this.datalist.firstChild);
 
