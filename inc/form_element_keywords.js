@@ -139,8 +139,6 @@ form_element_keywords.prototype.set_data=function(data) {
 
     this.keywords_list.appendChild(document.createTextNode(" "));
   }
-
-  this.notify_change();
 }
 
 form_element_keywords.prototype.get_data=function() {
