@@ -91,6 +91,7 @@ $form_def=array(
         'name'	=>"Name",
 	'type'	=>"text",
 	'empty_value'=>"unnamed",
+	'check' => array("unique", "../*/name"),
       ),
       'age'	=>array(
         'name'	=>"Age",

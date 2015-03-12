@@ -298,33 +298,54 @@ form_element.prototype.check_not=function(list, param) {
     list.push(param[1]);
 }
 
-form_element.prototype.resolve_other_element=function(path) {
-  var curr_parent = this.form_parent;
+form_element.prototype.resolve_other_elements=function(path) {
+  if(!path)
+    return [ this ];
 
-  while(path.substr(0, 3) == "../") {
-    curr_parent = curr_parent.form_parent;
-    path = path.substr(3);
+  var p = path.split("/");
+
+  var p_first = p[0];
+  p.splice(0, 1);
+  var p_other = p.join("/");
+
+  if(p_first == "..") {
+    return this.form_parent.resolve_other_elements(p_other);
   }
+  else if(p_first == "*") {
+    var ret = [];
 
-  return curr_parent.elements[path];
+    for(var k in this.elements)
+      ret = ret.concat(this.elements[k].resolve_other_elements(p_other));
+
+    return ret;
+  }
+  else if(p_first in this.elements) {
+    return [ this.elements[p_first] ];
+  }
+  else
+    alert("Path '" + p_first + "' not known");
+
+  return [ ];
 }
 
 // call check() on another form element of the same hierarchy
 form_element.prototype.check_check=function(list, param) {
   var check_errors=[];
 
-  other=this.resolve_other_element(param[0]);
-  if(!other)
-    return;
+  var other_list=this.form_parent.resolve_other_elements(param[0]);
 
-  other.check(check_errors, param[1]);
+  for(var i=0; i<other_list.length; i++) {
+    var other = other_list[i];
 
-  if(check_errors.length) {
-    if(param.length>2)
-      list.push(param[2]);
-    else
-      for(var i=0; i<check_errors.length; i++)
-	list.push(other.path_name()+": "+check_errors[i]);
+    other.check(check_errors, param[1]);
+
+    if(check_errors.length) {
+      if(param.length>2)
+	list.push(param[2]);
+      else
+	for(var i=0; i<check_errors.length; i++)
+	  list.push(other.path_name()+": "+check_errors[i]);
+    }
   }
 }
 
@@ -380,24 +401,32 @@ form_element.prototype.check_fun=function(list, param) {
 }
 
 form_element.prototype.check_unique=function(list, param) {
+  var data = [];
+
   if((param.length == 0) || (param[0] == null)) {
-    var data = this.get_data();
-    var done = [];
-    var dupl = [];
+    data = this.get_data();
+  }
+  else {
+    var other = this.form_parent.resolve_other_elements(param[0]);
+    for(var i=0; i<other.length; i++)
+      data.push(other[i].get_data());
+  }
 
-    for(var k in data) {
-      if(done.indexOf(data[k]) != -1)
-	dupl.push(JSON.stringify(data[k]));
+  var done = [];
+  var dupl = [];
 
-      done.push(data[k]);
-    }
+  for(var k in data) {
+    if(done.indexOf(data[k]) != -1)
+      dupl.push(JSON.stringify(data[k]));
 
-    if(dupl.length) {
-      if(param.length > 1)
-	list.push(lang(param[1], dupl.length, dupl.join(", ")));
-      else
-	list.push(lang("form:duplicate", dupl.length, dupl.join(", ")));
-    }
+    done.push(data[k]);
+  }
+
+  if(dupl.length) {
+    if(param.length > 1)
+      list.push(lang(param[1], dupl.length, dupl.join(", ")));
+    else
+      list.push(lang("form:duplicate", dupl.length, dupl.join(", ")));
   }
 }
 

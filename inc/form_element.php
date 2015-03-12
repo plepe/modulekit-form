@@ -305,32 +305,51 @@ class form_element {
       $errors[]=$param[1];
   }
 
-  function resolve_other_element($path) {
-    $parent = $this->form_parent;
+  function resolve_other_elements($path) {
+    if(!$path)
+      return array($this);
 
-    while(substr($path, 0, 3) == "../") {
-      $parent = $parent->form_parent;
-      $path = substr($path, 3);
+    $p = explode("/", $path);
+
+    $p_first = $p[0];
+    array_splice($p, 0, 1);
+    $p_other = implode("/", $p);
+
+    if($p_first == "..") {
+      return $this->form_parent->resolve_other_elements($p_other);
     }
+    else if($p_first == "*") {
+      $ret = [];
 
-    return $parent->elements[$path];
+      foreach($this->elements as $k=>$v)
+	$ret = array_merge($ret, $this->elements[$k]->resolve_other_elements($p_other));
+
+      return $ret;
+    }
+    else if(array_key_exists($p_first, $this->elements)) {
+      return array( $this->elements[$p_first] );
+    }
+    else
+      print("Path '". $p_first ."' not known");
+
+    return array();
   }
 
   // call check() on another form element of the same hierarchy
   function check_check(&$errors, $param) {
     $check_errors=array();
 
-    $other = $this->resolve_other_element($param[0]);
-    if(!$other)
-      return;
+    $other_list = $this->form_parent->resolve_other_elements($param[0]);
 
-    $other->check($check_errors, $param[1]);
+    foreach($other_list as $other) {
+      $other->check($check_errors, $param[1]);
 
-    if(sizeof($check_errors)) {
-      if(sizeof($param)>2)
-	$errors[]=$param[2];
-      else foreach($check_errors as $e) {
-	$errors[]=$other->path_name().": {$e}";
+      if(sizeof($check_errors)) {
+	if(sizeof($param)>2)
+	  $errors[]=$param[2];
+	else foreach($check_errors as $e) {
+	  $errors[]=$other->path_name().": {$e}";
+	}
       }
     }
   }
@@ -384,24 +403,32 @@ class form_element {
   }
 
   function check_unique(&$list, $param) {
+    $data = array();
+
     if((sizeof($param) == 0) || ($param[0] == null)) {
       $data = $this->get_data();
-      $done = array();
-      $dupl = array();
+    }
+    else {
+      $other_list = $this->form_parent->resolve_other_elements($param[0]);
+      foreach($other_list as $other)
+	$data[] = $other->get_data();
+    }
 
-      foreach($data as $k=>$v) {
-	if(in_array($v, $done))
-	  $dupl[] = json_encode($v, JSON_PRETTY_PRINT);
+    $done = array();
+    $dupl = array();
 
-	$done[] = $v;
-      }
+    foreach($data as $k=>$v) {
+      if(in_array($v, $done))
+	$dupl[] = json_encode($v, JSON_PRETTY_PRINT);
 
-      if(sizeof($dupl)) {
-	if(sizeof($param) > 1)
-	  $list[] = lang($param[1], sizeof($dupl), implode(", ", $dupl));
-	else
-	  $list[] = lang("form:duplicate", sizeof($dupl), implode(", ", $dupl));
-      }
+      $done[] = $v;
+    }
+
+    if(sizeof($dupl)) {
+      if(sizeof($param) > 1)
+	$list[] = lang($param[1], sizeof($dupl), implode(", ", $dupl));
+      else
+	$list[] = lang("form:duplicate", sizeof($dupl), implode(", ", $dupl));
     }
   }
 
