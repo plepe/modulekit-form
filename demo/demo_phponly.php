@@ -4,6 +4,7 @@ Header("content-type: text/html; charset=utf-8");
 $modulekit_nocache=file_exists(".nocache");
 include "../modulekit/loader.php"; /* loads all php-includes */
 include "demo_form.php";
+include "demo_functions.php";
 call_hooks("init");
 ?>
 <!DOCTYPE HTML>
@@ -16,11 +17,6 @@ call_hooks("init");
 </head>
 <body>
 <?php
-function fav_hobby_list($value, $form_element, $form) {
-  $values = $form->get_data();
-  return $values['hobbies'];
-}
-
 if($_REQUEST['q']) {
   $form_def=json_decode($_REQUEST['q'], true);
   $default_data=null;

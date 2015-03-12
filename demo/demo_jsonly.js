@@ -16,10 +16,6 @@ function init() {
   process(false);
 }
 
-function fav_hobby_list(value, form_element, form) {
-  return form.get_data()['hobbies'];
-}
-
 function process(check_errors) {
   var div=document.getElementById("definition");
   while(div.firstChild)

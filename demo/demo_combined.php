@@ -5,6 +5,7 @@ $modulekit_nocache=file_exists(".nocache");
 $modulekit_load[]="modulekit-form-debug";
 include "../modulekit/loader.php"; /* loads all php-includes */
 include "demo_form.php";
+include "demo_functions.php";
 call_hooks("init");
 ?>
 <!DOCTYPE HTML>
@@ -16,14 +17,10 @@ call_hooks("init");
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel='stylesheet' type='text/css' href='demo.css'/>
 <script type='text/javascript' src='demo_combined.js'></script>
+<script type='text/javascript' src='demo_functions.js'></script>
 </head>
 <body>
 <?php
-function fav_hobby_list($value, $form_element, $form) {
-  $values = $form->get_data();
-  return $values['hobbies'];
-}
-
 if($_REQUEST['q']) {
   $form_def=json_decode($_REQUEST['q'], true);
   $default_data=null;
