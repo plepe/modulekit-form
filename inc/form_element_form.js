@@ -146,3 +146,10 @@ form_element_form.prototype.show_errors=function() {
   for(var i in this.elements)
     this.elements[i].show_errors();
 }
+
+form_element_form.prototype.notify_child_change=function(element) {
+  // show errors of current element
+  this.parent("form_element_form").show_errors.call(this);
+
+  this.parent("form_element_form").notify_child_change.call(this, element);
+}

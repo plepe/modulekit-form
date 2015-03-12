@@ -407,3 +407,10 @@ form_element_array.prototype.show_errors=function() {
   for(var i in this.elements)
     this.elements[i].show_errors();
 }
+
+form_element_array.prototype.notify_child_change=function(element) {
+  // show errors of current element
+  this.parent("form_element_array").show_errors.call(this);
+
+  this.parent("form_element_array").notify_child_change.call(this, element);
+}

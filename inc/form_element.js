@@ -441,7 +441,17 @@ form_element.prototype.notify_change=function(ev) {
 
   this.show_errors.call(this);
 
+  if(this.form_parent)
+    this.form_parent.notify_child_change([this]);
+
   this.form_root.form.notify_change();
+}
+
+form_element.prototype.notify_child_change=function(elements) {
+  var el = [this].concat(elements);
+
+  if(this.form_parent)
+    this.form_parent.notify_child_change(el);
 }
 
 form_element.prototype.is_shown=function() {
