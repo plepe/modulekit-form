@@ -363,6 +363,22 @@ form_element.prototype.check_contains=function(list, param) {
     list.push(param[1]);
 }
 
+form_element.prototype.check_fun=function(list, param) {
+  var fun;
+  var ret = null;
+
+  if('js' in param[0])
+    fun = param[0]['js'];
+
+  if(typeof fun == "function")
+    ret = fun(this.get_data(), this, this.form_root.form);
+  else if(fun in window)
+    ret = window[fun](this.get_data(), this, this.form_root.form);
+
+  if(ret)
+    list.push(ret);
+}
+
 form_element.prototype.show_errors=function() {
   var check_errors=[];
   this.errors.call(this, check_errors);

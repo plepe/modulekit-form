@@ -1,3 +1,7 @@
+2015-03-12
+----------
+* New check: 'fun'
+
 2015-03-03
 ----------
 * Form Element Checkbox: options check_all and uncheck_all

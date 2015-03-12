@@ -366,6 +366,23 @@ class form_element {
       $errors[]=$param[1];
   }
 
+  function check_fun(&$list, $param) {
+    $fun = null;
+    $ret = null;
+
+    if(array_key_exists('php', $param[0]))
+      $fun = $param[0]['php'];
+
+    if($fun && (is_callable($fun) || (function_exists($fun)))) {
+      $ret = call_user_func($fun, $this->get_data(), $this, $this->form_root->form);
+    }
+    else
+      $ret = null;
+
+    if($ret)
+      $list[] = $ret;
+  }
+
   function is_shown() {
     if(isset($this->def['show_depend'])) {
       $errors=array();
