@@ -319,7 +319,7 @@ class form_element {
       return $this->form_parent->resolve_other_elements($p_other);
     }
     else if($p_first == "*") {
-      $ret = [];
+      $ret = array();
 
       foreach($this->elements as $k=>$v)
 	$ret = array_merge($ret, $this->elements[$k]->resolve_other_elements($p_other));

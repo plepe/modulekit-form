@@ -1,7 +1,7 @@
 2015-03-12
 ----------
 * New check: 'fun'
-* New check: 'unqiue'
+* New check: 'unique'
 
 2015-03-03
 ----------
