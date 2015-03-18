@@ -111,7 +111,8 @@ class form {
     if($this->errors())
       return false;
 
-    if($this->options['complete'] === false)
+    if((!array_key_exists('complete', $this->options)) ||
+       (!$this->options['complete']))
       return false;
 
     return $this->element->is_complete();
