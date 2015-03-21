@@ -9,7 +9,7 @@ class form_element_checkbox extends form_element {
     return $data;
   }
 
-  function set_request_data(&$data) {
+  function set_request_data($data) {
     $ret = true;
 
     if($data && array_key_exists("__check_all", $data)) {
