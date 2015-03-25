@@ -193,6 +193,7 @@ form_element_keywords.prototype.remove_keyword=function(i) {
   data=data.slice(0, i).concat(data.slice(i+1));
 
   this.set_data(data);
+  this.notify_change();
 }
 
 form_element_keywords.prototype.add_keyword=function() {
@@ -223,6 +224,7 @@ form_element_keywords.prototype.add_keyword_save=function(input) {
     new_data=new_data.concat([input.value]);
 
   this.set_data(new_data);
+  this.notify_change();
 
   delete(this.save_active);
 }
