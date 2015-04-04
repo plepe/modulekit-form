@@ -41,7 +41,10 @@ function form(id, def, options) {
 }
 
 form.prototype.resize=function() {
-  var obs=this.table.getElementsByTagName("table");
+  var obs1=this.table.getElementsByTagName("table");
+  var obs = [ this.table ];
+  for(var i=0; i<obs1.length; i++)
+    obs.push(obs1[i]);
 
   for(var i=0; i<obs.length; i++) {
     var ob=obs[i];
