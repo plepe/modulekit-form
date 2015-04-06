@@ -59,6 +59,18 @@ class form {
   }
 
   function set_request_data($data) {
+    // if an empty var_name is used, check if any of the element keys has been
+    // set in $_REQUEST
+    if($this->options['var_name'] === '') {
+      foreach($this->element->elements as $k=>$element) {
+	if(array_key_exists($k, $_REQUEST))
+	  $this->has_data = true;
+      }
+
+      if(!$this->has_data)
+	return;
+    }
+
     $this->has_data=true;
 
     if(!array_key_exists("show_errors", $this->options))
