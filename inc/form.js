@@ -19,10 +19,14 @@ function form(id, def, options) {
 
     // read orig_data
     var orig_data;
-    var inputs=document.getElementsByTagName("input");
-    for(var i=0; i<inputs.length; i++) {
-      if(inputs[i].name=="form_orig_"+this.options.var_name)
-	orig_data=json_decode(inputs[i].value);
+    if("form_orig_"+this.options.var_name in window)
+      orig_data = window["form_orig_"+this.options.var_name];
+    else {
+      var inputs=document.getElementsByTagName("input");
+      for(var i=0; i<inputs.length; i++) {
+	if(inputs[i].name=="form_orig_"+this.options.var_name)
+	  orig_data=json_decode(inputs[i].value);
+      }
     }
 
     // set orig_data to elements

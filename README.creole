@@ -353,6 +353,7 @@ Parameters:
 * def: a hash defining the form, see the Example code above and the Elements definition.
 * options: influence workings of the form, possible options:
 ** var_name: override default html input element prefix
+** orig_data: set to false, if orig_data should not be passed to subsequent requests as GET/POST-parameter
 
 === set_data(data) ===
 PHP/JS: Change data to supplied values. If data doesn't contain a key existing in the form, these values are not changed.
