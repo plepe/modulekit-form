@@ -42,9 +42,11 @@ form_element_numeric.prototype.set_data=function(data) {
 }
 
 form_element_numeric.prototype.errors=function(list) {
-  var data=this.parent("form_element_numeric").errors.call(this, list);
+  this.parent("form_element_numeric").errors.call(this, list);
 
-  if((this.data===null)||(this.data===""))
+  var data = this.parent("form_element_numeric").get_data.call(this);
+
+  if((data===null)||(data===""))
     return;
 
   var regexp=null;
@@ -59,7 +61,7 @@ form_element_numeric.prototype.errors=function(list) {
     default:
   }
 
-  if(!this.data.match(regexp)) {
+  if(!data.match(regexp)) {
     list.push(lang('form:invalid_value'));
   }
 }
