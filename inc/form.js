@@ -25,7 +25,7 @@ function form(id, def, options) {
       var inputs=document.getElementsByTagName("input");
       for(var i=0; i<inputs.length; i++) {
 	if(inputs[i].name=="form_orig_"+this.options.var_name)
-	  orig_data=json_decode(inputs[i].value);
+	  orig_data=JSON.parse(inputs[i].value);
       }
     }
 
