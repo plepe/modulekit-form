@@ -419,7 +419,7 @@ class form_element {
 
     foreach($data as $k=>$v) {
       if(in_array($v, $done))
-	$dupl[] = json_encode($v, JSON_PRETTY_PRINT);
+	$dupl[] = json_encode($v);
 
       $done[] = $v;
     }
