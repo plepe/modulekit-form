@@ -9,7 +9,7 @@ class form_element_json extends form_element_textarea {
   }
 
   function set_data($data) {
-    parent::set_data(json_encode($data));
+    parent::set_data(json_readable_encode($data));
   }
 
   function errors(&$errors) {

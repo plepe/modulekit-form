@@ -10,18 +10,8 @@ form_element_json.prototype.init=function(id, def, options, form_parent) {
 form_element_json.prototype.connect=function(dom_parent) {
   this.parent("form_element_json").connect.call(this, dom_parent);
 
-  if(this.dom_element) {
+  if(this.dom_element)
     this.dom_element.onblur=this.notify_change.bind(this);
-
-    // update element with formatted value
-    try {
-      var data = JSON.parse(this.dom_element.value);
-      this.dom_element.value = JSON.stringify(data, null, '  ');
-    }
-    catch(e) {
-      // ignore errors in parsing value
-    }
-  }
 }
 
 form_element_json.prototype.create_element=function() {
@@ -40,7 +30,7 @@ form_element_json.prototype.show_element=function() {
 }
 
 form_element_json.prototype.set_data=function(data) {
-  this.parent("form_element_json").set_data.call(this, JSON.stringify(data, null, '  '));
+  this.parent("form_element_json").set_data.call(this, json_readable_encode(data));
 }
 
 form_element_json.prototype.get_data=function() {
