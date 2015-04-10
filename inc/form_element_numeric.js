@@ -13,9 +13,9 @@ form_element_numeric.prototype.get_data=function() {
 
   switch(this.def.type) {
     case 'integer':
-      return parseInt(this.data);
+      return parseInt(data);
     default:
-      return parseFloat(this.data);
+      return parseFloat(data);
   }
 }
 
