@@ -123,11 +123,6 @@ form_element_select.prototype.refresh=function(force) {
   if(!this.dom_element)
     return;
 
-  if(this.is_modified())
-    cls="form_modified";
-  else
-    cls="form_orig";
-
   if('div_desc' in this) {
     this.div_desc.innerHTML="";
 
@@ -145,6 +140,11 @@ form_element_select.prototype.refresh=function(force) {
 	  this.div_desc.innerHTML = desc;
       }
   }
+
+  if(this.is_modified())
+    cls="form_modified";
+  else
+    cls="form_orig";
 
   this.dom_element.className=cls;
 }
