@@ -12,10 +12,10 @@ function modulekit_form_debug(element, span) {
 }
 
 register_hook('form_element_connected', function(element) {
-  if(!element.tr)
+  if(!element.td_desc)
     return;
 
-  var obs = element.tr.getElementsByTagName("div");
+  var obs = element.td_desc.getElementsByTagName("div");
   for(var i = 0; i < obs.length; i++) {
     var ob = obs.item(i);
 
