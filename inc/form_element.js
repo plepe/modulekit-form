@@ -123,8 +123,6 @@ form_element.prototype.show_desc=function() {
     }
   }
 
-  call_hooks('form_element_connected', this);
-
   return ret;
 }
 
@@ -163,6 +161,8 @@ form_element.prototype.show=function() {
   this.td_value.appendChild(this.show_element());
 
   this.td_value.appendChild(this.show_div_errors());
+
+  call_hooks('form_element_connected', this);
 
   return this.tr;
 }
