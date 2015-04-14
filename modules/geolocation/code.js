@@ -69,7 +69,7 @@ form_element_geolocation.prototype.update_display = function() {
   var data = this.get_data();
 
   var text;
-  if(this.data)
+  if(data)
     text = lang("form_element_geolocation:location_latlon", 0, data.latitude, data.longitude);
   else
     text = lang("form_element_geolocation:unknown_location");
