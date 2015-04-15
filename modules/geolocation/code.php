@@ -21,7 +21,7 @@ class form_element_geolocation extends form_element_json {
     $data = $this->get_data();
 
     if(is_array($data))
-      $text = lang("form_element_geolocation:location_latlon", 0, $data['latitude'], $data['longitude']);
+      $text = lang("form_element_geolocation:location_latlon", 0, $data['latitude'], $data['longitude'], $data['accuracy']);
 
     $this->display->appendChild(DOM_createHTMLElement($text, $document));
     $div->appendChild($this->display);

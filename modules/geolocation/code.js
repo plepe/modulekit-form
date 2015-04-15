@@ -70,7 +70,7 @@ form_element_geolocation.prototype.update_display = function() {
 
   var text;
   if(data)
-    text = lang("form_element_geolocation:location_latlon", 0, data.latitude, data.longitude);
+    text = lang("form_element_geolocation:location_latlon", 0, data.latitude, data.longitude, data.accuracy);
   else
     text = lang("form_element_geolocation:unknown_location");
 
