@@ -25,7 +25,7 @@ form_element_geolocation.prototype.connect = function(dom_parent) {
     this.api = navigator.geolocation;
 
   if(this.api)
-    this.api.watchPosition(this.update.bind(this));
+    this.api.watchPosition(this.update.bind(this), null, this.def.options);
 }
 
 form_element_geolocation.prototype.show_element = function() {
@@ -41,7 +41,7 @@ form_element_geolocation.prototype.show_element = function() {
     this.api = navigator.geolocation;
 
   if(this.api)
-    this.api.watchPosition(this.update.bind(this));
+    this.api.watchPosition(this.update.bind(this), null, this.def.options);
 
   return div;
 }
