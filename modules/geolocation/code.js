@@ -25,7 +25,7 @@ form_element_geolocation.prototype.connect = function(dom_parent) {
     this.api = navigator.geolocation;
 
   if(this.api)
-    this.api.watchPosition(this.update.bind(this));
+    this.api.watchPosition(this.update.bind(this), null, this.def.options);
 }
 
 form_element_geolocation.prototype.show_element = function() {
@@ -41,7 +41,7 @@ form_element_geolocation.prototype.show_element = function() {
     this.api = navigator.geolocation;
 
   if(this.api)
-    this.api.watchPosition(this.update.bind(this));
+    this.api.watchPosition(this.update.bind(this), null, this.def.options);
 
   return div;
 }
@@ -69,8 +69,8 @@ form_element_geolocation.prototype.update_display = function() {
   var data = this.get_data();
 
   var text;
-  if(this.data)
-    text = lang("form_element_geolocation:location_latlon", 0, data.latitude, data.longitude);
+  if(data)
+    text = lang("form_element_geolocation:location_latlon", 0, data.latitude, data.longitude, data.accuracy);
   else
     text = lang("form_element_geolocation:unknown_location");
 
