@@ -1,4 +1,7 @@
 <?php
+// Load additional modules
+$modulekit_load[] = "geolocation";
+
 $form_def=array(
   'name'	=>array(
     'name'	=>"Name",
@@ -134,6 +137,10 @@ $form_def=array(
     'name'	=>"Ready",
     'desc'	=>"Are you ready yet?",
   ),
+  'geo'         =>array(
+    'name'      => "Geo",
+    'type'      => "geolocation",
+  ),
 );
 
 $default_data=array(
@@ -151,4 +158,5 @@ $default_data=array(
   "json"=>array(1, 2, "foo", "bar"=>array("b", "a", "r")),
   "cats"=>array(array("name"=>"Foo", "age"=>3)),
   "num"=>10,
+  "geo"=>array("latitude"=>48.20, "longitude"=>16.37),
 );
