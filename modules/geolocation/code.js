@@ -23,6 +23,7 @@ form_element_geolocation.prototype.connect = function(dom_parent) {
       k = k[1];
 
       this.input[k] = nodes[i];
+      this.input[k].onchange = this.notify_input_change.bind(this);
     }
   }
 
@@ -68,6 +69,7 @@ form_element_geolocation.prototype.show_element = function() {
     this.input[k].setAttribute("class", cls + " geolocation");
     this.input[k].setAttribute("disabled", "true");
     this.input[k].setAttribute("type", "text");
+    this.input[k].onchange = this.notify_input_change.bind(this);
     if(data && (k in data))
       this.input[k].setAttribute("value", sprintf("%.5f", data[k]));
     span.appendChild(this.input[k]);
@@ -164,6 +166,25 @@ form_element_geolocation.prototype.update = function(position) {
     this.input._base_.value = JSON.stringify(coords);
 
   this.notify_change();
+}
+
+form_element_geolocation.prototype.notify_input_change = function(ev) {
+  if(!ev)
+    ev = event;
+
+  var data = JSON.parse(this.input._base_.value);
+
+  for(var ki = 0; ki < form_element_geolocation_keys.length; ki++) {
+    var k = form_element_geolocation_keys[ki];
+
+    if(ev.target == this.input[k])
+      data[k] = parseFloat(this.input[k].value);
+  }
+
+  this.data = data;
+  this.input._base_.value = JSON.stringify(data);
+
+  this.notify_change.call(this);
 }
 
 form_element_geolocation.prototype.set_data = function(data) {
