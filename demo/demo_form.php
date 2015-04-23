@@ -45,6 +45,11 @@ $form_def=array(
     'name'	=>"Comment",
     'type'	=>"textarea",
   ),
+  'num'         => array(
+    'name'      =>"Num",
+    'type'      =>"integer",
+    'default'   =>"3",
+  ),
   'nationality'	=>array(
     'name'	=>"Nationality",
     'type'	=>"select",
@@ -144,4 +149,6 @@ $default_data=array(
   "os"=>array("Ubuntu Linux", "Debian Linux"),
   "tags"=>array("Foo", "Bar"),
   "json"=>array(1, 2, "foo", "bar"=>array("b", "a", "r")),
+  "cats"=>array(array("name"=>"Foo", "age"=>3)),
+  "num"=>10,
 );
