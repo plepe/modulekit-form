@@ -1,5 +1,16 @@
 <?php
-$form_element_geolocation_keys = array("latitude", "longitude", "accuracy");
+$form_element_geolocation_keys = array(
+  "latitude"    => array(
+    "format"      => "%.5f",
+  ),
+  "longitude"   => array(
+    "format"      => "%.5f",
+  ),
+  "accuracy"    => array(
+    "format"      => "%.0f",
+  ),
+);
+html_export_var(array("form_element_geolocation_keys" => $form_element_geolocation_keys));
 
 class form_element_geolocation extends form_element {
   function type() {
@@ -34,7 +45,7 @@ class form_element_geolocation extends form_element {
 
     // latitude, longitude
     global $form_element_geolocation_keys;
-    foreach($form_element_geolocation_keys as $k) {
+    foreach($form_element_geolocation_keys as $k => $v) {
       $span = $document->createElement("span");
       $this->display->appendChild($span);
 
@@ -46,7 +57,7 @@ class form_element_geolocation extends form_element {
       $input->setAttribute("class", $class." geolocation");
       $input->setAttribute("type", "text");
       if(is_array($data))
-        $input->setAttribute("value", sprintf("%.5f", $data[$k]));
+        $input->setAttribute("value", sprintf($v['format'], $data[$k]));
       $span->appendChild($input);
     }
 
@@ -63,7 +74,7 @@ class form_element_geolocation extends form_element {
       $base = json_decode($data['_base_'], true);
 
     foreach($data as $k=>$v) {
-      if(in_array($k, $form_element_geolocation_keys) && (sprintf("%.5f", $base[$k]) != $data[$k]))
+      if(array_key_exists($k, $form_element_geolocation_keys) && (sprintf($form_element_geolocation_keys[$k]['format'], $base[$k]) != $data[$k]))
         $base[$k] = $v;
     }
 

@@ -1,5 +1,3 @@
-var form_element_geolocation_keys = [ "latitude", "longitude", "accuracy" ];
-
 form_element_geolocation.inherits_from(form_element);
 function form_element_geolocation() {
 }
@@ -57,8 +55,8 @@ form_element_geolocation.prototype.show_element = function() {
   this.display.appendChild(this.input._base_);
 
   // latitude, longitude
-  for(var ki = 0; ki < form_element_geolocation_keys.length; ki++) {
-    var k = form_element_geolocation_keys[ki];
+  for(var k in form_element_geolocation_keys) {
+    var v = form_element_geolocation_keys[k];
 
     var span = document.createElement("span");
     this.display.appendChild(span);
@@ -72,7 +70,7 @@ form_element_geolocation.prototype.show_element = function() {
     this.input[k].setAttribute("type", "text");
     this.input[k].onchange = this.notify_input_change.bind(this);
     if(data && (k in data))
-      this.input[k].setAttribute("value", sprintf("%.5f", data[k]));
+      this.input[k].setAttribute("value", sprintf(v.format, data[k]));
     span.appendChild(this.input[k]);
   }
 
@@ -146,9 +144,7 @@ form_element_geolocation.prototype.toggle_tracking = function(state) {
         return this.disable_tracking();
     }
 
-    for(var ki = 0; ki < form_element_geolocation_keys.length; ki++) {
-      var k = form_element_geolocation_keys[ki];
-
+    for(var k in form_element_geolocation_keys) {
       this.input[k].setAttribute("disabled", "true");
     }
   }
@@ -156,9 +152,7 @@ form_element_geolocation.prototype.toggle_tracking = function(state) {
     if(this.api)
       this.api.clearWatch(this.update.bind(this));
 
-    for(var ki = 0; ki < form_element_geolocation_keys.length; ki++) {
-      var k = form_element_geolocation_keys[ki];
-
+    for(var k in form_element_geolocation_keys) {
       this.input[k].removeAttribute("disabled");
     }
   }
@@ -186,9 +180,7 @@ form_element_geolocation.prototype.notify_input_change = function(ev) {
 
   var data = JSON.parse(this.input._base_.value);
 
-  for(var ki = 0; ki < form_element_geolocation_keys.length; ki++) {
-    var k = form_element_geolocation_keys[ki];
-
+  for(var k in form_element_geolocation_keys) {
     if(ev.target == this.input[k])
       data[k] = parseFloat(this.input[k].value);
   }
@@ -226,9 +218,10 @@ form_element_geolocation.prototype.update_display = function() {
   if(this.input && data) {
     this.input._base_.value = JSON.stringify(data);
 
-    for(var k in this.input) {
-      if((k != "_base_") && (k in data))
-        this.input[k].value = sprintf("%.5f", data[k]);
+    for(var k in form_element_geolocation_keys) {
+      var v = form_element_geolocation_keys[k];
+
+      this.input[k].value = sprintf(v.format, data[k]);
     }
 
     this.input.enable_tracking.checked = ('enable_tracking' in data ? data['enable_tracking'] : true);
