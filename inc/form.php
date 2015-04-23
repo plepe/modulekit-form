@@ -95,16 +95,11 @@ class form {
   function errors() {
     $errors=array();
 
-    if(!$this->has_data)
-      return false;
-
-    if(!$this->element->is_complete())
-      return false;
-
     $this->element->all_errors($errors);
 
     if(!sizeof($errors))
       return false;
+
     return $errors;
   }
 

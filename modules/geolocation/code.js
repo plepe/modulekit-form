@@ -1,4 +1,4 @@
-var form_element_geolocation_keys = [ "latitude", "longitude" ];
+var form_element_geolocation_keys = [ "latitude", "longitude", "accuracy" ];
 
 form_element_geolocation.inherits_from(form_element);
 function form_element_geolocation() {
@@ -141,7 +141,7 @@ form_element_geolocation.prototype.toggle_tracking = function(state) {
         this.api = navigator.geolocation;
 
       if(this.api)
-        this.api.watchPosition(this.update.bind(this));
+        this.api.watchPosition(this.update.bind(this), null, this.def.options);
       else
         return this.disable_tracking();
     }

@@ -1,5 +1,5 @@
 <?php
-$form_element_geolocation_keys = array("latitude", "longitude");
+$form_element_geolocation_keys = array("latitude", "longitude", "accuracy");
 
 class form_element_geolocation extends form_element {
   function type() {

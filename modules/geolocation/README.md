@@ -15,7 +15,7 @@ An optional form element for the Geolocation Javascript API. The resulting data 
 
 Options
 -------
-none
+* options: options for the navigator.geolocation element, typically: enableHighAccuracy, timeout, maximumAge. See http://dev.w3.org/geo/api/spec-source.html#position_options_interface for details.
 
 Notes
 -----
