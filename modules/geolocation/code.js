@@ -23,16 +23,12 @@ form_element_geolocation.prototype.connect = function(dom_parent) {
       k = k[1];
 
       this.input[k] = nodes[i];
-      this.input[k].setAttribute("disabled", "true");
     }
   }
 
-  this.api = null;
-  if('geolocation' in navigator)
-    this.api = navigator.geolocation;
+  this.show_enable_tracking();
 
-  if(this.api)
-    this.api.watchPosition(this.update.bind(this));
+  this.enable_tracking();
 }
 
 form_element_geolocation.prototype.show_element = function() {
@@ -77,22 +73,86 @@ form_element_geolocation.prototype.show_element = function() {
     span.appendChild(this.input[k]);
   }
 
+  this.show_enable_tracking();
+
   div.appendChild(this.display);
 
-  this.api = null;
-  if('geolocation' in navigator)
-    this.api = navigator.geolocation;
-
-  if(this.api)
-    this.api.watchPosition(this.update.bind(this));
+  this.enable_tracking();
 
   return div;
+}
+
+form_element_geolocation.prototype.show_enable_tracking = function() {
+  // track GPS?
+  var span = document.createElement("span");
+  this.input.enable_tracking = document.createElement("input");
+  this.input.enable_tracking.setAttribute("name", this.options.var_name + "[enable_tracking]");
+  this.input.enable_tracking.setAttribute("id", this.id + "[enable_tracking]");
+  this.input.enable_tracking.setAttribute("type", "checkbox");
+  this.input.enable_tracking.onchange = this.toggle_tracking.bind(this);
+  span.appendChild(this.input.enable_tracking);
+  var label = document.createElement("label");
+  label.setAttribute("for", this.id + "[enable_tracking]");
+  label.appendChild(document.createTextNode(lang("form_element_geolocation:enable_tracking")));
+  span.appendChild(label);
+  this.display.appendChild(span);
 }
 
 form_element_geolocation.prototype.refresh = function() {
   var div = this.parent("form_element_geolocation").refresh.call(this);
 
   this.update_display();
+}
+
+form_element_geolocation.prototype.enable_tracking = function() {
+  if(this.input && this.input.enable_tracking)
+    this.input.enable_tracking.checked = true;
+
+  this.toggle_tracking(true);
+}
+
+form_element_geolocation.prototype.disable_tracking = function() {
+  if(this.input && this.input.enable_tracking)
+    this.input.enable_tracking.checked = false;
+
+  this.toggle_tracking(false);
+}
+
+form_element_geolocation.prototype.toggle_tracking = function(state) {
+  if((state !== true) && (state !== false)) {
+    if(this.input && this.input.enable_tracking)
+      state = this.input.enable_tracking.checked;
+    else
+      return;
+  }
+
+  if(state) {
+    if(!this.api) {
+      if('geolocation' in navigator)
+        this.api = navigator.geolocation;
+
+      if(this.api)
+        this.api.watchPosition(this.update.bind(this));
+      else
+        return this.disable_tracking();
+    }
+
+    for(var ki = 0; ki < form_element_geolocation_keys.length; ki++) {
+      var k = form_element_geolocation_keys[ki];
+
+      this.input[k].setAttribute("disabled", "true");
+    }
+  }
+  else {
+    if(this.api)
+      this.api.clearWatch(this.update.bind(this));
+
+    for(var ki = 0; ki < form_element_geolocation_keys.length; ki++) {
+      var k = form_element_geolocation_keys[ki];
+
+      this.input[k].removeAttribute("disabled");
+    }
+  }
 }
 
 form_element_geolocation.prototype.update = function(position) {
@@ -116,8 +176,12 @@ form_element_geolocation.prototype.set_data = function(data) {
 form_element_geolocation.prototype.get_data = function() {
   var data = {};
 
-  if(this.input)
+  if(this.input) {
     data = JSON.parse(this.input._base_.value);
+
+    if(this.input.enable_tracking)
+      data.enable_tracking = this.input.enable_tracking.checked;
+  }
 
   return data;
 }

@@ -4,3 +4,4 @@ $lang_str['form_element_geolocation:latitude'] = "Breitengrad";
 $lang_str['form_element_geolocation:longitude'] = "Längengrad";
 $lang_str['form_element_geolocation:short:latitude'] = "Lat";
 $lang_str['form_element_geolocation:short:longitude'] = "Lon";
+$lang_str['form_element_geolocation:enable_tracking'] = "GPS abfragen";
