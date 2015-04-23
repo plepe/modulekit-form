@@ -1,5 +1,7 @@
 <?php
-class form_element_geolocation extends form_element_json {
+$form_element_geolocation_keys = array("latitude", "longitude");
+
+class form_element_geolocation extends form_element {
   function type() {
     return "geolocation";
   }
@@ -17,15 +19,53 @@ class form_element_geolocation extends form_element_json {
     $this->display = $document->createElement("div");
     $this->display->setAttribute("class", "display");
 
-    $text = lang("form_element_geolocation:unknown_location");
+    $class="form_orig";
+    if($this->is_modified())
+      $class="form_modified";
+
     $data = $this->get_data();
 
-    if(is_array($data))
-      $text = lang("form_element_geolocation:location_latlon", 0, $data['latitude'], $data['longitude']);
+    // base data
+    $input = $document->createElement("input");
+    $input->setAttribute("type", "hidden");
+    $input->setAttribute("name", $this->options['var_name'] . "[_base_]");
+    $input->setAttribute("value", json_encode($data));
+    $this->display->appendChild($input);
 
-    $this->display->appendChild(DOM_createHTMLElement($text, $document));
+    // latitude, longitude
+    global $form_element_geolocation_keys;
+    foreach($form_element_geolocation_keys as $k) {
+      $span = $document->createElement("span");
+      $this->display->appendChild($span);
+
+
+      $span->appendChild(
+        $document->createTextNode(lang("form_element_geolocation:short:{$k}") . ": "));
+      $input = $document->createElement("input");
+      $input->setAttribute("name", $this->options['var_name'] . "[{$k}]");
+      $input->setAttribute("class", $class." geolocation");
+      $input->setAttribute("type", "text");
+      if(is_array($data))
+        $input->setAttribute("value", sprintf("%.5f", $data[$k]));
+      $span->appendChild($input);
+    }
+
     $div->appendChild($this->display);
 
     return $div;
+  }
+
+  function set_request_data($data) {
+    $base = array();
+
+    if(array_key_exists('_base_', $data))
+      $base = json_decode($data['_base_'], true);
+
+    foreach($data as $k=>$v) {
+      if(($k != "_base_") && (sprintf("%.5f", $base[$k]) != $data[$k]))
+        $base[$k] = $v;
+    }
+
+    parent::set_request_data($base);
   }
 }

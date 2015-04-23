@@ -1,0 +1,7 @@
+table.form td.field_value .form_element_geolocation .display input[type=text] {
+  width: 5em;
+}
+table.form td.field_value .form_element_geolocation .display span {
+  display: inline-block;
+  margin-right: 0.5em;
+}
