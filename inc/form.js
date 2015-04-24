@@ -205,6 +205,64 @@ form.prototype.notify_change=function() {
     this.onchange();
 }
 
+form.prototype.get_request_data = function() {
+  var types = [ "input", "select", "textarea" ];
+  var ret = {};
+
+  for(var type_i = 0; type_i < types.length; type_i ++) {
+    var obs = this.table.getElementsByTagName(types[type_i]);
+    for(var i = 0; i < obs.length; i++) {
+      var ob = obs[i];
+      var active = true;
+      var path;
+
+      if(ob.type == "submit")
+        active = false;
+      if((ob.type == "checkbox") || (ob.type == "radio"))
+        active = ob.checked;
+      if(!ob.name)
+        active = false;
+
+      if(active) {
+        if(ob.name.indexOf("[") == -1)
+          path = [ ob.name ];
+        else {
+          path = [ ob.name.slice(0, ob.name.indexOf("[")) ];
+          path = path.concat(ob.name.slice(ob.name.indexOf("[") + 1, ob.name.length - 1).split("]["));
+        }
+
+        var r = ret;
+        for(var p = 0; p < path.length; p++) {
+          var v = path[p];
+          if(v == "")
+            v = arr_count(r);
+
+          if(p == path.length - 1) {
+            r[v] = ob.value;
+          }
+          else {
+            if(!(v in r))
+              r[v] = {};
+          }
+
+          r = r[v];
+        }
+      }
+    }
+  }
+
+  return ret;
+}
+
+function arr_count(arr) {
+  var ret = 0;
+
+  for(var k in arr)
+    ret++;
+
+  return ret;
+}
+
 var em_height_cache = {};
 function get_em_height(dom_el) {
   var font_size = elementCurrentStyle(dom_el, "font-size");

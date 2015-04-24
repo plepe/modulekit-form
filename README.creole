@@ -378,3 +378,6 @@ Ask, if the form has not been filled with data yet.
 
 === clear() ===
 Let the form forget its data (is_empty() will return true).
+
+=== get_request_data() ===
+(JS only): Return a structure similar to this which would be submitted to the server via GET/POST.

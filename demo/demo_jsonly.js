@@ -12,6 +12,16 @@ function init() {
   input.value="Ok";
   div.appendChild(input);
 
+  var input=document.createElement("input");
+  input.type="button";
+  input.value="Req";
+  input.onclick = function() {
+    var d = form_data.get_request_data();
+    console.log(d);
+    alert(JSON.stringify(d, null, '  '));
+  }
+  div.appendChild(input);
+
   div.onsubmit=process;
   process(false);
 }
