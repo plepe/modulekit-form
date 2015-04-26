@@ -1,3 +1,7 @@
+2015-04-26
+----------
+* New check: 'has_value'
+
 2015-04-06
 ----------
 * New option: 'orig_data' (set to false, if orig_data should not be passed to subsequent requests as GET/POST-parameter)

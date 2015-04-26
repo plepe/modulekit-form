@@ -230,6 +230,16 @@ form_element.prototype.check=function(list, param) {
   }
 }
 
+// check if element has a value
+form_element.prototype.check_has_value=function(list, param) {
+  if(this.get_data() === null) {
+    if(param.length<1)
+      list.push(lang('form:invalid_value'));
+    else
+      list.push(param[0]);
+  }
+}
+
 // call check() for all elements of the param-array
 // if last element is a string it wil be returned as error message (if any of the checks returned an error)
 form_element.prototype.check_and=function(list, param) {
