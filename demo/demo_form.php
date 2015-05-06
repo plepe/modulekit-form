@@ -39,6 +39,7 @@ $form_def=array(
   'birthday'	=>array(
     'name'	=>"Birthday",
     'type'	=>"date",
+    'include_data'=>array('check', 'sex', array('is', 'm')),
   ),
   'languages'	=>array(
     'name'	=>"What languages do you speak?",

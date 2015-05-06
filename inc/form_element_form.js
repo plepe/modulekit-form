@@ -69,7 +69,7 @@ form_element_form.prototype.get_data=function(data) {
   var ret={};
 
   for(var i in this.elements) {
-    if(this.elements[i].is_shown())
+    if(this.elements[i].include_data())
       ret[i]=this.elements[i].get_data();
   }
 

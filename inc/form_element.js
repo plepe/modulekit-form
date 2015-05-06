@@ -83,6 +83,23 @@ form_element.prototype.type=function() {
   return "default";
 }
 
+form_element.prototype.include_data=function() {
+  if('include_data' in this.def) {
+    console.log(this.def.include_data);
+    if((this.def.include_data === true) || (this.def.include_data === false))
+      return this.def.include_data;
+
+    errors=[];
+
+    this.check(errors, this.def.include_data);
+
+    if(errors.length)
+      return false;
+  }
+
+  return true;
+}
+
 form_element.prototype.get_data=function() {
   if(!this.dom_element)
     return this.data;

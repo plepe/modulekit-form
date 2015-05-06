@@ -239,6 +239,22 @@ class form_element {
     return $this->dom;
   }
 
+  function include_data() {
+    if(isset($this->def['include_data'])) {
+      if(is_bool($this->def['include_data']))
+	return $this->def['include_data'];
+
+      $errors=array();
+
+      $this->check($errors, $this->def['include_data']);
+
+      if(sizeof($errors))
+	return false;
+    }
+
+    return true;
+  }
+
   function save_data() {
   }
 

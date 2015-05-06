@@ -17,3 +17,7 @@ form_element_intermediate_text.prototype.show=function() {
 form_element_intermediate_text.prototype.get_data=function() {
   return null;
 }
+
+form_element_intermediate_text.prototype.include_data=function() {
+  return false;
+}

@@ -1,6 +1,7 @@
 2015-05-06
 ----------
 * New Form Element 'Intermediate Text'
+* New option for all Form Elements: 'include_data'
 
 2015-04-26
 ----------

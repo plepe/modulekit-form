@@ -20,4 +20,8 @@ class form_element_intermediate_text extends form_element {
   function get_data() {
     return null;
   }
+
+  function include_data() {
+    return false;
+  }
 }
