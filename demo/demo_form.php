@@ -14,6 +14,10 @@ $form_def=array(
     'type'	=>"radio",
     'values'	=>array('m'=>array("en"=>"male", "de"=>"männlich"), 'f'=>array("en"=>"female", "de"=>"weiblich")),
   ),
+  '_0' => array(
+    'type'	=> 'intermediate_text',
+    'text'	=> '<b>Tell something about your hobbies:</b>',
+  ),
   'hobbies'	=>array(
     'name'	=>"Hobbies",
     'type'	=>"array",

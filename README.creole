@@ -342,6 +342,13 @@ A non-editable field. It just shows the value. In opposition to other elements, 
 Definition:
 * type: 'display'
 
+=== Form Element "Intermediate Text" ===
+A non-editable field, which does not even contain data. It's meant for intermediate headings or longer descriptions.
+
+Definition:
+* type: 'intermediate_text'
+* text: some text which will be shown. May contain HTML.
+
 == Functions of form ==
 === Constructor ===
 Creates a form.

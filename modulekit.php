@@ -33,6 +33,7 @@ $include_php=array(
   "inc/form_element_autocomplete.php",
   "inc/form_element_display.php",
   "inc/form_element_hidden.php",
+  "inc/form_element_intermediate_text.php",
 );
 $include_js=array(
   "inc/functions.js",
@@ -58,6 +59,7 @@ $include_js=array(
   "inc/form_element_autocomplete.js",
   "inc/form_element_display.js",
   "inc/form_element_hidden.js",
+  "inc/form_element_intermediate_text.js",
 );
 $include_css=array(
   "inc/form.css",

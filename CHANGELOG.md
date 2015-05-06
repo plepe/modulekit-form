@@ -1,3 +1,7 @@
+2015-05-06
+----------
+* New Form Element 'Intermediate Text'
+
 2015-04-26
 ----------
 * New check: 'has_value'
