@@ -458,6 +458,15 @@ class form_element {
     }
   }
 
+  function check_has_value(&$list, $param) {
+    if($this->get_data() === null) {
+      if(sizeof($param)<2)
+	$errors[]=lang('form:invalid_value');
+      else
+	$errors[]=$param[0];
+    }
+  }
+
   function is_shown() {
     if(isset($this->def['show_depend'])) {
       $errors=array();
