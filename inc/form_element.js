@@ -426,6 +426,8 @@ form_element.prototype.check_fun=function(list, param) {
 
   if('js' in param[0])
     fun = param[0]['js'];
+  else
+    return;
 
   if(typeof fun == "function")
     ret = fun(this.get_data(), this, this.form_root.form);

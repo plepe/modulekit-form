@@ -417,6 +417,8 @@ class form_element {
 
     if(array_key_exists('php', $param[0]))
       $fun = $param[0]['php'];
+    else
+      return;
 
     if($fun && (is_callable($fun) || (function_exists($fun)))) {
       $ret = call_user_func($fun, $this->get_data(), $this, $this->form_root->form);
