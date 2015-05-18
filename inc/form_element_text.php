@@ -71,7 +71,7 @@ class form_element_text extends form_element {
     if($data === null)
       return;
 
-    if(preg_match("/{$param[0]}/", $data)) {
+    if(!preg_match("/{$param[0]}/", $data)) {
       if(sizeof($param)<2)
 	$errors[]="Ungültiger Wert";
       else
