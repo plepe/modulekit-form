@@ -245,6 +245,15 @@ form_element.prototype.check=function(list, param) {
   if(typeof this[check_fun]==='function') {
     this[check_fun](list, check);
   }
+
+  for(var i = 0; i < list.length; i++) {
+    if(typeof list[i] == "object") {
+      var p = list[i];
+      list.splice(i, 1);
+      for(var j = 0; j < p.length; j++)
+	list.splice(i, 0, p[j]);
+    }
+  }
 }
 
 // check if element has a value

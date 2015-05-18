@@ -124,6 +124,16 @@ class form_element {
     if(method_exists($this, $check_fun)) {
       call_user_func_array(array($this, $check_fun), array(&$errors, $param));
     }
+
+    $new_errors = array();
+    foreach($errors as $e) {
+      if(is_array($e))
+	$new_errors = array_merge($new_errors, $e);
+      else
+	$new_errors[] = $e;
+    }
+
+    $errors = $new_errors;
   }
 
   function is_complete() {

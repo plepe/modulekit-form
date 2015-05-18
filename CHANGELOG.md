@@ -1,3 +1,7 @@
+2015-05-18
+----------
+* Checks may return an array for multiple error messages
+
 2015-05-06
 ----------
 * New Form Element 'Intermediate Text'
