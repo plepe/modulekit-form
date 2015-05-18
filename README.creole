@@ -101,7 +101,9 @@ Basic form element with a single line text input.
 
 Definition:
 * type: 'text'
-* check: array("regexp", REGEXP, [MESSAGE]), e.g. array("regexp", "^A", "Value needs to start with an 'A'") (MESSAGE may be an array for multiple error messages)
+* checks:
+** regexp: array("regexp", REGEXP, [MESSAGE]), e.g. array("regexp", "^A", "Value needs to start with an 'A'") (MESSAGE may be an array for multiple error messages)
+** not_regexp: array("not_regexp", REGEXP, [MESSAGE]), e.g. array("not_regexp", "^A", "Value may not start with an 'A'") (MESSAGE may be an array for multiple error messages)
 * empty_value: Value to be returned if text field is empty (default: null)
 * html_attributes: Assoc. Array, e.g. array("style"=>"text-weight: bold;", "autofocus=>true)
 * values: array of recommended values

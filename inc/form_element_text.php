@@ -79,6 +79,23 @@ class form_element_text extends form_element {
     }
   }
 
+  function check_not_regexp(&$errors, $param) {
+    if(sizeof($param)<1)
+      return;
+
+    $data = $this->get_data();
+
+    if($data === null)
+      return;
+
+    if(preg_match("/{$param[0]}/", $data)) {
+      if(sizeof($param)<2)
+	$errors[]="Ungültiger Wert";
+      else
+	$errors[]=$param[1];
+    }
+  }
+
   function get_data() {
     $data=parent::get_data();
 

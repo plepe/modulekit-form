@@ -140,6 +140,23 @@ form_element_text.prototype.check_regexp=function(list, param) {
   }
 }
 
+form_element_text.prototype.check_not_regexp=function(list, param) {
+  if(param.length<1)
+    return;
+
+  var data = this.get_data();
+
+  if(data === null)
+    return;
+
+  if(data.match(param[0])) {
+    if(param.length<2)
+      list.push(lang('form:invalid_value'));
+    else
+      list.push(param[1]);
+  }
+}
+
 form_element_text.prototype.errors=function(list) {
   this.parent("form_element_text").errors.call(this, list);
 

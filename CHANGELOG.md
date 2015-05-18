@@ -1,6 +1,7 @@
 2015-05-18
 ----------
 * Checks may return an array for multiple error messages
+* Form Element Text: new check 'not_regexp'
 
 2015-05-06
 ----------
