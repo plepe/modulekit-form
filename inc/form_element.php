@@ -85,7 +85,7 @@ class form_element {
 
       if(is_array($req)) {
 	$this->check($req_test, $req);
-	$req = count($req_test) == 0;
+	$req = count($req_test) != 0;
       }
 
       return $req;

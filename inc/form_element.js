@@ -199,7 +199,7 @@ form_element.prototype.required=function() {
 
     if(typeof req == 'object') {
       this.check(req_test, req);
-      req = req_test.length == 0;
+      req = req_test.length != 0;
     }
 
     return req;
