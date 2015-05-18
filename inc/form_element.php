@@ -458,9 +458,9 @@ class form_element {
     }
   }
 
-  function check_has_value(&$list, $param) {
+  function check_has_value(&$errors, $param) {
     if($this->get_data() === null) {
-      if(sizeof($param)<2)
+      if(sizeof($param)<1)
 	$errors[]=lang('form:invalid_value');
       else
 	$errors[]=$param[0];
