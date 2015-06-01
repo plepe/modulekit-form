@@ -147,6 +147,7 @@ Definition (also see Form Element "Text"):
 * format: How date is displayed resp. entered in input field. Default: "j.n.Y G:i:s" (see PHP function 'Date' for details). Supported keys: Y, y, m, n, d, j, g, G, h, H, h, i, s, O, P, a, A.
 * value_format: How date is represented in set_data()/get_data(). See below under 'Value'.
 * check: Additional check type 'after', can be a date value or a reference to another date element on the same hierarchy level (e.g. 'check'=>array("after", "[start]", "Date has to be after 'start' element") )
+* timezone: which timezone to use (default: 'UTC')
 
 Value:
 * Returns a value in the specified type (see RFC 3339 for details). The format can be overwritten by the option 'value_format':
