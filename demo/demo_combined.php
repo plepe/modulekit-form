@@ -21,11 +21,11 @@ call_hooks("init");
 </head>
 <body>
 <?php
-if($_REQUEST['q']) {
+if(isset($_REQUEST['q'])) {
   $form_def=json_decode($_REQUEST['q'], true);
   $default_data=null;
 }
-if($_REQUEST['d']) {
+if(isset($_REQUEST['d'])) {
   $default_data=json_decode($_REQUEST['d'], true);
 }
 include "demo_header.php";

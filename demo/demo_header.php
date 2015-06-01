@@ -10,9 +10,9 @@ foreach(array("phponly"=>"PHP Only", "combined"=>"PHP/JS combined", "jsonly"=>"J
   $url="demo_{$variant}.php";
 
   $url_param=array();
-  if($_REQUEST['q'])
+  if(isset($_REQUEST['q']))
     $url_param[]="q=".urlencode($_REQUEST['q']);
-  if($_REQUEST['d'])
+  if(isset($_REQUEST['d']))
     $url_param[]="d=".urlencode($_REQUEST['d']);
   if(sizeof($url_param))
     $url.="?".implode("&amp;", $url_param);
@@ -29,8 +29,10 @@ print implode(" |\n", $text);
 
 print " Language: ";
 print "<form action='demo_{$current_variant}.php' method='get'>\n";
-print "<input type='hidden' name='q' value=\"".htmlspecialchars($_REQUEST['q'])."\">\n";
-print "<input type='hidden' name='d' value=\"".htmlspecialchars($_REQUEST['d'])."\">\n";
+if(isset($_REQUEST['q']))
+  print "<input type='hidden' name='q' value=\"".htmlspecialchars($_REQUEST['q'])."\">\n";
+if(isset($_REQUEST['d']))
+  print "<input type='hidden' name='d' value=\"".htmlspecialchars($_REQUEST['d'])."\">\n";
 print "<select name='ui_lang' onchange='this.form.submit()'>\n";
 $data=modulekit_loaded("");
 foreach($data['languages'] as $lang_id) {

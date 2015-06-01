@@ -1,14 +1,14 @@
 <?php
-if($_REQUEST['q']) {
+if(isset($_REQUEST['q'])) {
   $params="?q=".urlencode($_REQUEST['q']);
 }
-if($_REQUEST['d']) {
+if(isset($_REQUEST['d'])) {
   $params.="&d=".urlencode($_REQUEST['d']);
 }
 
 print "<h2>Example</h2>\n";
 print "Definition: ".htmlspecialchars($_REQUEST['q'])."<br>\n";
-if($_REQUEST['d'])
+if(isset($_REQUEST['d']))
   print "Data: ".htmlspecialchars($_REQUEST['d'])."<br>\n";
 
 print "<h2>Choose mode</h2>\n";
