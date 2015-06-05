@@ -435,21 +435,28 @@ class form_element {
 
     if((sizeof($param) == 0) || ($param[0] == null)) {
       $data = $this->get_data();
+
+      $done = array();
+      $dupl = array();
+
+      foreach($data as $k=>$v) {
+	if(in_array($v, $done))
+	  $dupl[] = json_encode($v);
+
+	$done[] = $v;
+      }
     }
     else {
+      $this_data = $this->get_data();
+      $this_data_enc = json_encode($this_data);
+
       $other_list = $this->form_parent->resolve_other_elements($param[0]);
-      foreach($other_list as $other)
-	$data[] = $other->get_data();
-    }
-
-    $done = array();
-    $dupl = array();
-
-    foreach($data as $k=>$v) {
-      if(in_array($v, $done))
-	$dupl[] = json_encode($v);
-
-      $done[] = $v;
+      foreach($other_list as $other) {
+	if(($other != $this) && (json_encode($other->get_data()) == $this_data_enc)) {
+	  $dupl = array( $this_data );
+	  break;
+	}
+      }
     }
 
     if(sizeof($dupl)) {

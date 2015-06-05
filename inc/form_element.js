@@ -443,21 +443,30 @@ form_element.prototype.check_unique=function(list, param) {
 
   if((param.length == 0) || (param[0] == null)) {
     data = this.get_data();
+
+    var done = [];
+    var dupl = [];
+
+    for(var k in data) {
+      if(done.indexOf(data[k]) != -1)
+	dupl.push(JSON.stringify(data[k]));
+
+      done.push(data[k]);
+    }
   }
   else {
-    var other = this.form_parent.resolve_other_elements(param[0]);
-    for(var i=0; i<other.length; i++)
-      data.push(other[i].get_data());
-  }
+    var this_data = this.get_data();
+    var this_data_enc = JSON.stringify(this_data);
 
-  var done = [];
-  var dupl = [];
+    var other_list = this.form_parent.resolve_other_elements(param[0]);
+    for(var i=0; i<other_list.length; i++) {
+      var other = other_list[i];
 
-  for(var k in data) {
-    if(done.indexOf(data[k]) != -1)
-      dupl.push(JSON.stringify(data[k]));
-
-    done.push(data[k]);
+      if((other != this) && (JSON.stringify(other.get_data()) == this_data_enc)) {
+	dupl = [ this_data ];
+	break;
+      }
+    }
   }
 
   if(dupl.length) {
