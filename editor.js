@@ -1,6 +1,8 @@
 function editor_update_form() {
   var def = form_data.get_data().elements;
 
+  document.getElementById("definition_display").innerHTML = json_readable_encode(def);
+
   var form_test_div = document.getElementById("form_test");
   while(form_test_div.lastChild)
     form_test_div.removeChild(form_test_div.lastChild);

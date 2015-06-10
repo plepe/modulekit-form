@@ -1,5 +1,6 @@
 <?php
 Header("content-type: text/html; charset=utf-8");
+$modulekit_load[] = "json_readable_encode";
 include "modulekit/loader.php"; /* loads all php-includes */
 call_hooks("init");
 
@@ -108,8 +109,8 @@ print "</form>\n";
 print "</div>\n";
 
 print "<div id='definition' class='struct'>\n";
-print "Form definition:<pre>\n";
-print_r($def);
+print "Form definition:<pre id='definition_display'>\n";
+print json_readable_encode($def);
 print "</pre>\n";
 print "</div>\n";
 
