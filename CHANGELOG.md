@@ -2,6 +2,7 @@
 ----------
 * New check 'required'
 * Form Element Array: when req=true, require at least one element
+* New Form Element 'hash' (like 'array', but with additional key)
 
 2015-06-01
 ----------

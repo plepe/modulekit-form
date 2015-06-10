@@ -285,7 +285,7 @@ function form_process_def(def) {
   for(var k in def) {
     var element_def=new clone(def[k]);
 
-    if(element_def.count&&(element_def.type!="array")) {
+    if(element_def.count&&(!in_array(element_def.type, ["array", "hash"]))) {
       def[k]=element_def.count;
 
       if(typeof def[k] != "object") {

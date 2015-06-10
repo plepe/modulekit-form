@@ -127,6 +127,13 @@ Definition:
 Value:
 * Array of sub elements.
 
+=== Form Element "Hash" ===
+Similar to "Array", but adds an additional key element. Values of key elements must be distinct. Result is a hash array with the key from the key element.
+
+Definition (see 'array' for additional options):
+* type: 'hash'
+* key_def: Definition of the key element. (Default: a field of type 'text')
+
 === Form Element "Text" ===
 Basic form element with a single line text input.
 

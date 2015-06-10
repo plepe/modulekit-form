@@ -26,3 +26,6 @@ $lang_str['form_element:please_select'] = "-- please select --";
 $lang_str['form:check_all'] = "check all";
 $lang_str['form:uncheck_all'] = "uncheck all";
 $lang_str['form:duplicate'] = array("Value %s appears multiple times.", "Values %s appear multiple times.");
+
+$lang_str['form:hash_key_field_name'] = "Key";
+$lang_str['form:hash_value_field_name'] = "Value";
