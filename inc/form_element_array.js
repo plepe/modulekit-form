@@ -414,3 +414,15 @@ form_element_array.prototype.notify_child_change=function(element) {
 
   this.parent("form_element_array").notify_child_change.call(this, element);
 }
+
+form_element_array.prototype.check_required=function(list, param) {
+  if(this.required()) {
+    for(var k in this.elements)
+      return;
+
+    if(param.length<1)
+      list.push(lang('form:require_value'));
+    else
+      list.push(param[0]);
+  }
+}

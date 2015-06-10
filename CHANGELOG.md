@@ -1,6 +1,7 @@
 2015-06-10
 ----------
 * New check 'required'
+* Form Element Array: when req=true, require at least one element
 
 2015-05-18
 ----------
