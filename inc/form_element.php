@@ -432,12 +432,11 @@ class form_element {
 
   function check_unique(&$list, $param) {
     $data = array();
+    $done = array();
+    $dupl = array();
 
     if((sizeof($param) == 0) || ($param[0] == null)) {
       $data = $this->get_data();
-
-      $done = array();
-      $dupl = array();
 
       foreach($data as $k=>$v) {
 	if(in_array($v, $done))

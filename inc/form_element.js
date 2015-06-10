@@ -439,13 +439,12 @@ form_element.prototype.check_fun=function(list, param) {
 }
 
 form_element.prototype.check_unique=function(list, param) {
+  var done = [];
+  var dupl = [];
   var data = [];
 
   if((param.length == 0) || (param[0] == null)) {
     data = this.get_data();
-
-    var done = [];
-    var dupl = [];
 
     for(var k in data) {
       if(done.indexOf(data[k]) != -1)
