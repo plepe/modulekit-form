@@ -301,4 +301,16 @@ class form_element_array extends form_element {
 
     return false;
   }
+
+  function check_required(&$errors, $param) {
+    if($this->required()) {
+      if(sizeof($this->elements))
+        return;
+
+      if(sizeof($param)<2)
+        $errors[]=lang('form:require_value');
+      else
+        $errors[]=$param[1];
+    }
+  }
 }

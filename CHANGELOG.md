@@ -1,3 +1,8 @@
+2015-06-10
+----------
+* New check 'required'
+* Form Element Array: when req=true, require at least one element
+
 2015-06-01
 ----------
 * Form Element Date: specify 'timezone' (default: 'UTC')

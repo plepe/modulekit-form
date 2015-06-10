@@ -139,10 +139,12 @@ form_element_array.prototype.set_data=function(data) {
     }
 
   if(this.dom) {
-    var p=this.dom.parentNode;
-    p.removeChild(this.dom);
-    var div=this.show_element();
-    p.appendChild(div);
+    var old_dom = this.dom;
+    var par = this.dom.parentNode;
+    var div = this.show_element();
+
+    par.insertBefore(div, old_dom);
+    par.removeChild(old_dom);
   }
 
   this.data=null;
@@ -295,6 +297,7 @@ form_element_array.prototype.add_element=function() {
     current=current.nextSibling;
   }
 
+  this.show_errors();
   this.form_root.form.resize();
 
   return false;
@@ -312,6 +315,7 @@ form_element_array.prototype.remove_element=function(k) {
     current=current.nextSibling;
   }
 
+  this.show_errors();
   this.form_root.form.resize();
 
   return false;
@@ -335,6 +339,7 @@ form_element_array.prototype.order_up=function(k) {
     current=current.nextSibling;
   }
 
+  this.show_errors();
   this.form_root.form.resize();
 
   return false;
@@ -358,6 +363,7 @@ form_element_array.prototype.order_down=function(k) {
     current=current.previousSibling;
   }
 
+  this.show_errors();
   this.form_root.form.resize();
 
   return false;
@@ -413,4 +419,16 @@ form_element_array.prototype.notify_child_change=function(element) {
   this.parent("form_element_array").show_errors.call(this);
 
   this.parent("form_element_array").notify_child_change.call(this, element);
+}
+
+form_element_array.prototype.check_required=function(list, param) {
+  if(this.required()) {
+    for(var k in this.elements)
+      return;
+
+    if(param.length<1)
+      list.push(lang('form:require_value'));
+    else
+      list.push(param[0]);
+  }
 }

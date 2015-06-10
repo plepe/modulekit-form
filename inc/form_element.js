@@ -85,7 +85,6 @@ form_element.prototype.type=function() {
 
 form_element.prototype.include_data=function() {
   if('include_data' in this.def) {
-    console.log(this.def.include_data);
     if((this.def.include_data === true) || (this.def.include_data === false))
       return this.def.include_data;
 
@@ -208,11 +207,21 @@ form_element.prototype.required=function() {
   return false;
 }
 
+form_element.prototype.check_required=function(list, param) {
+  var data=this.get_data();
+
+  if(this.required() && ((!this.data)||(data===null))) {
+    if(param.length<1)
+      list.push(lang('form:require_value'));
+    else
+      list.push(param[0]);
+  }
+}
+
 form_element.prototype.errors=function(list) {
   var data=this.get_data();
 
-  if(this.required() && ((!this.data)||(data===null)))
-    list.push(lang("form:require_value"));
+  this.check_required(list, []);
 
   if(this.def.check&&(data!==null)) {
     var check_errors=[];
@@ -439,25 +448,33 @@ form_element.prototype.check_fun=function(list, param) {
 }
 
 form_element.prototype.check_unique=function(list, param) {
+  var done = [];
+  var dupl = [];
   var data = [];
 
   if((param.length == 0) || (param[0] == null)) {
     data = this.get_data();
+
+    for(var k in data) {
+      if(done.indexOf(data[k]) != -1)
+	dupl.push(JSON.stringify(data[k]));
+
+      done.push(data[k]);
+    }
   }
   else {
-    var other = this.form_parent.resolve_other_elements(param[0]);
-    for(var i=0; i<other.length; i++)
-      data.push(other[i].get_data());
-  }
+    var this_data = this.get_data();
+    var this_data_enc = JSON.stringify(this_data);
 
-  var done = [];
-  var dupl = [];
+    var other_list = this.form_parent.resolve_other_elements(param[0]);
+    for(var i=0; i<other_list.length; i++) {
+      var other = other_list[i];
 
-  for(var k in data) {
-    if(done.indexOf(data[k]) != -1)
-      dupl.push(JSON.stringify(data[k]));
-
-    done.push(data[k]);
+      if((other != this) && (JSON.stringify(other.get_data()) == this_data_enc)) {
+	dupl = [ this_data ];
+	break;
+      }
+    }
   }
 
   if(dupl.length) {

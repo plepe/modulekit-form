@@ -97,8 +97,7 @@ class form_element {
   function errors(&$errors) {
     $data=$this->get_data();
 
-    if($this->required() && ($data===null))
-      $errors[]=lang("form:require_value");
+    $this->check_required($errors, array());
 
     if(isset($this->def['check']) && ($data !== null)) {
       $check_errors=array();
@@ -287,6 +286,17 @@ class form_element {
     $errors=array_merge($errors, $list_errors);
   }
 
+  function check_required(&$errors, $param) {
+    $data=$this->get_data();
+
+    if($this->required() && ($data===null)) {
+      if(sizeof($param)<2)
+        $errors[]=lang('form:require_value');
+      else
+        $errors[]=$param[1];
+    }
+  }
+
   // call check() for all elements of the param-array until one successful check is found
   // if last element is a string it wil be returned as error message (if all of the checks returned an error)
   function check_or(&$errors, $param) {
@@ -432,24 +442,30 @@ class form_element {
 
   function check_unique(&$list, $param) {
     $data = array();
-
-    if((sizeof($param) == 0) || ($param[0] == null)) {
-      $data = $this->get_data();
-    }
-    else {
-      $other_list = $this->form_parent->resolve_other_elements($param[0]);
-      foreach($other_list as $other)
-	$data[] = $other->get_data();
-    }
-
     $done = array();
     $dupl = array();
 
-    foreach($data as $k=>$v) {
-      if(in_array($v, $done))
-	$dupl[] = json_encode($v);
+    if((sizeof($param) == 0) || ($param[0] == null)) {
+      $data = $this->get_data();
 
-      $done[] = $v;
+      foreach($data as $k=>$v) {
+	if(in_array($v, $done))
+	  $dupl[] = json_encode($v);
+
+	$done[] = $v;
+      }
+    }
+    else {
+      $this_data = $this->get_data();
+      $this_data_enc = json_encode($this_data);
+
+      $other_list = $this->form_parent->resolve_other_elements($param[0]);
+      foreach($other_list as $other) {
+	if(($other != $this) && (json_encode($other->get_data()) == $this_data_enc)) {
+	  $dupl = array( $this_data );
+	  break;
+	}
+      }
     }
 
     if(sizeof($dupl)) {
