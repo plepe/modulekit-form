@@ -97,8 +97,7 @@ class form_element {
   function errors(&$errors) {
     $data=$this->get_data();
 
-    if($this->required() && ($data===null))
-      $errors[]=lang("form:require_value");
+    $this->check_required($errors, array());
 
     if(isset($this->def['check']) && ($data !== null)) {
       $check_errors=array();

@@ -221,8 +221,7 @@ form_element.prototype.check_required=function(list, param) {
 form_element.prototype.errors=function(list) {
   var data=this.get_data();
 
-  if(this.required() && ((!this.data)||(data===null)))
-    list.push(lang("form:require_value"));
+  this.check_required(list, []);
 
   if(this.def.check&&(data!==null)) {
     var check_errors=[];
