@@ -45,12 +45,12 @@ $form_editor=array(
         'name'	=>array(
           'name'	=>"Name",
           'type'	=>"text",
-          'req'	=>true,
         ),
         'type'	=>array(
           'name'	=>"Type",
           'type'	=>"select",
           'values'	=>$form_types,
+          'default'     =>'text',
         ),
         'values'	=>array(
           'name'	=>"Values",
@@ -59,7 +59,8 @@ $form_editor=array(
             'name'	=>lang('form:hash_value_field_name'),
             'type'	=>"text",
           ),
-          'default'=>2,
+          'default'=>0,
+          'button:add_element' => "Add value",
           'show_depend'=>$has_values,
           // 'include_data'=>array('and', array('not_empty'), $has_values),
           'include_data'=>$has_values,
