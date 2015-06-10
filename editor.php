@@ -21,6 +21,8 @@ foreach(get_declared_classes() as $cls) {
     $form_types[$m[1]]=$m[1];
 }
 
+$has_values = array("check", "type", array("or", array("is", "radio"), array("is", "select"), array("is", "checkbox"), array("is", "text"), array("is", "autocomplete"), array("is", "keywords")));
+
 $form_editor=array(
   'elements'	=>array(
     'name'	=>"Elements",
@@ -43,7 +45,7 @@ $form_editor=array(
         ),
         'type'	=>array(
           'name'	=>"Type",
-          'type'	=>"radio",
+          'type'	=>"select",
           'values'	=>$form_types,
         ),
         'values'	=>array(
@@ -54,7 +56,9 @@ $form_editor=array(
             'type'	=>"text",
           ),
           'default'=>2,
-          'show_depend'=>array("check", "type", array("or", array("is", "radio"), array("is", "select"), array("is", "checkbox"))),
+          'show_depend'=>$has_values,
+          // 'include_data'=>array('and', array('not_empty'), $has_values),
+          'include_data'=>$has_values,
         ),
       ),
     ),
