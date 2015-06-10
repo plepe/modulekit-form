@@ -85,7 +85,6 @@ form_element.prototype.type=function() {
 
 form_element.prototype.include_data=function() {
   if('include_data' in this.def) {
-    console.log(this.def.include_data);
     if((this.def.include_data === true) || (this.def.include_data === false))
       return this.def.include_data;
 
