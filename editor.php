@@ -11,6 +11,7 @@ call_hooks("init");
 <?php print modulekit_include_css(); /* prints all css-includes */ ?>
 <?php print_add_html_headers(); ?>
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<script type='text/javascript' src='editor.js'></script>
 </head>
 <body>
 <?php
@@ -28,6 +29,7 @@ $form_editor=array(
     'name'	=>"Elements",
     'type'	=>"hash",
     'default'   =>1,
+    'hide_label'=>true,
 
     'key_def'	=>array(
       'name'  =>lang('form:hash_key_field_name'),
@@ -75,40 +77,35 @@ if($_REQUEST['d']) {
 
 $form=new form("data", $form_editor);
 
-if($form->errors()) {
-  // print errors
-  print "Errors in the form were found:";
-  print $form->show_errors();
-}
-
 if($form->is_empty()) {
   // load data from database (or use default data)
   $form->set_data($default_data);
 }
 
 // show form
+print "<div id='editor'>\n";
 print "<form enctype='multipart/form-data' method='post'>\n";
 print $form->show();
 print "<input type='submit' value='Ok'>\n";
 print "</form>\n";
+print "</div>\n";
 
-if($form->is_complete()) {
-  $data = $form->get_data();
-  $def = $data['elements'];
+$data = $form->get_data();
+$def = $data['elements'];
 
-  print "Form definition:<pre>\n";
-  print_r($def);
-  print "</pre>\n";
+// save data to database (or - in this example - print to stdout)
+print "Form definition:<pre>\n";
+print_r($def);
+print "</pre>\n";
 
-  // save data to database (or - in this example - print to stdout)
-  print "This is what the form will look like:\n";
+print "This is what the form will look like:\n";
 
-  $ex=new form("ex", $def);
-  print $ex->show();
+print "<form id='form_test'>\n";
 
-  // reset form data
-  //$form->reset();
-}
+$ex=new form("form_test", $def);
+print $ex->show();
+
+print "</form>\n";
 
 ?>
 </body>
