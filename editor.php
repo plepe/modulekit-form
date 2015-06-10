@@ -24,44 +24,38 @@ foreach(get_declared_classes() as $cls) {
 $form_editor=array(
   'elements'	=>array(
     'name'	=>"Elements",
-    'type'	=>"form",
-    'count'	=>array("default"=>1),
+    'type'	=>"hash",
+    'default'   =>1,
 
-    'def'	=>array(
-      'id'		=>array(
-	'name'	=>"ID",
-	'type'	=>"text",
-	'req'	=>true,
-	'check'	=>array("regexp", "^[a-zA-Z0-9_]+$"),
-      ),
-      'name'	=>array(
-	'name'	=>"Name",
-	'type'	=>"text",
-	'req'	=>true,
-      ),
-      'type'	=>array(
-	'name'	=>"Type",
-	'type'	=>"radio",
-	'values'	=>$form_types,
-      ),
-      'values'	=>array(
-        'name'	=>"Values",
-	'type'	=>"array",
-	'def'	=>array(
-	    'type'	=>'form',
-	    'def'	=>array(
-		  'k'	=>array(
-		    'name'	=>"k",
-		    'type'	=>"text",
-		  ),
-		  'v'	=>array(
-		    'name'	=>"v",
-		    'type'	=>"text",
-		  ),
-		),
-	      ),
-	'count'	=>array("default"=>2),
-	'show_depend'=>array("check", "type", array("or", array("is", "radio"), array("is", "select"), array("is", "checkbox"))),
+    'key_def'	=>array(
+      'name'  =>lang('form:hash_key_field_name'),
+      'type'	=>"text",
+      'req'	=>true,
+      'check'	=>array("regexp", "^[a-zA-Z0-9_]+$"),
+    ),
+    'def'       =>array(
+      'type'      =>'form',
+      'def'       => array(
+        'name'	=>array(
+          'name'	=>"Name",
+          'type'	=>"text",
+          'req'	=>true,
+        ),
+        'type'	=>array(
+          'name'	=>"Type",
+          'type'	=>"radio",
+          'values'	=>$form_types,
+        ),
+        'values'	=>array(
+          'name'	=>"Values",
+          'type'	=>"hash",
+          'def'	=>array(
+            'name'	=>lang('form:hash_value_field_name'),
+            'type'	=>"text",
+          ),
+          'default'=>2,
+          'show_depend'=>array("check", "type", array("or", array("is", "radio"), array("is", "select"), array("is", "checkbox"))),
+        ),
       ),
     ),
   ),
@@ -94,29 +88,9 @@ print $form->show();
 print "<input type='submit' value='Ok'>\n";
 print "</form>\n";
 
-function fix_values(&$def) {
-  foreach($def as $id=>$d) {
-    if(($d['type']=="form")||($d['type']=="array")) {
-      fix_values($def[$id]['def']);
-    }
-
-    $values=array();
-    if($d['values']) foreach($d['values'] as $x) {
-      $values[$x['k']]=$x['v'];
-    }
-    $def[$id]['values']=$values;
-  }
-}
-
 if($form->is_complete()) {
-  $data=$form->get_data();
-  $def=array();
-  foreach($data['elements'] as $i=>$v) {
-    $def[$v['id']]=$v;
-    unset($def[$v['id']]['id']);
-  }
-
-  fix_values($def);
+  $data = $form->get_data();
+  $def = $data['elements'];
 
   print "Form definition:<pre>\n";
   print_r($def);
