@@ -1,3 +1,7 @@
+2015-06-10
+----------
+* New check 'required'
+
 2015-05-18
 ----------
 * Checks may return an array for multiple error messages

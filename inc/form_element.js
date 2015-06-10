@@ -207,6 +207,17 @@ form_element.prototype.required=function() {
   return false;
 }
 
+form_element.prototype.check_required=function(list, param) {
+  var data=this.get_data();
+
+  if(this.required() && ((!this.data)||(data===null))) {
+    if(param.length<1)
+      list.push(lang('form:require_value'));
+    else
+      list.push(param[0]);
+  }
+}
+
 form_element.prototype.errors=function(list) {
   var data=this.get_data();
 

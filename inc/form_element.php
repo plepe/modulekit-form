@@ -287,6 +287,17 @@ class form_element {
     $errors=array_merge($errors, $list_errors);
   }
 
+  function check_required(&$errors, $param) {
+    $data=$this->get_data();
+
+    if($this->required() && ($data===null)) {
+      if(sizeof($param)<2)
+        $errors[]=lang('form:require_value');
+      else
+        $errors[]=$param[1];
+    }
+  }
+
   // call check() for all elements of the param-array until one successful check is found
   // if last element is a string it wil be returned as error message (if all of the checks returned an error)
   function check_or(&$errors, $param) {
