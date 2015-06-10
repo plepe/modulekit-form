@@ -295,6 +295,7 @@ form_element_array.prototype.add_element=function() {
     current=current.nextSibling;
   }
 
+  this.show_errors();
   this.form_root.form.resize();
 
   return false;
@@ -312,6 +313,7 @@ form_element_array.prototype.remove_element=function(k) {
     current=current.nextSibling;
   }
 
+  this.show_errors();
   this.form_root.form.resize();
 
   return false;
@@ -335,6 +337,7 @@ form_element_array.prototype.order_up=function(k) {
     current=current.nextSibling;
   }
 
+  this.show_errors();
   this.form_root.form.resize();
 
   return false;
@@ -358,6 +361,7 @@ form_element_array.prototype.order_down=function(k) {
     current=current.previousSibling;
   }
 
+  this.show_errors();
   this.form_root.form.resize();
 
   return false;
