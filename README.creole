@@ -23,7 +23,10 @@ $f=new form('data', array(
 
 $f->set_data({ name: 'Alice', sex: 'f' });
 
+print "<form method='post'>\n";
 print $f->show();
+print "<input type='submit' value='Ok'>\n";
+print "</form>\n";
 }}}
 
 === JavaScript ===
@@ -40,8 +43,26 @@ f=new form('data', {
   }
 });
 
-f.show(document.getElementById("put_the_form_there"));
+// create a dom element where the form will be placed
+var form_dom = document.createElement("form");
+document.body.appendChild(form_dom);
 
+// show the form
+f.show(form_dom);
+
+// add a submit button
+var submit = document.createElement("input");
+submit.type = "submit";
+submit.value = "Ok";
+form_dom.appendChild(submit);
+
+// what happens, when the submit button is clicked
+form_dom.onsubmit = function() {
+  alert(JSON.stringify(f, null, '  '));
+  return false; // prevent submitting to webserver
+}
+
+// fill in some data (you can do this before showing the form, too)
 f.set_data({ name: 'Bob', sex: 'm' });
 }}}
 
