@@ -12,6 +12,7 @@ call_hooks("init");
 <?php print_add_html_headers(); ?>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script type='text/javascript' src='editor.js'></script>
+<link rel='stylesheet' type='text/css' href='editor.css'/>
 </head>
 <body>
 <?php
@@ -83,7 +84,8 @@ if($form->is_empty()) {
 }
 
 // show form
-print "<div id='editor'>\n";
+print "<div id='editor' class='struct'>\n";
+print "Define the form:\n";
 print "<form enctype='multipart/form-data' method='post'>\n";
 print $form->show();
 print "<input type='submit' value='Ok'>\n";
@@ -94,10 +96,7 @@ $data = $form->get_data();
 $def = $data['elements'];
 
 // save data to database (or - in this example - print to stdout)
-print "Form definition:<pre>\n";
-print_r($def);
-print "</pre>\n";
-
+print "<div id='preview' class='struct'>\n";
 print "This is what the form will look like:\n";
 
 print "<form id='form_test'>\n";
@@ -106,6 +105,13 @@ $ex=new form("form_test", $def);
 print $ex->show();
 
 print "</form>\n";
+print "</div>\n";
+
+print "<div id='definition' class='struct'>\n";
+print "Form definition:<pre>\n";
+print_r($def);
+print "</pre>\n";
+print "</div>\n";
 
 ?>
 </body>
