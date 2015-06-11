@@ -5,7 +5,7 @@ function form(id, def, options) {
   if(!options)
     options={};
   this.options=options;
-  if(!'var_name' in this.options)
+  if(!('var_name' in this.options))
     this.options.var_name=this.id;
 
   this.has_data=false;
