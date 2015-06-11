@@ -53,6 +53,10 @@ form.prototype.resize=function() {
   for(var i=0; i<obs.length; i++) {
     var ob=obs[i];
     if(in_array("form", ob.className.split(" "))) {
+      // form is invisible
+      if(!ob.parentNode)
+        return;
+
       var width=ob.parentNode.offsetWidth;
       var em_height = get_em_height(ob);
 
