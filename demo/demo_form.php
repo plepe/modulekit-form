@@ -139,6 +139,30 @@ $form_def=array(
     'name'	=>"Ready",
     'desc'	=>"Are you ready yet?",
   ),
+  'kv'          =>array(
+    'type'      =>"hash",
+    'name'      =>"Key/Value",
+    'def'       =>array(
+      'type'      => 'text',
+    ),
+  ),
+  'kv_form'     =>array(
+    'type'      =>"hash",
+    'name'      =>"Key/Value (with form)",
+    'def'       =>array(
+      'type'      => 'form',
+      'def'       => array(
+        'a'         => array(
+          'type'      => 'text',
+          'name'      => 'A',
+        ),
+        'b'         => array(
+          'type'      => 'text',
+          'name'      => 'B',
+        ),
+      ),
+    ),
+  ),
 );
 
 $default_data=array(
