@@ -103,7 +103,7 @@ print "This is what the form will look like:\n";
 
 print "<form id='form_test'>\n";
 
-$ex=new form("form_test", $def);
+$ex=new form("test", $def);
 print $ex->show();
 
 print "</form>\n";
@@ -112,6 +112,12 @@ print "</div>\n";
 print "<div id='definition' class='struct'>\n";
 print "Form definition:<pre id='definition_display'>\n";
 print json_readable_encode($def);
+print "</pre>\n";
+print "</div>\n";
+
+print "<div id='result' class='struct'>\n";
+print "Form result:<pre id='result_display'>\n";
+print json_readable_encode($ex->get_data());
 print "</pre>\n";
 print "</div>\n";
 
