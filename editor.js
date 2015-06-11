@@ -5,7 +5,7 @@ function preview_update_data() {
 }
 
 function editor_update_form() {
-  var def = form_data.get_data().elements;
+  var def = form_data.get_data().fields;
 
   document.getElementById("definition_display").innerHTML = json_readable_encode(def);
 

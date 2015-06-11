@@ -35,6 +35,8 @@ $include_php=array(
   "inc/form_element_display.php",
   "inc/form_element_hidden.php",
   "inc/form_element_intermediate_text.php",
+
+  "inc/form_template_editor.php",
 );
 $include_js=array(
   "inc/functions.js",

@@ -431,3 +431,9 @@ Let the form forget its data (is_empty() will return true).
 
 === get_request_data() ===
 (JS only): Return a structure similar to this which would be submitted to the server via GET/POST.
+
+== Form Templates ==
+=== form_template_editor() ===
+A form template for a form editor.
+
+(PHP only)
