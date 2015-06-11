@@ -1,6 +1,7 @@
 <?php
 Header("content-type: text/html; charset=utf-8");
 $modulekit_load[] = "json_readable_encode";
+$modulekit_load[] = "modulekit-form-debug";
 include "modulekit/loader.php"; /* loads all php-includes */
 call_hooks("init");
 
