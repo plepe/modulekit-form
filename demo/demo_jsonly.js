@@ -3,7 +3,7 @@ var form_data;
 function init() {
   var div=document.getElementById("form");
 
-  form_data=new form("foobar", form_def);
+  form_data=new form("data", form_def);
   form_data.show(div);
   form_data.set_data(default_data);
 
