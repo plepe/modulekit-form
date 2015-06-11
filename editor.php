@@ -16,6 +16,7 @@ call_hooks("init");
 <link rel='stylesheet' type='text/css' href='editor.css'/>
 </head>
 <body>
+<form enctype='multipart/form-data' method='post'>
 <?php
 
 $form_types=array();
@@ -88,10 +89,8 @@ if($form->is_empty()) {
 // show form
 print "<div id='editor' class='struct'>\n";
 print "Define the form:\n";
-print "<form enctype='multipart/form-data' method='post'>\n";
 print $form->show();
 print "<input type='submit' value='Ok'>\n";
-print "</form>\n";
 print "</div>\n";
 
 $data = $form->get_data();
@@ -101,12 +100,13 @@ $def = $data['elements'];
 print "<div id='preview' class='struct'>\n";
 print "This is what the form will look like:\n";
 
-print "<form id='form_test'>\n";
+print "<div id='form_test'>\n";
 
 $ex=new form("test", $def);
 print $ex->show();
 
-print "</form>\n";
+print "</div>\n";
+print "<input type='submit' value='Ok'>\n";
 print "</div>\n";
 
 print "<div id='definition' class='struct'>\n";
@@ -122,5 +122,6 @@ print "</pre>\n";
 print "</div>\n";
 
 ?>
+</form>
 </body>
 </html>
