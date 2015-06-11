@@ -3,6 +3,8 @@ function form_element_hash() {
 }
 
 form_element_hash.prototype.init=function(id, def, options, form_parent) {
+  def = new clone(def);
+
   if(!('key_def' in def)) {
     def.key_def = {
       'type': 'text',
