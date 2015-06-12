@@ -1,5 +1,8 @@
 <?php
-function form_template_editor() {
+function form_template_editor($options=array()) {
+  if(!array_key_exists('def_additional', $options))
+    $options['def_additional'] = array();
+
   $form_types=array();
   foreach(get_declared_classes() as $cls) {
     if(preg_match("/^form_element_(.*)$/", $cls, $m))
@@ -23,7 +26,7 @@ function form_template_editor() {
       ),
       'def'       =>array(
 	'type'      =>'form',
-	'def'       => array(
+	'def'       => array_merge(array(
 	  'name'	=>array(
 	    'name'	=>"Name",
 	    'type'	=>"text",
@@ -47,7 +50,7 @@ function form_template_editor() {
 	    // 'include_data'=>array('and', array('not_empty'), $has_values),
 	    'include_data'=>$has_values,
 	  ),
-	),
+	), $options['def_additional'])
       ),
     ),
   );
