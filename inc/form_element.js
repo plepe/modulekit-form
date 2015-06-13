@@ -598,6 +598,17 @@ form_element.prototype.func_call=function(def) {
     return fun(this.get_data(), this, this.form_root.form);
   else if(fun in window)
     return window[fun](this.get_data(), this, this.form_root.form);
+  else if(typeof fun == "string") {
+    var dom = document.createElement('script');
+    dom.type = 'text/javascript';
+    dom.appendChild(document.createTextNode('var __ = ' + fun));
+
+    document.body.appendChild(dom);
+    def.js = __;
+    document.body.removeChild(dom);
+
+    return def.js(this.get_data(), this, this.form_root.form);
+  }
 
   return null;
 }
