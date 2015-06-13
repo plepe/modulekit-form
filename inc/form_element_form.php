@@ -131,4 +131,12 @@ class form_element_form extends form_element {
 
     return false;
   }
+
+  function refresh($force=false) {
+    parent::refresh($force);
+
+    foreach($this->elements as $k=>$element) {
+      $element->refresh($force);
+    }
+  }
 }

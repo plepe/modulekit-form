@@ -584,6 +584,9 @@ class form_element {
 
     return $str;
   }
+
+  function refresh($force=false) {
+  }
 }
 
 function get_form_element_class($def) {
