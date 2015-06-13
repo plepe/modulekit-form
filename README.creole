@@ -84,6 +84,7 @@ Definition:
 * desc: Description (usually written below Name in smaller letters); accepts full HTML (in contrast to 'name'). This key may be translated (see below)
 * count: We internally be converted to a form element of type array using the options of this key. E.g. array('default'=>2) resp. { 'default': 2 }. If count is an integer value, e.g. '2', array('default'=>2, 'max'=>2) will be used. See 'Form Element Array' for more information.
 * default: Specify a default value, which is shown if no value is set.
+* default_func: if no value is set, use the provided function(s) to get a value. See chapter "Func Call" for details.
 * req: A value is required (true/false). Optionally this may be an array of the same syntax as 'check'.
 * check: Evaluate validity of input. Defined as array("type", parameters). Will call function "check_type" inside form element, will be passed parameters. Example: "regexp" for Form Element Text (will call function "check_regexp").
 ** 'and': combine several checks, e.g. array("and", array("regexp", ...), array("foo", ...)) - all sub-checks need to resolve positive.

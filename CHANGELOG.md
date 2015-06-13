@@ -2,6 +2,7 @@
 ----------
 * Documentation 'Func Call'
 * Func Call: A JS function can be specified as string.
+* Form Element *: new option 'default_func' (get the default value programmatically)
 
 2015-06-10
 ----------
