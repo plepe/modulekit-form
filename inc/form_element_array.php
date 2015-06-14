@@ -313,4 +313,12 @@ class form_element_array extends form_element {
         $errors[]=$param[1];
     }
   }
+
+  function refresh($force=false) {
+    parent::refresh($force);
+
+    foreach($this->elements as $k=>$element) {
+      $element->refresh($force);
+    }
+  }
 }

@@ -584,6 +584,14 @@ class form_element {
 
     return $str;
   }
+
+  function refresh($force=false) {
+    if(array_key_exists('default_func', $this->def) && ($this->data == null)) {
+      $v = $this->func_call($this->def['default_func']);
+      $this->set_data($v);
+      $this->set_orig_data($v);
+    }
+  }
 }
 
 function get_form_element_class($def) {

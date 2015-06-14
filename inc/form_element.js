@@ -560,6 +560,12 @@ form_element.prototype.refresh=function(force) {
   else
     this.tr.setAttribute("style", "display: none;");
 
+  if(('default_func' in this.def) && (this.data == null)) {
+    var v = this.func_call(this.def.default_func);
+    this.set_data(v);
+    this.set_orig_data(v);
+  }
+
   var req = this.required();
 
   if(req) {
