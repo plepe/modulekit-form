@@ -114,3 +114,16 @@ $body = $form_data->show();
 git add index.php
 git commit -m "basic index.php"
 ```
+
+END. Turn on production mode.
+-----------------------------
+As all these libraries consist of many files, loading the page may take quite long. There's a script in the modulekit directory which will concatenate the files and therefore speed up page loading.
+
+Execute:
+```sh
+modulekit/build_cache
+```
+
+This will create `.modulekit-cache` directory with the cached files. The cache will check the current git version on loading, therefore the cache does not have to be re-created, when the code is being updated.
+
+Just remove the directory `.modulekit-cache` to return to development mode.
