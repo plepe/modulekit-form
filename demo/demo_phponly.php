@@ -28,13 +28,6 @@ include "demo_header.php";
 
 $form=new form("data", $form_def);
 
-if($form->errors()) {
-  // print errors
-  print "Errors in the form were found!<br>";
-
-  print $form->show_errors();
-}
-
 if($form->is_complete()) {
   // save data to database
   print "Form is complete (no errors).<br>\n";
