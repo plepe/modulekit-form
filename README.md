@@ -133,6 +133,7 @@ Definition:
 * order: whether the elements of the array shall be orderable. true (default) / false.
 * button:add_element: override text of "Add Element" button (may be translated)
 * req: require at least one element
+* empty_value: value to return if array is empty. Default: null.
 
 Value:
 * Array of sub elements.

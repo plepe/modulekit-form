@@ -119,11 +119,17 @@ form_element_array.prototype.finish_connect=function() {
 
 form_element_array.prototype.get_data=function() {
   var ret={};
+  var count=0;
 
   for(var i in this.elements) {
-    if(this.elements[i].include_data())
+    if(this.elements[i].include_data()) {
       ret[i]=this.elements[i].get_data();
+      count++;
+    }
   }
+
+  if(count==0)
+    return this.def.empty_value || null;
 
   return ret;
 }
