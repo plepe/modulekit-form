@@ -503,19 +503,23 @@ class form_element {
     return $this->get_data()!==$this->get_orig_data();
   }
 
+  function func_call($def) {
+    $fun = null;
+
+    if(array_key_exists('php', $def))
+      $fun = $def['php'];
+
+    if($fun && (is_callable($fun) || (function_exists($fun))))
+      return call_user_func($fun, $this->get_data(), $this, $this->form_root->form);
+
+    return null;
+  }
+
   function get_values() {
     $ret=array();
 
     if(array_key_exists('values_func', $this->def)) {
-      $fun = null;
-
-      if(array_key_exists('php', $this->def['values_func']))
-	$fun = $this->def['values_func']['php'];
-
-      if($fun && (is_callable($fun) || (function_exists($fun))))
-	$this->def['values'] = call_user_func($fun, $this->get_data(), $this, $this->form_root->form);
-      else
-	$this->def['values'] = null;
+      $this->def['values'] = $this->func_call($this->def['values_func']);
     }
 
     if(!isset($this->def['values'])||!is_array($this->def['values']))
@@ -580,7 +584,6 @@ class form_element {
 
     return $str;
   }
-
 }
 
 function get_form_element_class($def) {

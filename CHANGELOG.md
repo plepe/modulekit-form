@@ -1,3 +1,8 @@
+2015-06-14
+----------
+* Documentation 'Func Call'
+* Func Call: A JS function can be specified as string.
+
 2015-06-10
 ----------
 * New check 'required'

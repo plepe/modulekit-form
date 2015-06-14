@@ -588,21 +588,36 @@ form_element.prototype.is_modified=function() {
   return this.get_data()!==this.get_orig_data();
 }
 
+form_element.prototype.func_call=function(def) {
+  var fun = null;
+
+  if('js' in def)
+    fun = def['js'];
+
+  if(typeof fun == "function")
+    return fun(this.get_data(), this, this.form_root.form);
+  else if(fun in window)
+    return window[fun](this.get_data(), this, this.form_root.form);
+  else if(typeof fun == "string") {
+    var dom = document.createElement('script');
+    dom.type = 'text/javascript';
+    dom.appendChild(document.createTextNode('var __ = ' + fun));
+
+    document.body.appendChild(dom);
+    def.js = __;
+    document.body.removeChild(dom);
+
+    return def.js(this.get_data(), this, this.form_root.form);
+  }
+
+  return null;
+}
+
 form_element.prototype.get_values=function() {
   var ret={};
 
   if('values_func' in this.def) {
-    var fun = null;
-
-    if('js' in this.def.values_func)
-      fun = this.def.values_func['js'];
-
-    if(typeof fun == "function")
-      this.def.values = fun(this.get_data(), this, this.form_root.form);
-    else if(fun in window)
-      this.def.values = window[fun](this.get_data(), this, this.form_root.form);
-    else
-      this.def.values = null;
+    this.def.values = this.func_call(this.def.values_func);
   }
 
   if(!this.def.values||(typeof this.def.values!="object"))
