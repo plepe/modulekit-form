@@ -498,6 +498,7 @@ form_template_editor([$options])
 A form template for a form editor.
 
 The following options are available:
+* def_form: additional settings for each field.
 * def_additional: additional form definitions for each field.
 
 (PHP only)

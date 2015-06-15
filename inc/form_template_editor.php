@@ -2,6 +2,8 @@
 function form_template_editor($options=array()) {
   if(!array_key_exists('def_additional', $options))
     $options['def_additional'] = array();
+  if(!array_key_exists('def_form', $options))
+    $options['def_form'] = array();
 
   $form_types=array();
   foreach(get_declared_classes() as $cls) {
@@ -12,7 +14,7 @@ function form_template_editor($options=array()) {
   $has_values = array("check", "type", array("or", array("is", "radio"), array("is", "select"), array("is", "checkbox"), array("is", "text"), array("is", "autocomplete"), array("is", "keywords")));
 
   $ret = array(
-    'fields'	=>array(
+    'fields'	=>array_merge(array(
       'name'	=>"Fields",
       'type'	=>"hash",
       'default'   =>1,
@@ -52,7 +54,7 @@ function form_template_editor($options=array()) {
 	  ),
 	), $options['def_additional'])
       ),
-    ),
+    ), $options['def_form']),
   );
 
   return $ret;
