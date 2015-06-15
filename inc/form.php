@@ -56,6 +56,8 @@ class form {
       $this->set_orig_data($data);
 
     $this->has_data=true;
+
+    $this->refresh();
   }
 
   function set_request_data($data) {
@@ -83,6 +85,8 @@ class form {
     $this->has_orig_data=true;
 
     $this->element->set_orig_data($data);
+
+    $this->refresh();
   }
 
   function get_orig_data() {
@@ -195,6 +199,10 @@ class form {
     $ret.="</script>\n";
 
     return $ret;
+  }
+
+  function refresh($force=false) {
+    $this->element->refresh($force);
   }
 }
 

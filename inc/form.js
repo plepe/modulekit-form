@@ -108,6 +108,8 @@ form.prototype.set_data=function(data) {
 
   if(!this.has_orig_data)
     this.set_orig_data(data);
+
+  this.refresh();
 }
 
 form.prototype.set_orig_data=function(data) {

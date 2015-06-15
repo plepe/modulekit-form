@@ -36,6 +36,10 @@ class form_element_array extends form_element {
 	$data[$k]=$element->get_data();
     }
 
+    if(!sizeof($data))
+      return array_key_exists('empty_value', $this->def) ?
+        $this->def['empty_value'] : null;
+
     return $data;
   }
 
@@ -311,6 +315,14 @@ class form_element_array extends form_element {
         $errors[]=lang('form:require_value');
       else
         $errors[]=$param[1];
+    }
+  }
+
+  function refresh($force=false) {
+    parent::refresh($force);
+
+    foreach($this->elements as $k=>$element) {
+      $element->refresh($force);
     }
   }
 }

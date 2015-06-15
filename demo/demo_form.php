@@ -8,6 +8,26 @@ $form_def=array(
     'html_attributes'   =>array("style"=>"border: 2px solid black;"),
     'check'	=> array("fun", array("js"=>"name_check", "php"=>"name_check")),
   ),
+  'nickname'   =>array(
+    'name'      =>'Nickname',
+    'desc'      =>"By default rot13 of the name",
+    'type'      =>'text',
+    'default_func' => array(
+      "js"=><<<EOT
+function(value, form_element, form) {
+  var s = form.get_data().name;
+  if(s == null)
+    return null;
+
+  // Source: http://stackoverflow.com/a/617685/4832631
+  return s.replace(/[a-zA-Z]/g,function(c){return String.fromCharCode((c<="Z"?90:122)>=(c=c.charCodeAt(0)+13)?c:c-26);});
+}
+EOT
+, "php"=>function($value, $form_element, $form) {
+  $d = $form->get_data();
+  return str_rot13($d['name']);
+}),
+  ),
   'sex'		=>array(
     'name'	=>array("en"=>"Sex", "de"=>"Geschlecht"),
     'desc'	=>array("en"=>"Choose your <a href='http://en.wikipedia.org/wiki/Gender'>gender</a>", "de"=>"Wähle Dein Geschlecht"),
@@ -166,7 +186,6 @@ $form_def=array(
 );
 
 $default_data=array(
-  "name"=>"Max Mustermann",
   "sex"=>"m",
   "comment"=>"Foo Bar\nBlablabla\n",
   "hobbies"=>array(0=>"Linux", 2=>"PHP", 5=>"Cycling"),

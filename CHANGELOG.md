@@ -1,3 +1,10 @@
+2015-06-14
+----------
+* Documentation 'Func Call'
+* Func Call: A JS function can be specified as string.
+* Form Element *: new option 'default_func' (get the default value programmatically)
+* Form Element Array: if array is empty, return value of 'empty_value' or null.
+
 2015-06-10
 ----------
 * New check 'required'
