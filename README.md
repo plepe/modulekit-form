@@ -145,6 +145,7 @@ Similar to "Array", but adds an additional key element. Values of key elements m
 Definition (see 'array' for additional options):
 * type: 'hash'
 * key_def: Definition of the key element. (Default: a field of type 'text')
+* empty_value: value to return if hash is empty. Default: null.
 
 Form Element "Text"
 -------------------

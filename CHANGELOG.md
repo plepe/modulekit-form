@@ -1,3 +1,7 @@
+2015-06-17
+----------
+* Form Element Hash: if hash is empty, return value of 'empty_value' or null.
+
 2015-06-14
 ----------
 * Documentation 'Func Call'

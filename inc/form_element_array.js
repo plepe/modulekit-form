@@ -117,7 +117,7 @@ form_element_array.prototype.finish_connect=function() {
   }
 }
 
-form_element_array.prototype.get_data=function() {
+form_element_array.prototype.get_data=function(return_empty_value) {
   var ret={};
   var count=0;
 
@@ -128,8 +128,12 @@ form_element_array.prototype.get_data=function() {
     }
   }
 
-  if(count==0)
-    return this.def.empty_value || null;
+  if(count==0) {
+    if(return_empty_value === null)
+      return this.def.empty_value || null;
+    else
+      return null;
+  }
 
   return ret;
 }

@@ -84,7 +84,13 @@ class form_element_hash extends form_element_array {
   }
 
   function get_data() {
-    return $this->_shrink_data(parent::get_data());
+    $data = parent::get_data(false);
+
+    if($data === null)
+      return array_key_exists('empty_value', $this->def) ?
+        $this->def['empty_value'] : null;
+    else
+      return $this->_shrink_data($data);
   }
 
   function set_orig_data($data) {
@@ -92,6 +98,9 @@ class form_element_hash extends form_element_array {
   }
 
   function get_orig_data() {
-    return $this->_shrink_data(parent::get_orig_data());
+    if($data = parent::get_orig_data())
+      return $this->_shrink_data($data);
+
+    return null;
   }
 }

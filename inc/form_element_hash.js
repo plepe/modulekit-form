@@ -88,7 +88,12 @@ form_element_hash.prototype.set_data=function(data) {
 }
 
 form_element_hash.prototype.get_data=function() {
-  return this._shrink_data(this.parent("form_element_hash").get_data.call(this));
+  data = this.parent("form_element_hash").get_data.call(this);
+
+  if(data === null)
+    return this.def.empty_value || null;
+  else
+    return this._shrink_data(data)
 }
 
 form_element_hash.prototype.set_orig_data=function(data) {

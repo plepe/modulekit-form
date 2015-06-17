@@ -29,16 +29,20 @@ class form_element_array extends form_element {
     }
   }
 
-  function get_data() {
+  function get_data($return_empty_value=null) {
     $data=array();
     foreach($this->elements as $k=>$element) {
       if($element->include_data())
 	$data[$k]=$element->get_data();
     }
 
-    if(!sizeof($data))
-      return array_key_exists('empty_value', $this->def) ?
-        $this->def['empty_value'] : null;
+    if(!sizeof($data)) {
+      if($return_empty_value === null)
+	return array_key_exists('empty_value', $this->def) ?
+	  $this->def['empty_value'] : null;
+      else
+	return null;
+    }
 
     return $data;
   }
