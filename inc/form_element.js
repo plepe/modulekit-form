@@ -519,14 +519,14 @@ form_element.prototype.show_errors=function() {
 }
 
 form_element.prototype.notify_change=function(ev) {
-  this.form_root.refresh();
-
   this.data=this.get_data();
 
   this.show_errors.call(this);
 
   if(this.form_parent)
     this.form_parent.notify_child_change([this]);
+
+  this.form_root.refresh();
 
   this.form_root.form.notify_change();
 }
