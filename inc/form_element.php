@@ -289,7 +289,7 @@ class form_element {
   function check_required(&$errors, $param) {
     $data=$this->get_data();
 
-    if($this->required() && ($data===null)) {
+    if($this->required() && ($data === null)) {
       if(sizeof($param)<2)
         $errors[]=lang('form:require_value');
       else

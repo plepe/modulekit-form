@@ -210,7 +210,7 @@ form_element.prototype.required=function() {
 form_element.prototype.check_required=function(list, param) {
   var data=this.get_data();
 
-  if(this.required() && ((!this.data)||(data===null))) {
+  if(this.required() && (data === null)) {
     if(param.length<1)
       list.push(lang('form:require_value'));
     else
