@@ -93,9 +93,6 @@ form_element_radio.prototype.update_options = function() {
     var text=document.createTextNode(get_value_string(values[k]));
     label.appendChild(text);
     span.appendChild(label);
-
-    var br=document.createElement("br");
-    this.dom.appendChild(br);
   }
 }
 

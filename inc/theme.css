@@ -50,6 +50,7 @@ span.form_element_file span.form_modified span.value
   content: "\00A0";
   display: inline-block;
   margin-right: 0.5em;
+  text-indent: 0.15em;
   width: 1em;
   height: 1em;
   background: #e0e0e0;
@@ -75,6 +76,7 @@ span.form_element_file span.form_modified span.value
   content: "\00A0";
   display: inline-block;
   margin-right: 0.5em;
+  text-indent: 0.15em;
   width: 1em;
   height: 1em;
   background: #e0e0e0;

@@ -31,9 +31,6 @@ class form_element_radio extends form_element {
       $text=$document->createTextNode(get_value_string($v));
       $label->appendChild($text);
       $span->appendChild($label);
-
-      $br=$document->createElement("br");
-      $div->appendChild($br);
     }
 
     return $div;
