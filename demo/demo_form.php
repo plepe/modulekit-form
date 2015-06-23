@@ -64,7 +64,7 @@ EOT
   'languages'	=>array(
     'name'	=>"What languages do you speak?",
     'type'	=>"checkbox",
-    'values'	=>array("php"=>"PHP", "perl"=>"Perl", "c"=>"C", "cpp"=>"C++", "java"=>"Java", "js"=>"Javascript"),
+    'values'	=>array("php"=>"PHP", "perl"=>"Perl", "c"=>"C", "cpp"=>"C++", "java"=>"Java", "js"=>array("name"=>"Javascript", "desc"=>"Script language, supported by web browsers")),
   ),
   'comment'	=>array(
     'name'	=>"Comment",

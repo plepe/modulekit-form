@@ -1,3 +1,7 @@
+2015-06-23
+----------
+* Form Element Radio/Checkbox: values may have a description ('desc' or 'desc:en' for localized string)
+
 2015-06-14
 ----------
 * Documentation 'Func Call'

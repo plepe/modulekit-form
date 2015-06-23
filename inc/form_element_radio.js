@@ -93,6 +93,14 @@ form_element_radio.prototype.update_options = function() {
     var text=document.createTextNode(get_value_string(values[k]));
     label.appendChild(text);
     span.appendChild(label);
+
+    var desc = get_value_string(values[k], "desc");
+    if(desc) {
+      var desc_label = document.createElement("span");
+      desc_label.setAttribute("class", "description");
+      desc_label.appendChild(document.createTextNode(desc));
+      span.appendChild(desc_label);
+    }
   }
 }
 

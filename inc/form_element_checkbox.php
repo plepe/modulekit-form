@@ -71,6 +71,13 @@ class form_element_checkbox extends form_element {
       $text=$document->createTextNode(get_value_string($v));
       $label->appendChild($text);
       $span->appendChild($label);
+
+      if($desc = get_value_string($v, "desc")) {
+	$desc_label = $document->createElement("span");
+	$desc_label->setAttribute("class", "description");
+	$desc_label->appendChild($document->createTextNode($desc));
+	$span->appendChild($desc_label);
+      }
     }
 
     if(array_key_exists('check_all', $this->def) && $this->def['check_all']) {

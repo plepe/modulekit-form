@@ -52,6 +52,11 @@ table.form .form_element_checkbox input {
   position: relative;
   *overflow: hidden;
 }
+table.form .form_element_radio span .description,
+table.form .form_element_checkbox span .description {
+  padding-left: 0px;
+  text-indent: 0px;
+}
 .form_autocomp_box {
   border: 1px solid black;
   display: block;
