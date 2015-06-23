@@ -34,6 +34,21 @@ EOT
     'type'	=>"radio",
     'values'	=>array('m'=>array("en"=>"male", "de"=>"männlich"), 'f'=>array("en"=>"female", "de"=>"weiblich")),
   ),
+  'rumble'      =>array(
+    'type'      =>"switch",
+    'name'      =>"... to rumble",
+    'switch'    =>"sex",
+    'def'       =>array(
+      'm'       =>array(
+        'type'  =>"text",
+        'name'  =>"m",
+      ),
+      'f'       =>array(
+        'type'  =>"boolean",
+        'name'  =>"w",
+      ),
+    ),
+  ),
   '_0' => array(
     'type'	=> 'intermediate_text',
     'text'	=> '<b>Tell something about your hobbies:</b>',
