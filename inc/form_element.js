@@ -552,6 +552,8 @@ form_element.prototype.is_shown=function() {
 }
 
 form_element.prototype.refresh=function(force) {
+  var data = this.get_data();
+
   if(!this.tr)
     return;
 
@@ -560,7 +562,7 @@ form_element.prototype.refresh=function(force) {
   else
     this.tr.setAttribute("style", "display: none;");
 
-  if(('default_func' in this.def) && (this.data == null)) {
+  if(('default_func' in this.def) && (data == null)) {
     var v = this.func_call(this.def.default_func);
     this.set_data(v);
     this.set_orig_data(v);
