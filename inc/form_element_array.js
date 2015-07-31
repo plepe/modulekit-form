@@ -122,8 +122,13 @@ form_element_array.prototype.get_data=function() {
   var count=0;
 
   for(var i in this.elements) {
+    var d = this.elements[i].get_data();
+
+    if(this.def.exclude_null_values && (d === null))
+      continue;
+
     if(this.elements[i].include_data()) {
-      ret[i]=this.elements[i].get_data();
+      ret[i] = d;
       count++;
     }
   }

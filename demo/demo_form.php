@@ -48,6 +48,7 @@ EOT
     'req'	=>true,
     'check'	=>array("unique"),
     'order'	=>false,
+    'exclude_null_values' => true,
   ),
   'fav_hobby'   =>array(
     'type'      => 'select',

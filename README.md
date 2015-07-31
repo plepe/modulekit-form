@@ -134,6 +134,7 @@ Definition:
 * button:add_element: override text of "Add Element" button (may be translated)
 * req: require at least one element
 * empty_value: value to return if array is empty. Default: null.
+* exclude_null_values: if true, remove null values from the array. Default: false.
 
 Value:
 * Array of sub elements.
