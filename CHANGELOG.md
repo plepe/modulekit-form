@@ -1,3 +1,11 @@
+2015-07-31
+----------
+* Form Element Array: new option 'exclude_null_values'
+
+2015-06-23
+----------
+* Form Element Radio/Checkbox: values may have a description ('desc' or 'desc:en' for localized string)
+
 2015-06-17
 ----------
 * Form Element Hash: if hash is empty, return value of 'empty_value' or null.

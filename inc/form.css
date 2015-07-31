@@ -19,7 +19,7 @@ table.form td.field_desc {
   padding-right: 0.5em;
 }
 table.form td.field_desc .form_desc,
-table.form div.description {
+table.form .description {
   font-size: 0.75em;
   font-style: italic;
 }
@@ -35,6 +35,27 @@ table.form td.field_value select {
 }
 table.form label:hover {
   text-decoration: underline;
+}
+table.form .form_element_checkbox div {
+}
+table.form .form_element_radio span,
+table.form .form_element_checkbox span {
+  display: block;
+  padding-left: 25px;
+  text-indent: -25px;
+}
+table.form .form_element_radio input,
+table.form .form_element_checkbox input {
+  width: 25px;
+  padding: 0px;
+  margin: 0px;
+  position: relative;
+  *overflow: hidden;
+}
+table.form .form_element_radio span .description,
+table.form .form_element_checkbox span .description {
+  padding-left: 0px;
+  text-indent: 0px;
 }
 .form_autocomp_box {
   border: 1px solid black;

@@ -134,6 +134,7 @@ Definition:
 * button:add_element: override text of "Add Element" button (may be translated)
 * req: require at least one element
 * empty_value: value to return if array is empty. Default: null.
+* exclude_null_values: if true, remove null values from the array. Default: false.
 
 Value:
 * Array of sub elements.
@@ -228,7 +229,7 @@ A list of checkboxes where a random count of boxes may be checked.
 
 Definition:
 * type: 'checkbox'
-* values: hash array of values, e.g. array("php"=>"PHP", "cpp"=>"C++", "js"=>"Javascript") or simple array of values, e.g. array("PHP", "C++", "Javascript"); may be translated like: array('m'=>array("en"=>"male", "de"=>"männlich"), 'f'=>array("en"=>"female", "de"=>"weiblich"))
+* values: hash array of values, e.g. array("php"=>"PHP", "cpp"=>"C++", "js"=>"Javascript") or simple array of values, e.g. array("PHP", "C++", "Javascript"); may be translated like: array('m'=>array("en"=>"male", "de"=>"männlich"), 'f'=>array("en"=>"female", "de"=>"weiblich")). A value may also have a description (see Form Element "Select").
 * values_func: function(s) which can update values list; see chapter "Func Call" for details.
 * values_mode: 'keys' (default when a hash array is used) or 'values' (default when a simple array is used)
 * check_all: if true, include a button "check all" which will check all checkboxes
@@ -244,7 +245,7 @@ A list of radio boxes where a maximum of one of boxes may be checked.
 
 Definition:
 * type: 'radio'
-* values: hash array of values, e.g. array("m"=>"male", "f"=>"female") or simple array of values, e.g. array("male", "female"); may be translated like: array('m'=>array("en"=>"male", "de"=>"männlich"), 'f'=>array("en"=>"female", "de"=>"weiblich"))
+* values: hash array of values, e.g. array("m"=>"male", "f"=>"female") or simple array of values, e.g. array("male", "female"); may be translated like: array('m'=>array("en"=>"male", "de"=>"männlich"), 'f'=>array("en"=>"female", "de"=>"weiblich")). A value may also have a description (see Form Element "Select").
 * values_func: function(s) which can update values list; see chapter "Func Call" for details.
 * values_mode: 'keys' (default when a hash array is used) or 'values' (default when a simple array is used)
 

@@ -137,6 +137,7 @@ class form {
 
   function reset() {
     $this->has_orig_data=false;
+    $this->has_data=false;
     //return form_reset($this->def, $this->data, $this->options['var_name']);
   }
 

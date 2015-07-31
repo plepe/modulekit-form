@@ -32,8 +32,12 @@ class form_element_radio extends form_element {
       $label->appendChild($text);
       $span->appendChild($label);
 
-      $br=$document->createElement("br");
-      $div->appendChild($br);
+      if($desc = get_value_string($v, "desc")) {
+	$desc_label = $document->createElement("span");
+	$desc_label->setAttribute("class", "description");
+	$desc_label->appendChild($document->createTextNode($desc));
+	$span->appendChild($desc_label);
+      }
     }
 
     return $div;

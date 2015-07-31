@@ -32,8 +32,13 @@ class form_element_array extends form_element {
   function get_data($return_empty_value=null) {
     $data=array();
     foreach($this->elements as $k=>$element) {
+      $d = $element->get_data();
+
+      if((isset($this->def['exclude_null_values']) && ($this->def['exclude_null_values'])) && ($d === null))
+	continue;
+
       if($element->include_data())
-	$data[$k]=$element->get_data();
+	$data[$k] = $d;
     }
 
     if(!sizeof($data)) {
