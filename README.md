@@ -424,6 +424,41 @@ Definition:
 * type: 'intermediate_text'
 * text: some text which will be shown. May contain HTML.
 
+Form Element "Switch"
+---------------------
+This is not really a form element of it's own, but selects one of several sub form elements by the value of another element. Only the selected sub form element will be shown.
+
+Definition:
+* type: 'switch'
+* switch: path (see check 'check' at Form Element) to other form element, whose value will be used for deciding which sub form element to show.
+* def: hash array where the keys are the possible values of the switch element and value is the definition of the sub form element.
+
+Example:
+```json
+{
+    "text_short_long": {
+        "type": "radio",
+        "name": "Short or long text?",
+        "values": [ "short", "long" ],
+        "default": "short"
+    },
+    "data": {
+        "type": "switch",
+        "switch": "text_short_long",
+        "def": {
+            "short": {
+                "type": "text",
+                "name": "Text"
+            },
+            "long": {
+                "type": "textarea",
+                "name": "Textarea"
+            }
+        }
+    }
+}
+```
+
 General functions
 =================
 Func Call
