@@ -123,3 +123,25 @@ form_element_switch.prototype.refresh=function() {
       this.element_table[k].style.display = 'none';
   }
 }
+
+// save changes of the active element to the other children
+form_element_switch.prototype.notify_child_change=function(children) {
+  this.parent("form_element_switch").notify_child_change.call(this, children);
+
+  if(children.length == 0)
+    return;
+
+  // check if the changed child was the currently active child
+  var el = this.get_active_element();
+  if(el != children[0])
+    return;
+
+  // load data from the active child
+  var data = el.get_data();
+
+  // save changes of the active element to the other children
+  for(var k in this.elements) {
+    if(this.elements[k] != el)
+      this.elements[k].set_data(data);
+  }
+}
