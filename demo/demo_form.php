@@ -34,21 +34,6 @@ EOT
     'type'	=>"radio",
     'values'	=>array('m'=>array("en"=>"male", "de"=>"männlich"), 'f'=>array("en"=>"female", "de"=>"weiblich")),
   ),
-  'rumble'      =>array(
-    'type'      =>"switch",
-    'name'      =>"... to rumble",
-    'switch'    =>"sex",
-    'def'       =>array(
-      'm'       =>array(
-        'type'  =>"text",
-        'name'  =>"m",
-      ),
-      'f'       =>array(
-        'type'  =>"boolean",
-        'name'  =>"w",
-      ),
-    ),
-  ),
   '_0' => array(
     'type'	=> 'intermediate_text',
     'text'	=> '<b>Tell something about your hobbies:</b>',
@@ -200,6 +185,27 @@ EOT
       ),
     ),
   ),
+  'text_or_area' => array(
+    'name'      => 'Text or Textarea?',
+    'type'      => 'radio',
+    'desc'      => 'Is the next field a text or a textarea?',
+    'default'   => 'none',
+    'values'    => array('none', 'text', 'textarea'),
+  ),
+  'tt'      =>array(
+    'type'      =>"switch",
+    'switch'    =>"text_or_area",
+    'def'       =>array(
+      'text'       =>array(
+        'type'  =>"text",
+        'name'  =>"text",
+      ),
+      'textarea'       =>array(
+        'type'  =>"textarea",
+        'name'  =>"textarea",
+      ),
+    ),
+  ),
 );
 
 $default_data=array(
@@ -216,4 +222,5 @@ $default_data=array(
   "json"=>array(1, 2, "foo", "bar"=>array("b", "a", "r")),
   "cats"=>array(array("name"=>"Foo", "age"=>3)),
   "num"=>10,
+  "tt" => "foobar",
 );
