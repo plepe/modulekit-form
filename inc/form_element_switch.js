@@ -113,7 +113,9 @@ form_element_switch.prototype.set_orig_data=function(data) {
     this.elements[k].set_orig_data(data);
 }
 
-form_element_switch.prototype.refresh=function() {
+form_element_switch.prototype.refresh=function(force) {
+  this.parent("form_element_switch").refresh.call(this, force);
+
   var el = this.get_active_element();
 
   for(var k in this.elements) {
@@ -121,6 +123,8 @@ form_element_switch.prototype.refresh=function() {
       this.element_table[k].style.display = null;
     else
       this.element_table[k].style.display = 'none';
+
+    this.elements[k].refresh(force);
   }
 }
 
