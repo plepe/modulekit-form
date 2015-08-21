@@ -49,6 +49,13 @@ class form_element {
     return "default";
   }
 
+  function weight() {
+    if(array_key_exists('weight', $this->def))
+      return $this->def['weight'];
+
+    return 0;
+  }
+
   function path_name() {
     $parent_path=$this->form_parent->path_name();
 

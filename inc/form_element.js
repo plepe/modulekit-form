@@ -37,6 +37,13 @@ form_element.prototype.name=function() {
   return name;
 }
 
+form_element.prototype.weight=function() {
+  if(this.def.weight)
+    return this.def.weight;
+
+  return 0;
+}
+
 form_element.prototype.path_name=function() {
   var parent_path=this.form_parent.path_name();
 

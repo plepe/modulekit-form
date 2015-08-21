@@ -57,9 +57,18 @@ form_element_form.prototype.show_element=function() {
   var table=document.createElement("table");
   table.id=this.id;
   table.className="form";
+  var element_list = [];
 
   for(var i in this.elements) {
-    table.appendChild(this.elements[i].show());
+    var element = this.elements[i];
+
+    element_list.push([ element.weight(), element.show() ]);
+  }
+
+  element_list = weight_sort(element_list);
+
+  for(var i in element_list) {
+    table.appendChild(element_list[i]);
   }
 
   return table;

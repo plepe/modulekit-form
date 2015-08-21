@@ -1,3 +1,7 @@
+2015-08-21
+----------
+* Form Element *: new option 'weight' (define order of elements for display)
+
 2015-07-31
 ----------
 * Form Element Array: new option 'exclude_null_values'

@@ -61,6 +61,7 @@ EOT
     'name'	=>"Birthday",
     'type'	=>"date",
     'include_data'=>array('check', 'sex', array('is', 'm')),
+    'weight' => -1,
   ),
   'languages'	=>array(
     'name'	=>"What languages do you speak?",
