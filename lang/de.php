@@ -22,6 +22,7 @@ $lang_str['form:check_lt_failed']="Wert muss < %s sein.";
 $lang_str['form:check_empty_or'] = "Keine Parameter für 'or' Vergleich";
 
 $lang_str['form_element:please_select'] = "-- bitte wählen --";
+$lang_str['form_element_date:format_error'] = "Kann Datum nicht auslesen";
 
 $lang_str['form:check_all'] = "alle markieren";
 $lang_str['form:uncheck_all'] = "keine markieren";
