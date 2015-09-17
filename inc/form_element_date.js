@@ -123,3 +123,10 @@ form_element_date.prototype.notify_change=function() {
       this.calendar.set_date(data);
   }
 }
+
+form_element_date.prototype.errors=function(list) {
+  var data=this.get_data();
+
+  if((this.parent("form_element_date").get_data() !== null) && (this.get_data() === null))
+    list.push(lang('form_element_date:format_error'));
+}

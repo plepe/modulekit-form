@@ -84,4 +84,10 @@ class form_element_date extends form_element_text {
     if($this->get_data()<=$param[0])
       $list[]=$param[1];
   }
+
+  function errors(&$list) {
+
+    if((parent::get_data() !== null) && ($this->get_data() === null))
+    $list[] = lang('form_element_date:format_error');
+  }
 }
