@@ -1,6 +1,7 @@
 2015-09-24
 ----------
 Form Element *: show_depend may be boolean false
+Form Element Fixed: new form type
 
 2015-08-21
 ----------

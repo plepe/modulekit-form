@@ -425,6 +425,17 @@ Definition:
 * type: 'intermediate_text'
 * text: some text which will be shown. May contain HTML.
 
+Form Element "Fixed"
+----------------------
+A non-editable field, it always has the specified value and can not be changed by UI or set_data(). It just shows the value. In opposition to other elements, this may contain HTML for formatting.
+
+Definition:
+* type: 'fixed'
+* value: the value of the element.
+
+Tips:
+Set 'show_depend' to false to hide this field.
+
 Form Element "Switch"
 ---------------------
 This is not really a form element of it's own, but selects one of several sub form elements by the value of another element. Only the selected sub form element will be shown.
