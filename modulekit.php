@@ -36,6 +36,7 @@ $include_php=array(
   "inc/form_element_hidden.php",
   "inc/form_element_intermediate_text.php",
   "inc/form_element_switch.php",
+  "inc/form_element_fixed.php",
 );
 $include_js=array(
   "inc/functions.js",
@@ -64,6 +65,7 @@ $include_js=array(
   "inc/form_element_hidden.js",
   "inc/form_element_intermediate_text.js",
   "inc/form_element_switch.js",
+  "inc/form_element_fixed.js",
 );
 $include_css=array(
   "inc/form.css",

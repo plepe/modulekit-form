@@ -206,6 +206,12 @@ EOT
       ),
     ),
   ),
+  'fixed'	=> array(
+    'name'	=> 'Fixed',
+    'type'	=> 'fixed',
+    'value'	=> 'test',
+    'show_depend' => false,
+  ),
 );
 
 $default_data=array(

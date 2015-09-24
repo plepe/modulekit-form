@@ -105,6 +105,7 @@ Definition:
   * 'unique': Check if all values of this element are different (element needs to return an array) OR - if a path as 2nd parameter is given - the values of the other elements are different. E.g. array('unique', '../*/name'). See check 'check' how to specify paths.
   * 'required': Error, if this element is required but value is empty.
   * 'has_value': Check if value of this element is not null. If it is null, print "Invalid Value" message or value of 1st parameter.
+* show_depend: if boolean 'false', do not show this field (it is active though). if an array similar to 'check', show the field when it evaluates to success.
 * hide_label: if true, hides the left column with label and description and stretches the form element to the full content width.
 * include_data: if set to false, the current form element is not included in get_data(). May contain a check like in 'check'.
 
@@ -423,6 +424,17 @@ A non-editable field, which does not even contain data. It's meant for intermedi
 Definition:
 * type: 'intermediate_text'
 * text: some text which will be shown. May contain HTML.
+
+Form Element "Fixed"
+----------------------
+A non-editable field, it always has the specified value and can not be changed by UI or set_data(). It just shows the value. In opposition to other elements, this may contain HTML for formatting.
+
+Definition:
+* type: 'fixed'
+* value: the value of the element.
+
+Tips:
+Set 'show_depend' to false to hide this field.
 
 Form Element "Switch"
 ---------------------
