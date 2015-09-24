@@ -494,6 +494,9 @@ class form_element {
 
   function is_shown() {
     if(isset($this->def['show_depend'])) {
+      if($this->def['show_depend'] === false)
+	return false;
+
       $errors=array();
 
       $this->check($errors, $this->def['show_depend']);

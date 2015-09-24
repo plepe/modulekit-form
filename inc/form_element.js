@@ -546,6 +546,9 @@ form_element.prototype.notify_child_change=function(elements) {
 }
 
 form_element.prototype.is_shown=function() {
+  if(this.def.show_depend === false)
+    return this.def.show_depend;
+
   if(this.def.show_depend) {
     errors=[];
 
