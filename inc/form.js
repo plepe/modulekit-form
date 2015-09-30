@@ -94,6 +94,9 @@ form.prototype.connect=function() {
   this.element.connect(element_dom_parent);
   this.element.finish_connect();
 
+  if(window.addResizeListener)
+    addResizeListener(element_dom_parent, this.resize.bind(this));
+
   call_hooks('form_connected', this);
 }
 
@@ -146,6 +149,9 @@ form.prototype.show=function(dom_parent) {
   div.setAttribute("style", "width: 0px; height: 0px; overflow: hidden;");
   div.innerHTML="<input type='submit'>";
   dom_parent.appendChild(div);
+
+  if(window.addResizeListener)
+    addResizeListener(dom_parent, this.resize.bind(this));
 
   // render the form
   this.table=this.element.show_element();
