@@ -449,6 +449,17 @@ form_element.prototype.check_fun=function(list, param) {
     ret = fun(this.get_data(), this, this.form_root.form);
   else if(fun in window)
     ret = window[fun](this.get_data(), this, this.form_root.form);
+  else if(typeof fun == "string") {
+    var dom = document.createElement('script');
+    dom.type = 'text/javascript';
+    dom.appendChild(document.createTextNode('var __ = ' + fun));
+
+    document.body.appendChild(dom);
+    fun = param[0]['js'] = __;
+    document.body.removeChild(dom);
+
+    ret = fun(this.get_data(), this, this.form_root.form);
+  }
 
   if(ret)
     list.push(ret);
