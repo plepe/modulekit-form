@@ -308,7 +308,6 @@ form_element_array.prototype.add_element=function() {
     current=current.nextSibling;
   }
 
-  this.show_errors();
   this.form_root.form.resize();
 
   return false;
