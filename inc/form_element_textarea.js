@@ -5,10 +5,10 @@ function form_element_textarea() {
 form_element_textarea.prototype.connect=function(dom_parent) {
   this.dom_element=dom_parent.getElementsByTagName("textarea")[0];
 
-  this.dom_element.oncut=this.delayed_resize.bind(this);
-  this.dom_element.onpaste=this.delayed_resize.bind(this);
-  this.dom_element.ondrop=this.delayed_resize.bind(this);
-  this.dom_element.onkeydown=this.delayed_resize.bind(this);
+  this.dom_element.oncut = this.delayed_resize.bind(this);
+  this.dom_element.onpaste = this.delayed_resize.bind(this);
+  this.dom_element.ondrop = this.delayed_resize.bind(this);
+  this.dom_element.onkeydown = this.delayed_resize.bind(this);
 
   this.parent("form_element_textarea").connect.call(this, dom_parent);
 
@@ -17,6 +17,11 @@ form_element_textarea.prototype.connect=function(dom_parent) {
 
 form_element_textarea.prototype.create_element=function() {
   var input=document.createElement("textarea");
+
+  input.oncut = this.delayed_resize.bind(this);
+  input.onpaste = this.delayed_resize.bind(this);
+  input.ondrop = this.delayed_resize.bind(this);
+  input.onkeydown = this.delayed_resize.bind(this);
 
   return input;
 }
