@@ -14,12 +14,6 @@ form_element_json.prototype.connect=function(dom_parent) {
     this.dom_element.onblur=this.notify_change.bind(this);
 }
 
-form_element_json.prototype.create_element=function() {
-  var input=document.createElement("textarea");
-
-  return input;
-}
-
 form_element_json.prototype.show_element=function() {
   var div=this.parent("form_element_json").show_element.call(this);
 
