@@ -6,6 +6,8 @@ $lang_str['edit']="Bearbeiten";
 $lang_str['change']="Ändern";
 
 $lang_str['form:add_element']="Element hinzufügen";
+$lang_str['form_element_array:error_min']="Zu wenig Einträge, min. %d.";
+$lang_str['form_element_array:error_max']="Zu viele Einträge, max. %d.";
 $lang_str['form:require_value']="Wert muss angegeben werden.";
 $lang_str['form:invalid_value']="Ungültiger Wert.";
 $lang_str['form:file_upload_error']="Datei '%s' konnte nicht raufgeladen werden, Fehler %d.";

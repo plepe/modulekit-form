@@ -130,7 +130,8 @@ Definition:
 * type: 'array'
 * def: Definition of the sub element.
 * default: default count of values
-* max: maximum count of values (currently just hides 'add element' button, no error message when maximum is overrun)
+* min: minimum count of values
+* max: maximum count of values
 * order: whether the elements of the array shall be orderable. true (default) / false.
 * button:add_element: override text of "Add Element" button (may be translated)
 * req: require at least one element
