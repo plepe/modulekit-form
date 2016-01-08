@@ -274,6 +274,7 @@ Definition:
 * values_func: function(s) which can update values list; see chapter "Func Call" for details.
 * empty_value: Value to be returned if key is empty (default: null)
 * placeholder: Text which will be used, when no value is selected (default: '--- please select ---')
+* null_value: By default an option with the internal value "" (empty string) will be added for the "please select" resp. null option. Set the 'null_value' if "" should be a valid option. Example: '__NULL__'.
 
 Value:
 * In 'keys' values_mode the key of the chosen value is returned (e.g. "m"); in 'values' mode the value is returned (e.g. "male")

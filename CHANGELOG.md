@@ -1,3 +1,7 @@
+2015-01-08 (Version >= 2.6)
+---------------------------
+Form Element Select: new option 'null_value'
+
 2015-12-04 (Version >= 2.6)
 -------------------
 Form Element Array: also accept 'min'; generate error when not in range
