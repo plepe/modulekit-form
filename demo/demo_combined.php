@@ -59,13 +59,13 @@ print "<div class='demo'>\n";
 
 print "<div class='definition'>\n";
 print "Form definition:<pre id='definition'>\n";
-print_r($form_def);
+print json_readable_encode($form_def);
 print "</pre>\n";
 print "</div>\n";
 
 print "<div class='form_data'>\n";
 print "Data: <pre id='form_data'>\n";
-print_r($form->get_data());
+print json_readable_encode($form->get_data());
 print "</pre>\n";
 print "</div>\n";
 
