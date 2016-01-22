@@ -16,6 +16,7 @@ $lang_str['form:file_upload_error:2']="Datei '%s' konnte nicht raufgeladen werde
 $lang_str['form:file_upload_error:3']="Fehler! Datei '%s' wurde nur teilweise raufgeladen.";
 $lang_str['form:file_not_accept_ext']="Extension '%s' nicht akzeptiert!";
 $lang_str['form:not_supported']="Formular Element Typ '%s' nicht unterstützt!";
+$lang_str['form:file_select'] = "Wähle Datei / Droppe Datei hier";
 
 $lang_str['form:check_ge_failed']="Wert muss >= %s sein.";
 $lang_str['form:check_le_failed']="Wert muss <= %s sein.";

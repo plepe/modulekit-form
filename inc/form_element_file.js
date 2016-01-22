@@ -71,7 +71,7 @@ form_element_file.prototype.connect=function(dom_parent) {
     input.setAttribute("name", this.options.var_name+"[file]");
     span.appendChild(input);
 
-    span.appendChild(document.createTextNode("Select file / Drop file"));
+    span.appendChild(document.createTextNode(lang("form:file_select")));
 
     this.dom_element = input;
     this.dom_element.onblur=this.notify_change.bind(this);
@@ -169,7 +169,7 @@ form_element_file.prototype.show_element=function() {
   input.setAttribute("name", this.options.var_name+"[file]");
   span.appendChild(input);
 
-  span.appendChild(document.createTextNode("Select file / Drop file"));
+  span.appendChild(document.createTextNode(lang("form:file_select")));
 
   this.dom_element=input;
   this.dom_element.onblur=this.notify_change.bind(this);

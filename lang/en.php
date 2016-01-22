@@ -16,6 +16,7 @@ $lang_str['form:file_upload_error:2']="File '%s' could not be uploaded, file is 
 $lang_str['form:file_upload_error:3']="Error! Only parts of file '%s' were uploaded.";
 $lang_str['form:file_not_accept_ext']="Extension '%s' not accepted!";
 $lang_str['form:not_supported']="Form Element type '%s' not supported!";
+$lang_str['form:file_select'] = "Select file / Drop file";
 
 $lang_str['form:check_ge_failed']="Value must be >= %s";
 $lang_str['form:check_le_failed']="Value must be <= %s";
