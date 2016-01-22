@@ -55,6 +55,25 @@ form_element_file.prototype.connect=function(dom_parent) {
   }
 
   if(this.dom_element) {
+    span = document.getElementById(this.id+"-newfile");
+    var div = span.parentNode;
+    div.removeChild(span);
+
+    var span=document.createElement("label");
+    span.setAttribute("id", this.id+"-newfile");
+    if(this.data)
+      span.style.display="none";
+    div.appendChild(span);
+
+    var input=document.createElement("input");
+    input.setAttribute("type", "file");
+    input.setAttribute("class", 'form_orig');
+    input.setAttribute("name", this.options.var_name+"[file]");
+    span.appendChild(input);
+
+    span.appendChild(document.createTextNode("Select file / Drop file"));
+
+    this.dom_element = input;
     this.dom_element.onblur=this.notify_change.bind(this);
     this.dom_element.onchange=this.notify_change_file.bind(this);
   }
@@ -138,7 +157,7 @@ form_element_file.prototype.show_element=function() {
   }
 
   // create input field for new file
-  var span=document.createElement("div");
+  var span=document.createElement("label");
   span.setAttribute("id", this.id+"-newfile");
   if(this.data)
     span.style.display="none";
@@ -149,6 +168,8 @@ form_element_file.prototype.show_element=function() {
   input.setAttribute("class", cls);
   input.setAttribute("name", this.options.var_name+"[file]");
   span.appendChild(input);
+
+  span.appendChild(document.createTextNode("Select file / Drop file"));
 
   this.dom_element=input;
   this.dom_element.onblur=this.notify_change.bind(this);
@@ -208,7 +229,7 @@ form_element_file.prototype.notify_change_file=function() {
     span_value.appendChild(document.createTextNode(format_file_size(data.size)));
   }
 
-  span.style.display="block";
+  span.style.display="inline-block";
   span.className = "form_modified";
 }
 
@@ -217,7 +238,7 @@ form_element_file.prototype.input_change=function() {
   span.style.display="none";
 
   span=document.getElementById(this.id+"-newfile");
-  span.style.display="block";
+  span.style.display="inline-block";
 }
 
 form_element_file.prototype.get_data=function() {
