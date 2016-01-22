@@ -2,6 +2,7 @@
   max-width: 64px;
   max-height: 32px;
   float: left;
+  margin-right: 2px;
 }
 .form_element_file .value {
   display: inline-block;
