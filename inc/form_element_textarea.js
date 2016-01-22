@@ -38,10 +38,16 @@ form_element_textarea.prototype.delayed_resize = function(ev, shrink) {
 
 form_element_textarea.prototype.resize = function(ev, shrink) {
   if(this.dom_element) {
+    // temporarily set fixed height for parent node to avoid page jumping
+    this.dom_element.parentNode.style.display = 'block';
+    this.dom_element.parentNode.style.minHeight = this.dom_element.parentNode.scrollHeight + 'px';
+
     // thanks for http://codingaspect.com/blog/textarea-auto-grow-resizing-textarea-to-fit-text-height for this solution
     this.dom_element.style.overlowY = 'hidden';
     this.dom_element.style.height = 'auto';
     this.dom_element.style.height = this.dom_element.scrollHeight + 'px';
+
+    this.dom_element.parentNode.style.minHeight = null;
   }
 }
 
