@@ -260,6 +260,9 @@ class form_element {
       if(is_bool($this->def['include_data']))
 	return $this->def['include_data'];
 
+      if($this->def['include_data'] === 'not_null')
+        return $this->get_data() !== null;
+
       $errors=array();
 
       $this->check($errors, $this->def['include_data']);

@@ -95,6 +95,9 @@ form_element.prototype.include_data=function() {
     if((this.def.include_data === true) || (this.def.include_data === false))
       return this.def.include_data;
 
+    if(this.def.include_data === 'not_null')
+      return this.get_data() !== null;
+
     errors=[];
 
     this.check(errors, this.def.include_data);

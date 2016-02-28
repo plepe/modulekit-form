@@ -56,6 +56,7 @@ EOT
     'values_func'=>array("js"=>"fav_hobby_list", "php"=>"fav_hobby_list"),
     'values_mode'=>"values",
     'name'      =>array("en"=>"Favorite hobby", "de"=>"Lieblingshobby"),
+    'include_data' => 'not_null',
   ),
   'birthday'	=>array(
     'name'	=>"Birthday",
