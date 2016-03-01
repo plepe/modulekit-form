@@ -167,6 +167,11 @@ form_element_text.prototype.errors=function(list) {
       if((!values) || (!in_array(this.data, values)))
         list.push(lang('form:invalid_value'));
     }
+
+    if(this.def.max_length) {
+      if(this.data.length > this.def.max_length)
+        list.push(lang('form:max_length_exceeded', 0, this.def.max_length));
+    }
   }
 }
 

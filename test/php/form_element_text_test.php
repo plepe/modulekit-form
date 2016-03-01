@@ -106,4 +106,29 @@ class form_element_text_test extends PHPUnit_Framework_TestCase {
       'text' => 'bar',
     ), $form->get_data());
   }
+
+  public function testMaxLength() {
+    $_REQUEST['data'] = array(
+      'text' => '0123456789',
+    );
+
+    $form = new form('data', array(
+      'text' => array(
+        'name' => 'Text',
+        'type' => 'text',
+        'max_length' => 5,
+      ),
+    ));
+
+    // is_complete?
+    $this->assertEquals(false, $form->is_complete());
+    // data?
+    $this->assertEquals(array(
+      'text' => '0123456789',
+    ), $form->get_data());
+    // errors?
+    $this->assertEquals(array(
+      'Text: Value is longer than 5 characters.',
+    ), $form->errors());
+  }
 }

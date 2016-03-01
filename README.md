@@ -163,6 +163,7 @@ Definition:
 * values: array of recommended values
 * values_func: function(s) which can update values list; see chapter "Func Call" for details.
 * force_values: boolean; if true, value must be member of 'values' array (default: false).
+* max_length: Value may not be longer than 'max_length' characters.
 
 Value:
 * String. Will be stripped of additional slashes.

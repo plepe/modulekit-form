@@ -5,6 +5,7 @@ $form_def=array(
     'desc'	=>"Please enter a name",
     'type'	=>"text",
     'req'	=>true,
+    'max_length' => 10,
     'html_attributes'   =>array("style"=>"border: 2px solid black;"),
     'check'	=> array("fun", array("js"=>"name_check", "php"=>"name_check")),
   ),

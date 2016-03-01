@@ -33,3 +33,4 @@ $lang_str['form:duplicate'] = array("Value %s appears multiple times.", "Values 
 
 $lang_str['form:hash_key_field_name'] = "Key";
 $lang_str['form:hash_value_field_name'] = "Value";
+$lang_str['form:max_length_exceeded'] = "Value is longer than %d characters.";
