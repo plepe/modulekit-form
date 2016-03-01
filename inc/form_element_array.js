@@ -10,6 +10,7 @@ form_element_array.prototype.init=function(id, def, options, form_parent) {
 
 form_element_array.prototype.build_form=function() {
   this.elements={};
+  this.element_divs = {};
 
   if(!this.data) {
     this.data={};
@@ -55,9 +56,11 @@ form_element_array.prototype.connect=function(dom_parent) {
 
   var current=this.dom_parent.firstChild;
   this.elements={};
+  this.element_divs = {};
   while(current) {
     var k;
     if((current.nodeName=="DIV")&&(k=current.getAttribute("form_element_num"))) {
+      this.element_divs[k] = current;
       var element_class="form_element_"+this.def.def.type;
       var element_id=this.id+"_"+k;
       var element_options=new clone(this.options);
@@ -243,6 +246,7 @@ form_element_array.prototype.show_element=function() {
 
   for(var k in this.elements) {
     var part_div=this.show_element_part(k, this.elements[k]);
+    this.element_divs[k] = part_div;
     div.appendChild(part_div);
   }
 

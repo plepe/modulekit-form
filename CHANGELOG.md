@@ -1,3 +1,7 @@
+2015-02-28 (Version >= 2.6)
+---------------------------
+Form Element *: 'include_data' may be 'not_null': include only if value not null
+
 2015-01-08 (Version >= 2.6)
 ---------------------------
 Form Element Select: new option 'null_value'

@@ -106,7 +106,7 @@ Definition:
   * 'required': Error, if this element is required but value is empty.
   * 'has_value': Check if value of this element is not null. If it is null, print "Invalid Value" message or value of 1st parameter.
 * hide_label: if true, hides the left column with label and description and stretches the form element to the full content width.
-* include_data: if set to false, the current form element is not included in get_data(). May contain a check like in 'check'.
+* include_data: if set to false, the current form element is not included in get_data(). if it is 'not_null', it will be only included, if the value is not null. May contain a check like in 'check'.
 
 Translation of name, desc, ...:
 To translate the options you may supply an array with the language codes as keys, e.g. array("en"=>"English text", "de"=>"German text"); if translation is missing, the first translation will be used.
