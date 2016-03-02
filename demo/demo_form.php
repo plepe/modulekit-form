@@ -107,7 +107,7 @@ $form_def=array(
     'template'	=>"submission-[timestamp].[ext]",
   ),
   'photos'	=>array(
-    'type'	=>"directory",
+    'type'	=>"files",
     'name'	=>"Photos",
     'desc'	=>"Upload multiple files",
     'path'	=>"/tmp",

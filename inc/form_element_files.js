@@ -1,15 +1,15 @@
-form_element_file.inherits_from(form_element);
-function form_element_file() {
+form_element_files.inherits_from(form_element);
+function form_element_files() {
 }
 
-form_element_file.prototype.init=function(id, def, options, form_parent) {
-  this.parent("form_element_file").init.call(this, id, def, options, form_parent);
+form_element_files.prototype.init=function(id, def, options, form_parent) {
+  this.parent("form_element_files").init.call(this, id, def, options, form_parent);
 }
 
-form_element_file.prototype.refresh=function() {
+form_element_files.prototype.refresh=function() {
   var cls;
 
-  //this.parent("form_element_file").check_modified.call(this);
+  //this.parent("form_element_files").check_modified.call(this);
 
   if(!this.dom_element)
     return;
@@ -24,8 +24,8 @@ form_element_file.prototype.refresh=function() {
   this.dom_element.onchange=this.notify_change_file.bind(this);
 }
 
-form_element_file.prototype.connect=function(dom_parent) {
-  this.parent("form_element_file").connect.call(this, dom_parent);
+form_element_files.prototype.connect=function(dom_parent) {
+  this.parent("form_element_files").connect.call(this, dom_parent);
 
   var obs=this.dom_parent.getElementsByTagName("input");
   for(var i=0; i<obs.length; i++) {
@@ -51,8 +51,8 @@ form_element_file.prototype.connect=function(dom_parent) {
   }
 }
 
-form_element_file.prototype.show_element=function() {
-  var div=this.parent("form_element_file").show_element.call(this);
+form_element_files.prototype.show_element=function() {
+  var div=this.parent("form_element_files").show_element.call(this);
 
   var cls="form_orig";
   if(this.is_modified())
@@ -122,8 +122,8 @@ form_element_file.prototype.show_element=function() {
   return div;
 }
 
-form_element_file.prototype.notify_change_file=function() {
-  this.parent("form_element_file").notify_change.call(this);
+form_element_files.prototype.notify_change_file=function() {
+  this.parent("form_element_files").notify_change.call(this);
 
   var span=document.getElementById(this.id+"-newfile");
   span.style.display="none";
@@ -143,7 +143,7 @@ form_element_file.prototype.notify_change_file=function() {
     input.onclick=this.input_change.bind(this);
     span.appendChild(input);
 
-    this.dom_parent.appendChild(span);
+    this.dom.appendChild(span);
   }
 
   var span_value = span.firstChild;
@@ -155,7 +155,7 @@ form_element_file.prototype.notify_change_file=function() {
   span.className = "form_modified";
 }
 
-form_element_file.prototype.input_change=function() {
+form_element_files.prototype.input_change=function() {
   var span=document.getElementById(this.id+"-oldfile");
   span.style.display="none";
 
