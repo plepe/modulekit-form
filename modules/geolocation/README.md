@@ -16,6 +16,7 @@ An optional form element for the Geolocation Javascript API. The resulting data 
 Options
 -------
 * options: options for the navigator.geolocation element, typically: enableHighAccuracy, timeout, maximumAge. See http://dev.w3.org/geo/api/spec-source.html#position_options_interface for details.
+* default_enable_tracking: per default GPS tracking will be enabled. Set to false to disable tracking per default (users need to check to enable).
 
 Notes
 -----

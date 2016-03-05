@@ -193,6 +193,7 @@ EOT
   'geo'         =>array(
     'name'      => "Geo",
     'type'      => "geolocation",
+    'default_enable_tracking' => false,
   ),
 );
 

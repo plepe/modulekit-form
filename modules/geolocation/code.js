@@ -28,7 +28,10 @@ form_element_geolocation.prototype.connect = function(dom_parent) {
   var data = this.get_data();
   this.show_enable_tracking(data);
 
-  this.toggle_tracking();
+  if((typeof this.def.default_enable_tracking == 'undefined') || (this.def.default_enable_tracking))
+    this.enable_tracking();
+  else
+    this.disable_tracking();
 }
 
 form_element_geolocation.prototype.show_element = function() {
