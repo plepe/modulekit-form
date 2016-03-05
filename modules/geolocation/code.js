@@ -137,12 +137,11 @@ form_element_geolocation.prototype.toggle_tracking = function(state) {
     if(!this.api) {
       if('geolocation' in navigator)
         this.api = navigator.geolocation;
-
-      if(this.api)
-        this.api.watchPosition(this.update.bind(this), null, this.def.options);
       else
         return this.disable_tracking();
     }
+
+    this.api.watchPosition(this.update.bind(this), null, this.def.options);
 
     for(var k in form_element_geolocation_keys) {
       this.input[k].setAttribute("disabled", "true");
