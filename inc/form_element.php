@@ -49,6 +49,13 @@ class form_element {
     return "default";
   }
 
+  function weight() {
+    if(array_key_exists('weight', $this->def))
+      return $this->def['weight'];
+
+    return 0;
+  }
+
   function path_name() {
     $parent_path=$this->form_parent->path_name();
 
@@ -85,7 +92,7 @@ class form_element {
 
       if(is_array($req)) {
 	$this->check($req_test, $req);
-	$req = count($req_test) == 0;
+	$req = count($req_test) != 0;
       }
 
       return $req;
@@ -97,8 +104,7 @@ class form_element {
   function errors(&$errors) {
     $data=$this->get_data();
 
-    if($this->required() && ($data===null))
-      $errors[]=lang("form:require_value");
+    $this->check_required($errors, array());
 
     if(isset($this->def['check']) && ($data !== null)) {
       $check_errors=array();
@@ -124,6 +130,16 @@ class form_element {
     if(method_exists($this, $check_fun)) {
       call_user_func_array(array($this, $check_fun), array(&$errors, $param));
     }
+
+    $new_errors = array();
+    foreach($errors as $e) {
+      if(is_array($e))
+	$new_errors = array_merge($new_errors, $e);
+      else
+	$new_errors[] = $e;
+    }
+
+    $errors = $new_errors;
   }
 
   function is_complete() {
@@ -239,6 +255,25 @@ class form_element {
     return $this->dom;
   }
 
+  function include_data() {
+    if(isset($this->def['include_data'])) {
+      if(is_bool($this->def['include_data']))
+	return $this->def['include_data'];
+
+      if($this->def['include_data'] === 'not_null')
+        return $this->get_data() !== null;
+
+      $errors=array();
+
+      $this->check($errors, $this->def['include_data']);
+
+      if(sizeof($errors))
+	return false;
+    }
+
+    return true;
+  }
+
   function save_data() {
   }
 
@@ -259,6 +294,17 @@ class form_element {
     }
 
     $errors=array_merge($errors, $list_errors);
+  }
+
+  function check_required(&$errors, $param) {
+    $data=$this->get_data();
+
+    if($this->required() && ($data === null)) {
+      if(sizeof($param)<2)
+        $errors[]=lang('form:require_value');
+      else
+        $errors[]=$param[1];
+    }
   }
 
   // call check() for all elements of the param-array until one successful check is found
@@ -391,6 +437,8 @@ class form_element {
 
     if(array_key_exists('php', $param[0]))
       $fun = $param[0]['php'];
+    else
+      return;
 
     if($fun && (is_callable($fun) || (function_exists($fun)))) {
       $ret = call_user_func($fun, $this->get_data(), $this, $this->form_root->form);
@@ -404,24 +452,30 @@ class form_element {
 
   function check_unique(&$list, $param) {
     $data = array();
-
-    if((sizeof($param) == 0) || ($param[0] == null)) {
-      $data = $this->get_data();
-    }
-    else {
-      $other_list = $this->form_parent->resolve_other_elements($param[0]);
-      foreach($other_list as $other)
-	$data[] = $other->get_data();
-    }
-
     $done = array();
     $dupl = array();
 
-    foreach($data as $k=>$v) {
-      if(in_array($v, $done))
-	$dupl[] = json_encode($v);
+    if((sizeof($param) == 0) || ($param[0] == null)) {
+      $data = $this->get_data();
 
-      $done[] = $v;
+      foreach($data as $k=>$v) {
+	if(in_array($v, $done))
+	  $dupl[] = json_encode($v);
+
+	$done[] = $v;
+      }
+    }
+    else {
+      $this_data = $this->get_data();
+      $this_data_enc = json_encode($this_data);
+
+      $other_list = $this->form_parent->resolve_other_elements($param[0]);
+      foreach($other_list as $other) {
+	if(($other != $this) && (json_encode($other->get_data()) == $this_data_enc)) {
+	  $dupl = array( $this_data );
+	  break;
+	}
+      }
     }
 
     if(sizeof($dupl)) {
@@ -429,6 +483,15 @@ class form_element {
 	$list[] = lang($param[1], sizeof($dupl), implode(", ", $dupl));
       else
 	$list[] = lang("form:duplicate", sizeof($dupl), implode(", ", $dupl));
+    }
+  }
+
+  function check_has_value(&$errors, $param) {
+    if($this->get_data() === null) {
+      if(sizeof($param)<1)
+	$errors[]=lang('form:invalid_value');
+      else
+	$errors[]=$param[0];
     }
   }
 
@@ -450,19 +513,23 @@ class form_element {
     return $this->get_data()!==$this->get_orig_data();
   }
 
+  function func_call($def) {
+    $fun = null;
+
+    if(array_key_exists('php', $def))
+      $fun = $def['php'];
+
+    if($fun && (is_callable($fun) || (function_exists($fun))))
+      return call_user_func($fun, $this->get_data(), $this, $this->form_root->form);
+
+    return null;
+  }
+
   function get_values() {
     $ret=array();
 
     if(array_key_exists('values_func', $this->def)) {
-      $fun = null;
-
-      if(array_key_exists('php', $this->def['values_func']))
-	$fun = $this->def['values_func']['php'];
-
-      if($fun && (is_callable($fun) || (function_exists($fun))))
-	$this->def['values'] = call_user_func($fun, $this->get_data(), $this, $this->form_root->form);
-      else
-	$this->def['values'] = null;
+      $this->def['values'] = $this->func_call($this->def['values_func']);
     }
 
     if(!isset($this->def['values'])||!is_array($this->def['values']))
@@ -528,6 +595,13 @@ class form_element {
     return $str;
   }
 
+  function refresh($force=false) {
+    if(array_key_exists('default_func', $this->def) && ($this->data == null)) {
+      $v = $this->func_call($this->def['default_func']);
+      $this->set_data($v);
+      $this->set_orig_data($v);
+    }
+  }
 }
 
 function get_form_element_class($def) {

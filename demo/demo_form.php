@@ -8,14 +8,39 @@ $form_def=array(
     'desc'	=>"Please enter a name",
     'type'	=>"text",
     'req'	=>true,
+    'max_length' => 10,
     'html_attributes'   =>array("style"=>"border: 2px solid black;"),
     'check'	=> array("fun", array("js"=>"name_check", "php"=>"name_check")),
+  ),
+  'nickname'   =>array(
+    'name'      =>'Nickname',
+    'desc'      =>"By default rot13 of the name",
+    'type'      =>'text',
+    'default_func' => array(
+      "js"=><<<EOT
+function(value, form_element, form) {
+  var s = form.get_data().name;
+  if(s == null)
+    return null;
+
+  // Source: http://stackoverflow.com/a/617685/4832631
+  return s.replace(/[a-zA-Z]/g,function(c){return String.fromCharCode((c<="Z"?90:122)>=(c=c.charCodeAt(0)+13)?c:c-26);});
+}
+EOT
+, "php"=>function($value, $form_element, $form) {
+  $d = $form->get_data();
+  return str_rot13($d['name']);
+}),
   ),
   'sex'		=>array(
     'name'	=>array("en"=>"Sex", "de"=>"Geschlecht"),
     'desc'	=>array("en"=>"Choose your <a href='http://en.wikipedia.org/wiki/Gender'>gender</a>", "de"=>"Wähle Dein Geschlecht"),
     'type'	=>"radio",
     'values'	=>array('m'=>array("en"=>"male", "de"=>"männlich"), 'f'=>array("en"=>"female", "de"=>"weiblich")),
+  ),
+  '_0' => array(
+    'type'	=> 'intermediate_text',
+    'text'	=> '<b>Tell something about your hobbies:</b>',
   ),
   'hobbies'	=>array(
     'name'	=>"Hobbies",
@@ -27,6 +52,7 @@ $form_def=array(
     'req'	=>true,
     'check'	=>array("unique"),
     'order'	=>false,
+    'exclude_null_values' => true,
   ),
   'fav_hobby'   =>array(
     'type'      => 'select',
@@ -34,15 +60,18 @@ $form_def=array(
     'values_func'=>array("js"=>"fav_hobby_list", "php"=>"fav_hobby_list"),
     'values_mode'=>"values",
     'name'      =>array("en"=>"Favorite hobby", "de"=>"Lieblingshobby"),
+    'include_data' => 'not_null',
   ),
   'birthday'	=>array(
     'name'	=>"Birthday",
     'type'	=>"date",
+    'include_data'=>array('check', 'sex', array('is', 'm')),
+    'weight' => -1,
   ),
   'languages'	=>array(
     'name'	=>"What languages do you speak?",
     'type'	=>"checkbox",
-    'values'	=>array("php"=>"PHP", "perl"=>"Perl", "c"=>"C", "cpp"=>"C++", "java"=>"Java", "js"=>"Javascript"),
+    'values'	=>array("php"=>"PHP", "perl"=>"Perl", "c"=>"C", "cpp"=>"C++", "java"=>"Java", "js"=>array("name"=>"Javascript", "desc"=>"Script language, supported by web browsers")),
   ),
   'comment'	=>array(
     'name'	=>"Comment",
@@ -137,6 +166,30 @@ $form_def=array(
     'name'	=>"Ready",
     'desc'	=>"Are you ready yet?",
   ),
+  'kv'          =>array(
+    'type'      =>"hash",
+    'name'      =>"Key/Value",
+    'def'       =>array(
+      'type'      => 'text',
+    ),
+  ),
+  'kv_form'     =>array(
+    'type'      =>"hash",
+    'name'      =>"Key/Value (with form)",
+    'def'       =>array(
+      'type'      => 'form',
+      'def'       => array(
+        'a'         => array(
+          'type'      => 'text',
+          'name'      => 'A',
+        ),
+        'b'         => array(
+          'type'      => 'text',
+          'name'      => 'B',
+        ),
+      ),
+    ),
+  ),
   'geo'         =>array(
     'name'      => "Geo",
     'type'      => "geolocation",
@@ -144,7 +197,6 @@ $form_def=array(
 );
 
 $default_data=array(
-  "name"=>"Max Mustermann",
   "sex"=>"m",
   "comment"=>"Foo Bar\nBlablabla\n",
   "hobbies"=>array(0=>"Linux", 2=>"PHP", 5=>"Cycling"),

@@ -56,6 +56,8 @@ class form {
       $this->set_orig_data($data);
 
     $this->has_data=true;
+
+    $this->refresh();
   }
 
   function set_request_data($data) {
@@ -83,6 +85,8 @@ class form {
     $this->has_orig_data=true;
 
     $this->element->set_orig_data($data);
+
+    $this->refresh();
   }
 
   function get_orig_data() {
@@ -133,6 +137,7 @@ class form {
 
   function reset() {
     $this->has_orig_data=false;
+    $this->has_data=false;
     //return form_reset($this->def, $this->data, $this->options['var_name']);
   }
 
@@ -196,11 +201,15 @@ class form {
 
     return $ret;
   }
+
+  function refresh($force=false) {
+    $this->element->refresh($force);
+  }
 }
 
 function form_process_def(&$def) {
   foreach($def as $k=>$element_def) {
-    if(isset($element_def['count'])&&($element_def['type']!="array")) {
+    if(isset($element_def['count'])&&(!in_array($element_def['type'], array("array", "hash")))) {
       $def[$k]=$element_def['count'];
 
       if(!is_array($def[$k])) {

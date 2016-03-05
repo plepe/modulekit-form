@@ -1,10 +1,16 @@
 /* buttons */
 input[type=submit],
 input[type=button],
-button {
+button,
+.form_element_file label {
   border: 2px outset #000000;
   border-radius: 3px;
   background: #d0d0d0;
+  font-family: sans-serif;
+  font-size: 10pt;
+  color: #303030;
+  padding: 1px 6px;
+  box-sizing: border-box;
 }
 
 /* general form elements */
@@ -50,6 +56,7 @@ span.form_element_file span.form_modified span.value
   content: "\00A0";
   display: inline-block;
   margin-right: 0.5em;
+  text-indent: 0.15em;
   width: 1em;
   height: 1em;
   background: #e0e0e0;
@@ -75,6 +82,7 @@ span.form_element_file span.form_modified span.value
   content: "\00A0";
   display: inline-block;
   margin-right: 0.5em;
+  text-indent: 0.15em;
   width: 1em;
   height: 1em;
   background: #e0e0e0;

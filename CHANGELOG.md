@@ -1,3 +1,71 @@
+2016-03-01 (Version >= 2.6)
+---------------------------
+Form Element Text: Option max_length: Value may not be longer than 'max_length' characters.
+
+2015-02-28 (Version >= 2.6)
+---------------------------
+Form Element *: 'include_data' may be 'not_null': include only if value not null
+
+2015-01-08 (Version >= 2.6)
+---------------------------
+Form Element Select: new option 'null_value'
+
+2015-12-04 (Version >= 2.6)
+-------------------
+Form Element Array: also accept 'min'; generate error when not in range
+
+2015-09-24
+----------
+Form Element *: show_depend may be boolean false
+Form Element Fixed: new form type
+
+2015-08-21
+----------
+* Form Element *: new option 'weight' (define order of elements for display)
+
+2015-07-31
+----------
+* Form Element Array: new option 'exclude_null_values'
+
+2015-06-23
+----------
+* Form Element Radio/Checkbox: values may have a description ('desc' or 'desc:en' for localized string)
+
+2015-06-14
+----------
+* Documentation 'Func Call'
+* Func Call: A JS function can be specified as string.
+* Form Element *: new option 'default_func' (get the default value programmatically)
+* Form Element Array: if array is empty, return value of 'empty_value' or null.
+
+2015-06-10
+----------
+* New check 'required'
+* Form Element Array: when req=true, require at least one element
+* New Form Element 'hash' (like 'array', but with additional key)
+
+2015-06-01
+----------
+* Form Element Date: specify 'timezone' (default: 'UTC')
+
+2015-05-18
+----------
+* Checks may return an array for multiple error messages
+* Form Element Text: new check 'not_regexp'
+
+2015-05-06
+----------
+* New Form Element 'Intermediate Text'
+* New option for all Form Elements: 'include_data'
+
+2015-04-26
+----------
+* New check: 'has_value'
+
+2015-04-24
+----------
+* New function: get_request_data() (JS only)
+
 2015-04-06
 ----------
 * New option: 'orig_data' (set to false, if orig_data should not be passed to subsequent requests as GET/POST-parameter)

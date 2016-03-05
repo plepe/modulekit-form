@@ -3,13 +3,23 @@ var form_data;
 function init() {
   var div=document.getElementById("form");
 
-  form_data=new form("foobar", form_def);
+  form_data=new form("data", form_def);
   form_data.show(div);
   form_data.set_data(default_data);
 
   var input=document.createElement("input");
   input.type="submit";
   input.value="Ok";
+  div.appendChild(input);
+
+  var input=document.createElement("input");
+  input.type="button";
+  input.value="Req";
+  input.onclick = function() {
+    var d = form_data.get_request_data();
+    console.log(d);
+    alert(JSON.stringify(d, null, '  '));
+  }
   div.appendChild(input);
 
   div.onsubmit=process;

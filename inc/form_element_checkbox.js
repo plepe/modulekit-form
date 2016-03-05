@@ -104,8 +104,13 @@ form_element_checkbox.prototype.update_options = function() {
     label.appendChild(text);
     span.appendChild(label);
 
-    var br=document.createElement("br");
-    this.dom.appendChild(br);
+    var desc = get_value_string(values[k], "desc");
+    if(desc) {
+      var desc_label = document.createElement("span");
+      desc_label.setAttribute("class", "description");
+      desc_label.appendChild(document.createTextNode(desc));
+      span.appendChild(desc_label);
+    }
   }
 
   if(('check_all' in this.def) && (this.def.check_all)) {

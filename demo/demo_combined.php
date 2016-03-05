@@ -21,23 +21,16 @@ call_hooks("init");
 </head>
 <body>
 <?php
-if($_REQUEST['q']) {
+if(isset($_REQUEST['q'])) {
   $form_def=json_decode($_REQUEST['q'], true);
   $default_data=null;
 }
-if($_REQUEST['d']) {
+if(isset($_REQUEST['d'])) {
   $default_data=json_decode($_REQUEST['d'], true);
 }
 include "demo_header.php";
 
 $form=new form("data", $form_def);
-
-if($form->errors()) {
-  // print errors
-  print "Errors in the form were found!<br>";
-
-  $form->show_errors();
-}
 
 if($form->is_complete()) {
   // save data to database
@@ -66,13 +59,13 @@ print "<div class='demo'>\n";
 
 print "<div class='definition'>\n";
 print "Form definition:<pre id='definition'>\n";
-print_r($form_def);
+print json_readable_encode($form_def);
 print "</pre>\n";
 print "</div>\n";
 
 print "<div class='form_data'>\n";
 print "Data: <pre id='form_data'>\n";
-print_r($form->get_data());
+print json_readable_encode($form->get_data());
 print "</pre>\n";
 print "</div>\n";
 

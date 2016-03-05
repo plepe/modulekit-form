@@ -37,7 +37,7 @@ class form_element_form extends form_element {
   function get_data() {
     $data=array();
     foreach($this->elements as $k=>$element) {
-      if($element->is_shown())
+      if($element->include_data())
 	$data[$k]=$element->get_data();
     }
 
@@ -107,9 +107,16 @@ class form_element_form extends form_element {
     $table=$document->createElement("table");
     $table->setAttribute("id", $this->id);
     $table->setAttribute("class", "form");
+    $element_list = array();
 
     foreach($this->elements as $k=>$element) {
-      $table->appendChild($element->show($document));
+      $element_list[] = array($element->weight(), $element->show($document));
+    }
+
+    $element_list = weight_sort($element_list);
+
+    foreach($element_list as $element) {
+      $table->appendChild($element);
     }
 
     return $table;
@@ -130,5 +137,13 @@ class form_element_form extends form_element {
     }
 
     return false;
+  }
+
+  function refresh($force=false) {
+    parent::refresh($force);
+
+    foreach($this->elements as $k=>$element) {
+      $element->refresh($force);
+    }
   }
 }

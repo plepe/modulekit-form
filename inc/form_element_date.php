@@ -44,14 +44,18 @@ class form_element_date extends form_element_text {
 
   function get_data() {
     // datetime can be stored internally either in value or display format
-    $dt=DateTime::createFromFormat($this->date_format(), $this->data);
+    $dt=DateTime::createFromFormat($this->date_format(), $this->data, $this->timezone());
     if(!$dt) {
-      $dt=DateTime::createFromFormat($this->value_format(), $this->data);
+      $dt=DateTime::createFromFormat($this->value_format(), $this->data, $this->timezone());
       if(!$dt)
 	return null;
     }
 
     return $dt->format($this->value_format());
+  }
+
+  function timezone() {
+    return new DateTimeZone(isset($this->def['timezone']) ? $this->def['timezone'] : 'UTC');
   }
 
   function show_element($document) {
@@ -61,7 +65,7 @@ class form_element_date extends form_element_text {
 
     if($this->data!==null) {
       if($this->get_data()!==null) {
-	$dt=new DateTime($this->get_data());
+	$dt=new DateTime($this->get_data(), $this->timezone());
 	$this->dom_element->setAttribute("value", $dt->format($format));
       }
       else
@@ -79,5 +83,11 @@ class form_element_date extends form_element_text {
 
     if($this->get_data()<=$param[0])
       $list[]=$param[1];
+  }
+
+  function errors(&$list) {
+
+    if((parent::get_data() !== null) && ($this->get_data() === null))
+    $list[] = lang('form_element_date:format_error');
   }
 }

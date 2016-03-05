@@ -66,7 +66,29 @@ class form_element_text extends form_element {
     if(sizeof($param)<1)
       return;
 
-    if(!preg_match("/{$param[0]}/", $this->get_data())) {
+    $data = $this->get_data();
+
+    if($data === null)
+      return;
+
+    if(!preg_match("/{$param[0]}/", $data)) {
+      if(sizeof($param)<2)
+	$errors[]="Ungültiger Wert";
+      else
+	$errors[]=$param[1];
+    }
+  }
+
+  function check_not_regexp(&$errors, $param) {
+    if(sizeof($param)<1)
+      return;
+
+    $data = $this->get_data();
+
+    if($data === null)
+      return;
+
+    if(preg_match("/{$param[0]}/", $data)) {
       if(sizeof($param)<2)
 	$errors[]="Ungültiger Wert";
       else
@@ -98,6 +120,11 @@ class form_element_text extends form_element {
         if(!in_array($this->data, $values)) {
           $errors[]=lang('form:invalid_value');
         }
+      }
+
+      if(isset($this->def['max_length'])) {
+        if(strlen($this->data) > $this->def['max_length'])
+          $errors[] = lang('form:max_length_exceeded', 0, $this->def['max_length']);
       }
     }
   }

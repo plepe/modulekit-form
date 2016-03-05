@@ -37,6 +37,13 @@ form_element.prototype.name=function() {
   return name;
 }
 
+form_element.prototype.weight=function() {
+  if(this.def.weight)
+    return this.def.weight;
+
+  return 0;
+}
+
 form_element.prototype.path_name=function() {
   var parent_path=this.form_parent.path_name();
 
@@ -81,6 +88,25 @@ form_element.prototype.type=function() {
     return this.def.type;
   
   return "default";
+}
+
+form_element.prototype.include_data=function() {
+  if('include_data' in this.def) {
+    if((this.def.include_data === true) || (this.def.include_data === false))
+      return this.def.include_data;
+
+    if(this.def.include_data === 'not_null')
+      return this.get_data() !== null;
+
+    errors=[];
+
+    this.check(errors, this.def.include_data);
+
+    if(errors.length)
+      return false;
+  }
+
+  return true;
 }
 
 form_element.prototype.get_data=function() {
@@ -182,7 +208,7 @@ form_element.prototype.required=function() {
 
     if(typeof req == 'object') {
       this.check(req_test, req);
-      req = req_test.length == 0;
+      req = req_test.length != 0;
     }
 
     return req;
@@ -191,11 +217,21 @@ form_element.prototype.required=function() {
   return false;
 }
 
+form_element.prototype.check_required=function(list, param) {
+  var data=this.get_data();
+
+  if(this.required() && (data === null)) {
+    if(param.length<1)
+      list.push(lang('form:require_value'));
+    else
+      list.push(param[0]);
+  }
+}
+
 form_element.prototype.errors=function(list) {
   var data=this.get_data();
 
-  if(this.required() && ((!this.data)||(data===null)))
-    list.push(lang("form:require_value"));
+  this.check_required(list, []);
 
   if(this.def.check&&(data!==null)) {
     var check_errors=[];
@@ -227,6 +263,25 @@ form_element.prototype.check=function(list, param) {
 
   if(typeof this[check_fun]==='function') {
     this[check_fun](list, check);
+  }
+
+  for(var i = 0; i < list.length; i++) {
+    if(typeof list[i] == "object") {
+      var p = list[i];
+      list.splice(i, 1);
+      for(var j = 0; j < p.length; j++)
+	list.splice(i, 0, p[j]);
+    }
+  }
+}
+
+// check if element has a value
+form_element.prototype.check_has_value=function(list, param) {
+  if(this.get_data() === null) {
+    if(param.length<1)
+      list.push(lang('form:invalid_value'));
+    else
+      list.push(param[0]);
   }
 }
 
@@ -390,36 +445,57 @@ form_element.prototype.check_fun=function(list, param) {
 
   if('js' in param[0])
     fun = param[0]['js'];
+  else
+    return;
 
   if(typeof fun == "function")
     ret = fun(this.get_data(), this, this.form_root.form);
   else if(fun in window)
     ret = window[fun](this.get_data(), this, this.form_root.form);
+  else if(typeof fun == "string") {
+    var dom = document.createElement('script');
+    dom.type = 'text/javascript';
+    dom.appendChild(document.createTextNode('var __ = ' + fun));
+
+    document.body.appendChild(dom);
+    fun = param[0]['js'] = __;
+    document.body.removeChild(dom);
+
+    ret = fun(this.get_data(), this, this.form_root.form);
+  }
 
   if(ret)
     list.push(ret);
 }
 
 form_element.prototype.check_unique=function(list, param) {
+  var done = [];
+  var dupl = [];
   var data = [];
 
   if((param.length == 0) || (param[0] == null)) {
     data = this.get_data();
+
+    for(var k in data) {
+      if(done.indexOf(data[k]) != -1)
+	dupl.push(JSON.stringify(data[k]));
+
+      done.push(data[k]);
+    }
   }
   else {
-    var other = this.form_parent.resolve_other_elements(param[0]);
-    for(var i=0; i<other.length; i++)
-      data.push(other[i].get_data());
-  }
+    var this_data = this.get_data();
+    var this_data_enc = JSON.stringify(this_data);
 
-  var done = [];
-  var dupl = [];
+    var other_list = this.form_parent.resolve_other_elements(param[0]);
+    for(var i=0; i<other_list.length; i++) {
+      var other = other_list[i];
 
-  for(var k in data) {
-    if(done.indexOf(data[k]) != -1)
-      dupl.push(JSON.stringify(data[k]));
-
-    done.push(data[k]);
+      if((other != this) && (JSON.stringify(other.get_data()) == this_data_enc)) {
+	dupl = [ this_data ];
+	break;
+      }
+    }
   }
 
   if(dupl.length) {
@@ -464,14 +540,14 @@ form_element.prototype.show_errors=function() {
 }
 
 form_element.prototype.notify_change=function(ev) {
-  this.form_root.refresh();
-
   this.data=this.get_data();
 
   this.show_errors.call(this);
 
   if(this.form_parent)
     this.form_parent.notify_child_change([this]);
+
+  this.form_root.refresh();
 
   this.form_root.form.notify_change();
 }
@@ -505,6 +581,12 @@ form_element.prototype.refresh=function(force) {
   else
     this.tr.setAttribute("style", "display: none;");
 
+  if(('default_func' in this.def) && (this.data == null)) {
+    var v = this.func_call(this.def.default_func);
+    this.set_data(v);
+    this.set_orig_data(v);
+  }
+
   var req = this.required();
 
   if(req) {
@@ -533,21 +615,36 @@ form_element.prototype.is_modified=function() {
   return this.get_data()!==this.get_orig_data();
 }
 
+form_element.prototype.func_call=function(def) {
+  var fun = null;
+
+  if('js' in def)
+    fun = def['js'];
+
+  if(typeof fun == "function")
+    return fun(this.get_data(), this, this.form_root.form);
+  else if(fun in window)
+    return window[fun](this.get_data(), this, this.form_root.form);
+  else if(typeof fun == "string") {
+    var dom = document.createElement('script');
+    dom.type = 'text/javascript';
+    dom.appendChild(document.createTextNode('var __ = ' + fun));
+
+    document.body.appendChild(dom);
+    def.js = __;
+    document.body.removeChild(dom);
+
+    return def.js(this.get_data(), this, this.form_root.form);
+  }
+
+  return null;
+}
+
 form_element.prototype.get_values=function() {
   var ret={};
 
   if('values_func' in this.def) {
-    var fun = null;
-
-    if('js' in this.def.values_func)
-      fun = this.def.values_func['js'];
-
-    if(typeof fun == "function")
-      this.def.values = fun(this.get_data(), this, this.form_root.form);
-    else if(fun in window)
-      this.def.values = window[fun](this.get_data(), this, this.form_root.form);
-    else
-      this.def.values = null;
+    this.def.values = this.func_call(this.def.values_func);
   }
 
   if(!this.def.values||(typeof this.def.values!="object"))

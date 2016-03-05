@@ -3,7 +3,7 @@ $name="Form";
 
 $id="modulekit-form";
 
-$depend=array("lang", "calendar", "date", "hooks", "json_readable_encode");
+$depend=array("lang", "calendar", "date", "hooks", "json_readable_encode", "weight_sort");
 
 $languages=array("en", "de");
 
@@ -14,8 +14,9 @@ $include_php=array(
   "inc/functions.php",
   "inc/form_element.php",
   "inc/form_element_array.php",
-  "inc/form_element_checkbox.php",
   "inc/form_element_form.php",
+  "inc/form_element_hash.php",
+  "inc/form_element_checkbox.php",
   "inc/form_element_radio.php",
   "inc/form_element_text.php",
   "inc/form_element_textarea.php",
@@ -33,18 +34,20 @@ $include_php=array(
   "inc/form_element_autocomplete.php",
   "inc/form_element_display.php",
   "inc/form_element_hidden.php",
+  "inc/form_element_intermediate_text.php",
 );
 $include_js=array(
   "inc/functions.js",
   "inc/form.js",
   "inc/form_element.js",
+  "inc/form_element_array.js",
+  "inc/form_element_form.js",
+  "inc/form_element_hash.js",
   "inc/form_element_text.js",
   "inc/form_element_textarea.js",
   "inc/form_element_boolean.js",
   "inc/form_element_radio.js",
-  "inc/form_element_form.js",
   "inc/form_element_checkbox.js",
-  "inc/form_element_array.js",
   "inc/form_element_color.js",
   "inc/form_element_password.js",
   "inc/form_element_keywords.js",
@@ -58,6 +61,7 @@ $include_js=array(
   "inc/form_element_autocomplete.js",
   "inc/form_element_display.js",
   "inc/form_element_hidden.js",
+  "inc/form_element_intermediate_text.js",
 );
 $include_css=array(
   "inc/form.css",

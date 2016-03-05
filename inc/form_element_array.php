@@ -29,12 +29,33 @@ class form_element_array extends form_element {
     }
   }
 
+  function errors(&$errors) {
+    parent::errors($errors);
+
+    if(isset($this->def['min']) && (sizeof($this->elements) < $this->def['min'])) {
+      $errors[] = lang('form_element_array:error_min', 0, $this->def['min']);
+    }
+
+    if(isset($this->def['max']) && (sizeof($this->elements) > $this->def['max'])) {
+      $errors[] = lang('form_element_array:error_max', 0, $this->def['max']);
+    }
+  }
+
   function get_data() {
     $data=array();
     foreach($this->elements as $k=>$element) {
-      if($element->is_shown())
-	$data[$k]=$element->get_data();
+      $d = $element->get_data();
+
+      if((isset($this->def['exclude_null_values']) && ($this->def['exclude_null_values'])) && ($d === null))
+	continue;
+
+      if($element->include_data())
+	$data[$k] = $d;
     }
+
+    if(!sizeof($data))
+      return array_key_exists('empty_value', $this->def) ?
+        $this->def['empty_value'] : null;
 
     return $data;
   }
@@ -269,6 +290,10 @@ class form_element_array extends form_element {
       $input->setAttribute("class", "reached_max");
     }
 
+    if(isset($this->def['min']) && (sizeof($this->elements) <= $this->def['min'])) {
+      $input->setAttribute("class", "reached_min");
+    }
+
     return $div;
   }
 
@@ -300,5 +325,25 @@ class form_element_array extends form_element {
     }
 
     return false;
+  }
+
+  function check_required(&$errors, $param) {
+    if($this->required()) {
+      if(sizeof($this->elements))
+        return;
+
+      if(sizeof($param)<2)
+        $errors[]=lang('form:require_value');
+      else
+        $errors[]=$param[1];
+    }
+  }
+
+  function refresh($force=false) {
+    parent::refresh($force);
+
+    foreach($this->elements as $k=>$element) {
+      $element->refresh($force);
+    }
   }
 }

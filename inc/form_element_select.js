@@ -4,6 +4,9 @@ function form_element_select() {
 
 form_element_select.prototype.init=function(id, def, options, form_parent) {
   this.parent("form_element_select").init.call(this, id, def, options, form_parent);
+
+  if(!('null_value' in this.def))
+    this.def.null_value = '';
 }
 
 form_element_select.prototype.connect=function(dom_parent) {
@@ -33,7 +36,7 @@ form_element_select.prototype.get_data=function() {
 
   var data = this.dom_element.value;
 
-  if((data==="")||(data===null)) {
+  if((data===this.def.null_value)||(data===null)) {
     if('empty_value' in this.def)
       return this.def.empty_value;
 
@@ -111,7 +114,7 @@ form_element_select.prototype.update_options=function() {
   else
     placeholder = lang('form_element:please_select');
 
-  this.show_element_option(this.dom_element, "", placeholder);
+  this.show_element_option(this.dom_element, this.def.null_value, placeholder);
   for(var k in values) {
     this.show_element_option(this.dom_element, k, values[k]);
   }

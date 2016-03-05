@@ -1,5 +1,12 @@
 <?php
 class form_element_select extends form_element {
+  function __construct($id, $def, $options, $form_parent) {
+    parent::__construct($id, $def, $options, $form_parent);
+
+    if(!array_key_exists('null_value', $this->def))
+      $this->def['null_value'] = "";
+  }
+
   function show_element_option($select, $k, $v, $document) {
     $option=$document->createElement("option");
     $option->setAttribute("value", $k);
@@ -33,7 +40,7 @@ class form_element_select extends form_element {
     else
       $placeholder = lang('form_element:please_select');
 
-    $this->show_element_option($select, "", $placeholder, $document);
+    $this->show_element_option($select, $this->def['null_value'], $placeholder, $document);
     foreach($values as $k=>$v) {
       $this->show_element_option($select, $k, $v, $document);
     }
@@ -65,7 +72,7 @@ class form_element_select extends form_element {
   function get_data() {
     $data=parent::get_data();
 
-    if(($data==="")||($data===null)) {
+    if(($data===$this->def['null_value'])||($data===null)) {
       if(array_key_exists('empty_value', $this->def))
 	return $this->def['empty_value'];
 
