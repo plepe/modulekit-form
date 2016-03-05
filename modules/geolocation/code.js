@@ -167,8 +167,12 @@ form_element_geolocation.prototype.update = function(position) {
   for(var k in position.coords)
     coords[k] = position.coords[k];
 
-  if(this.input)
-    coords.enable_tracking = this.input.enable_tracking.checked;
+  if(this.input) {
+    if(!this.input.enable_tracking.checked)
+      return;
+
+    coords.enable_tracking = true;
+  }
 
   if(this.input)
     this.input._base_.value = JSON.stringify(coords);
