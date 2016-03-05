@@ -28,10 +28,19 @@ form_element_geolocation.prototype.connect = function(dom_parent) {
   var data = this.get_data();
   this.show_enable_tracking(data);
 
-  if((typeof this.def.default_enable_tracking == 'undefined') || (this.def.default_enable_tracking))
-    this.enable_tracking();
-  else
-    this.disable_tracking();
+
+  if(data === null) {
+    if((typeof this.def.default_enable_tracking == 'undefined') || (this.def.default_enable_tracking))
+      this.enable_tracking();
+    else
+      this.disable_tracking();
+  }
+  else {
+    if((typeof data.enable_tracking !== 'undefined') && (data.enable_tracking == true))
+      this.enable_tracking();
+    else
+      this.disable_tracking();
+  }
 }
 
 form_element_geolocation.prototype.show_element = function() {
