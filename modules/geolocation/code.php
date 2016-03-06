@@ -70,16 +70,16 @@ class form_element_geolocation extends form_element {
     global $form_element_geolocation_keys;
     $base = array();
 
-    if(array_key_exists('_base_', $data))
+    if($data && array_key_exists('_base_', $data))
       $base = json_decode($data['_base_'], true);
 
-    foreach($data as $k=>$v) {
+    if($data) foreach($data as $k=>$v) {
       if(array_key_exists($k, $form_element_geolocation_keys) && (sprintf($form_element_geolocation_keys[$k]['format'], $base[$k]) != $data[$k]))
         $base[$k] = $v;
     }
 
     $base['enable_tracking'] = false;
-    if(array_key_exists("enable_tracking", $data))
+    if($data && array_key_exists("enable_tracking", $data))
       $base['enable_tracking'] = true;
 
     parent::set_request_data($base);
