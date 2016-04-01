@@ -44,8 +44,8 @@ table.form .form_element_checkbox span {
   padding-left: 25px;
   text-indent: -25px;
 }
-table.form .form_element_radio input,
-table.form .form_element_checkbox input {
+table.form .form_element_radio input.radio,
+table.form .form_element_checkbox input.checkbox {
   width: 25px;
   padding: 0px;
   margin: 0px;

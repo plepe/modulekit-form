@@ -29,6 +29,18 @@ class form_element_array extends form_element {
     }
   }
 
+  function errors(&$errors) {
+    parent::errors($errors);
+
+    if(isset($this->def['min']) && (sizeof($this->elements) < $this->def['min'])) {
+      $errors[] = lang('form_element_array:error_min', 0, $this->def['min']);
+    }
+
+    if(isset($this->def['max']) && (sizeof($this->elements) > $this->def['max'])) {
+      $errors[] = lang('form_element_array:error_max', 0, $this->def['max']);
+    }
+  }
+
   function get_data() {
     $data=array();
     foreach($this->elements as $k=>$element) {
@@ -276,6 +288,10 @@ class form_element_array extends form_element {
 
     if(isset($this->def['max']) && (sizeof($this->elements) >= $this->def['max'])) {
       $input->setAttribute("class", "reached_max");
+    }
+
+    if(isset($this->def['min']) && (sizeof($this->elements) <= $this->def['min'])) {
+      $input->setAttribute("class", "reached_min");
     }
 
     return $div;

@@ -2,7 +2,18 @@
   max-width: 64px;
   max-height: 32px;
   float: left;
+  margin-right: 2px;
 }
 .form_element_file .value {
   display: inline-block;
+}
+.form_element_file label input[type="file"] {
+  position: fixed;
+  top: -1000px;
+}
+.form_element_file label {
+  display: inline-block;
+}
+.form_element_file label:hover {
+  text-decoration: none;
 }

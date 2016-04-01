@@ -274,6 +274,20 @@ form_element_array.prototype.all_errors=function(list) {
     this.elements[k].all_errors(list);
 }
 
+form_element_array.prototype.errors=function(list) {
+  this.parent("form_element_array").errors.call(this, list);
+
+  var count = 0;
+  for(var k in this.elements)
+    count++;
+
+  if('max' in this.def && (count > this.def.max))
+    list.push(lang('form_element_array:error_max', 0, this.def.max));
+
+  if('min' in this.def && (count < this.def.min))
+    list.push(lang('form_element_array:error_min', 0, this.def.min));
+}
+
 form_element_array.prototype.is_complete=function() {
 // TODO?
 //  if(this.changed_count)
@@ -308,7 +322,6 @@ form_element_array.prototype.add_element=function() {
     current=current.nextSibling;
   }
 
-  this.show_errors();
   this.form_root.form.resize();
 
   return false;
