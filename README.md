@@ -164,6 +164,7 @@ Definition:
 * values_func: function(s) which can update values list; see chapter "Func Call" for details.
 * force_values: boolean; if true, value must be member of 'values' array (default: false).
 * max_length: Value may not be longer than 'max_length' characters.
+* max_bytes: Value may not be longer than 'max_bytes' bytes in the current encoding (hopefully UTF-8).
 
 Value:
 * String. Will be stripped of additional slashes.

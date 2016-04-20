@@ -1,3 +1,7 @@
+2016-04-20 (Version >= 2.6)
+---------------------------
+Form Element Text: Option max_bytes: Value may not be longer than 'max_bytes' bytes.
+
 2016-03-01 (Version >= 2.6)
 ---------------------------
 Form Element Text: Option max_length: Value may not be longer than 'max_length' characters.

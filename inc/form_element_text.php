@@ -126,6 +126,11 @@ class form_element_text extends form_element {
         if(mb_strlen($this->data) > $this->def['max_length'])
           $errors[] = lang('form:max_length_exceeded', 0, $this->def['max_length']);
       }
+
+      if(isset($this->def['max_bytes'])) {
+        if(strlen($this->data) > $this->def['max_bytes'])
+          $errors[] = lang('form:max_bytes_exceeded', 0, $this->def['max_bytes']);
+      }
     }
   }
 
