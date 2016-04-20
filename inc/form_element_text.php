@@ -123,7 +123,7 @@ class form_element_text extends form_element {
       }
 
       if(isset($this->def['max_length'])) {
-        if(strlen($this->data) > $this->def['max_length'])
+        if(mb_strlen($this->data) > $this->def['max_length'])
           $errors[] = lang('form:max_length_exceeded', 0, $this->def['max_length']);
       }
     }
