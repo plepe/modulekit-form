@@ -152,4 +152,27 @@ class form_element_text_test extends PHPUnit_Framework_TestCase {
       'text' => '01234',
     ), $form->get_data());
   }
+
+  public function testRenderSimple() {
+    $_REQUEST['data'] = array(
+      'text' => 'foo bar test'
+    );
+
+    $form = new form('data', array(
+      'text' => array(
+        'name' => 'Text',
+        'type' => 'text',
+      ),
+    ));
+
+    $dom = new DOMDocument();
+    $node = $form->element->elements['text']->show_element($dom);
+    $dom->appendChild($node);
+    $result= $dom->saveHTML();
+    $this->assertEquals(
+      "<span class=\"form_element_text\" id=\"data_text\"><input type=\"text\" class=\"form_modified\" name=\"data[text]\" value=\"foo bar test\"></span>\n",
+      $result
+    );
+  }
+
 }
