@@ -555,10 +555,31 @@ class form_element {
 
       switch($this->def['values_mode']) {
 	case "keys":
-	  $ret[$k]=$v;
+          if(is_array($v)) {
+            $v['key'] = $k;
+            $ret[] = $v;
+          }
+          else
+            $ret[] = array('key' => $k, 'name' => $v);
+
 	  break;
 	case "values":
-	  $ret[$v]=array('name' => $v);
+          if(is_array($v)) {
+            if(array_key_exists(0, $v)) {
+              $v['key'] = $v[0];
+              unset($v[0]);
+
+              if(array_key_exists(1, $v)) {
+                $v['name'] = $v[1];
+                unset($v[1]);
+              }
+            }
+            elseif(!array_key_exists('key', $v))
+              $v['key'] = $v;
+          }
+          else {
+            $ret[] = array('key' => $v, 'name' => $v);
+          }
 	  break;
 	default:
 	  // invalid mode

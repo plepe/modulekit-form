@@ -41,8 +41,8 @@ class form_element_select extends form_element {
       $placeholder = lang('form_element:please_select');
 
     $this->show_element_option($select, $this->def['null_value'], $placeholder, $document);
-    foreach($values as $k=>$v) {
-      $this->show_element_option($select, $k, $v, $document);
+    foreach($values as $v) {
+      $this->show_element_option($select, $v['key'], $v, $document);
     }
 
     $div->appendChild($select);

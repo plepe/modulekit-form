@@ -79,6 +79,64 @@ form_dom.onsubmit = function() {
 f.set_data({ name: 'Bob', sex: 'm' });
 ```
 
+Values Array
+------------
+Many form elements support a values array, e.g. Select, Checkbox, Radio.
+The most simple version is this:
+```json
+[
+    "Foo",
+    "Bar"
+]
+```
+
+The result of this form would either be "Foo" or "Bar". If you set the `values_mode` to `keys` though, it would return either '0' ("Foo") or '1' ("Bar").
+
+Most often, you want to use a hash array though, e.g.
+```json
+{
+    "foo": "Foo",
+    "bar": "Bar"
+}
+```
+
+There are two possible values, "foo" (displayed as "Foo") and "bar" (displayed as "Bar"). The `values_mode` will automatically be set to `keys`. If you override it to `values`, the results will be "Foo" and "Bar".
+
+There's a more powerful version, where the value is a hash itself, with additional values:
+```json
+{
+    "foo": {
+        "name": "Foo",
+        "desc": "Explanation what Foo means"
+    },
+    "bar": "Bar"
+}
+```
+
+The "foo" value has an additional helptext. As you can see, you can mix different types of values.
+
+To use a hash for possibles values has a drawback though, as order of elements is not guaranteed in JavaScript (which is at least true for numeric values). Therefore Version 2.7 introduced two additional formats:
+```json
+[
+    [ "foo", "Foo" ],
+    [ "bar", "Bar" ]
+]
+
+[
+    {
+        "key": "foo",
+        "name": "Foo",
+        "desc": "Explanation what Foo means"
+    },
+    {
+        "key": "bar",
+        "name": "Bar"
+    }
+]
+```
+
+As you can see, input is a real array, each element is either an array with two elements or a hash with additional information. `values_mode` is `values`, but the value of the first array element resp. the "key" is used.
+
 Form Elements
 =============
 All Form Elements
