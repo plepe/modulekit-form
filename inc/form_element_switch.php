@@ -63,7 +63,11 @@ class form_element_switch extends form_element {
   }
 
   function get_active_element() {
-    $switch_data = $this->get_switch_element()->get_data();
+    $switch_el = $this->get_switch_element();
+    if(!$switch_el)
+      return null;
+
+    $switch_data = $switch_el->get_data();
 
     if(!array_key_exists($switch_data, $this->elements))
       return null;
