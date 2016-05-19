@@ -1,14 +1,14 @@
 <?php
-class form_element_select_test extends PHPUnit_Framework_TestCase {
+class form_element_keywords_test extends PHPUnit_Framework_TestCase {
   public function testRenderArray() {
     $_REQUEST['data'] = array(
-      'test' => 'bar',
+      'test' => "bar, blubb",
     );
 
     $form = new form('data', array(
       'test' => array(
         'name' => 'Test',
-        'type' => 'select',
+        'type' => 'keywords',
         'values' => array('foo', 'bar', 'bla'),
       ),
     ));
@@ -18,24 +18,24 @@ class form_element_select_test extends PHPUnit_Framework_TestCase {
     $dom->appendChild($node);
     $result = trim($dom->saveHTML());
     $this->assertEquals(
-      '<span class="form_element_select" id="data_test"><select name="data[test]" id="data_test"><option value="">-- please select --</option><option value="foo">foo</option><option value="bar" selected>bar</option><option value="bla">bla</option></select><div class="description"><span></span></div></span>',
+      '<span class="form_element_keywords" id="data_test"><datalist id="data_test-datalist"><option value="foo"></option><option value="bar"></option><option value="bla"></option></datalist><input type="text" class="form_modified" name="data[test]" value="bar, blubb"></span>',
       $result
     );
 
     $this->assertEquals(array(
-      'test' => 'bar',
+      'test' => array('bar', 'blubb'),
     ), $form->get_data());
   }
 
   public function testRenderHash() {
     $_REQUEST['data'] = array(
-      'test' => 'bar'
+      'test' => "bar, blubb",
     );
 
     $form = new form('data', array(
       'test' => array(
         'name' => 'Test',
-        'type' => 'select',
+        'type' => 'keywords',
         'values' => array('foo' => "Foo", 'bar' => "Bar", 'bla' => "Bla"),
       ),
     ));
@@ -45,24 +45,24 @@ class form_element_select_test extends PHPUnit_Framework_TestCase {
     $dom->appendChild($node);
     $result = trim($dom->saveHTML());
     $this->assertEquals(
-      '<span class="form_element_select" id="data_test"><select name="data[test]" id="data_test"><option value="">-- please select --</option><option value="foo">Foo</option><option value="bar" selected>Bar</option><option value="bla">Bla</option></select><div class="description"><span></span></div></span>',
+      '<span class="form_element_keywords" id="data_test"><datalist id="data_test-datalist"><option value="Foo"></option><option value="Bar"></option><option value="Bla"></option></datalist><input type="text" class="form_modified" name="data[test]" value="bar, blubb"></span>',
       $result
     );
 
     $this->assertEquals(array(
-      'test' => 'bar',
+      'test' => array('bar', 'blubb'),
     ), $form->get_data());
   }
 
   public function testRenderComplexHash() {
     $_REQUEST['data'] = array(
-      'test' => 'bar'
+      'test' => "bar, blubb",
     );
 
     $form = new form('data', array(
       'test' => array(
         'name' => 'Test',
-        'type' => 'select',
+        'type' => 'keywords',
         'values' => array('foo' => array("name" => "Foo", "desc" => "Foo Desc"), 'bar' => array("name" => "Bar"), 'bla' => "Bla"),
       ),
     ));
@@ -72,12 +72,12 @@ class form_element_select_test extends PHPUnit_Framework_TestCase {
     $dom->appendChild($node);
     $result = trim($dom->saveHTML());
     $this->assertEquals(
-      '<span class="form_element_select" id="data_test"><select name="data[test]" id="data_test"><option value="">-- please select --</option><option value="foo">Foo</option><option value="bar" selected>Bar</option><option value="bla">Bla</option></select><div class="description"><span><ul><li><b>Foo</b>: Foo Desc</li></ul></span></div></span>',
+      '<span class="form_element_keywords" id="data_test"><datalist id="data_test-datalist"><option value="Foo"></option><option value="Bar"></option><option value="Bla"></option></datalist><input type="text" class="form_modified" name="data[test]" value="bar, blubb"></span>',
       $result
     );
 
     $this->assertEquals(array(
-      'test' => 'bar',
+      'test' => array('bar', 'blubb'),
     ), $form->get_data());
   }
 

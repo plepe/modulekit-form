@@ -155,24 +155,108 @@ class form_element_text_test extends PHPUnit_Framework_TestCase {
 
   public function testRenderSimple() {
     $_REQUEST['data'] = array(
-      'text' => 'foo bar test'
+      'test' => 'foo bar test'
     );
 
     $form = new form('data', array(
-      'text' => array(
+      'test' => array(
         'name' => 'Text',
         'type' => 'text',
       ),
     ));
 
     $dom = new DOMDocument();
-    $node = $form->element->elements['text']->show_element($dom);
+    $node = $form->element->elements['test']->show_element($dom);
     $dom->appendChild($node);
-    $result= $dom->saveHTML();
+    $result= trim($dom->saveHTML());
     $this->assertEquals(
-      "<span class=\"form_element_text\" id=\"data_text\"><input type=\"text\" class=\"form_modified\" name=\"data[text]\" value=\"foo bar test\"></span>\n",
+      '<span class="form_element_text" id="data_test"><input type="text" class="form_modified" name="data[test]" value="foo bar test"></span>',
       $result
     );
+
+    $this->assertEquals(array(
+      'test' => 'foo bar test',
+    ), $form->get_data());
   }
 
+  public function testRenderValuesArray() {
+    $_REQUEST['data'] = array(
+      'test' => 'bar'
+    );
+
+    $form = new form('data', array(
+      'test' => array(
+        'name' => 'Test',
+        'type' => 'text',
+        'values' => array('foo', 'bar', 'bla'),
+      ),
+    ));
+
+    $dom = new DOMDocument();
+    $node = $form->element->elements['test']->show_element($dom);
+    $dom->appendChild($node);
+    $result= trim($dom->saveHTML());
+    $this->assertEquals(
+      '<span class="form_element_text" id="data_test"><span class="form_datalist_container"><datalist id="data_test-datalist"><option value="foo">foo</option><option value="bar">bar</option><option value="bla">bla</option></datalist></span><input type="text" class="form_modified" name="data[test]" value="bar" list="data_test-datalist"></span>',
+      $result
+    );
+
+    $this->assertEquals(array(
+      'test' => 'bar',
+    ), $form->get_data());
+  }
+
+  public function testRenderValuesHash() {
+    $_REQUEST['data'] = array(
+      'test' => 'bar'
+    );
+
+    $form = new form('data', array(
+      'test' => array(
+        'name' => 'Test',
+        'type' => 'text',
+        'values' => array('foo' => "Foo", 'bar' => "Bar", 'bla' => "Bla"),
+      ),
+    ));
+
+    $dom = new DOMDocument();
+    $node = $form->element->elements['test']->show_element($dom);
+    $dom->appendChild($node);
+    $result= trim($dom->saveHTML());
+    $this->assertEquals(
+      '<span class="form_element_text" id="data_test"><span class="form_datalist_container"><datalist id="data_test-datalist"><option value="Foo">Foo</option><option value="Bar">Bar</option><option value="Bla">Bla</option></datalist></span><input type="text" class="form_modified" name="data[test]" value="bar" list="data_test-datalist"></span>',
+      $result
+    );
+
+    $this->assertEquals(array(
+      'test' => 'bar',
+    ), $form->get_data());
+  }
+
+  public function testRenderValuesComplexHash() {
+    $_REQUEST['data'] = array(
+      'test' => 'bar'
+    );
+
+    $form = new form('data', array(
+      'test' => array(
+        'name' => 'Test',
+        'type' => 'text',
+        'values' => array('foo' => array("name" => "Foo", "desc" => "Foo Desc"), 'bar' => array("name" => "Bar"), 'bla' => "Bla"),
+      ),
+    ));
+
+    $dom = new DOMDocument();
+    $node = $form->element->elements['test']->show_element($dom);
+    $dom->appendChild($node);
+    $result= trim($dom->saveHTML());
+    $this->assertEquals(
+      '<span class="form_element_text" id="data_test"><span class="form_datalist_container"><datalist id="data_test-datalist"><option value="Foo">Foo</option><option value="Bar">Bar</option><option value="Bla">Bla</option></datalist></span><input type="text" class="form_modified" name="data[test]" value="bar" list="data_test-datalist"></span>',
+      $result
+    );
+
+    $this->assertEquals(array(
+      'test' => 'bar',
+    ), $form->get_data());
+  }
 }

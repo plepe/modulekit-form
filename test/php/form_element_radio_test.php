@@ -1,14 +1,14 @@
 <?php
-class form_element_select_test extends PHPUnit_Framework_TestCase {
+class form_element_radio_test extends PHPUnit_Framework_TestCase {
   public function testRenderArray() {
     $_REQUEST['data'] = array(
-      'test' => 'bar',
+      'test' => 'bar'
     );
 
     $form = new form('data', array(
       'test' => array(
         'name' => 'Test',
-        'type' => 'select',
+        'type' => 'radio',
         'values' => array('foo', 'bar', 'bla'),
       ),
     ));
@@ -18,7 +18,7 @@ class form_element_select_test extends PHPUnit_Framework_TestCase {
     $dom->appendChild($node);
     $result = trim($dom->saveHTML());
     $this->assertEquals(
-      '<span class="form_element_select" id="data_test"><select name="data[test]" id="data_test"><option value="">-- please select --</option><option value="foo">foo</option><option value="bar" selected>bar</option><option value="bla">bla</option></select><div class="description"><span></span></div></span>',
+      '<span class="form_element_radio" id="data_test"><span class="form_orig"><input type="radio" id="data_test-foo" name="data[test]" value="foo"><label for="data_test-foo">foo</label></span><span class="form_orig"><input type="radio" id="data_test-bar" name="data[test]" value="bar" checked><label for="data_test-bar">bar</label></span><span class="form_orig"><input type="radio" id="data_test-bla" name="data[test]" value="bla"><label for="data_test-bla">bla</label></span></span>',
       $result
     );
 
@@ -35,7 +35,7 @@ class form_element_select_test extends PHPUnit_Framework_TestCase {
     $form = new form('data', array(
       'test' => array(
         'name' => 'Test',
-        'type' => 'select',
+        'type' => 'radio',
         'values' => array('foo' => "Foo", 'bar' => "Bar", 'bla' => "Bla"),
       ),
     ));
@@ -45,7 +45,7 @@ class form_element_select_test extends PHPUnit_Framework_TestCase {
     $dom->appendChild($node);
     $result = trim($dom->saveHTML());
     $this->assertEquals(
-      '<span class="form_element_select" id="data_test"><select name="data[test]" id="data_test"><option value="">-- please select --</option><option value="foo">Foo</option><option value="bar" selected>Bar</option><option value="bla">Bla</option></select><div class="description"><span></span></div></span>',
+      '<span class="form_element_radio" id="data_test"><span class="form_orig"><input type="radio" id="data_test-foo" name="data[test]" value="foo"><label for="data_test-foo">Foo</label></span><span class="form_orig"><input type="radio" id="data_test-bar" name="data[test]" value="bar" checked><label for="data_test-bar">Bar</label></span><span class="form_orig"><input type="radio" id="data_test-bla" name="data[test]" value="bla"><label for="data_test-bla">Bla</label></span></span>',
       $result
     );
 
@@ -62,7 +62,7 @@ class form_element_select_test extends PHPUnit_Framework_TestCase {
     $form = new form('data', array(
       'test' => array(
         'name' => 'Test',
-        'type' => 'select',
+        'type' => 'radio',
         'values' => array('foo' => array("name" => "Foo", "desc" => "Foo Desc"), 'bar' => array("name" => "Bar"), 'bla' => "Bla"),
       ),
     ));
@@ -72,7 +72,7 @@ class form_element_select_test extends PHPUnit_Framework_TestCase {
     $dom->appendChild($node);
     $result = trim($dom->saveHTML());
     $this->assertEquals(
-      '<span class="form_element_select" id="data_test"><select name="data[test]" id="data_test"><option value="">-- please select --</option><option value="foo">Foo</option><option value="bar" selected>Bar</option><option value="bla">Bla</option></select><div class="description"><span><ul><li><b>Foo</b>: Foo Desc</li></ul></span></div></span>',
+      '<span class="form_element_radio" id="data_test"><span class="form_orig"><input type="radio" id="data_test-foo" name="data[test]" value="foo"><label for="data_test-foo">Foo</label><span class="description">Foo Desc</span></span><span class="form_orig"><input type="radio" id="data_test-bar" name="data[test]" value="bar" checked><label for="data_test-bar">Bar</label></span><span class="form_orig"><input type="radio" id="data_test-bla" name="data[test]" value="bla"><label for="data_test-bla">Bla</label></span></span>',
       $result
     );
 
