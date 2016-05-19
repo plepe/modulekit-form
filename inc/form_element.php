@@ -576,6 +576,8 @@ class form_element {
             }
             elseif(!array_key_exists('key', $v))
               $v['key'] = $v;
+
+            $ret[] = $v;
           }
           else {
             $ret[] = array('key' => $v, 'name' => $v);
