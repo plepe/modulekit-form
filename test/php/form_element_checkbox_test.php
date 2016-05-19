@@ -80,4 +80,66 @@ class form_element_checkbox_test extends PHPUnit_Framework_TestCase {
       'test' => array('foo', 'bar'),
     ), $form->get_data());
   }
+
+  public function testRenderValuesKey() {
+    $_REQUEST['data'] = array(
+      'test' => array('foo', 'bar'),
+    );
+
+    $form = new form('data', array(
+      'test' => array(
+        'name' => 'Test',
+        'type' => 'checkbox',
+        'values' => array(
+          array('key' => 'foo', "name" => "Foo", "desc" => "Foo Desc"),
+          array('key' => 'bar', "name" => "Bar"),
+          array('key' => 'bla', "name" => "Bla"),
+        ),
+      ),
+    ));
+
+    $dom = new DOMDocument();
+    $node = $form->element->elements['test']->show_element($dom);
+    $dom->appendChild($node);
+    $result = trim($dom->saveHTML());
+    $this->assertEquals(
+      '<span class="form_element_checkbox" id="data_test"><span class="form_orig"><input type="checkbox" id="data_test-foo" name="data[test][]" value="foo" checked><label for="data_test-foo">Foo</label><span class="description">Foo Desc</span></span><span class="form_orig"><input type="checkbox" id="data_test-bar" name="data[test][]" value="bar" checked><label for="data_test-bar">Bar</label></span><span class="form_orig"><input type="checkbox" id="data_test-bla" name="data[test][]" value="bla"><label for="data_test-bla">Bla</label></span></span>',
+      $result
+    );
+
+    $this->assertEquals(array(
+      'test' => array('foo', 'bar'),
+    ), $form->get_data());
+  }
+
+  public function testRenderValuesSimple() {
+    $_REQUEST['data'] = array(
+      'test' => array('foo', 'bar'),
+    );
+
+    $form = new form('data', array(
+      'test' => array(
+        'name' => 'Test',
+        'type' => 'checkbox',
+        'values' => array(
+          array('foo', "Foo"),
+          array('bar', "Bar"),
+          array('bla', "Bla"),
+        ),
+      ),
+    ));
+
+    $dom = new DOMDocument();
+    $node = $form->element->elements['test']->show_element($dom);
+    $dom->appendChild($node);
+    $result = trim($dom->saveHTML());
+    $this->assertEquals(
+      '<span class="form_element_checkbox" id="data_test"><span class="form_orig"><input type="checkbox" id="data_test-foo" name="data[test][]" value="foo" checked><label for="data_test-foo">Foo</label></span><span class="form_orig"><input type="checkbox" id="data_test-bar" name="data[test][]" value="bar" checked><label for="data_test-bar">Bar</label></span><span class="form_orig"><input type="checkbox" id="data_test-bla" name="data[test][]" value="bla"><label for="data_test-bla">Bla</label></span></span>',
+      $result
+    );
+
+    $this->assertEquals(array(
+      'test' => array('foo', 'bar'),
+    ), $form->get_data());
+  }
 }

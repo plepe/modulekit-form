@@ -81,4 +81,66 @@ class form_element_select_test extends PHPUnit_Framework_TestCase {
     ), $form->get_data());
   }
 
+  public function testRenderValuesKey() {
+    $_REQUEST['data'] = array(
+      'test' => 'bar'
+    );
+
+    $form = new form('data', array(
+      'test' => array(
+        'name' => 'Test',
+        'type' => 'select',
+        'values' => array(
+          array('key' => 'foo', "name" => "Foo", "desc" => "Foo Desc"),
+          array('key' => 'bar', "name" => "Bar"),
+          array('key' => 'bla', "name" => "Bla"),
+        ),
+      ),
+    ));
+
+    $dom = new DOMDocument();
+    $node = $form->element->elements['test']->show_element($dom);
+    $dom->appendChild($node);
+    $result = trim($dom->saveHTML());
+    $this->assertEquals(
+      '<span class="form_element_select" id="data_test"><select name="data[test]" id="data_test"><option value="">-- please select --</option><option value="foo">Foo</option><option value="bar" selected>Bar</option><option value="bla">Bla</option></select><div class="description"><span><ul><li><b>Foo</b>: Foo Desc</li></ul></span></div></span>',
+      $result
+    );
+
+    $this->assertEquals(array(
+      'test' => 'bar',
+    ), $form->get_data());
+  }
+
+  public function testRenderValuesSimple() {
+    $_REQUEST['data'] = array(
+      'test' => 'bar'
+    );
+
+    $form = new form('data', array(
+      'test' => array(
+        'name' => 'Test',
+        'type' => 'select',
+        'values' => array(
+          array('foo', "Foo"),
+          array('bar', "Bar"),
+          array('bla', "Bla"),
+        ),
+      ),
+    ));
+
+    $dom = new DOMDocument();
+    $node = $form->element->elements['test']->show_element($dom);
+    $dom->appendChild($node);
+    $result = trim($dom->saveHTML());
+    $this->assertEquals(
+      '<span class="form_element_select" id="data_test"><select name="data[test]" id="data_test"><option value="">-- please select --</option><option value="foo">Foo</option><option value="bar" selected>Bar</option><option value="bla">Bla</option></select><div class="description"><span></span></div></span>',
+      $result
+    );
+
+    $this->assertEquals(array(
+      'test' => 'bar',
+    ), $form->get_data());
+  }
+
 }

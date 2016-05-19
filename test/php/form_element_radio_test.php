@@ -81,4 +81,65 @@ class form_element_radio_test extends PHPUnit_Framework_TestCase {
     ), $form->get_data());
   }
 
+  public function testRenderValuesKey() {
+    $_REQUEST['data'] = array(
+      'test' => 'bar'
+    );
+
+    $form = new form('data', array(
+      'test' => array(
+        'name' => 'Test',
+        'type' => 'radio',
+        'values' => array(
+          array('key' => 'foo', "name" => "Foo", "desc" => "Foo Desc"),
+          array('key' => 'bar', "name" => "Bar"),
+          array('key' => 'bla', "name" => "Bla"),
+        ),
+      ),
+    ));
+
+    $dom = new DOMDocument();
+    $node = $form->element->elements['test']->show_element($dom);
+    $dom->appendChild($node);
+    $result = trim($dom->saveHTML());
+    $this->assertEquals(
+      '<span class="form_element_radio" id="data_test"><span class="form_orig"><input type="radio" id="data_test-foo" name="data[test]" value="foo"><label for="data_test-foo">Foo</label><span class="description">Foo Desc</span></span><span class="form_orig"><input type="radio" id="data_test-bar" name="data[test]" value="bar" checked><label for="data_test-bar">Bar</label></span><span class="form_orig"><input type="radio" id="data_test-bla" name="data[test]" value="bla"><label for="data_test-bla">Bla</label></span></span>',
+      $result
+    );
+
+    $this->assertEquals(array(
+      'test' => 'bar',
+    ), $form->get_data());
+  }
+
+  public function testRenderValuesSimple() {
+    $_REQUEST['data'] = array(
+      'test' => 'bar'
+    );
+
+    $form = new form('data', array(
+      'test' => array(
+        'name' => 'Test',
+        'type' => 'radio',
+        'values' => array(
+          array('foo', "Foo"),
+          array('bar', "Bar"),
+          array('bla', "Bla"),
+        ),
+      ),
+    ));
+
+    $dom = new DOMDocument();
+    $node = $form->element->elements['test']->show_element($dom);
+    $dom->appendChild($node);
+    $result = trim($dom->saveHTML());
+    $this->assertEquals(
+      '<span class="form_element_radio" id="data_test"><span class="form_orig"><input type="radio" id="data_test-foo" name="data[test]" value="foo"><label for="data_test-foo">Foo</label></span><span class="form_orig"><input type="radio" id="data_test-bar" name="data[test]" value="bar" checked><label for="data_test-bar">Bar</label></span><span class="form_orig"><input type="radio" id="data_test-bla" name="data[test]" value="bla"><label for="data_test-bla">Bla</label></span></span>',
+      $result
+    );
+
+    $this->assertEquals(array(
+      'test' => 'bar',
+    ), $form->get_data());
+  }
 }
