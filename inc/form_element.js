@@ -641,7 +641,7 @@ form_element.prototype.func_call=function(def) {
 }
 
 form_element.prototype.get_values=function() {
-  var ret={};
+  var ret=[];
 
   if('values_func' in this.def) {
     this.def.values = this.func_call(this.def.values_func);
@@ -671,10 +671,36 @@ form_element.prototype.get_values=function() {
 
     switch(this.def.values_mode) {
       case "keys":
-	ret[k]=val;
+        if(typeof val == 'object') {
+          val.key = k;
+          ret.push(val);
+        }
+        else
+          ret.push({ key: k, name: val });
 	break;
       case "values":
-        ret[val]={ 'name': val };
+        if(typeof val == 'object') {
+          if(typeof val.length != 'undefined') {
+            var w = {};
+            if(val.length >= 1) {
+              w.key = val[0];
+
+              if(val.length >= 2) {
+                w.name = val[1];
+              }
+
+              ret.push(w);
+            }
+          }
+          else {
+            if(!('key' in val))
+              val.key = val;
+            ret.push(val);
+          }
+        }
+        else {
+          ret.push({ key: val, name: val });
+        }
 	break;
       default:
         // invalid mode
