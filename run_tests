@@ -7,3 +7,14 @@ for i in test/php/*test.php ; do
       exit 1
     fi
 done
+
+for i in `ls test/combined | egrep 'php$'`; do
+    i=`echo $i | cut -d'.' -f1`
+
+    echo "*** $i ***"
+    php create_jstest.php $i
+    mocha-phantomjs -p `which phantomjs` test.html
+    if [ "$?" != "0" ] ; then
+      exit 1
+    fi
+done
