@@ -1,6 +1,7 @@
 <?php
 Header("content-type: text/html; charset=utf-8");
 include "modulekit/loader.php"; /* loads all php-includes */
+call_hooks("init");
 
 $test = $argv[1];
 
@@ -33,6 +34,7 @@ fputs($f, "<input type='submit'>\n");
 fputs($f, "</form>\n");
 fputs($f, "<script src='test/combined/{$test}.js'></script>\n");
 fputs($f, "<script>\n");
+fputs($f, "call_hooks('init');\n");
 fputs($f, "if (window.mochaPhantomJS) { mochaPhantomJS.run(); }\n");
 fputs($f, "else { mocha.run(); }\n");
 fputs($f, "</script>\n");
