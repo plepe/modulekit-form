@@ -13,7 +13,9 @@ class form_element_checkbox extends form_element {
     $ret = true;
 
     if($data && array_key_exists("__check_all", $data)) {
-      $data = array_keys($this->get_values());
+      $data = array();
+      foreach($this->get_values() as $v)
+        $data[] = $v['key'];
       $ret = false;
     }
 
@@ -43,7 +45,8 @@ class form_element_checkbox extends form_element {
     if($data==="")
       $data=array();
 
-    foreach($this->get_values() as $k=>$v) {
+    foreach($this->get_values() as $v) {
+      $k = $v['key'];
       $id="{$this->id}-$k";
 
       // check for changes

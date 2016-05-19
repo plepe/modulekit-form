@@ -3,7 +3,8 @@ class form_element_radio extends form_element {
   function show_element($document) {
     $div=parent::show_element($document);
 
-    foreach($this->get_values() as $k=>$v) {
+    foreach($this->get_values() as $v) {
+      $k = $v['key'];
       $id="{$this->id}-$k";
 
       // check for changes
