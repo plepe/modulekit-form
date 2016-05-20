@@ -13,6 +13,7 @@ class PHPUnit_MochaPhantomJS extends PHPUnit_Framework_TestCase {
     fputs($f, "<div id='mocha'></div>\n");
     fputs($f, "<script src='./node_modules/mocha/mocha.js'></script>\n");
     fputs($f, "<script src='./node_modules/chai/chai.js'></script>\n");
+    fputs($f, "<script src='./node_modules/jquery/dist/jquery.min.js'></script>\n");
     fputs($f, "<script>\n");
     fputs($f, "mocha.ui('bdd'); \n");
     fputs($f, "mocha.reporter('html');\n");
@@ -25,7 +26,7 @@ class PHPUnit_MochaPhantomJS extends PHPUnit_Framework_TestCase {
     fputs($f, '<meta name="viewport" content="width=device-width, initial-scale=1">' . "\n");
     fputs($f, "</head>\n");
     fputs($f, "<body>\n");
-    fputs($f, "<form method='post'>\n");
+    fputs($f, "<form id='form' method='post'>\n");
     fputs($f, $form->show());
     fputs($f, "<input type='submit'>\n");
     fputs($f, "</form>\n");
@@ -33,7 +34,14 @@ class PHPUnit_MochaPhantomJS extends PHPUnit_Framework_TestCase {
       fputs($f, "<script>\n{$js_cmds}\n</script>\n");
     }
     fputs($f, "<script>\n");
+    fputs($f, "function end_script() {\n");
+    fputs($f, "  console.log('=== START QUERYSTRING ===');\n");
+    fputs($f, "  console.log(\$('#form').serialize());\n");
+    fputs($f, "  console.log('=== END QUERYSTRING ===');\n");
+    fputs($f, "}\n");
     fputs($f, "call_hooks('init');\n");
+    // TOOD: call end_script() before exit from mocha
+    fputs($f, "end_script();\n");
     fputs($f, "if (window.mochaPhantomJS) { mochaPhantomJS.run(); }\n");
     fputs($f, "else { mocha.run(); }\n");
     fputs($f, "</script>\n");
@@ -41,12 +49,27 @@ class PHPUnit_MochaPhantomJS extends PHPUnit_Framework_TestCase {
     fputs($f, "</html>\n");
 
     $f = popen("mocha-phantomjs -p `which phantomjs` test.html", "r");
+    $reading_querystring = false;
+    $query_string = "";
     while($r = fgets($f)) {
-      print $r;
+      $r = chop($r);
+      if($reading_querystring == false) {
+        if($r == '=== START QUERYSTRING ===')
+          $reading_querystring = true;
+        else
+          print "$r\n";
+      }
+      else {
+        if($r == '=== END QUERYSTRING ===')
+          $reading_querystring = false;
+        else
+          $query_string .= $r;
+      }
     }
     $code = pclose($f);
-    echo "CODE $code\n";
-
     $this->assertEquals($code, 0);
+
+    parse_str($query_string, $_REQUEST);
+    parse_str($query_string, $_GET);
   }
 }

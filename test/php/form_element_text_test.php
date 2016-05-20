@@ -9,16 +9,16 @@ class form_element_text_test extends PHPUnit_MochaPhantomJS {
     );
 
     $form = new form('data', $def);
+    $form->set_data(array("text" => "test"));
+
     $this->run_combined($form, <<<EOT
+document.getElementsByName("data[text]")[0].value = "foo bar test";
 describe("form_element_text", function() {
   assert.isObject(form_data);
 });
 EOT
     );
 
-    $_REQUEST['data'] = array(
-      'text' => 'foo bar test'
-    );
     $form = new form('data', $def);
 
     // is_complete?
