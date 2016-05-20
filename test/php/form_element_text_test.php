@@ -1,16 +1,25 @@
 <?php
-class form_element_text_test extends PHPUnit_Framework_TestCase {
+class form_element_text_test extends PHPUnit_MochaPhantomJS {
   public function testReadTextFromRequest() {
-    $_REQUEST['data'] = array(
-      'text' => 'foo bar test'
-    );
-
-    $form = new form('data', array(
+    $def = array(
       'text' => array(
         'name' => 'Text',
         'type' => 'text',
       ),
-    ));
+    );
+
+    $form = new form('data', $def);
+    $this->run_combined($form, <<<EOT
+describe("form_element_text", function() {
+  assert.isObject(form_data);
+});
+EOT
+    );
+
+    $_REQUEST['data'] = array(
+      'text' => 'foo bar test'
+    );
+    $form = new form('data', $def);
 
     // is_complete?
     $this->assertEquals(true, $form->is_complete());
