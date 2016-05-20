@@ -1,0 +1,11 @@
+{
+    "name": "modulekit-form",
+    "version": "v2.6.0-devel",
+    "description": "This Forms library easily creates powerful and interactive HTML forms via PHP and/or JavaScript.",
+    "author": "Stephan Bösch-Plepelits <skunk@xover.mud.at>",
+    "devDependencies": {
+        "mocha-phantomjs": "*",
+        "jquery": "*",
+        "chai": "*"
+    }
+}
