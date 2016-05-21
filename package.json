@@ -5,6 +5,7 @@
     "author": "Stephan Bösch-Plepelits <skunk@xover.mud.at>",
     "devDependencies": {
         "mocha-phantomjs": "*",
+        "mocha": "*",
         "jquery": "*",
         "chai": "*"
     }
