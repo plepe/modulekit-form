@@ -12,13 +12,24 @@ class form_element_text_test extends PHPUnit_MochaPhantomJS {
     $form->set_data(array("text" => "test"));
 
     $this->run_combined($form, <<<EOT
+// Change form data
 document.getElementsByName("data[text]")[0].value = "foo bar test";
+
+// Tests
 describe("form_element_text", function() {
-  assert.isObject(form_data);
+  it("form_data is defined", function() {
+    assert.isObject(form_data);
+  });
+  it("status", function() {
+    // TODO: when will has_data will be set to true?
+    // assert.equal(form_data.is_complete(), true);
+    assert.deepEqual(form_data.get_data(), { text: "foo bar test" });
+  });
 });
 EOT
     );
 
+    // Reload form after submitting
     $form = new form('data', $def);
 
     // is_complete?
@@ -30,16 +41,42 @@ EOT
   }
 
   public function testEmptyvalueIsNull() {
-    $_REQUEST['data'] = array(
-      'text' => '',
-    );
-
-    $form = new form('data', array(
+    $def = array(
       'text' => array(
         'name' => 'Text',
         'type' => 'text',
       ),
-    ));
+    );
+
+    $form = new form('data', $def);
+
+    // is_complete? (not submitted yet)
+    $this->assertEquals(false, $form->is_complete());
+    // data?
+    $this->assertEquals(array(
+      'text' => null,
+    ), $form->get_data());
+
+    $this->run_combined($form, <<<EOT
+// Change form data
+document.getElementsByName("data[text]")[0].value = "";
+
+// Tests
+describe("form_element_text", function() {
+  it("form_data is defined", function() {
+    assert.isObject(form_data);
+  });
+  it("status", function() {
+    // TODO: when will has_data will be set to true?
+    // assert.equal(form_data.is_complete(), true);
+    assert.deepEqual(form_data.get_data(), { text: null });
+  });
+});
+EOT
+    );
+
+    // Reload form after submitting
+    $form = new form('data', $def);
 
     // is_complete?
     $this->assertEquals(true, $form->is_complete());
@@ -50,17 +87,37 @@ EOT
   }
 
   public function testReqEmptyvalue() {
-    $_REQUEST['data'] = array(
-      'text' => '',
-    );
-
-    $form = new form('data', array(
+    $def = array(
       'text' => array(
         'name' => 'Text',
         'type' => 'text',
         'req'  => true,
       ),
-    ));
+    );
+
+    $form = new form('data', $def);
+
+    $this->run_combined($form, <<<EOT
+// Change form data
+document.getElementsByName("data[text]")[0].value = "";
+
+// Tests
+describe("form_element_text", function() {
+  it("form_data is defined", function() {
+    assert.isObject(form_data);
+  });
+  it("status", function() {
+    // TODO: when will has_data will be set to true?
+    // assert.equal(form_data.is_complete(), true);
+    assert.deepEqual(form_data.get_data(), { text: null });
+    assert.deepEqual(form_data.errors(), [ 'Text: Value is mandatory.' ]);
+  });
+});
+EOT
+    );
+
+    // Reload form after submitting
+    $form = new form('data', $def);
 
     // is_complete?
     $this->assertEquals(false, $form->is_complete());
@@ -75,17 +132,36 @@ EOT
   }
 
   public function testOverrideEmptyvalue() {
-    $_REQUEST['data'] = array(
-      'text' => '',
-    );
-
-    $form = new form('data', array(
+    $def = array(
       'text' => array(
         'name' => 'Text',
         'type' => 'text',
         'empty_value'  => 'foobar',
       ),
-    ));
+    );
+
+    $form = new form('data', $def);
+
+    $this->run_combined($form, <<<EOT
+// Change form data
+document.getElementsByName("data[text]")[0].value = "";
+
+// Tests
+describe("form_element_text", function() {
+  it("form_data is defined", function() {
+    assert.isObject(form_data);
+  });
+  it("status", function() {
+    // TODO: when will has_data will be set to true?
+    // assert.equal(form_data.is_complete(), true);
+    assert.deepEqual(form_data.get_data(), { text: 'foobar' });
+  });
+});
+EOT
+    );
+
+    // Reload form after submitting
+    $form = new form('data', $def);
 
     // is_complete?
     $this->assertEquals(true, $form->is_complete());
@@ -96,17 +172,37 @@ EOT
   }
 
   public function testRegexp() {
-    $_REQUEST['data'] = array(
-      'text' => 'bar',
-    );
-
-    $form = new form('data', array(
+    $def = array(
       'text' => array(
         'name' => 'Text',
         'type' => 'text',
         'check'  => array('regexp', '^foo'),
       ),
-    ));
+    );
+
+    $form = new form('data', $def);
+
+    $this->run_combined($form, <<<EOT
+// Change form data
+document.getElementsByName("data[text]")[0].value = "bar";
+
+// Tests
+describe("form_element_text", function() {
+  it("form_data is defined", function() {
+    assert.isObject(form_data);
+  });
+  it("status", function() {
+    // TODO: when will has_data will be set to true?
+    // assert.equal(form_data.is_complete(), true);
+    assert.deepEqual(form_data.get_data(), { text: 'bar' });
+    assert.deepEqual(form_data.errors(), [ 'Text: Invalid value.' ]);
+  });
+});
+EOT
+    );
+
+    // Reload form after submitting
+    $form = new form('data', $def);
 
     // is_complete?
     $this->assertEquals(false, $form->is_complete());
@@ -114,20 +210,44 @@ EOT
     $this->assertEquals(array(
       'text' => 'bar',
     ), $form->get_data());
+    // errors?
+    $this->assertEquals(array(
+      'Text: Ungültiger Wert',
+    ), $form->errors());
   }
 
   public function testMaxLength1() {
-    $_REQUEST['data'] = array(
-      'text' => '012345',
-    );
-
-    $form = new form('data', array(
+    $def = array(
       'text' => array(
         'name' => 'Text',
         'type' => 'text',
         'max_length' => 5,
       ),
-    ));
+    );
+
+    $form = new form('data', $def);
+
+    $this->run_combined($form, <<<EOT
+// Change form data
+document.getElementsByName("data[text]")[0].value = "012345";
+
+// Tests
+describe("form_element_text", function() {
+  it("form_data is defined", function() {
+    assert.isObject(form_data);
+  });
+  it("status", function() {
+    // TODO: when will has_data will be set to true?
+    // assert.equal(form_data.is_complete(), true);
+    assert.deepEqual(form_data.get_data(), { text: '012345' });
+    assert.deepEqual(form_data.errors(), [ 'Text: Value is longer than 5 characters.' ]);
+  });
+});
+EOT
+    );
+
+    // Reload form after submitting
+    $form = new form('data', $def);
 
     // is_complete?
     $this->assertEquals(false, $form->is_complete());
@@ -142,17 +262,37 @@ EOT
   }
 
   public function testMaxLength2() {
-    $_REQUEST['data'] = array(
-      'text' => '01234',
-    );
-
-    $form = new form('data', array(
+    $def = array(
       'text' => array(
         'name' => 'Text',
         'type' => 'text',
         'max_length' => 5,
       ),
-    ));
+    );
+
+    $form = new form('data', $def);
+
+    $this->run_combined($form, <<<EOT
+// Change form data
+document.getElementsByName("data[text]")[0].value = "01234";
+
+// Tests
+describe("form_element_text", function() {
+  it("form_data is defined", function() {
+    assert.isObject(form_data);
+  });
+  it("status", function() {
+    // TODO: when will has_data will be set to true?
+    // assert.equal(form_data.is_complete(), true);
+    assert.deepEqual(form_data.get_data(), { text: '01234' });
+    assert.deepEqual(form_data.errors(), false);
+  });
+});
+EOT
+    );
+
+    // Reload form after submitting
+    $form = new form('data', $def);
 
     // is_complete?
     $this->assertEquals(true, $form->is_complete());
@@ -163,16 +303,36 @@ EOT
   }
 
   public function testRenderSimple() {
-    $_REQUEST['data'] = array(
-      'test' => 'foo bar test'
-    );
-
-    $form = new form('data', array(
+    $def = array(
       'test' => array(
         'name' => 'Text',
         'type' => 'text',
       ),
-    ));
+    );
+
+    $form = new form('data', $def);
+
+    $this->run_combined($form, <<<EOT
+// Change form data
+document.getElementsByName("data[test]")[0].value = "foo bar test";
+
+// Tests
+describe("form_element_text", function() {
+  it("form_data is defined", function() {
+    assert.isObject(form_data);
+  });
+  it("status", function() {
+    // TODO: when will has_data will be set to true?
+    // assert.equal(form_data.is_complete(), true);
+    assert.deepEqual(form_data.get_data(), { test: 'foo bar test' });
+    assert.deepEqual(form_data.errors(), false);
+  });
+});
+EOT
+    );
+
+    // Reload form after submitting
+    $form = new form('data', $def);
 
     $dom = new DOMDocument();
     $node = $form->element->elements['test']->show_element($dom);
@@ -189,17 +349,37 @@ EOT
   }
 
   public function testRenderValuesArray() {
-    $_REQUEST['data'] = array(
-      'test' => 'bar'
-    );
-
-    $form = new form('data', array(
+    $def = array(
       'test' => array(
         'name' => 'Test',
         'type' => 'text',
         'values' => array('foo', 'bar', 'bla'),
       ),
-    ));
+    );
+
+    $form = new form('data', $def);
+
+    $this->run_combined($form, <<<EOT
+// Change form data
+document.getElementsByName("data[test]")[0].value = "bar";
+
+// Tests
+describe("form_element_text", function() {
+  it("form_data is defined", function() {
+    assert.isObject(form_data);
+  });
+  it("status", function() {
+    // TODO: when will has_data will be set to true?
+    // assert.equal(form_data.is_complete(), true);
+    assert.deepEqual(form_data.get_data(), { test: 'bar' });
+    assert.deepEqual(form_data.errors(), false);
+  });
+});
+EOT
+    );
+
+    // Reload form after submitting
+    $form = new form('data', $def);
 
     $dom = new DOMDocument();
     $node = $form->element->elements['test']->show_element($dom);
@@ -216,17 +396,37 @@ EOT
   }
 
   public function testRenderValuesHash() {
-    $_REQUEST['data'] = array(
-      'test' => 'bar'
-    );
-
-    $form = new form('data', array(
+    $def = array(
       'test' => array(
         'name' => 'Test',
         'type' => 'text',
         'values' => array('foo' => "Foo", 'bar' => "Bar", 'bla' => "Bla"),
       ),
-    ));
+    );
+
+    $form = new form('data', $def);
+
+    $this->run_combined($form, <<<EOT
+// Change form data
+document.getElementsByName("data[test]")[0].value = "bar";
+
+// Tests
+describe("form_element_text", function() {
+  it("form_data is defined", function() {
+    assert.isObject(form_data);
+  });
+  it("status", function() {
+    // TODO: when will has_data will be set to true?
+    // assert.equal(form_data.is_complete(), true);
+    assert.deepEqual(form_data.get_data(), { test: 'bar' });
+    assert.deepEqual(form_data.errors(), false);
+  });
+});
+EOT
+    );
+
+    // Reload form after submitting
+    $form = new form('data', $def);
 
     $dom = new DOMDocument();
     $node = $form->element->elements['test']->show_element($dom);
@@ -243,17 +443,37 @@ EOT
   }
 
   public function testRenderValuesComplexHash() {
-    $_REQUEST['data'] = array(
-      'test' => 'bar'
-    );
-
-    $form = new form('data', array(
+    $def = array(
       'test' => array(
         'name' => 'Test',
         'type' => 'text',
         'values' => array('foo' => array("name" => "Foo", "desc" => "Foo Desc"), 'bar' => array("name" => "Bar"), 'bla' => "Bla"),
       ),
-    ));
+    );
+
+    $form = new form('data', $def);
+
+    $this->run_combined($form, <<<EOT
+// Change form data
+document.getElementsByName("data[test]")[0].value = "bar";
+
+// Tests
+describe("form_element_text", function() {
+  it("form_data is defined", function() {
+    assert.isObject(form_data);
+  });
+  it("status", function() {
+    // TODO: when will has_data will be set to true?
+    // assert.equal(form_data.is_complete(), true);
+    assert.deepEqual(form_data.get_data(), { test: 'bar' });
+    assert.deepEqual(form_data.errors(), false);
+  });
+});
+EOT
+    );
+
+    // Reload form after submitting
+    $form = new form('data', $def);
 
     $dom = new DOMDocument();
     $node = $form->element->elements['test']->show_element($dom);
