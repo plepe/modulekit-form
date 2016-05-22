@@ -336,12 +336,13 @@ EOT
 
     $dom = new DOMDocument();
     $node = $form->element->elements['test']->show_element($dom);
-    $dom->appendChild($node);
-    $result= trim($dom->saveHTML());
-    $this->assertEquals(
-      '<span class="form_element_text" id="data_test"><input type="text" class="form_modified" name="data[test]" value="foo bar test"></span>',
-      $result
-    );
+    $result = $this->toXML($node);
+    $expected = <<<EOT
+<span class="form_element_text" id="data_test">
+  <input type="text" class="form_modified" name="data[test]" value="foo bar test"/>
+</span>
+EOT;
+    $this->assertEquals($expected, $result);
 
     $this->assertEquals(array(
       'test' => 'foo bar test',
@@ -383,12 +384,20 @@ EOT
 
     $dom = new DOMDocument();
     $node = $form->element->elements['test']->show_element($dom);
-    $dom->appendChild($node);
-    $result= trim($dom->saveHTML());
-    $this->assertEquals(
-      '<span class="form_element_text" id="data_test"><span class="form_datalist_container"><datalist id="data_test-datalist"><option value="foo">foo</option><option value="bar">bar</option><option value="bla">bla</option></datalist></span><input type="text" class="form_modified" name="data[test]" value="bar" list="data_test-datalist"></span>',
-      $result
-    );
+    $result = $this->toXML($node);
+    $expected = <<<EOT
+<span class="form_element_text" id="data_test">
+  <span class="form_datalist_container">
+    <datalist id="data_test-datalist">
+      <option value="foo">foo</option>
+      <option value="bar">bar</option>
+      <option value="bla">bla</option>
+    </datalist>
+  </span>
+  <input type="text" class="form_modified" name="data[test]" value="bar" list="data_test-datalist"/>
+</span>
+EOT;
+    $this->assertEquals($expected, $result);
 
     $this->assertEquals(array(
       'test' => 'bar',
@@ -430,12 +439,20 @@ EOT
 
     $dom = new DOMDocument();
     $node = $form->element->elements['test']->show_element($dom);
-    $dom->appendChild($node);
-    $result= trim($dom->saveHTML());
-    $this->assertEquals(
-      '<span class="form_element_text" id="data_test"><span class="form_datalist_container"><datalist id="data_test-datalist"><option value="Foo">Foo</option><option value="Bar">Bar</option><option value="Bla">Bla</option></datalist></span><input type="text" class="form_modified" name="data[test]" value="bar" list="data_test-datalist"></span>',
-      $result
-    );
+    $result = $this->toXML($node);
+    $expected = <<<EOT
+<span class="form_element_text" id="data_test">
+  <span class="form_datalist_container">
+    <datalist id="data_test-datalist">
+      <option value="Foo">Foo</option>
+      <option value="Bar">Bar</option>
+      <option value="Bla">Bla</option>
+    </datalist>
+  </span>
+  <input type="text" class="form_modified" name="data[test]" value="bar" list="data_test-datalist"/>
+</span>
+EOT;
+    $this->assertEquals($expected, $result);
 
     $this->assertEquals(array(
       'test' => 'bar',
@@ -477,12 +494,20 @@ EOT
 
     $dom = new DOMDocument();
     $node = $form->element->elements['test']->show_element($dom);
-    $dom->appendChild($node);
-    $result= trim($dom->saveHTML());
-    $this->assertEquals(
-      '<span class="form_element_text" id="data_test"><span class="form_datalist_container"><datalist id="data_test-datalist"><option value="Foo">Foo</option><option value="Bar">Bar</option><option value="Bla">Bla</option></datalist></span><input type="text" class="form_modified" name="data[test]" value="bar" list="data_test-datalist"></span>',
-      $result
-    );
+    $result = $this->toXML($node);
+    $expected = <<<EOT
+<span class="form_element_text" id="data_test">
+  <span class="form_datalist_container">
+    <datalist id="data_test-datalist">
+      <option value="Foo">Foo</option>
+      <option value="Bar">Bar</option>
+      <option value="Bla">Bla</option>
+    </datalist>
+  </span>
+  <input type="text" class="form_modified" name="data[test]" value="bar" list="data_test-datalist"/>
+</span>
+EOT;
+    $this->assertEquals($expected, $result);
 
     $this->assertEquals(array(
       'test' => 'bar',

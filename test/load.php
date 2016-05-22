@@ -72,4 +72,14 @@ class PHPUnit_MochaPhantomJS extends PHPUnit_Framework_TestCase {
     parse_str($query_string, $_REQUEST);
     parse_str($query_string, $_GET);
   }
+
+  function toXML($node) {
+    $dom = $node->ownerDocument;
+    $dom->appendChild($node);
+    $dom->formatOutput = true;
+    $result = trim($dom->saveXML());
+    $result = preg_replace('/^.+\n/', '', $result);
+
+    return $result;
+  }
 }
