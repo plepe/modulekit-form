@@ -14,6 +14,7 @@ class form_element_text_test extends PHPUnit_MochaPhantomJS {
 
     // render
     $node = $form->element->elements['text']->dom;
+    print_r($form->element->elements['text']->get_values());
     $result = $this->toXML($node);
     $expected = <<<EOT
 <span class="form_element_text" id="data_text">
@@ -27,13 +28,16 @@ EOT;
 document.getElementsByName("data[text]")[0].value = "foo bar test";
 
 // Tests
-describe("form_element_text", function() {
+describe("simple", function() {
   it("form_data is defined", function() {
     assert.isObject(form_data);
   });
   it("status", function() {
     // TODO: when will has_data will be set to true?
     // assert.equal(form_data.is_complete(), true);
+    var render_actual = form_data.element.elements.text.dom.innerHTML;
+    var render_expected = '<input type="text" class="form_modified" name="data[text]" value="test">';
+    assert.equal(render_actual, render_expected);
     assert.deepEqual(form_data.get_data(), { text: "foo bar test" });
   });
 });
@@ -94,13 +98,16 @@ EOT;
 document.getElementsByName("data[text]")[0].value = "";
 
 // Tests
-describe("form_element_text", function() {
+describe("empty value is null?", function() {
   it("form_data is defined", function() {
     assert.isObject(form_data);
   });
   it("status", function() {
     // TODO: when will has_data will be set to true?
     // assert.equal(form_data.is_complete(), true);
+    var render_actual = form_data.element.elements.text.dom.innerHTML;
+    var render_expected = '<input type="text" class="form_orig" name="data[text]" value="">';
+    assert.equal(render_actual, render_expected);
     assert.deepEqual(form_data.get_data(), { text: null });
   });
 });
@@ -156,13 +163,16 @@ EOT;
 document.getElementsByName("data[text]")[0].value = "";
 
 // Tests
-describe("form_element_text", function() {
+describe("req=true", function() {
   it("form_data is defined", function() {
     assert.isObject(form_data);
   });
   it("status", function() {
     // TODO: when will has_data will be set to true?
     // assert.equal(form_data.is_complete(), true);
+    var render_actual = form_data.element.elements.text.dom.innerHTML;
+    var render_expected = '<input type="text" class="form_orig" name="data[text]" value="">';
+    assert.equal(render_actual, render_expected);
     assert.deepEqual(form_data.get_data(), { text: null });
     assert.deepEqual(form_data.errors(), [ 'Text: Value is mandatory.' ]);
   });
@@ -223,13 +233,16 @@ EOT;
 document.getElementsByName("data[text]")[0].value = "";
 
 // Tests
-describe("form_element_text", function() {
+describe("override empty_value", function() {
   it("form_data is defined", function() {
     assert.isObject(form_data);
   });
   it("status", function() {
     // TODO: when will has_data will be set to true?
     // assert.equal(form_data.is_complete(), true);
+    var render_actual = form_data.element.elements.text.dom.innerHTML;
+    var render_expected = '<input type="text" class="form_modified" name="data[text]" value="">';
+    assert.equal(render_actual, render_expected);
     assert.deepEqual(form_data.get_data(), { text: 'foobar' });
   });
 });
@@ -285,13 +298,16 @@ EOT;
 document.getElementsByName("data[text]")[0].value = "bar";
 
 // Tests
-describe("form_element_text", function() {
+describe("regexp", function() {
   it("form_data is defined", function() {
     assert.isObject(form_data);
   });
   it("status", function() {
     // TODO: when will has_data will be set to true?
     // assert.equal(form_data.is_complete(), true);
+    var render_actual = form_data.element.elements.text.dom.innerHTML;
+    var render_expected = '<input type="text" class="form_orig" name="data[text]" value="">';
+    assert.equal(render_actual, render_expected);
     assert.deepEqual(form_data.get_data(), { text: 'bar' });
     assert.deepEqual(form_data.errors(), [ 'Text: Invalid value.' ]);
   });
@@ -352,13 +368,16 @@ EOT;
 document.getElementsByName("data[text]")[0].value = "012345";
 
 // Tests
-describe("form_element_text", function() {
+describe("max_length 1", function() {
   it("form_data is defined", function() {
     assert.isObject(form_data);
   });
   it("status", function() {
     // TODO: when will has_data will be set to true?
     // assert.equal(form_data.is_complete(), true);
+    var render_actual = form_data.element.elements.text.dom.innerHTML;
+    var render_expected = '<input type="text" class="form_orig" name="data[text]" value="">';
+    assert.equal(render_actual, render_expected);
     assert.deepEqual(form_data.get_data(), { text: '012345' });
     assert.deepEqual(form_data.errors(), [ 'Text: Value is longer than 5 characters.' ]);
   });
@@ -419,13 +438,16 @@ EOT;
 document.getElementsByName("data[text]")[0].value = "01234";
 
 // Tests
-describe("form_element_text", function() {
+describe("max_length 2", function() {
   it("form_data is defined", function() {
     assert.isObject(form_data);
   });
   it("status", function() {
     // TODO: when will has_data will be set to true?
     // assert.equal(form_data.is_complete(), true);
+    var render_actual = form_data.element.elements.text.dom.innerHTML;
+    var render_expected = '<input type="text" class="form_orig" name="data[text]" value="">';
+    assert.equal(render_actual, render_expected);
     assert.deepEqual(form_data.get_data(), { text: '01234' });
     assert.deepEqual(form_data.errors(), false);
   });
@@ -489,13 +511,16 @@ EOT;
 document.getElementsByName("data[test]")[0].value = "bar";
 
 // Tests
-describe("form_element_text", function() {
+describe("values array", function() {
   it("form_data is defined", function() {
     assert.isObject(form_data);
   });
   it("status", function() {
     // TODO: when will has_data will be set to true?
     // assert.equal(form_data.is_complete(), true);
+    var render_actual = form_data.element.elements.test.dom.innerHTML;
+    var render_expected = '<span class="form_datalist_container"><datalist id="data_test-datalist"><option value="foo">foo</option><option value="bar">bar</option><option value="bla">bla</option></datalist></span><input type="text" class="form_orig" name="data[test]" value="" list="data_test-datalist"><span class="form_datalist_container"><datalist id="data_test-datalist"><option value="foo">foo</option><option value="bar">bar</option><option value="bla">bla</option></datalist></span>';
+    assert.equal(render_actual, render_expected);
     assert.deepEqual(form_data.get_data(), { test: 'bar' });
     assert.deepEqual(form_data.errors(), false);
   });
@@ -564,13 +589,16 @@ EOT;
 document.getElementsByName("data[test]")[0].value = "bar";
 
 // Tests
-describe("form_element_text", function() {
+describe("values hash", function() {
   it("form_data is defined", function() {
     assert.isObject(form_data);
   });
   it("status", function() {
     // TODO: when will has_data will be set to true?
     // assert.equal(form_data.is_complete(), true);
+    var render_actual = form_data.element.elements.test.dom.innerHTML;
+    var render_expected = '<span class="form_datalist_container"><datalist id="data_test-datalist"><option value="Foo">Foo</option><option value="Bar">Bar</option><option value="Bla">Bla</option></datalist></span><input type="text" class="form_orig" name="data[test]" value="" list="data_test-datalist"><span class="form_datalist_container"><datalist id="data_test-datalist"><option value="Foo">Foo</option><option value="Bar">Bar</option><option value="Bla">Bla</option></datalist></span>';
+    assert.equal(render_actual, render_expected);
     assert.deepEqual(form_data.get_data(), { test: 'bar' });
     assert.deepEqual(form_data.errors(), false);
   });
@@ -639,13 +667,16 @@ EOT;
 document.getElementsByName("data[test]")[0].value = "bar";
 
 // Tests
-describe("form_element_text", function() {
+describe("values complex hash", function() {
   it("form_data is defined", function() {
     assert.isObject(form_data);
   });
   it("status", function() {
     // TODO: when will has_data will be set to true?
     // assert.equal(form_data.is_complete(), true);
+    var render_actual = form_data.element.elements.test.dom.innerHTML;
+    var render_expected = '<span class="form_datalist_container"><datalist id="data_test-datalist"><option value="Foo">Foo</option><option value="Bar">Bar</option><option value="Bla">Bla</option></datalist></span><input type="text" class="form_orig" name="data[test]" value="" list="data_test-datalist"><span class="form_datalist_container"><datalist id="data_test-datalist"><option value="Foo">Foo</option><option value="Bar">Bar</option><option value="Bla">Bla</option></datalist></span>';
+    assert.equal(render_actual, render_expected);
     assert.deepEqual(form_data.get_data(), { test: 'bar' });
     assert.deepEqual(form_data.errors(), false);
   });
