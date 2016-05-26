@@ -10,8 +10,19 @@ class form_element_text_test extends PHPUnit_MochaPhantomJS {
 
     $form = new form('data', $def);
     $form->set_data(array("text" => "test"));
+    $content = $form->show();
 
-    $this->run_combined($form, <<<EOT
+    // render
+    $node = $form->element->elements['text']->dom;
+    $result = $this->toXML($node);
+    $expected = <<<EOT
+<span class="form_element_text" id="data_text">
+  <input type="text" class="form_orig" name="data[text]" value="test"/>
+</span>
+EOT;
+    $this->assertEquals($expected, $result);
+
+    $this->run_combined($content, <<<EOT
 // Change form data
 document.getElementsByName("data[text]")[0].value = "foo bar test";
 
@@ -31,6 +42,7 @@ EOT
 
     // Reload form after submitting
     $form = new form('data', $def);
+    $content = $form->show();
 
     // is_complete?
     $this->assertEquals(true, $form->is_complete());
@@ -38,6 +50,15 @@ EOT
     $this->assertEquals(array(
       'text' => 'foo bar test'
     ), $form->get_data());
+    // render
+    $node = $form->element->elements['text']->dom;
+    $result = $this->toXML($node);
+    $expected = <<<EOT
+<span class="form_element_text" id="data_text">
+  <input type="text" class="form_modified" name="data[text]" value="foo bar test"/>
+</span>
+EOT;
+    $this->assertEquals($expected, $result);
   }
 
   public function testEmptyvalueIsNull() {
@@ -49,6 +70,17 @@ EOT
     );
 
     $form = new form('data', $def);
+    $content = $form->show();
+
+    // render
+    $node = $form->element->elements['text']->dom;
+    $result = $this->toXML($node);
+    $expected = <<<EOT
+<span class="form_element_text" id="data_text">
+  <input type="text" class="form_orig" name="data[text]" value=""/>
+</span>
+EOT;
+    $this->assertEquals($expected, $result);
 
     // is_complete? (not submitted yet)
     $this->assertEquals(false, $form->is_complete());
@@ -57,7 +89,7 @@ EOT
       'text' => null,
     ), $form->get_data());
 
-    $this->run_combined($form, <<<EOT
+    $this->run_combined($content, <<<EOT
 // Change form data
 document.getElementsByName("data[text]")[0].value = "";
 
@@ -77,6 +109,17 @@ EOT
 
     // Reload form after submitting
     $form = new form('data', $def);
+    $content = $form->show();
+
+    // render
+    $node = $form->element->elements['text']->dom;
+    $result = $this->toXML($node);
+    $expected = <<<EOT
+<span class="form_element_text" id="data_text">
+  <input type="text" class="form_orig" name="data[text]" value=""/>
+</span>
+EOT;
+    $this->assertEquals($expected, $result);
 
     // is_complete?
     $this->assertEquals(true, $form->is_complete());
@@ -96,8 +139,19 @@ EOT
     );
 
     $form = new form('data', $def);
+    $content = $form->show();
 
-    $this->run_combined($form, <<<EOT
+    // render
+    $node = $form->element->elements['text']->dom;
+    $result = $this->toXML($node);
+    $expected = <<<EOT
+<span class="form_element_text required" id="data_text">
+  <input type="text" class="form_orig" name="data[text]" value=""/>
+</span>
+EOT;
+    $this->assertEquals($expected, $result);
+
+    $this->run_combined($content, <<<EOT
 // Change form data
 document.getElementsByName("data[text]")[0].value = "";
 
@@ -118,6 +172,17 @@ EOT
 
     // Reload form after submitting
     $form = new form('data', $def);
+    $content = $form->show();
+
+    // render
+    $node = $form->element->elements['text']->dom;
+    $result = $this->toXML($node);
+    $expected = <<<EOT
+<span class="form_element_text required" id="data_text">
+  <input type="text" class="form_orig" name="data[text]" value=""/>
+</span>
+EOT;
+    $this->assertEquals($expected, $result);
 
     // is_complete?
     $this->assertEquals(false, $form->is_complete());
@@ -141,8 +206,19 @@ EOT
     );
 
     $form = new form('data', $def);
+    $content = $form->show();
 
-    $this->run_combined($form, <<<EOT
+    // render
+    $node = $form->element->elements['text']->dom;
+    $result = $this->toXML($node);
+    $expected = <<<EOT
+<span class="form_element_text" id="data_text">
+  <input type="text" class="form_orig" name="data[text]" value=""/>
+</span>
+EOT;
+    $this->assertEquals($expected, $result);
+
+    $this->run_combined($content, <<<EOT
 // Change form data
 document.getElementsByName("data[text]")[0].value = "";
 
@@ -162,6 +238,17 @@ EOT
 
     // Reload form after submitting
     $form = new form('data', $def);
+    $content = $form->show();
+
+    // render
+    $node = $form->element->elements['text']->dom;
+    $result = $this->toXML($node);
+    $expected = <<<EOT
+<span class="form_element_text" id="data_text">
+  <input type="text" class="form_orig" name="data[text]" value=""/>
+</span>
+EOT;
+    $this->assertEquals($expected, $result);
 
     // is_complete?
     $this->assertEquals(true, $form->is_complete());
@@ -181,8 +268,19 @@ EOT
     );
 
     $form = new form('data', $def);
+    $content = $form->show();
 
-    $this->run_combined($form, <<<EOT
+    // render
+    $node = $form->element->elements['text']->dom;
+    $result = $this->toXML($node);
+    $expected = <<<EOT
+<span class="form_element_text" id="data_text">
+  <input type="text" class="form_orig" name="data[text]" value=""/>
+</span>
+EOT;
+    $this->assertEquals($expected, $result);
+
+    $this->run_combined($content, <<<EOT
 // Change form data
 document.getElementsByName("data[text]")[0].value = "bar";
 
@@ -203,6 +301,17 @@ EOT
 
     // Reload form after submitting
     $form = new form('data', $def);
+    $content = $form->show();
+
+    // render
+    $node = $form->element->elements['text']->dom;
+    $result = $this->toXML($node);
+    $expected = <<<EOT
+<span class="form_element_text" id="data_text">
+  <input type="text" class="form_modified" name="data[text]" value="bar"/>
+</span>
+EOT;
+    $this->assertEquals($expected, $result);
 
     // is_complete?
     $this->assertEquals(false, $form->is_complete());
@@ -226,8 +335,19 @@ EOT
     );
 
     $form = new form('data', $def);
+    $content = $form->show();
 
-    $this->run_combined($form, <<<EOT
+    // render
+    $node = $form->element->elements['text']->dom;
+    $result = $this->toXML($node);
+    $expected = <<<EOT
+<span class="form_element_text" id="data_text">
+  <input type="text" class="form_orig" name="data[text]" value=""/>
+</span>
+EOT;
+    $this->assertEquals($expected, $result);
+
+    $this->run_combined($content, <<<EOT
 // Change form data
 document.getElementsByName("data[text]")[0].value = "012345";
 
@@ -248,6 +368,17 @@ EOT
 
     // Reload form after submitting
     $form = new form('data', $def);
+    $content = $form->show();
+
+    // render
+    $node = $form->element->elements['text']->dom;
+    $result = $this->toXML($node);
+    $expected = <<<EOT
+<span class="form_element_text" id="data_text">
+  <input type="text" class="form_modified" name="data[text]" value="012345"/>
+</span>
+EOT;
+    $this->assertEquals($expected, $result);
 
     // is_complete?
     $this->assertEquals(false, $form->is_complete());
@@ -271,8 +402,19 @@ EOT
     );
 
     $form = new form('data', $def);
+    $content = $form->show();
 
-    $this->run_combined($form, <<<EOT
+    // render
+    $node = $form->element->elements['text']->dom;
+    $result = $this->toXML($node);
+    $expected = <<<EOT
+<span class="form_element_text" id="data_text">
+  <input type="text" class="form_orig" name="data[text]" value=""/>
+</span>
+EOT;
+    $this->assertEquals($expected, $result);
+
+    $this->run_combined($content, <<<EOT
 // Change form data
 document.getElementsByName("data[text]")[0].value = "01234";
 
@@ -293,6 +435,17 @@ EOT
 
     // Reload form after submitting
     $form = new form('data', $def);
+    $content = $form->show();
+
+    // render
+    $node = $form->element->elements['text']->dom;
+    $result = $this->toXML($node);
+    $expected = <<<EOT
+<span class="form_element_text" id="data_text">
+  <input type="text" class="form_modified" name="data[text]" value="01234"/>
+</span>
+EOT;
+    $this->assertEquals($expected, $result);
 
     // is_complete?
     $this->assertEquals(true, $form->is_complete());
@@ -302,54 +455,7 @@ EOT
     ), $form->get_data());
   }
 
-  public function testRenderSimple() {
-    $def = array(
-      'test' => array(
-        'name' => 'Text',
-        'type' => 'text',
-      ),
-    );
-
-    $form = new form('data', $def);
-
-    $this->run_combined($form, <<<EOT
-// Change form data
-document.getElementsByName("data[test]")[0].value = "foo bar test";
-
-// Tests
-describe("form_element_text", function() {
-  it("form_data is defined", function() {
-    assert.isObject(form_data);
-  });
-  it("status", function() {
-    // TODO: when will has_data will be set to true?
-    // assert.equal(form_data.is_complete(), true);
-    assert.deepEqual(form_data.get_data(), { test: 'foo bar test' });
-    assert.deepEqual(form_data.errors(), false);
-  });
-});
-EOT
-    );
-
-    // Reload form after submitting
-    $form = new form('data', $def);
-
-    $dom = new DOMDocument();
-    $node = $form->element->elements['test']->show_element($dom);
-    $result = $this->toXML($node);
-    $expected = <<<EOT
-<span class="form_element_text" id="data_test">
-  <input type="text" class="form_modified" name="data[test]" value="foo bar test"/>
-</span>
-EOT;
-    $this->assertEquals($expected, $result);
-
-    $this->assertEquals(array(
-      'test' => 'foo bar test',
-    ), $form->get_data());
-  }
-
-  public function testRenderValuesArray() {
+  public function testValuesArray() {
     $def = array(
       'test' => array(
         'name' => 'Test',
@@ -359,8 +465,26 @@ EOT;
     );
 
     $form = new form('data', $def);
+    $content = $form->show();
 
-    $this->run_combined($form, <<<EOT
+    // render
+    $node = $form->element->elements['test']->dom;
+    $result = $this->toXML($node);
+    $expected = <<<EOT
+<span class="form_element_text" id="data_test">
+  <span class="form_datalist_container">
+    <datalist id="data_test-datalist">
+      <option value="foo">foo</option>
+      <option value="bar">bar</option>
+      <option value="bla">bla</option>
+    </datalist>
+  </span>
+  <input type="text" class="form_orig" name="data[test]" value="" list="data_test-datalist"/>
+</span>
+EOT;
+    $this->assertEquals($expected, $result);
+
+    $this->run_combined($content, <<<EOT
 // Change form data
 document.getElementsByName("data[test]")[0].value = "bar";
 
@@ -381,9 +505,10 @@ EOT
 
     // Reload form after submitting
     $form = new form('data', $def);
+    $content = $form->show();
 
     $dom = new DOMDocument();
-    $node = $form->element->elements['test']->show_element($dom);
+    $node = $form->element->elements['test']->dom;
     $result = $this->toXML($node);
     $expected = <<<EOT
 <span class="form_element_text" id="data_test">
@@ -404,7 +529,7 @@ EOT;
     ), $form->get_data());
   }
 
-  public function testRenderValuesHash() {
+  public function testValuesHash() {
     $def = array(
       'test' => array(
         'name' => 'Test',
@@ -414,8 +539,27 @@ EOT;
     );
 
     $form = new form('data', $def);
+    $content = $form->show();
 
-    $this->run_combined($form, <<<EOT
+    // render
+    $node = $form->element->elements['test']->dom;
+    $result = $this->toXML($node);
+    $expected = <<<EOT
+<span class="form_element_text" id="data_test">
+  <span class="form_datalist_container">
+    <datalist id="data_test-datalist">
+      <option value="Foo">Foo</option>
+      <option value="Bar">Bar</option>
+      <option value="Bla">Bla</option>
+    </datalist>
+  </span>
+  <input type="text" class="form_orig" name="data[test]" value="" list="data_test-datalist"/>
+</span>
+EOT;
+    $this->assertEquals($expected, $result);
+
+
+    $this->run_combined($content, <<<EOT
 // Change form data
 document.getElementsByName("data[test]")[0].value = "bar";
 
@@ -436,9 +580,10 @@ EOT
 
     // Reload form after submitting
     $form = new form('data', $def);
+    $content = $form->show();
 
     $dom = new DOMDocument();
-    $node = $form->element->elements['test']->show_element($dom);
+    $node = $form->element->elements['test']->dom;
     $result = $this->toXML($node);
     $expected = <<<EOT
 <span class="form_element_text" id="data_test">
@@ -459,7 +604,7 @@ EOT;
     ), $form->get_data());
   }
 
-  public function testRenderValuesComplexHash() {
+  public function testValuesComplexHash() {
     $def = array(
       'test' => array(
         'name' => 'Test',
@@ -469,8 +614,27 @@ EOT;
     );
 
     $form = new form('data', $def);
+    $content = $form->show();
 
-    $this->run_combined($form, <<<EOT
+    // render
+    $node = $form->element->elements['test']->dom;
+    $result = $this->toXML($node);
+    $expected = <<<EOT
+<span class="form_element_text" id="data_test">
+  <span class="form_datalist_container">
+    <datalist id="data_test-datalist">
+      <option value="Foo">Foo</option>
+      <option value="Bar">Bar</option>
+      <option value="Bla">Bla</option>
+    </datalist>
+  </span>
+  <input type="text" class="form_orig" name="data[test]" value="" list="data_test-datalist"/>
+</span>
+EOT;
+    $this->assertEquals($expected, $result);
+
+
+    $this->run_combined($content, <<<EOT
 // Change form data
 document.getElementsByName("data[test]")[0].value = "bar";
 
@@ -491,9 +655,10 @@ EOT
 
     // Reload form after submitting
     $form = new form('data', $def);
+    $content = $form->show();
 
     $dom = new DOMDocument();
-    $node = $form->element->elements['test']->show_element($dom);
+    $node = $form->element->elements['test']->dom;
     $result = $this->toXML($node);
     $expected = <<<EOT
 <span class="form_element_text" id="data_test">
