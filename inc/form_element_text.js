@@ -38,7 +38,7 @@ form_element_text.prototype.show_element=function() {
   input.className=cls;
   input.name=this.options.var_name;
   if(this.data)
-    input.value=this.data;
+    input.setAttribute('value', this.data);
   div.appendChild(input);
   this.dom_element=input;
   this.dom_element.onblur=this.notify_change.bind(this);
@@ -98,7 +98,7 @@ form_element_text.prototype.set_data=function(data) {
   this.parent("form_element_text").set_data.call(this, data);
 
   if(this.dom_element)
-    this.dom_element.value=this.data;
+    this.dom_element.setAttribute('value', this.data);
 }
 
 form_element_text.prototype.refresh=function(force) {

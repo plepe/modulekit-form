@@ -39,7 +39,7 @@ describe("form_element_text", function() {
     form_data.show(document.getElementById('test_form'));
 
     var render_actual = form_data.element.elements.test.dom.innerHTML;
-    var render_expected = '<input type="text" class="form_orig" name="data[test]">';
+    var render_expected = '<input type="text" class="form_orig" name="data[test]" value="foobar">';
 
     // modify data
     form_data.element.elements.test.dom_element.value = "bar";
