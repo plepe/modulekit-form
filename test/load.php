@@ -30,7 +30,7 @@ class PHPUnit_MochaPhantomJS extends PHPUnit_Framework_TestCase {
     fputs($f, '<meta name="viewport" content="width=device-width, initial-scale=1">' . "\n");
     fputs($f, "</head>\n");
     fputs($f, "<body>\n");
-    fputs($f, "<form id='form' method='post'>\n");
+    fputs($f, "<form id='test_form' method='post'>\n");
     fputs($f, $form);
     fputs($f, "<input type='submit'>\n");
     fputs($f, "</form>\n");
@@ -40,7 +40,7 @@ class PHPUnit_MochaPhantomJS extends PHPUnit_Framework_TestCase {
     fputs($f, "<script>\n");
     fputs($f, "function end_script() {\n");
     fputs($f, "  console.log('=== START QUERYSTRING ===');\n");
-    fputs($f, "  console.log(\$('#form').serialize());\n");
+    fputs($f, "  console.log(\$('#test_form').serialize());\n");
     fputs($f, "  console.log('=== END QUERYSTRING ===');\n");
     fputs($f, "}\n");
     fputs($f, "call_hooks('init');\n");
