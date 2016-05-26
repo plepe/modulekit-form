@@ -15,11 +15,16 @@ describe("form_element_text", function() {
 
     var render_actual = form_data.element.elements.test.dom.innerHTML;
     var render_expected = '<input type="text" class="form_orig" name="data[test]">';
+    assert.equal(render_actual, render_expected);
 
     // modify data
     form_data.element.elements.test.dom_element.value = 'bar';
+    form_data.element.elements.test.notify_change();
 
+    var render_actual = form_data.element.elements.test.dom.innerHTML;
+    var render_expected = '<input type="text" class="form_modified" name="data[test]">';
     assert.equal(render_actual, render_expected);
+
     assert.deepEqual(form_data.get_data(), { test: 'bar' });
     assert.deepEqual(form_data.errors(), false);
   });
@@ -40,11 +45,16 @@ describe("form_element_text", function() {
 
     var render_actual = form_data.element.elements.test.dom.innerHTML;
     var render_expected = '<input type="text" class="form_orig" name="data[test]" value="foobar">';
+    assert.equal(render_actual, render_expected);
 
     // modify data
     form_data.element.elements.test.dom_element.value = "bar";
+    form_data.element.elements.test.notify_change();
 
+    var render_actual = form_data.element.elements.test.dom.innerHTML;
+    var render_expected = '<input type="text" class="form_modified" name="data[test]" value="foobar">';
     assert.equal(render_actual, render_expected);
+
     assert.deepEqual(form_data.get_data(), { test: 'bar' });
     assert.deepEqual(form_data.errors(), false);
   });
@@ -65,11 +75,16 @@ describe("form_element_text", function() {
 
     var render_actual = form_data.element.elements.test.dom.innerHTML;
     var render_expected = '<input type="text" class="form_orig" name="data[test]" value="foobar">';
+    assert.equal(render_actual, render_expected);
 
     // modify data
     form_data.element.elements.test.dom_element.value = "bar";
+    form_data.element.elements.test.notify_change();
 
+    var render_actual = form_data.element.elements.test.dom.innerHTML;
+    var render_expected = '<input type="text" class="form_modified" name="data[test]" value="foobar">';
     assert.equal(render_actual, render_expected);
+
     assert.deepEqual(form_data.get_data(), { test: 'bar' });
     assert.deepEqual(form_data.errors(), false);
   });
@@ -87,9 +102,8 @@ describe("form_element_text", function() {
 
     var render_actual = form_data.element.elements.test.dom.innerHTML;
     var render_expected = '<input type="text" class="form_orig" name="data[test]">';
-
-    // modify data
     assert.equal(render_actual, render_expected);
+
     assert.deepEqual(form_data.get_data(), { test: null });
     assert.deepEqual(form_data.errors(), [ 'Test: Value is mandatory.' ]);
   });
@@ -107,9 +121,8 @@ describe("form_element_text", function() {
 
     var render_actual = form_data.element.elements.test.dom.innerHTML;
     var render_expected = '<input type="text" class="form_orig" name="data[test]">';
-
-    // modify data
     assert.equal(render_actual, render_expected);
+
     assert.deepEqual(form_data.get_data(), { test: 'foobar' });
     assert.deepEqual(form_data.errors(), false);
   });
@@ -127,11 +140,16 @@ describe("form_element_text", function() {
 
     var render_actual = form_data.element.elements.test.dom.innerHTML;
     var render_expected = '<input type="text" class="form_orig" name="data[test]">';
+    assert.equal(render_actual, render_expected);
 
     // modify data
     form_data.element.elements.test.dom_element.value = "bar";
+    form_data.element.elements.test.notify_change();
 
+    var render_actual = form_data.element.elements.test.dom.innerHTML;
+    var render_expected = '<input type="text" class="form_modified" name="data[test]">';
     assert.equal(render_actual, render_expected);
+
     assert.deepEqual(form_data.get_data(), { test: 'bar' });
     assert.deepEqual(form_data.errors(), [ 'Test: Invalid value.' ]);
   });
@@ -149,11 +167,16 @@ describe("form_element_text", function() {
 
     var render_actual = form_data.element.elements.test.dom.innerHTML;
     var render_expected = '<input type="text" class="form_orig" name="data[test]" list="data_test-datalist"><span class="form_datalist_container"><datalist id="data_test-datalist"><option value="foo">foo</option><option value="bar">bar</option><option value="bla">bla</option></datalist></span>';
+    assert.equal(render_actual, render_expected);
 
     // modify data
     form_data.element.elements.test.dom_element.value = "bar";
+    form_data.element.elements.test.notify_change();
 
+    var render_actual = form_data.element.elements.test.dom.innerHTML;
+    var render_expected = '<input type="text" class="form_modified" name="data[test]" list="data_test-datalist"><span class="form_datalist_container"><datalist id="data_test-datalist"><option value="foo">foo</option><option value="bar">bar</option><option value="bla">bla</option></datalist></span>';
     assert.equal(render_actual, render_expected);
+
     assert.deepEqual(form_data.get_data(), { test: 'bar' });
     assert.deepEqual(form_data.errors(), false);
   });
@@ -171,11 +194,16 @@ describe("form_element_text", function() {
 
     var render_actual = form_data.element.elements.test.dom.innerHTML;
     var render_expected = '<input type="text" class="form_orig" name="data[test]" list="data_test-datalist"><span class="form_datalist_container"><datalist id="data_test-datalist"><option value="Foo">Foo</option><option value="Bar">Bar</option><option value="Bla">Bla</option></datalist></span>';
+    assert.equal(render_actual, render_expected);
 
     // modify data
     form_data.element.elements.test.dom_element.value = "bar";
+    form_data.element.elements.test.notify_change();
 
+    var render_actual = form_data.element.elements.test.dom.innerHTML;
+    var render_expected = '<input type="text" class="form_modified" name="data[test]" list="data_test-datalist"><span class="form_datalist_container"><datalist id="data_test-datalist"><option value="Foo">Foo</option><option value="Bar">Bar</option><option value="Bla">Bla</option></datalist></span>';
     assert.equal(render_actual, render_expected);
+
     assert.deepEqual(form_data.get_data(), { test: 'bar' });
     assert.deepEqual(form_data.errors(), false);
   });
@@ -193,11 +221,16 @@ describe("form_element_text", function() {
 
     var render_actual = form_data.element.elements.test.dom.innerHTML;
     var render_expected = '<input type="text" class="form_orig" name="data[test]" list="data_test-datalist"><span class="form_datalist_container"><datalist id="data_test-datalist"><option value="Foo">Foo</option><option value="Bar">Bar</option><option value="Bla">Bla</option></datalist></span>';
+    assert.equal(render_actual, render_expected);
 
     // modify data
     form_data.element.elements.test.dom_element.value = "bar";
+    form_data.element.elements.test.notify_change();
 
+    var render_actual = form_data.element.elements.test.dom.innerHTML;
+    var render_expected = '<input type="text" class="form_modified" name="data[test]" list="data_test-datalist"><span class="form_datalist_container"><datalist id="data_test-datalist"><option value="Foo">Foo</option><option value="Bar">Bar</option><option value="Bla">Bla</option></datalist></span>';
     assert.equal(render_actual, render_expected);
+
     assert.deepEqual(form_data.get_data(), { test: 'bar' });
     assert.deepEqual(form_data.errors(), false);
   });
