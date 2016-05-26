@@ -10,7 +10,7 @@ for i in test/php/*test.php ; do
     fi
 done
 
-for i in `ls test/combined | egrep 'php$'`; do
+for i in `ls test/js | egrep 'js$'`; do
     i=`echo $i | cut -d'.' -f1`
 
     echo "*** $i ***"
