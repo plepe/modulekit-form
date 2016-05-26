@@ -78,8 +78,9 @@ class PHPUnit_MochaPhantomJS extends PHPUnit_Framework_TestCase {
   }
 
   function toXML($node) {
-    $dom = $node->ownerDocument;
-    $dom->appendChild($node);
+    $dom = new DOMDocument();
+    $x = $dom->importNode($node->cloneNode(true), true);
+    $dom->appendChild($x);
     $dom->formatOutput = true;
     $result = trim($dom->saveXML());
     $result = preg_replace('/^.+\n/', '', $result);
