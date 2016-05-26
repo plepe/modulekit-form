@@ -4,6 +4,10 @@ call_hooks("init");
 
 class PHPUnit_MochaPhantomJS extends PHPUnit_Framework_TestCase {
   function run_combined($form, $js_cmds=null) {
+    if(!is_string($form)) {
+      $form = $form->show();
+    }
+
     $f = fopen("test.html", "w");
     fputs($f, "<!DOCTYPE HTML>\n");
     fputs($f, "<html>\n");
@@ -27,7 +31,7 @@ class PHPUnit_MochaPhantomJS extends PHPUnit_Framework_TestCase {
     fputs($f, "</head>\n");
     fputs($f, "<body>\n");
     fputs($f, "<form id='form' method='post'>\n");
-    fputs($f, $form->show());
+    fputs($f, $form);
     fputs($f, "<input type='submit'>\n");
     fputs($f, "</form>\n");
     if($js_cmds) {
