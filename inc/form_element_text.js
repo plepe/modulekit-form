@@ -51,7 +51,7 @@ form_element_text.prototype.show_element=function() {
 form_element_text.prototype.update_options = function() {
   var values = this.get_values();
 
-  if(values)
+  if(Object.keys(values).length !== 0)
     this.dom_element.setAttribute("list", this.id+"-datalist");
   else {
     this.dom_element.removeAttribute("list");

@@ -14,7 +14,7 @@ describe("form_element_text", function() {
     form_data.show(document.getElementById('test_form'));
 
     var render_actual = form_data.element.elements.test.dom.innerHTML;
-    var render_expected = '<input type="text" class="form_orig" name="data[test]" list="data_test-datalist"><span class="form_datalist_container"><datalist id="data_test-datalist"></datalist></span>';
+    var render_expected = '<input type="text" class="form_orig" name="data[test]">';
 
     // modify data
     form_data.element.elements.test.dom_element.value = 'bar';
@@ -39,7 +39,7 @@ describe("form_element_text", function() {
     form_data.show(document.getElementById('test_form'));
 
     var render_actual = form_data.element.elements.test.dom.innerHTML;
-    var render_expected = '<input type="text" class="form_orig" name="data[test]" list="data_test-datalist"><span class="form_datalist_container"><datalist id="data_test-datalist"></datalist></span>';
+    var render_expected = '<input type="text" class="form_orig" name="data[test]">';
 
     // modify data
     form_data.element.elements.test.dom_element.value = "bar";
