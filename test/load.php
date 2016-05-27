@@ -71,7 +71,7 @@ class PHPUnit_MochaPhantomJS extends PHPUnit_Framework_TestCase {
       }
     }
     $code = pclose($f);
-    $this->assertEquals($code, 0);
+    $this->assertEquals($code, 0, "Running web page failed!");
 
     parse_str($query_string, $_REQUEST);
     parse_str($query_string, $_GET);
@@ -84,6 +84,7 @@ class PHPUnit_MochaPhantomJS extends PHPUnit_Framework_TestCase {
     $dom->formatOutput = true;
     $result = trim($dom->saveXML());
     $result = preg_replace('/^.+\n/', '', $result);
+    // print "===\n{$result}\n===\n";
 
     return $result;
   }
