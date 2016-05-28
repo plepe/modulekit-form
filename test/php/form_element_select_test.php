@@ -35,7 +35,6 @@ EOT;
 
     $this->run_combined($form, <<<EOT
 // Change form data
-form_data.set_data({ test: "bar" });
     $(form_data.element.elements.test.dom_element).find('[value="bar"]').prop('selected', true);
     form_data.element.elements.test.notify_change();
 
@@ -48,7 +47,7 @@ describe("form_element_select values array", function() {
     // TODO: when will has_data will be set to true?
     // assert.equal(form_data.is_complete(), true);
     var render_actual = form_data.element.elements.test.dom.innerHTML;
-    var render_expected = '<select name="data[test]" id="data_test" class="form_orig"><option value="">-- please select --</option><option value="3">3</option><option value="foo">foo</option><option value="1">1</option><option value="bar" selected="selected">bar</option><option value="bla">bla</option><option value="2">2</option></select><div class="description"></div>';
+    var render_expected = '<select name="data[test]" id="data_test" class="form_modified"><option value="">-- please select --</option><option value="3">3</option><option value="foo">foo</option><option value="1">1</option><option value="bar" selected="selected">bar</option><option value="bla">bla</option><option value="2">2</option></select><div class="description"></div>';
     assert.equal(render_actual, render_expected);
 
     assert.deepEqual(form_data.get_data(), { test: "bar" });
@@ -122,7 +121,6 @@ EOT;
 
     $this->run_combined($form, <<<EOT
 // Change form data
-form_data.set_data({ test: "bar" });
     $(form_data.element.elements.test.dom_element).find('[value="bar"]').prop('selected', true);
     form_data.element.elements.test.notify_change();
 
@@ -135,7 +133,7 @@ describe("form_element_select hash", function() {
     // TODO: when will has_data will be set to true?
     // assert.equal(form_data.is_complete(), true);
     var render_actual = form_data.element.elements.test.dom.innerHTML;
-    var render_expected = '<select name="data[test]" id="data_test" class="form_orig"><option value="">-- please select --</option><option value="2">Two</option><option value="foo">Foo</option><option value="1">One</option><option value="bar" selected="selected">Bar</option><option value="bla">Bla</option><option value="3">Three</option></select><div class="description"></div>';
+    var render_expected = '<select name="data[test]" id="data_test" class="form_modified"><option value="">-- please select --</option><option value="2">Two</option><option value="foo">Foo</option><option value="1">One</option><option value="bar" selected="selected">Bar</option><option value="bla">Bla</option><option value="3">Three</option></select><div class="description"></div>';
     assert.equal(render_actual, render_expected);
 
     assert.deepEqual(form_data.get_data(), { test: "bar" });
@@ -215,7 +213,6 @@ EOT;
 
     $this->run_combined($form, <<<EOT
 // Change form data
-form_data.set_data({ test: "bar" });
     $(form_data.element.elements.test.dom_element).find('[value="foo"]').prop('selected', true);
     form_data.element.elements.test.notify_change();
 
@@ -228,7 +225,7 @@ describe("form_element_select complex hash", function() {
     // TODO: when will has_data will be set to true?
     // assert.equal(form_data.is_complete(), true);
     var render_actual = form_data.element.elements.test.dom.innerHTML;
-    var render_expected = '<select name="data[test]" id="data_test" class="form_modified"><option value="">-- please select --</option><option value="2">Two</option><option value="foo">Foo</option><option value="1">One</option><option value="bar" selected="selected">Bar</option><option value="bla">Bla</option><option value="3">Three</option></select><div class="description">Foo Desc</div>';
+    var render_expected = '<select name="data[test]" id="data_test" class="form_modified"><option value="">-- please select --</option><option value="2">Two</option><option value="foo" selected="selected">Foo</option><option value="1">One</option><option value="bar">Bar</option><option value="bla">Bla</option><option value="3">Three</option></select><div class="description">Foo Desc</div>';
     assert.equal(render_actual, render_expected);
 
     assert.deepEqual(form_data.get_data(), { test: "foo" });
