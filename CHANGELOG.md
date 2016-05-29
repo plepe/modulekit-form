@@ -1,3 +1,7 @@
+2016-05-29 (Version >= 2.7)
+---------------------------
+Form Element Checkbox: when no elements are checked, return null (or `empty_value`) (before, an empty array was returned)
+
 2016-04-20 (Version >= 2.6)
 ---------------------------
 Form Element Text: Option max_bytes: Value may not be longer than 'max_bytes' bytes.

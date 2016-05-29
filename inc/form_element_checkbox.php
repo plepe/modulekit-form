@@ -3,8 +3,9 @@ class form_element_checkbox extends form_element {
   function get_data() {
     $data = parent::get_data();
 
-    if(($data === "") or ($data === null))
-      return array();
+    if(($data === "") or ($data === null) or (sizeof($data) == 0))
+      return array_key_exists('empty_value', $this->def) ?
+        $this->def['empty_value'] : null;
 
     return $data;
   }

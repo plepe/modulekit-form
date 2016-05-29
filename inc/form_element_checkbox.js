@@ -37,6 +37,9 @@ form_element_checkbox.prototype.get_data=function() {
       this.data.push(i);
   }
 
+  if(this.data.length == 0)
+    return this.def.empty_value || null;
+
   return this.data;
 }
 
