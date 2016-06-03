@@ -23,6 +23,9 @@ form_element_switch.prototype.connect=function(dom_parent) {
 
   this.element_table = {};
 
+  var reload_dom = document.getElementById(this.id);
+  reload_dom.style.display = 'none';
+
   for(var k in this.elements) {
     var dom_parent = document.getElementById('tr-' + this.id + "_" + k);
     this.elements[k].connect(dom_parent);

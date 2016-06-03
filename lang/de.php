@@ -4,6 +4,7 @@ $lang_str['cancel']="Abbrechen";
 $lang_str['new']="Neu";
 $lang_str['edit']="Bearbeiten";
 $lang_str['change']="Ändern";
+$lang_str['reload'] = "Neu laden";
 
 $lang_str['form:add_element']="Element hinzufügen";
 $lang_str['form_element_array:error_min']="Zu wenig Einträge, min. %d.";
@@ -33,3 +34,5 @@ $lang_str['form:duplicate'] = array("Wert %s kommt mehrfach vor.", "Werte %s kom
 
 $lang_str['form:hash_key_field_name'] = "Schlüssel";
 $lang_str['form:hash_value_field_name'] = "Wert";
+
+$lang_str['form_element_switch:reload_desc'] = "Nach dem Ändern von '%s' bitte den Knopf drücken um Formular neu zu laden.";

@@ -11,6 +11,8 @@ class form_element_switch extends form_element {
       $this->def['hide_label'] = true;
 
     $this->build_form();
+
+    $this->reload_clicked = false;
   }
 
   function build_form() {
@@ -33,13 +35,21 @@ class form_element_switch extends form_element {
   function show($document) {
     $this->element_table = array();
 
+    $reload_dom = $document->createElement("tr");
+    $reload_dom->setAttribute("id", $this->id);
+    $reload_dom->appendChild(DOM_createHTMLElement("<td></td>", $document));
+    $reload_dom->appendChild(DOM_createHTMLElement("<td><input type='submit' value='" . lang('reload') . "' name='" . $this->options['var_name'] . "[__reload__]'> " . lang("form_element_switch:reload_desc", 0, $this->get_switch_element()->name()) . "</td>", $document));
+
     $el = $this->get_active_element();
 
     foreach($this->elements as $k=>$element) {
       $this->element_table[$k] = $element->show($document);
+
+      if($element != $el)
+        $this->element_table[$k]->setAttribute("style", "display: none");
     }
 
-    return $this->element_table;
+    return array_merge(array($reload_dom), $this->element_table);
   }
 
   function get_switch_element() {
@@ -87,6 +97,9 @@ class form_element_switch extends form_element {
   function set_request_data($data) {
     $ret = true;
 
+    if(array_key_exists('__reload__', $data))
+      $this->reload_clicked = true;
+
     foreach($this->elements as $k=>$element) {
       if(!isset($data[$k]))
 	$data[$k] = null;
@@ -98,6 +111,10 @@ class form_element_switch extends form_element {
     }
 
     return $ret;
+  }
+
+  function is_modified() {
+    return !$this->reload_clicked;
   }
 
   function set_orig_data($data) {
