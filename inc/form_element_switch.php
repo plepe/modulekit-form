@@ -30,21 +30,16 @@ class form_element_switch extends form_element {
     $this->elements[$k]=new $element_class($element_id, $element_def, $element_options, $this);
   }
 
-  function show_element($document) {
-    $div=parent::show_element($document);
+  function show($document) {
     $this->element_table = array();
 
+    $el = $this->get_active_element();
+
     foreach($this->elements as $k=>$element) {
-      $this->element_table[$k] = $document->createElement("table");
-      $this->element_table[$k]->setAttribute("form_element_switch", $k);
-      $this->element_table[$k]->setAttribute("class", "form form_element_switch_part");
-
-      $this->element_table[$k]->appendChild($element->show($document));
-
-      $div->appendChild($this->element_table[$k]);
+      $this->element_table[$k] = $element->show($document);
     }
 
-    return $div;
+    return $this->element_table;
   }
 
   function get_switch_element() {

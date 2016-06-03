@@ -23,19 +23,11 @@ form_element_switch.prototype.connect=function(dom_parent) {
 
   this.element_table = {};
 
-  var current = dom_parent.firstChild;
-  while(current) {
-    var k;
-    if(k = current.getAttribute("form_element_switch")) {
-      if(k in this.elements) {
-        this.element_table[k] = current;
+  for(var k in this.elements) {
+    var dom_parent = document.getElementById('tr-' + this.id + "_" + k);
+    this.elements[k].connect(dom_parent);
+    this.element_table[k] = dom_parent;
 
-        var dom_parent = document.getElementById(this.id+"_"+k);
-        this.elements[k].connect(dom_parent);
-      }
-    }
-
-    current = current.nextSibling;
   }
 }
 
@@ -51,23 +43,18 @@ form_element_switch.prototype.create_element=function(k, element_def) {
   }
 }
 
-form_element_switch.prototype.show_element=function() {
-  var div=this.parent("form_element_switch").show_element.call(this);
+form_element_switch.prototype.show=function() {
   this.element_table = {};
+  var ret = [];
 
   for(var k in this.elements) {
     var element = this.elements[k];
 
-    this.element_table[k] = document.createElement("table");
-    this.element_table[k].setAttribute("form_element_switch", k);
-    this.element_table[k].setAttribute("class", "form form_element_switch_part");
-
-    this.element_table[k].appendChild(element.show());
-
-    div.appendChild(this.element_table[k]);
+    this.element_table[k] = element.show();
+    ret.push(this.element_table[k]);
   }
 
-  return div;
+  return ret;
 }
 
 form_element_switch.prototype.get_switch_element=function() {
@@ -119,12 +106,12 @@ form_element_switch.prototype.refresh=function(force) {
   var el = this.get_active_element();
 
   for(var k in this.elements) {
+    this.elements[k].refresh(force);
+
     if(this.elements[k] == el)
       this.element_table[k].style.display = null;
     else
       this.element_table[k].style.display = 'none';
-
-    this.elements[k].refresh(force);
   }
 }
 
