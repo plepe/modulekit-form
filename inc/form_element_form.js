@@ -68,7 +68,12 @@ form_element_form.prototype.show_element=function() {
   element_list = weight_sort(element_list);
 
   for(var i in element_list) {
-    table.appendChild(element_list[i]);
+    if(element_list[i].length) {
+      for(var j = 0; j < element_list[i].length; j++)
+        table.appendChild(element_list[i][j]);
+    }
+    else
+      table.appendChild(element_list[i]);
   }
 
   return table;

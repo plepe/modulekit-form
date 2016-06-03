@@ -116,7 +116,13 @@ class form_element_form extends form_element {
     $element_list = weight_sort($element_list);
 
     foreach($element_list as $element) {
-      $table->appendChild($element);
+      if(is_array($element)) {
+        foreach($element as $el)
+          $table->appendChild($el);
+      }
+      else {
+        $table->appendChild($element);
+      }
     }
 
     return $table;
