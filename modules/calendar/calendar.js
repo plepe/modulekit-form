@@ -110,9 +110,7 @@ calendar.prototype.get_date=function() {
 }
 
 calendar.prototype.set_date=function(date) {
-  this.options.timezone=0;
-
-  if(!this.options.type)
+  if(!this.options.type) {
     for(var k in calendar_types) {
       var d;
       if(d=date_parse_from_format(calendar_types[k], this.options.date)) {
@@ -120,9 +118,14 @@ calendar.prototype.set_date=function(date) {
 	this.options.timezone=(typeof d.timezone=="undefined"?0:d.timezone);
       }
     }
-
-  if(this.options.type=="datetime-local") {
+  }
+  else if(this.options.type=="datetime-local") {
+    this.options.timezone=0;
     date+="Z";
+  }
+  else if(this.options.type=="datetime") {
+    var d = date_parse_from_format('Y-m-d\\TH:i:sP', this.options.date);
+    this.options.timezone = typeof d.timezone == "undefined" ? 0 : d.timezone;
   }
 
   // load 'date' from options
