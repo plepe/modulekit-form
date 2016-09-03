@@ -127,9 +127,6 @@ calendar.prototype.set_date=function(date) {
 
   // load 'date' from options
   this.date=new Date(date);
-  // let's ignore timezone offset
-  var tz_offset=this.date.getTimezoneOffset()*60;
-  this.date=new Date(this.date.getTime()+(tz_offset+this.options.timezone)*1000);
 
   this.show_date=new Date(this.date);
 
