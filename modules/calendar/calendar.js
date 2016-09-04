@@ -58,23 +58,66 @@ function calendar(options) {
 
   if((this.options.type=="datetime")||(this.options.type=="datetime-local")) {
     this.div_time=document.createElement("div");
+    this.div_time.className = 'time';
     this.div.appendChild(this.div_time);
 
-    this.time_form=new form(null, {
-      'hour': {
-	'name': "Hour",
-	'type': "select",
-        'values': range(0, 23)
-      },
-      'minute': {
-	'name': "Minute",
-	'type': "select",
-        'values': range(0, 59, 5)
-      }
-    });
-    this.time_form.show(this.div_time);
+    // Hour input
+    this.div_hour = document.createElement('div');
+    this.div_time.appendChild(this.div_hour);
 
-    this.time_form.onchange=this.form_change.bind(this);
+    var b = document.createElement('input');
+    b.type = 'button';
+    b.value = '⋀';
+    this.div_hour.appendChild(b);
+    b.onclick = function() {
+      if(++this.input_hour.value > 23)
+        this.input_hour.value = 0;
+      this.form_change();
+    }.bind(this);
+
+    this.input_hour = document.createElement('input');
+    this.div_hour.appendChild(this.input_hour);
+    this.input_hour.onchange = this.form_change.bind(this);
+    this.input_hour.value = 0;
+
+    var b = document.createElement('input');
+    b.type = 'button';
+    b.value = '⋁';
+    this.div_hour.appendChild(b);
+    b.onclick = function() {
+      if(--this.input_hour.value < 0)
+        this.input_hour.value = 23;
+      this.form_change();
+    }.bind(this);
+
+    // Minute input
+    this.div_minute = document.createElement('div');
+    this.div_time.appendChild(this.div_minute);
+
+    var b = document.createElement('input');
+    b.type = 'button';
+    b.value = '⋀';
+    this.div_minute.appendChild(b);
+    b.onclick = function() {
+      if(++this.input_minute.value > 59)
+        this.input_minute.value = 0;
+      this.form_change();
+    }.bind(this);
+
+    this.input_minute = document.createElement('input');
+    this.div_minute.appendChild(this.input_minute);
+    this.input_minute.onchange = this.form_change.bind(this);
+    this.input_minute.value = 0;
+
+    var b = document.createElement('input');
+    b.type = 'button';
+    b.value = '⋁';
+    this.div_minute.appendChild(b);
+    b.onclick = function() {
+      if(--this.input_minute.value < 0)
+        this.input_minute.value = 59;
+      this.form_change();
+    }.bind(this);
   }
 
   if(this.options.date)
@@ -133,11 +176,10 @@ calendar.prototype.set_date=function(date) {
 
   this.show_date=new Date(this.date);
 
-  if(this.time_form)
-    this.time_form.set_data({
-      'hour': this.date.getHours(),
-      'minute': this.date.getMinutes()
-    });
+  if(this.input_hour) {
+    this.input_hour.value = this.date.getHours();
+    this.input_minute.value = this.date.getMinutes();
+  }
 
   this.fill();
 }
@@ -254,10 +296,8 @@ calendar.prototype.choose_date=function(day) {
 }
 
 calendar.prototype.form_change=function() {
-  var d=this.time_form.get_data();
-
-  this.date.setHours(d.hour);
-  this.date.setMinutes(d.minute);
+  this.date.setHours(this.input_hour.value);
+  this.date.setMinutes(this.input_minute.value);
 
   this.options.callback(this.get_date());
 }

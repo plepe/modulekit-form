@@ -23,3 +23,11 @@ div.calendar td.chosen_date {
   color: #ffffff;
   background: #000000;
 }
+div.calendar div.time div {
+  display: inline-block;
+}
+div.calendar div.time div input {
+  width: 3em;
+  display: block;
+  text-align: center;
+}
