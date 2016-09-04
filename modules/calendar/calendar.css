@@ -15,6 +15,7 @@ div.calendar table {
 div.calendar td{
   width: 14.2857%;
   text-align: center;
+  cursor: pointer;
 }
 div.calendar td.wrong_month {
   color: #707070;
