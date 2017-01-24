@@ -1,0 +1,25 @@
+{
+  "name": "modulekit-form",
+  "version": "2.6.0",
+  "description": "This Forms library easily creates powerful and interactive HTML forms via PHP and/or JavaScript.￼Edit",
+  "main": "index.js",
+  "directories": {
+    "doc": "doc",
+    "test": "test"
+  },
+  "dependencies": {},
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/plepe/modulekit-form.git"
+  },
+  "author": "Stephan Bösch-Plepelits <skunk@xover.mud.at>",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/plepe/modulekit-form/issues"
+  },
+  "homepage": "https://github.com/plepe/modulekit-form#readme"
+}
