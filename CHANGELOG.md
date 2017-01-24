@@ -1,3 +1,7 @@
+2017-01-24
+----------
+* Form Element Array: new option 'removeable' (shall elements be removeable)
+
 2015-01-08 (Version >= 2.6)
 ---------------------------
 Form Element Select: new option 'null_value'

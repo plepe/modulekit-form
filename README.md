@@ -133,6 +133,7 @@ Definition:
 * min: minimum count of values
 * max: maximum count of values
 * order: whether the elements of the array shall be orderable. true (default) / false.
+* removeable: whether the elements of the array shall be removeable. true (default) / false.
 * button:add_element: override text of "Add Element" button (may be translated)
 * req: require at least one element
 * empty_value: value to return if array is empty. Default: null.
