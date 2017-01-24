@@ -215,6 +215,7 @@ class form_element_array extends form_element {
 
   function show_element_part($k, $element, $document) {
     $order = ((!array_key_exists("order", $this->def)) || ($this->def['order'] == true)) ? "order": "no_order";
+    $removeable = ((!array_key_exists("removeable", $this->def)) || ($this->def['removeable'] !== false)) ? "removeable" : "not_removeable";
 
     // wrapper #k
     $div=$document->createElement("div");
@@ -224,7 +225,7 @@ class form_element_array extends form_element {
     // element #k
     $el_div=$document->createElement("span");
     $el_div->setAttribute("form_element_num", $k);
-    $el_div->setAttribute("class", "form_element_array_part_element form_element_{$element->type()} form_element_array_{$order}");
+    $el_div->setAttribute("class", "form_element_array_part_element form_element_{$element->type()} form_element_array_{$order}_{$removeable}");
     $div->appendChild($el_div);
 
     $el_div->appendChild($element->show_element($document));
@@ -252,11 +253,13 @@ class form_element_array extends form_element {
       $el_div->appendChild($input);
     }
 
-    $input=$document->createElement("input");
-    $input->setAttribute("type", "submit");
-    $input->setAttribute("name", "{$this->options['var_name']}[__remove][{$k}]");
-    $input->setAttribute("value", "X");
-    $el_div->appendChild($input);
+    if ($removeable === 'removeable') {
+      $input=$document->createElement("input");
+      $input->setAttribute("type", "submit");
+      $input->setAttribute("name", "{$this->options['var_name']}[__remove][{$k}]");
+      $input->setAttribute("value", "X");
+      $el_div->appendChild($input);
+    }
 
     return $div;
   }

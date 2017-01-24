@@ -1,3 +1,7 @@
+2017-01-24 (Version >= 2.6)
+---------------------------
+* Form Element Array: new option 'removeable' (shall elements be removeable)
+
 2016-04-20 (Version >= 2.6)
 ---------------------------
 Form Element Text: Option max_bytes: Value may not be longer than 'max_bytes' bytes.
