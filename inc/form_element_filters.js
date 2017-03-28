@@ -245,6 +245,7 @@ form_element_filters.prototype.show_element=function() {
 
   this.action_add=document.createElement("select");
   this.action_add.name=this.options.var_name+"[__new]";
+  this.action_add.className = 'form_element_filters_action_add'
 
   var option = document.createElement('option');
   option.value = '';
@@ -420,10 +421,14 @@ form_element_filters.prototype.refresh=function(force) {
   for(var k in this.elements)
     count++;
 
-  if('max' in this.def && (count >= this.def.max))
-    this.action_add.className = "reached_max";
+  var max_count = 0
+  for(var k in this.def.def)
+    max_count++
+
+  if(count === max_count)
+    this.action_add.classList.add("reached_max")
   else
-    this.action_add.className = "";
+    this.action_add.classList.remove("reached_max")
 }
 
 form_element_filters.prototype.is_modified=function() {
