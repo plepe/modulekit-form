@@ -119,6 +119,11 @@ form_element_date.prototype.check_after=function(list, param) {
 }
 
 form_element_date.prototype.notify_change=function() {
+  var data = this.get_data()
+  if (this.data === data) {
+    return
+  }
+
   this.parent("form_element_date").notify_change.call(this);
 
   if(this.calendar) {
