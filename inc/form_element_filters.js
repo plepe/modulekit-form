@@ -14,36 +14,15 @@ form_element_filters.prototype.build_form=function() {
 
   if(!this.data) {
     this.data={};
-    for(var k=0; k<this.def['default']; k++) {
-      this.data[k]=null;
-    }
   }
-
-  for(var k in this.data) {
-    this.create_element(k);
-  }
-}
-
-form_element_filters.prototype.index_element=function(el) {
-  var i=1;
-  for(var k in this.elements) {
-    if(el==k)
-      return "#"+i;
-    i++;
-  }
-
-  return null;
 }
 
 form_element_filters.prototype.create_element=function(k) {
-  var element_def=new clone(this.def.def);
+  var element_def=new clone(this.def.def[k]);
   var element_class=get_form_element_class(element_def);
   var element_id=this.id+"_"+k;
   var element_options=new clone(this.options);
   element_options.var_name=element_options.var_name+"["+k+"]";
-  element_def._name=function(k) {
-    return this.index_element(k);
-  }.bind(this, k);
 
   if(class_exists(element_class)) {
     this.elements[k]=eval("new "+element_class+"()");
@@ -144,13 +123,21 @@ form_element_filters.prototype.get_data=function() {
 
 form_element_filters.prototype.set_data=function(data) {
   this.data=data;
-  this.build_form();
 
   if(data)
     for(var k in data) {
-      if(typeof this.elements[k]!="undefined")
-	this.elements[k].set_data(data[k]);
+      if(typeof this.elements[k]=="undefined") {
+        this.create_element(k)
+      }
+
+      this.elements[k].set_data(data[k]);
     }
+
+  for (var k in this.elements) {
+    if (!data || (!(k in data))) {
+      this.remove_element(k)
+    }
+  }
 
   if(this.dom) {
     var old_dom = this.dom;
@@ -165,6 +152,7 @@ form_element_filters.prototype.set_data=function(data) {
 }
 
 form_element_filters.prototype.set_orig_data=function(data) {
+  // TODO!
   for(var k in this.elements) {
     if(!data)
       this.elements[k].set_orig_data(null);
@@ -208,10 +196,7 @@ form_element_filters.prototype.show_element_part=function(k, element) {
   el_div.className="form_element_filters_part_element form_element_"+element.type() + " form_element_filters_" + order + "_" + removeable;
   div.appendChild(el_div);
 
-  el_div.appendChild(element.show_element());
-
-  // errors #k
-  el_div.appendChild(element.show_div_errors());
+  el_div.appendChild(element.show());
 
   // Actions #k
   var el_div=document.createElement("span");
@@ -261,18 +246,35 @@ form_element_filters.prototype.show_element=function() {
   el_div.className="form_element_filters_actions";
   div.appendChild(el_div);
 
-  this.action_add=document.createElement("input");
-  this.action_add.type="submit";
+  this.action_add=document.createElement("select");
   this.action_add.name=this.options.var_name+"[__new]";
+
+  var option = document.createElement('option');
+  option.value = '';
   if("button:add_element" in this.def) {
     if(typeof(this.def['button:add_element']) == "object")
-      this.action_add.value = lang(this.def['button:add_element']);
+      option.appendChild(document.createTextNode(lang(this.def['button:add_element'])));
     else
-      this.action_add.value = this.def['button:add_element'];
+      option.appendChild(document.createTextNode(this.def['button:add_element']));
   }
   else
-    this.action_add.value=lang('form:add_element');
-  this.action_add.onclick=this.add_element.bind(this);
+    option.appendChild(document.createTextNode(lang('form:add_element')));
+  this.action_add.appendChild(option);
+
+  for (var k in this.def.def) {
+    var element_def = this.def.def[k];
+    var option = document.createElement('option');
+    option.value = k;
+
+    if (k in this.elements) {
+      option.disabled = true;
+    }
+
+    option.appendChild(document.createTextNode(element_def.name));
+    this.action_add.appendChild(option);
+  }
+
+  this.action_add.onchange=this.add_element.bind(this);
   el_div.appendChild(this.action_add);
 
   return div;
@@ -313,27 +315,34 @@ form_element_filters.prototype.is_complete=function() {
 }
 
 form_element_filters.prototype.add_element=function() {
-  var highest_id=0;
+  console.log('add');
+  var id = this.action_add.value;
 
-  for(var i in this.elements) {
-    i = parseInt(i);
-    if(i>highest_id)
-      highest_id=i;
+  if (id in this.elements) {
+    return;
   }
 
-  highest_id=parseInt(highest_id)+1;
-  this.create_element(highest_id);
+  this.create_element(id);
 
   var current=document.getElementById(this.id).firstChild;
   while(current) {
     if(current.className=="form_element_filters_actions") {
-      current.parentNode.insertBefore(this.show_element_part(highest_id, this.elements[highest_id]), current);
+      current.parentNode.insertBefore(this.show_element_part(id, this.elements[id]), current);
       break;
     }
     current=current.nextSibling;
   }
 
   this.form_root.form.resize();
+
+  this.action_add.value = '';
+  for (var i = 0; i < this.action_add.options.length; i++) {
+    var option = this.action_add.options[i];
+
+    if (option.value === id) {
+      option.disabled = true;
+    }
+  }
 
   return false;
 }
@@ -352,6 +361,14 @@ form_element_filters.prototype.remove_element=function(k) {
 
   this.show_errors();
   this.form_root.form.resize();
+
+  for (var i = 0; i < this.action_add.options.length; i++) {
+    var option = this.action_add.options[i];
+
+    if (option.value === k) {
+      option.disabled = false;
+    }
+  }
 
   return false;
 }

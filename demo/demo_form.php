@@ -1,5 +1,25 @@
 <?php
 $form_def=array(
+  'filters'     =>array(
+    'name'      =>"Filters",
+    'type'      =>'filters',
+    'order'     =>false,
+    'def'       =>array(
+      'a'         => array(
+        'type'    => 'text',
+        'name'    => 'A',
+      ),
+      'b'         => array(
+        'type'    => 'select',
+        'name'    => 'B',
+        'values'  => array('1', '2', '3'),
+      ),
+      'c'         => array(
+        'type'    => 'date',
+        'name'    => 'C',
+      ),
+    ),
+  ),
   'name'	=>array(
     'name'	=>"Name",
     'desc'	=>"Please enter a name",
@@ -203,4 +223,5 @@ $default_data=array(
   "json"=>array(1, 2, "foo", "bar"=>array("b", "a", "r")),
   "cats"=>array(array("name"=>"Foo", "age"=>3)),
   "num"=>10,
+  "filters" => array("a"=>'Foobar', "b"=>"3"),
 );
