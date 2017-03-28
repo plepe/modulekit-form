@@ -185,24 +185,17 @@ form_element_filters.prototype.show_element_part=function(k, element) {
   else
     removeable = 'not_removeable';
 
-  // wrapper #k
-  var div=document.createElement("div");
-  div.setAttribute("form_element_num", k);
-  div.className="form_element_filters_part";
-
   // element #k
-  var el_div=document.createElement("span");
-  el_div.setAttribute("form_element_num", k);
-  el_div.className="form_element_filters_part_element form_element_"+element.type() + " form_element_filters_" + order + "_" + removeable;
-  div.appendChild(el_div);
+  var tr = element.show()
 
-  el_div.appendChild(element.show());
+  tr.setAttribute("form_element_num", k);
+  tr.className = tr.className + " form_element_filters_part_element form_element_"+element.type() + " form_element_filters_" + order + "_" + removeable;
 
   // Actions #k
-  var el_div=document.createElement("span");
+  var el_div=document.createElement("td");
   el_div.setAttribute("form_element_num", k);
   el_div.className="form_element_filters_part_element_actions";
-  div.appendChild(el_div);
+  tr.appendChild(el_div);
 
   if(order == 'order') {
     var input=document.createElement("input");
@@ -229,17 +222,21 @@ form_element_filters.prototype.show_element_part=function(k, element) {
     el_div.appendChild(input);
   }
 
-  return div;
+  return tr;
 }
 
 form_element_filters.prototype.show_element=function() {
   var div=this.parent("form_element_filters").show_element.call(this);
   this.get_data();
 
+  this.dom_table = document.createElement('table')
+  this.dom_table.className = 'form_element_filters_table'
+  div.appendChild(this.dom_table)
+
   for(var k in this.elements) {
     var part_div=this.show_element_part(k, this.elements[k]);
     this.element_divs[k] = part_div;
-    div.appendChild(part_div);
+    this.dom_table.appendChild(part_div);
   }
 
   var el_div=document.createElement("div");
@@ -315,7 +312,6 @@ form_element_filters.prototype.is_complete=function() {
 }
 
 form_element_filters.prototype.add_element=function() {
-  console.log('add');
   var id = this.action_add.value;
 
   if (id in this.elements) {
@@ -324,14 +320,7 @@ form_element_filters.prototype.add_element=function() {
 
   this.create_element(id);
 
-  var current=document.getElementById(this.id).firstChild;
-  while(current) {
-    if(current.className=="form_element_filters_actions") {
-      current.parentNode.insertBefore(this.show_element_part(id, this.elements[id]), current);
-      break;
-    }
-    current=current.nextSibling;
-  }
+  this.dom_table.appendChild(this.show_element_part(id, this.elements[id]))
 
   this.form_root.form.resize();
 
@@ -348,12 +337,12 @@ form_element_filters.prototype.add_element=function() {
 }
 
 form_element_filters.prototype.remove_element=function(k) {
-  var current=document.getElementById(this.id).firstChild;
-  while(current) {
-    if((current.className=="form_element_filters_part")&&(current.getAttribute("form_element_num")==k)) {
-      current.parentNode.removeChild(current);
-      delete(this.elements[k]);
-      break;
+  var current = this.dom_table.firstChild;
+  while (current) {
+    if (current.getAttribute("form_element_num") === k) {
+      current.parentNode.removeChild(current)
+      delete this.elements[k]
+      break
     }
 
     current=current.nextSibling;

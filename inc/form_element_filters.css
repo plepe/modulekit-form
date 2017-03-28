@@ -1,25 +1,17 @@
+.form_element_filters_table {
+  width: 100%;
+}
 .form_element_filters_part {
 }
 .form_element_filters_part_element {
-  display: inline-block;
   vertical-align: top;
-  width: 80%; /* fallback for browsers without support for calc() */
 }
-.form_element_filters_part_element.form_element_filters_order_removeable {
-  width: calc(100% - 105px);
-}
-.form_element_filters_part_element.form_element_filters_no_order_removeable {
-  width: calc(100% - 35px);
-}
-.form_element_filters_part_element.form_element_filters_order_not_removeable {
-  width: calc(100% - 75px);
-}
-.form_element_filters_part_element.form_element_filters_no_order_not_removeable {
+.form_element_filters_part_element {
   width: 100%;
 }
 .form_element_filters_part_element_actions {
-  display: inline-block;
   vertical-align: top;
+  width: 0;
 }
 .form_element_filters_part_element_actions input {
   margin-left: 5px;
