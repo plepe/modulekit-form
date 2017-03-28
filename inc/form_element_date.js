@@ -83,6 +83,11 @@ form_element_date.prototype.get_data=function(format) {
 }
 
 form_element_date.prototype.set_data=function(data, format) {
+  this.parent("form_element_date").set_data.call(this, data);
+  this.update_data(data, format)
+}
+
+form_element_date.prototype.update_data=function(data, format) {
   var d="";
 
   if(!format)
@@ -94,11 +99,11 @@ form_element_date.prototype.set_data=function(data, format) {
       d=date_format(this.date_format(), d);
   }
 
-  this.parent("form_element_date").set_data.call(this, d);
+  this.dom_element.value = d;
 }
 
 form_element_date.prototype.set_data_from_calendar=function(data) {
-  this.set_data(data, form_element_date_calender_format[this.type()]);
+  this.update_data(data, form_element_date_calender_format[this.type()]);
 
   this.notify_change();
 }
