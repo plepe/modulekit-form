@@ -540,7 +540,12 @@ form_element.prototype.show_errors=function() {
 }
 
 form_element.prototype.notify_change=function(ev) {
-  this.data=this.get_data();
+  var data = this.get_data()
+  if (this.data === data) {
+    return
+  }
+
+  this.data = data;
 
   this.show_errors.call(this);
 
