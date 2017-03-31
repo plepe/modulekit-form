@@ -26,7 +26,7 @@ if(isset($_REQUEST['d'])) {
 }
 include "demo_header.php";
 
-$form=new form("data", $form_def);
+$form=new form("data", $form_def, $options);
 
 if($form->is_complete()) {
   // save data to database

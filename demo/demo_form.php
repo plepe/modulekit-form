@@ -189,6 +189,9 @@ EOT
   ),
 );
 
+$options = array(
+);
+
 $default_data=array(
   "sex"=>"m",
   "comment"=>"Foo Bar\nBlablabla\n",
