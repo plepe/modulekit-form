@@ -77,10 +77,14 @@ form_element_filters.prototype.connect=function(dom_parent) {
     }
   }
 
-  var div = this.dom_parent.getElementsByClassName('form_element_filters_actions');
-  if (div.length) {
-    div = div[0];
+  var divs = this.dom_parent.getElementsByClassName('form_element_filters_actions');
+  var div = null
+  for (var i = 0; i < divs.length; i++) {
+    if (divs[i].parentNode === this.dom_parent)
+      div = divs[i]
+  }
 
+  if (div) {
     this.action_add = div.firstChild;
     this.action_add.onchange=this.add_element.bind(this);
 
