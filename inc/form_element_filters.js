@@ -33,26 +33,27 @@ form_element_filters.prototype.create_element=function(k) {
 form_element_filters.prototype.connect=function(dom_parent) {
   this.parent("form_element_filters").connect.call(this, dom_parent);
 
-  var current=this.dom_parent.firstChild;
+  this.dom_table = this.dom_parent.firstChild;
+  var table_rows = this.dom_table.rows;
   this.elements={};
   this.element_divs = {};
-  while(current) {
+
+  for (var i = 0; i < table_rows.length; i++) {
+    var current = table_rows[i];
     var k;
-    if((current.nodeName=="DIV")&&(k=current.getAttribute("form_element_num"))) {
+
+    if((current.nodeName=="TR")&&(k=current.getAttribute("form_element_num"))) {
       this.element_divs[k] = current;
-      var element_class="form_element_"+this.def.def.type;
+      var element_class="form_element_"+this.def.def[k].type;
       var element_id=this.id+"_"+k;
       var element_options=new clone(this.options);
       element_options.var_name=element_options.var_name+"["+k+"]";
-      var element_def=new clone(this.def.def);
-      element_def._name=function(k) {
-	return this.index_element(k);
-      }.bind(this, k);
+      var element_def=this.def.def[k];
 
       if(class_exists(element_class)) {
 	this.elements[k]=eval("new "+element_class+"()");
 	this.elements[k].init(element_id, element_def, element_options, this);
-	this.elements[k].connect(current.firstChild.firstChild);
+	this.elements[k].connect(document.getElementById(element_id));
       }
 
       // modify part actions
@@ -74,20 +75,18 @@ form_element_filters.prototype.connect=function(dom_parent) {
 	input=input.nextSibling;
       }
     }
+  }
 
-    // modify actions
-    if(current.className=="form_element_filters_actions") {
-      input=current.firstChild;
-      while(input) {
-	if(input.name==this.options.var_name+"[__new]") {
-	  this.action_add = input;
-	  this.action_add.onclick = this.add_element.bind(this);
-	}
-	input=input.nextSibling;
-      }
+  var div = this.dom_parent.getElementsByClassName('form_element_filters_actions');
+  if (div.length) {
+    div = div[0];
+
+    this.action_add = div.firstChild;
+    this.action_add.onchange=this.add_element.bind(this);
+
+    if (div.firstChild.nextSibling) {
+      div.removeChild(div.firstChild.nextSibling);
     }
-
-    current=current.nextSibling;
   }
 }
 
