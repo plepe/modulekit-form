@@ -51,6 +51,14 @@ form_element_date.prototype.connect=function(dom_parent) {
   this.activate_calendar(this.dom_element);
 }
 
+form_element_date.prototype.show_element = function() {
+  var div = this.parent("form_element_date").show_element.call(this)
+
+  this.update_data(this.data)
+
+  return div
+}
+
 form_element_date.prototype.activate_calendar=function(input) {
   input.onfocus=function() {
     if(typeof this.calendar=="undefined")
