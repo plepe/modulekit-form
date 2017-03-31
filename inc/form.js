@@ -74,22 +74,19 @@ form.prototype.resize=function() {
 }
 
 form.prototype.build_form=function() {
-  var def={
-    type: 'form',
-    def: this.def
-  };
+  if (!('type' in this.options)) {
+    this.options.type = 'form'
+  }
 
-  this.element=new form_element_form();
-  this.element.init(this.id, def, this.options, null);
+  this.options.def = this.def
+
+  var element_type = 'form_element_' + this.options.type
+  this.element=new window[element_type]();
+  this.element.init(this.id, this.options, this.options, null);
   this.element.form=this;
 }
 
 form.prototype.connect=function() {
-  var def={
-    type: 'form',
-    def: this.def
-  };
-
   var element_dom_parent=document.getElementById(this.id);
   this.element.connect(element_dom_parent);
   this.element.finish_connect();
