@@ -64,13 +64,25 @@ form_element_filters.prototype.connect=function(dom_parent) {
       input=input.firstChild;
       while(input) {
 	if(input.name==this.options.var_name+"[__remove]["+k+"]") {
-	  input.onclick=this.remove_element.bind(this, k);
+	  input.onclick = function (k) {
+            this.remove_element(k)
+            this.notify_change()
+            return false;
+          }.bind(this, k)
 	}
 	else if(input.name==this.options.var_name+"[__order_up]["+k+"]") {
-	  input.onclick=this.order_up.bind(this, k);
+	  input.onclick = function (k) {
+            this.order_up(k)
+            this.notify_change()
+            return false;
+          }.bind(this, k)
 	}
 	else if(input.name==this.options.var_name+"[__order_down]["+k+"]") {
-	  input.onclick=this.order_down.bind(this, k);
+	  input.onclick = function (k) {
+            this.order_down(k)
+            this.notify_change()
+            return false;
+          }.bind(this, k)
 	}
 	input=input.nextSibling;
       }
@@ -205,13 +217,22 @@ form_element_filters.prototype.show_element_part=function(k, element) {
     input.type="submit";
     input.name=this.options.var_name+"[__order_up]["+k+"]";
     input.value="↑";
-    input.onclick=this.order_up.bind(this, k);
+    input.onclick = function (k) {
+      this.order_up(k)
+      this.notify_change()
+      return false;
+    }.bind(this, k)
     el_div.appendChild(input);
 
     var input=document.createElement("input");
     input.type="submit";
     input.name=this.options.var_name+"[__order_down]["+k+"]";
     input.value="↓";
+    input.onclick = function (k) {
+      this.order_down(k)
+      this.notify_change()
+      return false;
+    }.bind(this, k)
     input.onclick=this.order_down.bind(this, k);
     el_div.appendChild(input);
   }
@@ -221,7 +242,12 @@ form_element_filters.prototype.show_element_part=function(k, element) {
     input.type="submit";
     input.name=this.options.var_name+"[__remove]["+k+"]";
     input.value="X";
-    input.onclick=this.remove_element.bind(this, k);
+    input.onclick = function (k) {
+      console.log(k)
+      this.remove_element(k)
+      this.notify_change()
+      return false;
+    }.bind(this, k)
     el_div.appendChild(input);
   }
 
@@ -337,6 +363,8 @@ form_element_filters.prototype.add_element=function() {
       option.disabled = true;
     }
   }
+
+  this.notify_change();
 
   return false;
 }
