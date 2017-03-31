@@ -337,15 +337,16 @@ form_element_filters.prototype.add_element=function() {
 }
 
 form_element_filters.prototype.remove_element=function(k) {
-  var current = this.dom_table.firstChild;
-  while (current) {
+  var table_rows = this.dom_table.rows;
+
+  for (var i = 0; i < table_rows.length; i++) {
+    var current = table_rows[i];
+
     if (current.getAttribute("form_element_num") === k) {
       current.parentNode.removeChild(current)
       delete this.elements[k]
       break
     }
-
-    current=current.nextSibling;
   }
 
   this.show_errors();
@@ -363,22 +364,28 @@ form_element_filters.prototype.remove_element=function(k) {
 }
 
 form_element_filters.prototype.order_up=function(k) {
-  var current=document.getElementById(this.id).firstChild;
-  var prev=null;
+  var table_rows = this.dom_table.rows;
+  var new_elements = {}
 
-  while(current) {
-    if(current.className=="form_element_filters_part") {
-      if(current.getAttribute("form_element_num")==k) {
-	if(prev)
-	  current.parentNode.insertBefore(current, prev);
-	break;
+  for (var i = 0; i < table_rows.length; i++) {
+    var current = table_rows[i];
+    var l = current.getAttribute("form_element_num");
+
+    if (i + 1 < table_rows.length) {
+      var next = table_rows[i + 1];
+      var n = next.getAttribute("form_element_num");
+
+      if (n == k) {
+        current.parentNode.insertBefore(next, current);
+        new_elements[n] = this.elements[n]
+        i++
       }
-
-      prev=current;
     }
 
-    current=current.nextSibling;
+    new_elements[l] = this.elements[l]
   }
+
+  this.elements = new_elements
 
   this.show_errors();
   this.form_root.form.resize();
@@ -387,22 +394,28 @@ form_element_filters.prototype.order_up=function(k) {
 }
 
 form_element_filters.prototype.order_down=function(k) {
-  var current=document.getElementById(this.id).lastChild;
-  var next=null;
+  var table_rows = this.dom_table.rows;
+  var new_elements = {}
 
-  while(current) {
-    if(current.className=="form_element_filters_part") {
-      if(current.getAttribute("form_element_num")==k) {
-	if(next)
-	  current.parentNode.insertBefore(next, current);
-	break;
+  for (var i = 0; i < table_rows.length; i++) {
+    var current = table_rows[i];
+    var l = current.getAttribute("form_element_num");
+
+    if (i + 1 < table_rows.length) {
+      var next = table_rows[i + 1];
+      var n = next.getAttribute("form_element_num");
+
+      if (l == k) {
+        current.parentNode.insertBefore(next, current);
+        new_elements[n] = this.elements[n]
+        i++
       }
-
-      next=current;
     }
 
-    current=current.previousSibling;
+    new_elements[l] = this.elements[l]
   }
+
+  this.elements = new_elements
 
   this.show_errors();
   this.form_root.form.resize();
