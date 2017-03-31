@@ -22,6 +22,6 @@
 table.form .form_element_filters select.form_element_filters_action_add {
   width: auto;
 }
-table.form .form_element_filters select.form_element_filters_action_add.reached_max {
+table.form .form_element_filters .form_element_filters_actions.reached_max {
   display: none;
 }

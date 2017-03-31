@@ -62,19 +62,29 @@ class form_element_filters extends form_element {
 
   function set_data($data) {
     $this->data=$data;
-    $this->build_form();
 
-    if($data&&is_array($data))
-      foreach($data as $k=>$d) {
-	if(isset($this->elements[$k]))
-	  $this->elements[$k]->set_data($d);
+    if ($data)
+      foreach ($data as $k => $d) {
+        if (!array_key_exists($k, $this->elements)) {
+          $this->create_element($k);
+        }
+
+        $this->elements[$k]->set_data($d);
       }
+
+    foreach ($this->elements as $k => $element) {
+      if (!$data || !array_key_exists($k, $data)) {
+        $this->remove_element($k);
+      }
+    }
 
     unset($this->data);
   }
 
   function set_request_data($data) {
     $ret = true;
+
+    $this->build_form();
 
     // request data empty? -> empty array
     if($data === null) {
@@ -83,13 +93,17 @@ class form_element_filters extends form_element {
 
     $this->data=$data;
     if(isset($this->data['__new'])) {
+      if ($k = $this->data['__new']) {
+        $new = $k;
+        $ret = false;
+      }
       unset($this->data['__new']);
-      $this->data[]=null;
-      $this->changed_count=true;
-      $ret = false;
     }
     if(isset($this->data['__remove'])) {
-      $remove=$this->data['__remove'];
+      $remove = $this->data['__remove'];
+      foreach ($remove as $k => $d) {
+        unset($this->data[$k]);
+      }
       unset($this->data['__remove']);
       $ret = false;
     }
@@ -104,7 +118,14 @@ class form_element_filters extends form_element {
       $ret = false;
     }
 
-    $this->build_form();
+    if ($this->data)
+      foreach ($this->data as $k => $d) {
+        if (!array_key_exists($k, $this->elements)) {
+          $this->create_element($k);
+        }
+
+        $this->elements[$k]->set_data($d);
+      }
 
     if(isset($order_up)) {
       foreach($order_up as $i=>$dummy) {
@@ -162,11 +183,8 @@ class form_element_filters extends form_element {
 	$ret = false;
     }
 
-    if(isset($remove)) {
-      foreach($remove as $k=>$dummy) {
-	unset($this->data[$k]);
-	unset($this->elements[$k]);
-      }
+    if (isset($new)) {
+      $this->create_element($new);
       $this->changed_count=true;
     }
 
@@ -176,6 +194,7 @@ class form_element_filters extends form_element {
   }
 
   function set_orig_data($data) {
+    // TODO!
     if((!isset($data))||(!is_array($data)))
       $data=array();
     $this->orig_data=$data;
@@ -194,50 +213,43 @@ class form_element_filters extends form_element {
   function build_form() {
     $this->elements=array();
 
-    $data = array();
-    if($this->def['default'] > 0)
-      $data=array_fill(0, $this->def['default'], null);
-
-    if(isset($this->data)&&is_array($this->data))
-      $data=$this->data;
-
-    $element_class=get_form_element_class($this->def['def']);
-    $element_def=$this->def['def'];
-    foreach($data as $k=>$v) {
-      $element_id="{$this->id}_{$k}";
-      $element_options=$this->options;
-      $element_options['var_name']="{$this->options['var_name']}[{$k}]";
-      $element_def['_name']="#".(sizeof($this->elements)+1);
-
-      $this->elements[$k]=new $element_class($element_id, $element_def, $element_options, $this);
+    if (!$this->data) {
+      $this->data = array();
     }
+  }
+
+  function create_element ($k) {
+    $element_def = $this->def['def'][$k];
+    $element_class = get_form_element_class($element_def);
+    $element_id = "{$this->id}_{$k}";
+    $element_options = $this->options;
+    $element_options['var_name'] = "{$element_options['var_name']}[{$k}]";
+
+    if (class_exists($element_class)) {
+      $this->elements[$k] = new $element_class($element_id, $element_def, $element_options, $this);
+    } else {
+    }
+  }
+
+  function remove_element ($k) {
+    unset($this->elements[$k]);
   }
 
   function show_element_part($k, $element, $document) {
     $order = ((!array_key_exists("order", $this->def)) || ($this->def['order'] == true)) ? "order": "no_order";
     $removeable = ((!array_key_exists("removeable", $this->def)) || ($this->def['removeable'] !== false)) ? "removeable" : "not_removeable";
 
-    // wrapper #k
-    $div=$document->createElement("div");
-    $div->setAttribute("form_element_num", $k);
-    $div->setAttribute("class", "form_element_filters_part");
-
     // element #k
-    $el_div=$document->createElement("span");
-    $el_div->setAttribute("form_element_num", $k);
-    $el_div->setAttribute("class", "form_element_filters_part_element form_element_{$element->type()} form_element_filters_{$order}_{$removeable}");
-    $div->appendChild($el_div);
+    $tr = $element->show($document);
 
-    $el_div->appendChild($element->show_element($document));
-
-    // errors #k
-    $el_div->appendChild($element->show_div_errors($document));
+    $tr->setAttribute("form_element_num", $k);
+    $tr->setAttribute("class", $tr->getAttribute("class") . " form_element_filters_part_element form_element_{$element->type()} form_element_filters_{$order}_{$removeable}");
 
     // Actions #k
-    $el_div=$document->createElement("span");
+    $el_div=$document->createElement("td");
     $el_div->setAttribute("form_element_num", $k);
     $el_div->setAttribute("class", "form_element_filters_part_element_actions");
-    $div->appendChild($el_div);
+    $tr->appendChild($el_div);
 
     if($order == "order") {
       $input=$document->createElement("input");
@@ -261,40 +273,64 @@ class form_element_filters extends form_element {
       $el_div->appendChild($input);
     }
 
-    return $div;
+    return $tr;
   }
 
   function show_element($document) {
     $div=parent::show_element($document);
 
+    $this->dom_table = $document->createElement('table');
+    $this->dom_table->setAttribute('class', 'form_element_filters_table');
+    $div->appendChild($this->dom_table);
+
     foreach($this->elements as $k=>$element) {
       $part_div=$this->show_element_part($k, $element, $document);
-      $div->appendChild($part_div);
+      $this->dom_table->appendChild($part_div);
     }
 
     $el_div=$document->createElement("div");
     $el_div->setAttribute("class", "form_element_filters_actions");
     $div->appendChild($el_div);
 
-    $input=$document->createElement("input");
-    $input->setAttribute("type", "submit");
+    $input = $document->createElement('select');
     $input->setAttribute("name", "{$this->options['var_name']}[__new]");
+    $input->setAttribute("class", "form_element_filters_action_add");
+
+    $option = $document->createElement('option');
+    $option->setAttribute('value', '');
+    $option->setAttribute('selected', 'true');
+
     if(array_key_exists("button:add_element", $this->def)) {
       if(is_array($this->def['button:add_element']))
-        $input->setAttribute("value", lang($this->def['button:add_element']));
+        $option->appendChild($document->createTextNode(lang($this->def['button:add_element'])));
       else
-        $input->setAttribute("value", $this->def['button:add_element']);
+        $option->appendChild($document->createTextNode($this->def['button:add_element']));
     }
     else
-      $input->setAttribute("value", lang("form:add_element"));
-    $el_div->appendChild($input);
+      $option->appendChild($document->createTextNode(lang("form:add_element")));
+    $input->appendChild($option);
 
-    if(isset($this->def['max']) && (sizeof($this->elements) >= $this->def['max'])) {
-      $input->setAttribute("class", "reached_max");
+    foreach ($this->def['def'] as $k => $element_def) {
+      $option = $document->createElement('option');
+      $option->setAttribute('value', $k);
+
+      if (array_key_exists($k, $this->elements)) {
+        $option->setAttribute('disabled', 'true');
+      }
+
+      $option->appendChild($document->createTextNode($element_def['name'] . ""));
+      $input->appendChild($option);
     }
 
-    if(isset($this->def['min']) && (sizeof($this->elements) <= $this->def['min'])) {
-      $input->setAttribute("class", "reached_min");
+    $el_div->appendChild($input);
+
+    $input = $document->createElement('input');
+    $input->setAttribute('type', 'submit');
+    $input->setAttribute('value', lang('ok'));
+    $el_div->appendChild($input);
+
+    if (sizeof($this->def['def']) == sizeof($this->elements)) {
+      $el_div->setAttribute('class', $el_div->getAttribute('class') . ' reached_max');
     }
 
     return $div;

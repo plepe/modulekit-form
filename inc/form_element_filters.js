@@ -428,9 +428,9 @@ form_element_filters.prototype.refresh=function(force) {
   if (!this.action_add)
     return;
   else if (count === max_count)
-    this.action_add.classList.add("reached_max")
+    this.action_add.parentNode.classList.add("reached_max")
   else
-    this.action_add.classList.remove("reached_max")
+    this.action_add.parentNode.classList.remove("reached_max")
 }
 
 form_element_filters.prototype.is_modified=function() {
