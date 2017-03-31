@@ -109,6 +109,9 @@ form_element_keywords.prototype.set_data=function(data) {
 
   this.get_data();
 
+  if (!this.dom_element)
+    return;
+
   while(this.keywords_list.firstChild)
     this.keywords_list.removeChild(this.keywords_list.firstChild);
 

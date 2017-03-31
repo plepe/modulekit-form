@@ -425,7 +425,9 @@ form_element_filters.prototype.refresh=function(force) {
   for(var k in this.def.def)
     max_count++
 
-  if(count === max_count)
+  if (!this.action_add)
+    return;
+  else if (count === max_count)
     this.action_add.classList.add("reached_max")
   else
     this.action_add.classList.remove("reached_max")
