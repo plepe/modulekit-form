@@ -281,6 +281,7 @@ class form_element_filters extends form_element {
 
     $this->dom_table = $document->createElement('table');
     $this->dom_table->setAttribute('class', 'form_element_filters_table');
+    $this->dom_table->setAttribute('id', $this->id);
     $div->appendChild($this->dom_table);
 
     foreach($this->elements as $k=>$element) {

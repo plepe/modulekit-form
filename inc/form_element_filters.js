@@ -230,6 +230,7 @@ form_element_filters.prototype.show_element=function() {
 
   this.dom_table = document.createElement('table')
   this.dom_table.className = 'form_element_filters_table'
+  this.dom_table.id = this.id
   div.appendChild(this.dom_table)
 
   for(var k in this.elements) {
