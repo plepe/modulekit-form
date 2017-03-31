@@ -5,13 +5,22 @@
 }
 .form_element_filters_part_element {
   vertical-align: top;
-}
-.form_element_filters_part_element {
   width: 100%;
 }
 .form_element_filters_part_element_actions {
-  vertical-align: top;
-  width: 0;
+  padding: 0;
+}
+.form_element_filters_order_removeable .form_element_filters_part_element_actions {
+  width: 105px;
+}
+.form_element_filters_no_order_removeable .form_element_filters_part_element_actions {
+  width: 35px;
+}
+.form_element_filters_order_not_removeable .form_element_filters_part_element_actions {
+  width: 75px;
+}
+.form_element_filters_no_order_not_removeable .form_element_filters_part_element_actions {
+  width: 0px;
 }
 .form_element_filters_part_element_actions input {
   margin-left: 5px;
