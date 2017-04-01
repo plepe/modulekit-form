@@ -10,13 +10,6 @@ class form_element_form extends form_element {
     $this->build_form();
   }
 
-  function path_name() {
-    if($this->form_parent===null)
-      return null;
-
-    return parent::path_name();
-  }
-
   function build_form() {
     $this->elements=array();
 
