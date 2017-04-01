@@ -124,7 +124,7 @@ class form_element_filters extends form_element {
           $this->add_element($k);
         }
 
-        $this->elements[$k]->set_data($d);
+        $this->elements[$k]->set_request_data($d);
       }
 
     if(isset($order_up)) {
