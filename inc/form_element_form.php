@@ -98,6 +98,7 @@ class form_element_form extends form_element {
 
   function show_element($document) {
     $table=$document->createElement("table");
+    $table->setAttribute("class", 'form_element_form');
     $table->setAttribute("id", $this->id);
     $element_list = array();
 

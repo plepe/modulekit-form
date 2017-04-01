@@ -45,31 +45,7 @@ function form(id, def, options) {
 }
 
 form.prototype.resize=function() {
-  var obs1=this.table.getElementsByTagName("table");
-  var obs = [ this.table ];
-  for(var i=0; i<obs1.length; i++)
-    obs.push(obs1[i]);
-
-  for(var i=0; i<obs.length; i++) {
-    var ob=obs[i];
-    if(in_array("form", ob.className.split(" "))) {
-      // form is invisible
-      if(!ob.parentNode)
-        return;
-
-      var width=ob.parentNode.offsetWidth;
-      var em_height = get_em_height(ob);
-
-      // set class according to width
-      if(width/em_height<=25)
-	ob.className="form small";
-      else if(width/em_height<=40)
-	ob.className="form medium";
-      else
-	ob.className="form";
-    }
-  }
-
+  this.element.resize()
   this.refresh(true);
 }
 

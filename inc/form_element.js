@@ -616,6 +616,9 @@ form_element.prototype.refresh=function(force) {
   }
 }
 
+form_element.prototype.resize = function () {
+}
+
 form_element.prototype.is_modified=function() {
   return this.get_data()!==this.get_orig_data();
 }
