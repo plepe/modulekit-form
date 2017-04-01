@@ -57,6 +57,9 @@ class form_element {
   }
 
   function path_name() {
+    if($this->form_parent===null)
+      return null;
+
     $parent_path=$this->form_parent->path_name();
 
     if($parent_path===null)
