@@ -56,7 +56,6 @@ form_element_form.prototype.build_form=function() {
 form_element_form.prototype.show_element=function() {
   var table=document.createElement("table");
   table.id=this.id;
-  table.className="form";
   var element_list = [];
 
   for(var i in this.elements) {

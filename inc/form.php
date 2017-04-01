@@ -169,6 +169,7 @@ class form {
 
     $div=$this->element->show_element($document);
     $document->appendChild($div);
+    $div->setAttribute("class", $div->getAttribute("class") . " form");
 
     $orig_data=$this->get_orig_data();
 
