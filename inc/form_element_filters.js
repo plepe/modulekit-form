@@ -314,8 +314,8 @@ form_element_filters.prototype.show_element=function() {
     option.appendChild(document.createTextNode(lang('form:add_element')));
   this.action_add.appendChild(option);
 
-  for (var k in this.def.def) {
-    var element_def = this.def.def[k];
+  for (var k in this.available_elements) {
+    var element = this.available_elements[k]
     var option = document.createElement('option');
     option.value = k;
 
@@ -323,7 +323,7 @@ form_element_filters.prototype.show_element=function() {
       option.disabled = true;
     }
 
-    option.appendChild(document.createTextNode(element_def.name));
+    option.appendChild(document.createTextNode(element.name()));
     this.action_add.appendChild(option);
   }
 

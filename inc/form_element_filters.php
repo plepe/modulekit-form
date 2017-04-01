@@ -336,7 +336,7 @@ class form_element_filters extends form_element {
       $option->appendChild($document->createTextNode(lang("form:add_element")));
     $input->appendChild($option);
 
-    foreach ($this->def['def'] as $k => $element_def) {
+    foreach ($this->available_elements as $k => $element) {
       $option = $document->createElement('option');
       $option->setAttribute('value', $k);
 
@@ -344,7 +344,7 @@ class form_element_filters extends form_element {
         $option->setAttribute('disabled', 'true');
       }
 
-      $option->appendChild($document->createTextNode($element_def['name'] . ""));
+      $option->appendChild($document->createTextNode($element->name()));
       $input->appendChild($option);
     }
 
