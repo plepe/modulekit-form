@@ -152,6 +152,7 @@ form.prototype.show=function(dom_parent) {
 
   // render the form
   this.table=this.element.show_element();
+  this.table.classList.add('form');
 
   dom_parent.appendChild(this.table);
 

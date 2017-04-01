@@ -28,9 +28,9 @@
 }
 .form_element_filters_part_actions {
 }
-table.form .form_element_filters select.form_element_filters_action_add {
+.form .form_element_filters select.form_element_filters_action_add {
   width: auto;
 }
-table.form .form_element_filters .form_element_filters_actions.reached_max {
+.form .form_element_filters .form_element_filters_actions.reached_max {
   display: none;
 }
