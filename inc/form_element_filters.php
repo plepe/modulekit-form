@@ -66,7 +66,7 @@ class form_element_filters extends form_element {
     if ($data)
       foreach ($data as $k => $d) {
         if (!array_key_exists($k, $this->elements)) {
-          $this->create_element($k);
+          $this->add_element($k);
         }
 
         $this->elements[$k]->set_data($d);
@@ -121,7 +121,7 @@ class form_element_filters extends form_element {
     if ($this->data)
       foreach ($this->data as $k => $d) {
         if (!array_key_exists($k, $this->elements)) {
-          $this->create_element($k);
+          $this->add_element($k);
         }
 
         $this->elements[$k]->set_data($d);
@@ -184,7 +184,7 @@ class form_element_filters extends form_element {
     }
 
     if (isset($new)) {
-      $this->create_element($new);
+      $this->add_element($new);
       $this->changed_count=true;
     }
 
@@ -194,41 +194,66 @@ class form_element_filters extends form_element {
   }
 
   function set_orig_data($data) {
-    // TODO!
-    if((!isset($data))||(!is_array($data)))
+    if ((!isset($data)) || (!is_array($data))) {
       $data=array();
-    $this->orig_data=$data;
+    }
 
-    foreach($data as $k=>$v) {
-      if(isset($this->elements[$k])) {
-	$this->elements[$k]->set_orig_data($v);
+    foreach ($this->available_elements as $k => $element) {
+      if (array_key_exists($k, $data)) {
+        $element->set_orig_data($data[$k]);
+      } else {
+        $element->set_orig_data(null);
       }
     }
+
+    $this->orig_data_elements = array_keys($data);
   }
 
   function get_orig_data() {
-    return $this->orig_data;
+    $ret = array();
+
+    if (!isset($this->orig_data_elements)) {
+      return array();
+    }
+
+    foreach ($this->orig_data_elements as $k) {
+      $ret[$k] = $this->available_elements[$k]->get_orig_data();
+    }
+
+    return $ret;
   }
 
   function build_form() {
     $this->elements=array();
+    $this->available_elements=array();
 
     if (!$this->data) {
       $this->data = array();
     }
-  }
 
-  function create_element ($k) {
-    $element_def = $this->def['def'][$k];
-    $element_class = get_form_element_class($element_def);
-    $element_id = "{$this->id}_{$k}";
-    $element_options = $this->options;
-    $element_options['var_name'] = "{$element_options['var_name']}[{$k}]";
+    foreach ($this->def['def'] as $k => $def) {
+      $element_def = $def;
+      $element_class = get_form_element_class($element_def);
+      $element_id = "{$this->id}_{$k}";
+      $element_options = $this->options;
+      $element_options['var_name'] = "{$element_options['var_name']}[{$k}]";
 
-    if (class_exists($element_class)) {
-      $this->elements[$k] = new $element_class($element_id, $element_def, $element_options, $this);
-    } else {
+      if (class_exists($element_class)) {
+        $this->available_elements[$k] = new $element_class($element_id, $element_def, $element_options, $this);
+      } else {
+      }
     }
+  }
+  function add_element ($k) {
+    if (array_key_exists($k, $this->elements)) {
+      return false;
+    }
+
+    if (!array_key_exists($k, $this->available_elements)) {
+      trigger_error("{$this->id} - add_element: \"{$k}\" not found", E_USER_ERROR);
+    }
+
+    $this->elements[$k] = $this->available_elements[$k];
   }
 
   function remove_element ($k) {
