@@ -44,18 +44,9 @@ form_element_filters.prototype.connect=function(dom_parent) {
     var k;
 
     if((current.nodeName=="TR")&&(k=current.getAttribute("form_element_num"))) {
-      this.element_divs[k] = current;
-      var element_class="form_element_"+this.def.def[k].type;
-      var element_id=this.id+"_"+k;
-      var element_options=new clone(this.options);
-      element_options.var_name=element_options.var_name+"["+k+"]";
-      var element_def=this.def.def[k];
-
-      if(class_exists(element_class)) {
-	this.elements[k]=eval("new "+element_class+"()");
-	this.elements[k].init(element_id, element_def, element_options, this);
-	this.elements[k].connect(document.getElementById(element_id));
-      }
+      var element = this.available_elements[k]
+      this.elements[k] = element
+      element.connect(document.getElementById(element.id));
 
       // modify part actions
       var input=current.firstChild;
