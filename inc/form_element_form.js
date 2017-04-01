@@ -25,6 +25,8 @@ form_element_form.prototype.connect=function(dom_parent) {
     if(element_dom_parent)
       this.elements[k].connect(element_dom_parent);
   }
+
+  this.dom_table = document.getElementById(this.id)
 }
 
 form_element_form.prototype.finish_connect=function() {
@@ -54,8 +56,9 @@ form_element_form.prototype.build_form=function() {
 }
 
 form_element_form.prototype.show_element=function() {
-  var table=document.createElement("table");
-  table.id=this.id;
+  this.dom_table = document.createElement("table");
+  this.dom_table.className = 'form_element_form';
+  this.dom_table.id = this.id;
   var element_list = [];
 
   for(var i in this.elements) {
@@ -67,10 +70,10 @@ form_element_form.prototype.show_element=function() {
   element_list = weight_sort(element_list);
 
   for(var i in element_list) {
-    table.appendChild(element_list[i]);
+    this.dom_table.appendChild(element_list[i]);
   }
 
-  return table;
+  return this.dom_table;
 }
 
 form_element_form.prototype.get_data=function(data) {
@@ -138,6 +141,26 @@ form_element_form.prototype.refresh=function(force) {
 
   for(var i in this.elements)
     this.elements[i].refresh(force);
+}
+
+form_element_form.prototype.resize = function () {
+  this.parent("form_element_form").resize.call(this);
+
+  var width = this.dom_table.parentNode.offsetWidth;
+  var em_height = get_em_height(this.dom_table);
+
+  this.dom_table.classList.remove('small')
+  this.dom_table.classList.remove('medium')
+
+  if (width / em_height <= 25) {
+    this.dom_table.classList.add('small')
+  } else if (width / em_height <= 40) {
+    this.dom_table.classList.add('medium')
+  }
+
+  for (var k in this.elements) {
+    this.elements[k].resize()
+  }
 }
 
 form_element_form.prototype.is_modified=function() {

@@ -333,7 +333,7 @@ form_element_array.prototype.add_element=function() {
     current=current.nextSibling;
   }
 
-  this.form_root.form.resize();
+  this.element[highest_id].resize()
 
   return false;
 }
@@ -351,7 +351,7 @@ form_element_array.prototype.remove_element=function(k) {
   }
 
   this.show_errors();
-  this.form_root.form.resize();
+  this.resize();
 
   return false;
 }
@@ -375,7 +375,7 @@ form_element_array.prototype.order_up=function(k) {
   }
 
   this.show_errors();
-  this.form_root.form.resize();
+  this.resize();
 
   return false;
 }
@@ -399,7 +399,7 @@ form_element_array.prototype.order_down=function(k) {
   }
 
   this.show_errors();
-  this.form_root.form.resize();
+  this.resize();
 
   return false;
 }
@@ -418,6 +418,14 @@ form_element_array.prototype.refresh=function(force) {
     this.action_add.className = "reached_max";
   else
     this.action_add.className = "";
+}
+
+form_element_array.prototype.resize = function () {
+  this.parent("form_element_array").resize.call(this);
+
+  for (var k in this.elements) {
+    this.elements[k].resize()
+  }
 }
 
 form_element_array.prototype.is_modified=function() {

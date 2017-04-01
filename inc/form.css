@@ -85,29 +85,3 @@
   color: #ffffff;
   background: #ff0000;
 }
-
-/* adapt to screen sizes */
-/*   <640px   */
-.form.medium td.field_desc {
-  width: 128px;
-}
-
-/*   <400px   */
-.form.small,
-.form.small thead,
-.form.small tbody,
-.form.small tr,
-.form.small th,
-.form.small td
-{
-  display: block;
-}
-.form.small td.field_desc {
-  width: 100%;
-}
-.form.small td.field_value {
-  padding-left: 1em;
-}
-.form.small tr {
-  padding-bottom: 0.5em;
-}
