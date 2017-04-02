@@ -44,6 +44,11 @@ form_element_form_chooser.prototype.connect=function(dom_parent) {
     var k;
 
     if((current.nodeName=="TR")&&(k=current.getAttribute("form_element_num"))) {
+      if (!(k in this.available_elements)) {
+        alert(this.id + ': can\'t connect to child "' + k + '" - not availabe')
+        break
+      }
+
       var element = this.available_elements[k]
       this.elements[k] = element
       element.connect(document.getElementById(element.id));
@@ -145,11 +150,13 @@ form_element_form_chooser.prototype.set_data=function(data) {
 
   if(data)
     for(var k in data) {
-      if(typeof this.elements[k]=="undefined") {
+      if (!(k in this.elements)) {
         this.add_element(k)
       }
 
-      this.elements[k].set_data(data[k]);
+      if (k in this.elements) {
+        this.elements[k].set_data(data[k]);
+      }
     }
 
   for (var k in this.elements) {
@@ -198,7 +205,9 @@ form_element_form_chooser.prototype.get_orig_data=function() {
   for (var i = 0; i < this.orig_data_elements.length; i++) {
     var k = this.orig_data_elements[i]
 
-    ret[k] = this.available_elements[k].get_orig_data()
+    if (k in this.available_elements) {
+      ret[k] = this.available_elements[k].get_orig_data()
+    }
   }
 
   return ret
@@ -259,7 +268,6 @@ form_element_form_chooser.prototype.show_element_part=function(k, element) {
     input.name=this.options.var_name+"[__remove]["+k+"]";
     input.value="X";
     input.onclick = function (k) {
-      console.log(k)
       this.remove_element(k)
       this.notify_change()
       return false;
@@ -370,7 +378,7 @@ form_element_form_chooser.prototype.add_element = function(k) {
   }
 
   if(!(k in this.available_elements)) {
-    alert(this.id + ' - add_element: "' + k + '" not found')
+    console.log(this.id + ' - add_element: "' + k + '" not found')
     return false
   }
 

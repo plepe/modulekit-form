@@ -69,7 +69,9 @@ class form_element_form_chooser extends form_element {
           $this->add_element($k);
         }
 
-        $this->elements[$k]->set_data($d);
+        if (array_key_exists($k, $this->elements)) {
+          $this->elements[$k]->set_data($d);
+        }
       }
 
     foreach ($this->elements as $k => $element) {
@@ -216,7 +218,9 @@ class form_element_form_chooser extends form_element {
     }
 
     foreach ($this->orig_data_elements as $k) {
-      $ret[$k] = $this->available_elements[$k]->get_orig_data();
+      if (array_key_exists($k, $this->available_elements)) {
+        $ret[$k] = $this->available_elements[$k]->get_orig_data();
+      }
     }
 
     return $ret;
@@ -249,7 +253,8 @@ class form_element_form_chooser extends form_element {
     }
 
     if (!array_key_exists($k, $this->available_elements)) {
-      trigger_error("{$this->id} - add_element: \"{$k}\" not found", E_USER_ERROR);
+      trigger_error("{$this->id} - add_element: \"{$k}\" not found", E_USER_WARNING);
+      return;
     }
 
     $this->elements[$k] = $this->available_elements[$k];
