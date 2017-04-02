@@ -28,9 +28,53 @@
 }
 .form_element_form_chooser_part_actions {
 }
-table.form .form_element_form_chooser select.form_element_form_chooser_action_add {
+.form .form_element_form_chooser select.form_element_form_chooser_action_add {
   width: auto;
 }
-table.form .form_element_form_chooser .form_element_form_chooser_actions.reached_max {
+.form .form_element_form_chooser .form_element_form_chooser_actions.reached_max {
   display: none;
+}
+
+/* adapt to screen sizes */
+/*   <640px   */
+.form_element_form_chooser_table.medium td.field_desc {
+  width: 128px;
+}
+
+/*   <400px   */
+.form_element_form_chooser_table.small,
+.form_element_form_chooser_table.small > thead,
+.form_element_form_chooser_table.small > tbody,
+.form_element_form_chooser_table.small > tr,
+.form_element_form_chooser_table.small > tr > th,
+.form_element_form_chooser_table.small > tr > td
+{
+  display: block;
+  position: relative;
+}
+.form_element_form_chooser_table.small > tr > td.field_desc {
+  width: 100%;
+}
+.form_element_form_chooser_table.small > tr > td.form_element_form_chooser_part_element_actions {
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+.form_element_form_chooser_table.small > tr.form_element_form_chooser_order_removeable > td.field_desc {
+  padding-right: 105px;
+}
+.form_element_form_chooser_table.small > tr.form_element_form_chooser_no_order_removeable > td.field_desc {
+  padding-right: 35px;
+}
+.form_element_form_chooser_table.small > tr.form_element_form_chooser_order_not_removeable > td.field_desc {
+  padding-right: 75px;
+}
+.form_element_form_chooser_table.small > tr.form_element_form_chooser_no_order_not_removeable > td.field_desc {
+  padding-right: 0px;
+}
+.form_element_form_chooser_table.small > tr > td.field_value {
+  padding-left: 1em;
+}
+.form_element_form_chooser_table.small > tr {
+  padding-bottom: 0.5em;
 }
