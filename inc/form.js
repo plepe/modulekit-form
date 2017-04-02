@@ -71,6 +71,8 @@ form.prototype.connect=function() {
     addResizeListener(element_dom_parent, this.resize.bind(this));
 
   call_hooks('form_connected', this);
+
+  this.resize()
 }
 
 form.prototype.get_data=function() {
