@@ -239,7 +239,7 @@ class form_element_form_chooser extends form_element {
       $element_class = get_form_element_class($element_def);
       $element_id = "{$this->id}_{$k}";
       $element_options = $this->options;
-      $element_options['var_name'] = "{$element_options['var_name']}[{$k}]";
+      $element_options['var_name'] = form_build_child_var_name($this->options, $k);
 
       if (class_exists($element_class)) {
         $this->available_elements[$k] = new $element_class($element_id, $element_def, $element_options, $this);
