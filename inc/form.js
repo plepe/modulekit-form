@@ -1,9 +1,16 @@
 function form(id, def, options) {
+  if(!options) {
+    options = {}
+  }
+
+  if (!id) {
+    id = '_'
+    options.var_name = ''
+  }
+
   this.id=id;
   this.def=def;
   form_process_def(this.def);
-  if(!options)
-    options={};
   this.options=options;
   if(!('var_name' in this.options))
     this.options.var_name=this.id;

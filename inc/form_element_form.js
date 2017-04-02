@@ -45,10 +45,7 @@ form_element_form.prototype.build_form=function() {
 
     var element_id=this.id+"_"+k;
     var element_options=new clone(this.options);
-    if(element_options.var_name)
-      element_options.var_name=element_options.var_name+"["+k+"]";
-    else
-      element_options.var_name=k;
+    element_options.var_name = form_build_child_var_name(this.options, k)
 
     this.elements[k]=eval("new "+element_class+"()");
     this.elements[k].init(element_id, this.def.def[k], element_options, this);

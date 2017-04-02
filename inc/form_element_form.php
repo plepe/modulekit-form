@@ -18,10 +18,7 @@ class form_element_form extends form_element {
 
       $element_id="{$this->id}_{$k}";
       $element_options=$this->options;
-      if($this->options['var_name'])
-	$element_options['var_name']="{$this->options['var_name']}[{$k}]";
-      else
-	$element_options['var_name']=$k;
+      $element_options['var_name'] = form_build_child_var_name($this->options, $k);
 
       $this->elements[$k]=new $element_class($element_id, $element_def, $element_options, $this);
     }
