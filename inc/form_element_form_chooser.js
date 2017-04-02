@@ -35,6 +35,7 @@ form_element_form_chooser.prototype.connect=function(dom_parent) {
   this.parent("form_element_form_chooser").connect.call(this, dom_parent);
 
   this.dom_table = this.dom_parent.firstChild;
+  this.dom_table_body = this.dom_table.firstChild
   var table_rows = this.dom_table.rows;
   this.elements={};
   this.element_divs = {};
@@ -286,11 +287,13 @@ form_element_form_chooser.prototype.show_element=function() {
   this.dom_table.className = 'form_element_form_chooser_table'
   this.dom_table.id = this.id
   div.appendChild(this.dom_table)
+  this.dom_table_body = document.createElement('tbody')
+  this.dom_table.appendChild(this.dom_table_body)
 
   for(var k in this.elements) {
     var part_div=this.show_element_part(k, this.elements[k]);
     this.element_divs[k] = part_div;
-    this.dom_table.appendChild(part_div);
+    this.dom_table_body.appendChild(part_div);
   }
 
   var el_div=document.createElement("div");
@@ -384,7 +387,7 @@ form_element_form_chooser.prototype.add_element = function(k) {
 
   this.elements[k] = this.available_elements[k]
 
-  this.dom_table.appendChild(this.show_element_part(k, this.elements[k]))
+  this.dom_table_body.appendChild(this.show_element_part(k, this.elements[k]))
 
   this.resize()
 

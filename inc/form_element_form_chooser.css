@@ -37,7 +37,8 @@
 
 /* adapt to screen sizes */
 /*   <640px   */
-.form_element_form_chooser_table.medium td.field_desc {
+.form_element_form_chooser_table.medium > tbody > tr > td.field_desc,
+.form_element_form_chooser_table.medium > tbody > tbody > tr> td.field_desc {
   width: 128px;
 }
 
@@ -45,36 +46,36 @@
 .form_element_form_chooser_table.small,
 .form_element_form_chooser_table.small > thead,
 .form_element_form_chooser_table.small > tbody,
-.form_element_form_chooser_table.small > tr,
-.form_element_form_chooser_table.small > tr > th,
-.form_element_form_chooser_table.small > tr > td
+.form_element_form_chooser_table.small > tbody > tr,
+.form_element_form_chooser_table.small > tbody > tr > th,
+.form_element_form_chooser_table.small > tbody > tr > td
 {
   display: block;
   position: relative;
 }
-.form_element_form_chooser_table.small > tr > td.field_desc {
+.form_element_form_chooser_table.small > tbody > tr > td.field_desc {
   width: 100%;
 }
-.form_element_form_chooser_table.small > tr > td.form_element_form_chooser_part_element_actions {
+.form_element_form_chooser_table.small > tbody > tr > td.form_element_form_chooser_part_element_actions {
   position: absolute;
   right: 0;
   top: 0;
 }
-.form_element_form_chooser_table.small > tr.form_element_form_chooser_order_removeable > td.field_desc {
+.form_element_form_chooser_table.small > tbody > tr.form_element_form_chooser_order_removeable > td.field_desc {
   padding-right: 105px;
 }
-.form_element_form_chooser_table.small > tr.form_element_form_chooser_no_order_removeable > td.field_desc {
+.form_element_form_chooser_table.small > tbody > tr.form_element_form_chooser_no_order_removeable > td.field_desc {
   padding-right: 35px;
 }
-.form_element_form_chooser_table.small > tr.form_element_form_chooser_order_not_removeable > td.field_desc {
+.form_element_form_chooser_table.small > tbody > tr.form_element_form_chooser_order_not_removeable > td.field_desc {
   padding-right: 75px;
 }
-.form_element_form_chooser_table.small > tr.form_element_form_chooser_no_order_not_removeable > td.field_desc {
+.form_element_form_chooser_table.small > tbody > tr.form_element_form_chooser_no_order_not_removeable > td.field_desc {
   padding-right: 0px;
 }
-.form_element_form_chooser_table.small > tr > td.field_value {
+.form_element_form_chooser_table.small > tbody > tr > td.field_value {
   padding-left: 1em;
 }
-.form_element_form_chooser_table.small > tr {
+.form_element_form_chooser_table.small > tbody > tr {
   padding-bottom: 0.5em;
 }
