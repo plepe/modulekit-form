@@ -206,7 +206,7 @@ class form_element_array extends form_element {
     foreach($data as $k=>$v) {
       $element_id="{$this->id}_{$k}";
       $element_options=$this->options;
-      $element_options['var_name']="{$this->options['var_name']}[{$k}]";
+      $element_options['var_name'] = form_build_child_var_name($this->options, $k);
       $element_def['_name']="#".(sizeof($this->elements)+1);
 
       $this->elements[$k]=new $element_class($element_id, $element_def, $element_options, $this);

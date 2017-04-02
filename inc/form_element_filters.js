@@ -22,7 +22,7 @@ form_element_filters.prototype.build_form=function() {
     var element_class=get_form_element_class(element_def);
     var element_id=this.id+"_"+k;
     var element_options=new clone(this.options);
-    element_options.var_name=element_options.var_name+"["+k+"]";
+    element_options.var_name = form_build_child_var_name(this.options, k)
 
     if(class_exists(element_class)) {
       this.available_elements[k]=eval("new "+element_class+"()");

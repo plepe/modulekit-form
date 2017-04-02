@@ -305,3 +305,11 @@ function lengthInUtf8Bytes(str) {
   var m = encodeURIComponent(str).match(/%[89ABab]/g);
   return str.length + (m ? m.length : 0);
 }
+
+function form_build_child_var_name (options, k) {
+  if(options.var_name)
+    return options.var_name + '[' + k + ']'
+
+  else
+    return '' + k
+}
