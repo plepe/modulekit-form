@@ -166,14 +166,7 @@ form_element_form_chooser.prototype.set_data=function(data) {
     }
   }
 
-  if(this.dom) {
-    var old_dom = this.dom;
-    var par = this.dom.parentNode;
-    var div = this.show_element();
-
-    par.insertBefore(div, old_dom);
-    par.removeChild(old_dom);
-  }
+  this.resize();
 
   this.data=null;
 }
