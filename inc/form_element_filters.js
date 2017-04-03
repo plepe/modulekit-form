@@ -393,8 +393,6 @@ form_element_filters.prototype.add_element = function(k) {
     }
   }
 
-  this.notify_change()
-
   return false
 }
 
