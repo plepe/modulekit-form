@@ -312,28 +312,32 @@ form_element_array.prototype.is_complete=function() {
   return true;
 }
 
-form_element_array.prototype.add_element=function() {
-  var highest_id=0;
+form_element_array.prototype.add_element = function (id) {
+  if (typeof id === 'undefined') {
+    id = 0
 
-  for(var i in this.elements) {
-    i = parseInt(i);
-    if(i>highest_id)
-      highest_id=i;
+    for (var i in this.elements) {
+      i = parseInt(i)
+      if (i > id) {
+        highest_id = i
+      }
+    }
+
+    id = parseInt(id) + 1
   }
 
-  highest_id=parseInt(highest_id)+1;
-  this.create_element(highest_id);
+  this.create_element(id)
 
   var current=document.getElementById(this.id).firstChild;
   while(current) {
     if(current.className=="form_element_array_actions") {
-      current.parentNode.insertBefore(this.show_element_part(highest_id, this.elements[highest_id]), current);
+      current.parentNode.insertBefore(this.show_element_part(id, this.elements[id]), current);
       break;
     }
     current=current.nextSibling;
   }
 
-  this.element[highest_id].resize()
+  this.elements[id].resize()
 
   return false;
 }
