@@ -244,6 +244,7 @@ form_element_array.prototype.show_element_part=function(k, element) {
     el_div.appendChild(input);
   }
 
+  this.element_divs[k] = div
   return div;
 }
 
@@ -253,7 +254,6 @@ form_element_array.prototype.show_element=function() {
 
   for(var k in this.elements) {
     var part_div=this.show_element_part(k, this.elements[k]);
-    this.element_divs[k] = part_div;
     div.appendChild(part_div);
   }
 
