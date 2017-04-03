@@ -143,25 +143,37 @@ form_element_array.prototype.get_data=function() {
 }
 
 form_element_array.prototype.set_data=function(data) {
-  this.data=data;
-  this.build_form();
+  this.data = data
+  var new_elements = {}
+  var new_element_divs = {}
 
   if(data)
     for(var k in data) {
-      if(typeof this.elements[k]!="undefined")
-	this.elements[k].set_data(data[k]);
+      if(typeof this.elements[k] === "undefined") {
+        this.add_element(k)
+      }
+
+      this.elements[k].set_data(data[k])
+      new_elements[k] = this.elements[k]
+      new_element_divs[k] = this.element_divs[k]
     }
 
-  if(this.dom) {
-    var old_dom = this.dom;
-    var par = this.dom.parentNode;
-    var div = this.show_element();
-
-    par.insertBefore(div, old_dom);
-    par.removeChild(old_dom);
+  for (var k in this.elements) {
+    if (!(k in data)) {
+      this.remove_element(k)
+    }
   }
 
-  this.data=null;
+  this.elements = new_elements
+  this.element_divs = new_element_divs
+  for (var k in new_element_divs) {
+    var div = this.element_divs[k]
+    if (div) {
+      this.dom.insertBefore(div, this.action_add.parentNode)
+    }
+  }
+
+  this.data = null
 }
 
 form_element_array.prototype.set_orig_data=function(data) {
