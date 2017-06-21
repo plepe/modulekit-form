@@ -32,6 +32,12 @@ class form_element {
       $this->set_data($this->def['default']);
       $this->set_orig_data($this->def['default']);
     }
+
+    if(array_key_exists('default_func', $this->def) && ($this->data == null)) {
+      $v = $this->func_call($this->def['default_func']);
+      $this->set_data($v);
+      $this->set_orig_data($v);
+    }
   }
 
   function name() {
