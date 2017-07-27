@@ -45,6 +45,9 @@ class form_element_hash extends form_element_array {
 
   function _expand_data($data) {
     $new_data = array();
+    if (!$data) {
+      $data = array();
+    }
 
     if($this->value_is_form) {
       foreach($data as $k=>$v) {
@@ -62,6 +65,9 @@ class form_element_hash extends form_element_array {
 
   function _shrink_data($data) {
     $new_data = array();
+    if (!$data) {
+      $data = array();
+    }
 
     if($this->value_is_form) {
       foreach($data as $v) {

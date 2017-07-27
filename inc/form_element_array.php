@@ -195,7 +195,7 @@ class form_element_array extends form_element {
     $this->elements=array();
 
     $data = array();
-    if($this->def['default'] > 0)
+    if(array_key_exists('default', $this->def) && $this->def['default'] > 0)
       $data=array_fill(0, $this->def['default'], null);
 
     if(isset($this->data)&&is_array($this->data))

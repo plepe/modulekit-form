@@ -56,6 +56,10 @@ class form {
   }
 
   function get_data() {
+    if (!isset($this->element)) {
+      return;
+    }
+
     return $this->element->get_data();
   }
 
