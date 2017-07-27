@@ -27,11 +27,11 @@ form_element_radio.prototype.get_data=function() {
   if(!this.dom_values)
     return this.data;
 
-  for(var i in this.dom_values) {
-    this.data=null;
+  for (var i in this.dom_values) {
+    var data = null;
 
-    if(this.dom_values[i].checked)
-      return this.data=i;
+    if (this.dom_values[i].checked)
+      return data = i;
   }
 
   return null;
