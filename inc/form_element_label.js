@@ -49,7 +49,5 @@ form_element_label.prototype.get_data=function(data) {
   if(!this.dom_element1)
     return null;
 
-  this.data=this.dom_element1.value;
-
-  return this.data;
+  return this.dom_element1.value;
 }

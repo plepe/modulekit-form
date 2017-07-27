@@ -34,13 +34,13 @@ form_element_json.prototype.get_data=function() {
     if(!this.dom_element.value)
       return null;
 
-    this.data=this.dom_element.value;
+    data=this.dom_element.value;
   }
 
   this._errors=[];
 
   try {
-    data=JSON.parse(this.data);
+    data=JSON.parse(data);
   }
   catch(err) {
     data=null;
