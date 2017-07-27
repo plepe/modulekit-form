@@ -37,8 +37,18 @@ class form_element_switch extends form_element {
 
     $reload_dom = $document->createElement("tr");
     $reload_dom->setAttribute("id", $this->id);
-    $reload_dom->appendChild(DOM_createHTMLElement("<td></td>", $document));
-    $reload_dom->appendChild(DOM_createHTMLElement("<td><input type='submit' value='" . lang('reload') . "' name='" . $this->options['var_name'] . "[__reload__]'> " . lang("form_element_switch:reload_desc", 0, $this->get_switch_element()->name()) . "</td>", $document));
+    $reload_dom->appendChild($document->createElement('td'));
+
+    $td = $document->createElement('td');
+    $input = $document->createElement('input');
+    $input->setAttribute('type', 'submit');
+    $input->setAttribute('value', lang('reload'));
+    $input->setAttribute('name', $this->options['var_name'] . "[__reload__]");
+
+    $td->appendChild($input);
+    $td->appendChild($document->createTextNode(' ' . lang("form_element_switch:reload_desc", 0, $this->get_switch_element()->name())));
+
+    $reload_dom->appendChild($td);
 
     $el = $this->get_active_element();
 
