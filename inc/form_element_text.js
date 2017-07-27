@@ -167,6 +167,18 @@ form_element_text.prototype.errors=function(list) {
       if((!values) || (!in_array(this.data, values)))
         list.push(lang('form:invalid_value'));
     }
+
+    if(this.def.max_length) {
+      if(this.data.length > this.def.max_length)
+        list.push(lang('form:max_length_exceeded', 0, this.def.max_length));
+    }
+
+    // TODO: this assumes that UTF-8 is being used!
+    if(this.def.max_bytes) {
+console.log(this.data, lengthInUtf8Bytes(this.data));
+      if(lengthInUtf8Bytes(this.data) > this.def.max_bytes)
+        list.push(lang('form:max_bytes_exceeded', 0, this.def.max_bytes));
+    }
   }
 }
 

@@ -36,3 +36,6 @@ $lang_str['form:hash_key_field_name'] = "Key";
 $lang_str['form:hash_value_field_name'] = "Value";
 
 $lang_str['form_element_switch:reload_desc'] = "After changing '%s', please click button to reload form.";
+
+$lang_str['form:max_length_exceeded'] = "Value is longer than %d characters.";
+$lang_str['form:max_bytes_exceeded'] = "Value representation is longer than %d bytes.";

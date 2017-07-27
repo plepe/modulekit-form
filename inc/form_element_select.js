@@ -54,7 +54,7 @@ form_element_select.prototype.set_data=function(data) {
 
   for(var k in this.dom_values) {
     if(this.data==k)
-      this.dom_values[k].selected=true;
+      this.dom_values[k].setAttribute('selected', 'selected');
   }
 }
 
@@ -63,7 +63,7 @@ form_element_select.prototype.show_element_option=function(select, k, v) {
   option.value=k;
   // TODO: indexOf not supported in IE8 and earlier
   if(this.data==k)
-    option.selected=true;
+    option.setAttribute('selected', 'selected');
   select.appendChild(option);
   this.dom_values[k]=option;
 

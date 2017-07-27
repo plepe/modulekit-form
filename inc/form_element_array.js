@@ -10,6 +10,7 @@ form_element_array.prototype.init=function(id, def, options, form_parent) {
 
 form_element_array.prototype.build_form=function() {
   this.elements={};
+  this.element_divs = {};
 
   if(!this.data) {
     this.data={};
@@ -55,9 +56,11 @@ form_element_array.prototype.connect=function(dom_parent) {
 
   var current=this.dom_parent.firstChild;
   this.elements={};
+  this.element_divs = {};
   while(current) {
     var k;
     if((current.nodeName=="DIV")&&(k=current.getAttribute("form_element_num"))) {
+      this.element_divs[k] = current;
       var element_class="form_element_"+this.def.def.type;
       var element_id=this.id+"_"+k;
       var element_options=new clone(this.options);
@@ -184,10 +187,15 @@ form_element_array.prototype.get_orig_data=function() {
 
 form_element_array.prototype.show_element_part=function(k, element) {
   var order;
+  var removeable;
   if(!('order' in this.def) || this.def.order)
     order = 'order'
   else
     order = 'no_order';
+  if(!('removeable' in this.def) || this.def.removeable !== false)
+    removeable = 'removeable'
+  else
+    removeable = 'not_removeable';
 
   // wrapper #k
   var div=document.createElement("div");
@@ -197,7 +205,7 @@ form_element_array.prototype.show_element_part=function(k, element) {
   // element #k
   var el_div=document.createElement("span");
   el_div.setAttribute("form_element_num", k);
-  el_div.className="form_element_array_part_element form_element_"+element.type() + " form_element_array_" + order;
+  el_div.className="form_element_array_part_element form_element_"+element.type() + " form_element_array_" + order + "_" + removeable;
   div.appendChild(el_div);
 
   el_div.appendChild(element.show_element());
@@ -227,12 +235,14 @@ form_element_array.prototype.show_element_part=function(k, element) {
     el_div.appendChild(input);
   }
 
-  var input=document.createElement("input");
-  input.type="submit";
-  input.name=this.options.var_name+"[__remove]["+k+"]";
-  input.value="X";
-  input.onclick=this.remove_element.bind(this, k);
-  el_div.appendChild(input);
+  if (removeable === 'removeable') {
+    var input=document.createElement("input");
+    input.type="submit";
+    input.name=this.options.var_name+"[__remove]["+k+"]";
+    input.value="X";
+    input.onclick=this.remove_element.bind(this, k);
+    el_div.appendChild(input);
+  }
 
   return div;
 }
@@ -243,6 +253,7 @@ form_element_array.prototype.show_element=function() {
 
   for(var k in this.elements) {
     var part_div=this.show_element_part(k, this.elements[k]);
+    this.element_divs[k] = part_div;
     div.appendChild(part_div);
   }
 

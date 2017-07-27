@@ -5,11 +5,17 @@
   vertical-align: top;
   width: 80%; /* fallback for browsers without support for calc() */
 }
-.form_element_array_part_element.form_element_array_order {
+.form_element_array_part_element.form_element_array_order_removeable {
   width: calc(100% - 105px);
 }
-.form_element_array_part_element.form_element_array_no_order {
+.form_element_array_part_element.form_element_array_no_order_removeable {
   width: calc(100% - 35px);
+}
+.form_element_array_part_element.form_element_array_order_not_removeable {
+  width: calc(100% - 75px);
+}
+.form_element_array_part_element.form_element_array_no_order_not_removeable {
+  width: 100%;
 }
 .form_element_array_part_element_actions {
   display: inline-block;

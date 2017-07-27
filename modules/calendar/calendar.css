@@ -15,6 +15,7 @@ div.calendar table {
 div.calendar td{
   width: 14.2857%;
   text-align: center;
+  cursor: pointer;
 }
 div.calendar td.wrong_month {
   color: #707070;
@@ -22,4 +23,12 @@ div.calendar td.wrong_month {
 div.calendar td.chosen_date {
   color: #ffffff;
   background: #000000;
+}
+div.calendar div.time div {
+  display: inline-block;
+}
+div.calendar div.time div input {
+  width: 3em;
+  display: block;
+  text-align: center;
 }

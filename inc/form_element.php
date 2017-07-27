@@ -14,11 +14,16 @@ class form_element {
     $this->id=$id;
     $this->def=$def;
     $this->options=$options;
-    $this->form_parent=$form_parent;
-    if($form_parent==null)
-      $this->form_root=$this;
-    else
-      $this->form_root=$form_parent->form_root;
+
+    if(get_class($form_parent) === 'form') {
+      $this->form_parent = null;
+      $this->form_root = $this;
+      $this->form = $form_parent;
+    }
+    else {
+      $this->form_parent = $form_parent;
+      $this->form_root = $form_parent->form_root;
+    }
 
     $this->data=null;
     $this->orig_data=null;
@@ -26,6 +31,12 @@ class form_element {
     if(array_key_exists('default', $this->def)) {
       $this->set_data($this->def['default']);
       $this->set_orig_data($this->def['default']);
+    }
+
+    if(array_key_exists('default_func', $this->def) && ($this->data == null)) {
+      $v = $this->func_call($this->def['default_func']);
+      $this->set_data($v);
+      $this->set_orig_data($v);
     }
   }
 
@@ -259,6 +270,9 @@ class form_element {
     if(isset($this->def['include_data'])) {
       if(is_bool($this->def['include_data']))
 	return $this->def['include_data'];
+
+      if($this->def['include_data'] === 'not_null')
+        return $this->get_data() !== null;
 
       $errors=array();
 

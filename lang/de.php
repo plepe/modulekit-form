@@ -36,3 +36,5 @@ $lang_str['form:hash_key_field_name'] = "Schlüssel";
 $lang_str['form:hash_value_field_name'] = "Wert";
 
 $lang_str['form_element_switch:reload_desc'] = "Nach dem Ändern von '%s' bitte den Knopf drücken um Formular neu zu laden.";
+$lang_str['form:max_length_exceeded'] = "Wert ist länger als %d Zeichen.";
+$lang_str['form:max_bytes_exceeded'] = "Interne Wertrepräsentation ist länger als %d Bytes.";

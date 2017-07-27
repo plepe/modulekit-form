@@ -1,3 +1,19 @@
+2017-01-24 (Version >= 2.6)
+---------------------------
+* Form Element Array: new option 'removeable' (shall elements be removeable)
+
+2016-04-20 (Version >= 2.6)
+---------------------------
+Form Element Text: Option max_bytes: Value may not be longer than 'max_bytes' bytes.
+
+2016-03-01 (Version >= 2.6)
+---------------------------
+Form Element Text: Option max_length: Value may not be longer than 'max_length' characters.
+
+2015-02-28 (Version >= 2.6)
+---------------------------
+Form Element *: 'include_data' may be 'not_null': include only if value not null
+
 2015-01-08 (Version >= 2.6)
 ---------------------------
 Form Element Select: new option 'null_value'

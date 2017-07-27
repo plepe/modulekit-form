@@ -95,6 +95,9 @@ form_element.prototype.include_data=function() {
     if((this.def.include_data === true) || (this.def.include_data === false))
       return this.def.include_data;
 
+    if(this.def.include_data === 'not_null')
+      return this.get_data() !== null;
+
     errors=[];
 
     this.check(errors, this.def.include_data);
@@ -537,7 +540,12 @@ form_element.prototype.show_errors=function() {
 }
 
 form_element.prototype.notify_change=function(ev) {
-  this.data=this.get_data();
+  var data = this.get_data()
+  if (this.data === data) {
+    return
+  }
+
+  this.data = data;
 
   this.show_errors.call(this);
 
