@@ -148,23 +148,23 @@ form_element_keywords.prototype.get_data=function() {
   if(!this.dom_element)
     return this.data;
 
-  this.data=this.dom_element.value;
-  this.data=this.data.split(/ *, */);
+  var data=this.dom_element.value;
+  data=data.split(/ *, */);
 
   // avoid empty keywords, detect duplicates
   var new_data=[];
   var dupl_detect={};
-  for(var i=0; i<this.data.length; i++) {
-    if(dupl_detect[this.data[i]])
+  for(var i=0; i<data.length; i++) {
+    if(dupl_detect[data[i]])
       /* nothing */;
-    else if(!this.data[i].match(/^ *$/))
-      new_data.push(this.data[i]);
+    else if(!data[i].match(/^ *$/))
+      new_data.push(data[i]);
 
-    dupl_detect[this.data[i]]=true;
+    dupl_detect[data[i]]=true;
   }
-  this.data=new_data;
+  data=new_data;
 
-  return this.data;
+  return data;
 }
 
 form_element_keywords.prototype.refresh=function(force) {

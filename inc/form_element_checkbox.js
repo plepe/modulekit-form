@@ -30,14 +30,14 @@ form_element_checkbox.prototype.get_data=function() {
   if(!this.dom_values)
     return this.data;
 
-  this.data=[];
+  var data = []
 
-  for(var i in this.dom_values) {
-    if(this.dom_values[i].checked)
-      this.data.push(i);
+  for (var i in this.dom_values) {
+    if (this.dom_values[i].checked)
+      data.push(i)
   }
 
-  return this.data;
+  return data
 }
 
 form_element_checkbox.prototype.set_data=function(data) {
