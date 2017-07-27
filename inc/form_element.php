@@ -14,11 +14,16 @@ class form_element {
     $this->id=$id;
     $this->def=$def;
     $this->options=$options;
-    $this->form_parent=$form_parent;
-    if($form_parent==null)
-      $this->form_root=$this;
-    else
-      $this->form_root=$form_parent->form_root;
+
+    if(get_class($form_parent) === 'form') {
+      $this->form_parent = null;
+      $this->form_root = $this;
+      $this->form = $form_parent;
+    }
+    else {
+      $this->form_parent = $form_parent;
+      $this->form_root = $form_parent->form_root;
+    }
 
     $this->data=null;
     $this->orig_data=null;

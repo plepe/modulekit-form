@@ -41,8 +41,7 @@ class form {
       'type'	=>'form',
       'def'	=>$this->def,
     );
-    $this->element=new form_element_form($this->id, $def, $this->options, null);
-    $this->element->form=$this;
+    $this->element=new form_element_form($this->id, $def, $this->options, $this);
   }
 
   function get_data() {
