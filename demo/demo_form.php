@@ -2,7 +2,7 @@
 $form_def=array(
   'filters'     =>array(
     'name'      =>"Filters",
-    'type'      =>'filters',
+    'type'      =>'form_chooser',
     'order'     =>false,
     'def'       =>array(
       'a'         => array(

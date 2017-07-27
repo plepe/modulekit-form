@@ -3,7 +3,7 @@ input[type=submit],
 input[type=button],
 button,
 .form_element_file label,
-.form_element_filters select.form_element_filters_action_add {
+.form_element_form_chooser select.form_element_form_chooser_action_add {
   border: 2px outset #000000;
   border-radius: 3px;
   background: #d0d0d0;

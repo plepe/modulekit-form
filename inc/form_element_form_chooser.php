@@ -1,5 +1,5 @@
 <?php
-class form_element_filters extends form_element {
+class form_element_form_chooser extends form_element {
   public $changed_count;
 
   function __construct($id, $def, $options, $form_parent) {
@@ -33,11 +33,11 @@ class form_element_filters extends form_element {
     parent::errors($errors);
 
     if(isset($this->def['min']) && (sizeof($this->elements) < $this->def['min'])) {
-      $errors[] = lang('form_element_filters:error_min', 0, $this->def['min']);
+      $errors[] = lang('form_element_form_chooser:error_min', 0, $this->def['min']);
     }
 
     if(isset($this->def['max']) && (sizeof($this->elements) > $this->def['max'])) {
-      $errors[] = lang('form_element_filters:error_max', 0, $this->def['max']);
+      $errors[] = lang('form_element_form_chooser:error_max', 0, $this->def['max']);
     }
   }
 
@@ -268,12 +268,12 @@ class form_element_filters extends form_element {
     $tr = $element->show($document);
 
     $tr->setAttribute("form_element_num", $k);
-    $tr->setAttribute("class", $tr->getAttribute("class") . " form_element_filters_part_element form_element_{$element->type()} form_element_filters_{$order}_{$removeable}");
+    $tr->setAttribute("class", $tr->getAttribute("class") . " form_element_form_chooser_part_element form_element_{$element->type()} form_element_form_chooser_{$order}_{$removeable}");
 
     // Actions #k
     $el_div=$document->createElement("td");
     $el_div->setAttribute("form_element_num", $k);
-    $el_div->setAttribute("class", "form_element_filters_part_element_actions");
+    $el_div->setAttribute("class", "form_element_form_chooser_part_element_actions");
     $tr->appendChild($el_div);
 
     if($order == "order") {
@@ -305,7 +305,7 @@ class form_element_filters extends form_element {
     $div=parent::show_element($document);
 
     $this->dom_table = $document->createElement('table');
-    $this->dom_table->setAttribute('class', 'form_element_filters_table');
+    $this->dom_table->setAttribute('class', 'form_element_form_chooser_table');
     $this->dom_table->setAttribute('id', $this->id);
     $div->appendChild($this->dom_table);
 
@@ -315,12 +315,12 @@ class form_element_filters extends form_element {
     }
 
     $el_div=$document->createElement("div");
-    $el_div->setAttribute("class", "form_element_filters_actions");
+    $el_div->setAttribute("class", "form_element_form_chooser_actions");
     $div->appendChild($el_div);
 
     $input = $document->createElement('select');
     $input->setAttribute("name", "{$this->options['var_name']}[__new]");
-    $input->setAttribute("class", "form_element_filters_action_add");
+    $input->setAttribute("class", "form_element_form_chooser_action_add");
 
     $option = $document->createElement('option');
     $option->setAttribute('value', '');

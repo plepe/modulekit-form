@@ -1,14 +1,14 @@
-form_element_filters.inherits_from(form_element);
-function form_element_filters() {
+form_element_form_chooser.inherits_from(form_element);
+function form_element_form_chooser() {
 }
 
-form_element_filters.prototype.init=function(id, def, options, form_parent) {
-  this.parent("form_element_filters").init.call(this, id, def, options, form_parent);
+form_element_form_chooser.prototype.init=function(id, def, options, form_parent) {
+  this.parent("form_element_form_chooser").init.call(this, id, def, options, form_parent);
 
   this.build_form();
 }
 
-form_element_filters.prototype.build_form=function() {
+form_element_form_chooser.prototype.build_form=function() {
   this.elements={};
   this.element_divs = {};
   this.available_elements = {};
@@ -31,8 +31,8 @@ form_element_filters.prototype.build_form=function() {
   }
 }
 
-form_element_filters.prototype.connect=function(dom_parent) {
-  this.parent("form_element_filters").connect.call(this, dom_parent);
+form_element_form_chooser.prototype.connect=function(dom_parent) {
+  this.parent("form_element_form_chooser").connect.call(this, dom_parent);
 
   this.dom_table = this.dom_parent.firstChild;
   var table_rows = this.dom_table.rows;
@@ -59,7 +59,7 @@ form_element_filters.prototype.connect=function(dom_parent) {
 
       // modify part actions
       var input=current.firstChild;
-      while((input)&&(input.className!="form_element_filters_part_element_actions")) input=input.nextSibling;
+      while((input)&&(input.className!="form_element_form_chooser_part_element_actions")) input=input.nextSibling;
       if(!input)
 	break;
       input=input.firstChild;
@@ -90,7 +90,7 @@ form_element_filters.prototype.connect=function(dom_parent) {
     }
   }
 
-  var divs = this.dom_parent.getElementsByClassName('form_element_filters_actions');
+  var divs = this.dom_parent.getElementsByClassName('form_element_form_chooser_actions');
   var div = null
   for (var i = 0; i < divs.length; i++) {
     if (divs[i].parentNode === this.dom_parent)
@@ -119,15 +119,15 @@ form_element_filters.prototype.connect=function(dom_parent) {
   }
 }
 
-form_element_filters.prototype.finish_connect=function() {
-  this.parent("form_element_filters").finish_connect.call(this);
+form_element_form_chooser.prototype.finish_connect=function() {
+  this.parent("form_element_form_chooser").finish_connect.call(this);
 
   for(var k in this.elements) {
     this.elements[k].finish_connect();
   }
 }
 
-form_element_filters.prototype.get_data=function() {
+form_element_form_chooser.prototype.get_data=function() {
   var ret={};
   var count=0;
 
@@ -149,7 +149,7 @@ form_element_filters.prototype.get_data=function() {
   return ret;
 }
 
-form_element_filters.prototype.set_data=function(data) {
+form_element_form_chooser.prototype.set_data=function(data) {
   this.data=data;
 
   if(data)
@@ -179,7 +179,7 @@ form_element_filters.prototype.set_data=function(data) {
   this.data=null;
 }
 
-form_element_filters.prototype.set_orig_data=function(data) {
+form_element_form_chooser.prototype.set_orig_data=function(data) {
   if (!data) {
     data = {}
   }
@@ -197,7 +197,7 @@ form_element_filters.prototype.set_orig_data=function(data) {
   this.orig_data_elements = Object.keys(data)
 }
 
-form_element_filters.prototype.get_orig_data=function() {
+form_element_form_chooser.prototype.get_orig_data=function() {
   var ret = {}
 
   if (!this.orig_data_elements) {
@@ -213,7 +213,7 @@ form_element_filters.prototype.get_orig_data=function() {
   return ret
 }
 
-form_element_filters.prototype.show_element_part=function(k, element) {
+form_element_form_chooser.prototype.show_element_part=function(k, element) {
   var order;
   var removeable;
   if(!('order' in this.def) || this.def.order)
@@ -229,12 +229,12 @@ form_element_filters.prototype.show_element_part=function(k, element) {
   var tr = element.show()
 
   tr.setAttribute("form_element_num", k);
-  tr.className = tr.className + " form_element_filters_part_element form_element_"+element.type() + " form_element_filters_" + order + "_" + removeable;
+  tr.className = tr.className + " form_element_form_chooser_part_element form_element_"+element.type() + " form_element_form_chooser_" + order + "_" + removeable;
 
   // Actions #k
   var el_div=document.createElement("td");
   el_div.setAttribute("form_element_num", k);
-  el_div.className="form_element_filters_part_element_actions";
+  el_div.className="form_element_form_chooser_part_element_actions";
   tr.appendChild(el_div);
 
   if(order == 'order') {
@@ -279,12 +279,12 @@ form_element_filters.prototype.show_element_part=function(k, element) {
   return tr;
 }
 
-form_element_filters.prototype.show_element=function() {
-  var div=this.parent("form_element_filters").show_element.call(this);
+form_element_form_chooser.prototype.show_element=function() {
+  var div=this.parent("form_element_form_chooser").show_element.call(this);
   this.get_data();
 
   this.dom_table = document.createElement('table')
-  this.dom_table.className = 'form_element_filters_table'
+  this.dom_table.className = 'form_element_form_chooser_table'
   this.dom_table.id = this.id
   div.appendChild(this.dom_table)
 
@@ -295,12 +295,12 @@ form_element_filters.prototype.show_element=function() {
   }
 
   var el_div=document.createElement("div");
-  el_div.className="form_element_filters_actions";
+  el_div.className="form_element_form_chooser_actions";
   div.appendChild(el_div);
 
   this.action_add=document.createElement("select");
   this.action_add.name=this.options.var_name+"[__new]";
-  this.action_add.className = 'form_element_filters_action_add'
+  this.action_add.className = 'form_element_form_chooser_action_add'
 
   var option = document.createElement('option');
   option.value = '';
@@ -339,28 +339,28 @@ form_element_filters.prototype.show_element=function() {
   return div;
 }
 
-form_element_filters.prototype.all_errors=function(list) {
-  this.parent("form_element_filters").all_errors.call(this, list);
+form_element_form_chooser.prototype.all_errors=function(list) {
+  this.parent("form_element_form_chooser").all_errors.call(this, list);
 
   for(var k in this.elements)
     this.elements[k].all_errors(list);
 }
 
-form_element_filters.prototype.errors=function(list) {
-  this.parent("form_element_filters").errors.call(this, list);
+form_element_form_chooser.prototype.errors=function(list) {
+  this.parent("form_element_form_chooser").errors.call(this, list);
 
   var count = 0;
   for(var k in this.elements)
     count++;
 
   if('max' in this.def && (count > this.def.max))
-    list.push(lang('form_element_filters:error_max', 0, this.def.max));
+    list.push(lang('form_element_form_chooser:error_max', 0, this.def.max));
 
   if('min' in this.def && (count < this.def.min))
-    list.push(lang('form_element_filters:error_min', 0, this.def.min));
+    list.push(lang('form_element_form_chooser:error_min', 0, this.def.min));
 }
 
-form_element_filters.prototype.is_complete=function() {
+form_element_form_chooser.prototype.is_complete=function() {
 // TODO?
 //  if(this.changed_count)
 //    return false;
@@ -373,7 +373,7 @@ form_element_filters.prototype.is_complete=function() {
   return true;
 }
 
-form_element_filters.prototype.add_element = function(k) {
+form_element_form_chooser.prototype.add_element = function(k) {
   if (k in this.elements) {
     return false
   }
@@ -403,7 +403,7 @@ form_element_filters.prototype.add_element = function(k) {
   return false
 }
 
-form_element_filters.prototype.remove_element=function(k) {
+form_element_form_chooser.prototype.remove_element=function(k) {
   var table_rows = this.dom_table.rows;
 
   for (var i = 0; i < table_rows.length; i++) {
@@ -430,7 +430,7 @@ form_element_filters.prototype.remove_element=function(k) {
   return false;
 }
 
-form_element_filters.prototype.order_up=function(k) {
+form_element_form_chooser.prototype.order_up=function(k) {
   var table_rows = this.dom_table.rows;
   var new_elements = {}
 
@@ -460,7 +460,7 @@ form_element_filters.prototype.order_up=function(k) {
   return false;
 }
 
-form_element_filters.prototype.order_down=function(k) {
+form_element_form_chooser.prototype.order_down=function(k) {
   var table_rows = this.dom_table.rows;
   var new_elements = {}
 
@@ -490,8 +490,8 @@ form_element_filters.prototype.order_down=function(k) {
   return false;
 }
 
-form_element_filters.prototype.refresh=function(force) {
-  this.parent("form_element_filters").refresh.call(this, force);
+form_element_form_chooser.prototype.refresh=function(force) {
+  this.parent("form_element_form_chooser").refresh.call(this, force);
 
   for(var i in this.elements)
     this.elements[i].refresh(force);
@@ -512,7 +512,7 @@ form_element_filters.prototype.refresh=function(force) {
     this.action_add.parentNode.classList.remove("reached_max")
 }
 
-form_element_filters.prototype.is_modified=function() {
+form_element_form_chooser.prototype.is_modified=function() {
   var orig_data=this.get_orig_data();
 
   for(var i in this.elements) {
@@ -534,21 +534,21 @@ form_element_filters.prototype.is_modified=function() {
   return false;
 }
 
-form_element_filters.prototype.show_errors=function() {
-  this.parent("form_element_filters").show_errors.call(this);
+form_element_form_chooser.prototype.show_errors=function() {
+  this.parent("form_element_form_chooser").show_errors.call(this);
 
   for(var i in this.elements)
     this.elements[i].show_errors();
 }
 
-form_element_filters.prototype.notify_child_change=function(element) {
+form_element_form_chooser.prototype.notify_child_change=function(element) {
   // show errors of current element
-  this.parent("form_element_filters").show_errors.call(this);
+  this.parent("form_element_form_chooser").show_errors.call(this);
 
-  this.parent("form_element_filters").notify_child_change.call(this, element);
+  this.parent("form_element_form_chooser").notify_child_change.call(this, element);
 }
 
-form_element_filters.prototype.check_required=function(list, param) {
+form_element_form_chooser.prototype.check_required=function(list, param) {
   if(this.required()) {
     for(var k in this.elements)
       return;
