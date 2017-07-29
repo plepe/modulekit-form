@@ -118,14 +118,13 @@ class form_element_form_chooser extends form_element {
       $ret = false;
     }
 
-    if ($this->data)
+    if ($this->data) {
       foreach ($this->data as $k => $d) {
         if (!array_key_exists($k, $this->elements)) {
           $this->add_element($k);
         }
-
-        $this->elements[$k]->set_data($d);
       }
+    }
 
     if(isset($order_up)) {
       foreach($order_up as $i=>$dummy) {
