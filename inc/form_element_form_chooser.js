@@ -378,7 +378,7 @@ form_element_form_chooser.prototype.add_element = function(k) {
 
   this.dom_table.appendChild(this.show_element_part(k, this.elements[k]))
 
-  this.form_root.form.resize()
+  this.resize()
 
   this.action_add.value = ''
   for (var i = 0; i < this.action_add.options.length; i++) {
@@ -408,7 +408,7 @@ form_element_form_chooser.prototype.remove_element=function(k) {
   }
 
   this.show_errors();
-  this.form_root.form.resize();
+  this.resize();
 
   for (var i = 0; i < this.action_add.options.length; i++) {
     var option = this.action_add.options[i];
@@ -446,7 +446,7 @@ form_element_form_chooser.prototype.order_up=function(k) {
   this.elements = new_elements
 
   this.show_errors();
-  this.form_root.form.resize();
+  this.resize();
 
   return false;
 }
@@ -476,7 +476,7 @@ form_element_form_chooser.prototype.order_down=function(k) {
   this.elements = new_elements
 
   this.show_errors();
-  this.form_root.form.resize();
+  this.resize();
 
   return false;
 }
@@ -501,6 +501,14 @@ form_element_form_chooser.prototype.refresh=function(force) {
     this.action_add.parentNode.classList.add("reached_max")
   else
     this.action_add.parentNode.classList.remove("reached_max")
+}
+
+form_element_form_chooser.prototype.resize = function () {
+  this.parent("form_element_form_chooser").resize.call(this);
+
+  for (var k in this.elements) {
+    this.elements[k].resize()
+  }
 }
 
 form_element_form_chooser.prototype.is_modified=function() {
