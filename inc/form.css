@@ -38,11 +38,14 @@
 }
 .form .form_element_checkbox div {
 }
-.form .form_element_radio span,
-.form .form_element_checkbox span {
+.form .field_value > .form_element_radio > span,
+.form .field_value > .form_element_checkbox > span {
   display: block;
-  padding-left: 25px;
-  text-indent: -25px;
+}
+.form .field_value > .form_element_radio > span > .description,
+.form .field_value > .form_element_checkbox > span > .description {
+  margin-left: 26px;
+  display: block;
 }
 .form .form_element_radio input.radio,
 .form .form_element_checkbox input.checkbox {
