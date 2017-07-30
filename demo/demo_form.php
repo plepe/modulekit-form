@@ -1,5 +1,25 @@
 <?php
 $form_def=array(
+  'filters'     =>array(
+    'name'      =>"Filters",
+    'type'      =>'form_chooser',
+    'order'     =>false,
+    'def'       =>array(
+      'a'         => array(
+        'type'    => 'text',
+        'name'    => 'A',
+      ),
+      'b'         => array(
+        'type'    => 'select',
+        'name'    => 'B',
+        'values'  => array('1', '2', '3'),
+      ),
+      'c'         => array(
+        'type'    => 'date',
+        'name'    => 'C',
+      ),
+    ),
+  ),
   'name'	=>array(
     'name'	=>"Name",
     'desc'	=>"Please enter a name",
@@ -216,6 +236,9 @@ EOT
   ),
 );
 
+$options = array(
+);
+
 $default_data=array(
   "sex"=>"m",
   "comment"=>"Foo Bar\nBlablabla\n",
@@ -231,4 +254,5 @@ $default_data=array(
   "cats"=>array(array("name"=>"Foo", "age"=>3)),
   "num"=>10,
   "tt" => "foobar",
+  "filters" => array("a"=>'Foobar', "b"=>"3"),
 );

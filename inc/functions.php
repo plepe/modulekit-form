@@ -65,3 +65,11 @@ function get_value_string($v, $key="name") {
 
   return null;
 }
+
+function form_build_child_var_name ($options, $k) {
+  if($options['var_name'])
+    return "{$options['var_name']}[{$k}]";
+
+  else
+    return "{$k}";
+}

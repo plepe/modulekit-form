@@ -388,6 +388,37 @@ STATE: It's not possible yet to read file content in JavaScript mode
   * Error 20: Can't rename temporary file to final file
   * Error 21: Final file size differs from PHP upload data
 
+Form Element "Form Chooser"
+---------------------------
+Choose sub elements from a predefined list of elements. The result will only include the selected sub elements.
+
+Definition:
+* type: 'form_chooser'
+* def: a list of available sub elements
+* min: how many elements must be selected at minimum
+* max: how many elements must be selected at maximum
+* exclude_null_values: if true, remove null values from the array. Default: false.
+* order: whether the elements shall be orderable. true (default) / false.
+* removeable: whether the elements shall be removeable. true (default) / false.
+
+Example:
+```json
+"foobar": {
+    "name": "Foobar",
+    "type": "form_chooser",
+    "def": {
+        "foo": {
+            "name": "Foo",
+            "type": "text"
+        },
+        "bar": {
+            "name": "Bar",
+            "type": "textarea"
+        }
+    }
+}
+```
+
 Form Element "Directory"
 ------------------------
 Upload multiple files. Files are moved to a newly created directory in the specified path, as value an array will be returned.

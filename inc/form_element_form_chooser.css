@@ -1,0 +1,81 @@
+.form_element_form_chooser_table {
+  width: 100%;
+}
+.form_element_form_chooser_part {
+}
+.form_element_form_chooser_part_element {
+  vertical-align: top;
+  width: 100%;
+}
+.form_element_form_chooser_part_element_actions {
+  padding: 0;
+}
+.form_element_form_chooser_order_removeable .form_element_form_chooser_part_element_actions {
+  width: 105px;
+}
+.form_element_form_chooser_no_order_removeable .form_element_form_chooser_part_element_actions {
+  width: 35px;
+}
+.form_element_form_chooser_order_not_removeable .form_element_form_chooser_part_element_actions {
+  width: 75px;
+}
+.form_element_form_chooser_no_order_not_removeable .form_element_form_chooser_part_element_actions {
+  width: 0px;
+}
+.form_element_form_chooser_part_element_actions input {
+  margin-left: 5px;
+  width: 30px;
+}
+.form_element_form_chooser_part_actions {
+}
+.form .form_element_form_chooser select.form_element_form_chooser_action_add {
+  width: auto;
+}
+.form .form_element_form_chooser .form_element_form_chooser_actions.reached_max {
+  display: none;
+}
+
+/* adapt to screen sizes */
+/*   <640px   */
+.form_element_form_chooser_table.medium > tbody > tr > td.field_desc,
+.form_element_form_chooser_table.medium > tbody > tbody > tr> td.field_desc {
+  width: 128px;
+}
+
+/*   <400px   */
+.form_element_form_chooser_table.small,
+.form_element_form_chooser_table.small > thead,
+.form_element_form_chooser_table.small > tbody,
+.form_element_form_chooser_table.small > tbody > tr,
+.form_element_form_chooser_table.small > tbody > tr > th,
+.form_element_form_chooser_table.small > tbody > tr > td
+{
+  display: block;
+  position: relative;
+}
+.form_element_form_chooser_table.small > tbody > tr > td.field_desc {
+  width: 100%;
+}
+.form_element_form_chooser_table.small > tbody > tr > td.form_element_form_chooser_part_element_actions {
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+.form_element_form_chooser_table.small > tbody > tr.form_element_form_chooser_order_removeable > td.field_desc {
+  padding-right: 105px;
+}
+.form_element_form_chooser_table.small > tbody > tr.form_element_form_chooser_no_order_removeable > td.field_desc {
+  padding-right: 35px;
+}
+.form_element_form_chooser_table.small > tbody > tr.form_element_form_chooser_order_not_removeable > td.field_desc {
+  padding-right: 75px;
+}
+.form_element_form_chooser_table.small > tbody > tr.form_element_form_chooser_no_order_not_removeable > td.field_desc {
+  padding-right: 0px;
+}
+.form_element_form_chooser_table.small > tbody > tr > td.field_value {
+  padding-left: 1em;
+}
+.form_element_form_chooser_table.small > tbody > tr {
+  padding-bottom: 0.5em;
+}

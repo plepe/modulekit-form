@@ -23,7 +23,7 @@ form_element.prototype.init=function(id, def, options, form_parent) {
 }
 
 form_element.prototype.name=function() {
-  var name;
+  var name = this.id;
 
   if(this.def._name)
     name=this.def._name();
@@ -617,6 +617,9 @@ form_element.prototype.refresh=function(force) {
     if(this.dom)
       remove_class(this.dom, "required");
   }
+}
+
+form_element.prototype.resize = function () {
 }
 
 form_element.prototype.is_modified=function() {
