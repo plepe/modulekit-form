@@ -1,9 +1,16 @@
 function form(id, def, options) {
+  if(!options) {
+    options = {}
+  }
+
+  if (!id) {
+    id = '_'
+    options.var_name = ''
+  }
+
   this.id=id;
   this.def=def;
   form_process_def(this.def);
-  if(!options)
-    options={};
   this.options=options;
   if(!('var_name' in this.options))
     this.options.var_name=this.id;
@@ -45,51 +52,24 @@ function form(id, def, options) {
 }
 
 form.prototype.resize=function() {
-  var obs1=this.table.getElementsByTagName("table");
-  var obs = [ this.table ];
-  for(var i=0; i<obs1.length; i++)
-    obs.push(obs1[i]);
-
-  for(var i=0; i<obs.length; i++) {
-    var ob=obs[i];
-    if(in_array("form", ob.className.split(" "))) {
-      // form is invisible
-      if(!ob.parentNode)
-        return;
-
-      var width=ob.parentNode.offsetWidth;
-      var em_height = get_em_height(ob);
-
-      // set class according to width
-      if(width/em_height<=25)
-	ob.className="form small";
-      else if(width/em_height<=40)
-	ob.className="form medium";
-      else
-	ob.className="form";
-    }
-  }
-
+  this.element.resize()
   this.refresh(true);
 }
 
 form.prototype.build_form=function() {
-  var def={
-    type: 'form',
-    def: this.def
-  };
+  if (!('type' in this.options)) {
+    this.options.type = 'form'
+  }
 
-  this.element=new form_element_form();
-  this.element.init(this.id, def, this.options, null);
+  this.options.def = this.def
+
+  var element_type = 'form_element_' + this.options.type
+  this.element=new window[element_type]();
+  this.element.init(this.id, this.options, this.options, null);
   this.element.form=this;
 }
 
 form.prototype.connect=function() {
-  var def={
-    type: 'form',
-    def: this.def
-  };
-
   var element_dom_parent=document.getElementById(this.id);
   this.element.connect(element_dom_parent);
   this.element.finish_connect();
@@ -98,6 +78,8 @@ form.prototype.connect=function() {
     addResizeListener(element_dom_parent, this.resize.bind(this));
 
   call_hooks('form_connected', this);
+
+  this.resize()
 }
 
 form.prototype.get_data=function() {
@@ -155,6 +137,7 @@ form.prototype.show=function(dom_parent) {
 
   // render the form
   this.table=this.element.show_element();
+  this.table.classList.add('form');
 
   dom_parent.appendChild(this.table);
 

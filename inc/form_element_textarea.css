@@ -1,4 +1,4 @@
-table.form td.field_value .form_element_textarea textarea {
+.form td.field_value .form_element_textarea textarea {
   resize: none;
   min-height: 6em;
   overflow-y: hidden;
