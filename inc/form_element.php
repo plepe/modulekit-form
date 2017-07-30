@@ -41,6 +41,8 @@ class form_element {
   }
 
   function name() {
+    $name = $this->id;
+
     if(array_key_exists('name', $this->def))
       $name=$this->def['name'];
 
