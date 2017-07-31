@@ -155,20 +155,22 @@ form_element_form.prototype.refresh=function(force) {
 form_element_form.prototype.resize = function () {
   this.parent("form_element_form").resize.call(this);
 
-  var width = this.dom_table.parentNode.offsetWidth;
-  var em_height = get_em_height(this.dom_table);
-
   this.dom_table.classList.remove('small')
   this.dom_table.classList.remove('medium')
 
-  var variants = [ [] ]
+  var width = this.dom_table.parentNode.offsetWidth;
+  var em_height = get_em_height(this.dom_table);
 
-  if (width / em_height <= 25) {
+  var variants = []
+  if (width / em_height > 40) {
+    variants.push([])
+  } else if (width / em_height > 25) {
+    variants.push([ 'medium' ])
+  } else {
     variants.push([ 'small' ])
-  } else if (width / em_height <= 40) {
-    variants.push([ 'medium'])
   }
 
+  console.log(this.id)
   tryCss(this.dom_table, variants, this.elements)
 }
 

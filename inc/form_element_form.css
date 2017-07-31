@@ -16,6 +16,7 @@
 /*   <640px   */
 .form_element_form.medium td.field_desc {
   width: 128px;
+  min-width: 128px;
 }
 
 /*   <400px   */

@@ -510,18 +510,23 @@ form_element_form_chooser.prototype.refresh=function(force) {
 form_element_form_chooser.prototype.resize = function () {
   this.parent("form_element_form_chooser").resize.call(this);
 
+  this.dom_table.classList.remove('small')
+  this.dom_table.classList.remove('medium')
+
   if (this.dom_table.rows.length >= 1) {
     var width = this.dom_table.parentNode.parentNode.offsetWidth - this.dom_table.rows[0].cells[2].offsetWidth
     var em_height = get_em_height(this.dom_table);
 
-    var variants = [ [] ]
-
-    if (width / em_height <= 25) {
+    var variants = []
+    if (width / em_height > 40) {
+      variants.push([])
+    } else if (width / em_height > 25) {
+      variants.push([ 'medium' ])
+    } else {
       variants.push([ 'small' ])
-    } else if (width / em_height <= 40) {
-      variants.push([ 'medium'])
     }
 
+    console.log(this.id)
     tryCss(this.dom_table, variants, this.elements)
   }
 }

@@ -14,6 +14,7 @@
 }
 .form td.field_desc {
   width: 256px;
+  min-width: 256px;
   vertical-align: top;
   padding-bottom: 2px;
   padding-right: 0.5em;
