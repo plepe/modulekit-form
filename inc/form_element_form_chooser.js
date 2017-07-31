@@ -514,20 +514,15 @@ form_element_form_chooser.prototype.resize = function () {
     var width = this.dom_table.parentNode.parentNode.offsetWidth - this.dom_table.rows[0].cells[2].offsetWidth
     var em_height = get_em_height(this.dom_table);
 
-    if (width / em_height <= 25) {
-      this.dom_table.classList.remove('medium')
-      this.dom_table.classList.add('small')
-    } else if (width / em_height <= 40) {
-      this.dom_table.classList.remove('small')
-      this.dom_table.classList.add('medium')
-    } else {
-      this.dom_table.classList.remove('small')
-      this.dom_table.classList.remove('medium')
-    }
-  }
+    var variants = [ [] ]
 
-  for (var k in this.elements) {
-    this.elements[k].resize()
+    if (width / em_height <= 25) {
+      variants.push([ 'small' ])
+    } else if (width / em_height <= 40) {
+      variants.push([ 'medium'])
+    }
+
+    tryCss(this.dom_table, variants, this.elements)
   }
 }
 

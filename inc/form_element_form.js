@@ -161,15 +161,15 @@ form_element_form.prototype.resize = function () {
   this.dom_table.classList.remove('small')
   this.dom_table.classList.remove('medium')
 
+  var variants = [ [] ]
+
   if (width / em_height <= 25) {
-    this.dom_table.classList.add('small')
+    variants.push([ 'small' ])
   } else if (width / em_height <= 40) {
-    this.dom_table.classList.add('medium')
+    variants.push([ 'medium'])
   }
 
-  for (var k in this.elements) {
-    this.elements[k].resize()
-  }
+  tryCss(this.dom_table, variants, this.elements)
 }
 
 form_element_form.prototype.is_modified=function() {

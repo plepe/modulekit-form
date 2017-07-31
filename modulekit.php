@@ -68,6 +68,7 @@ $include_js=array(
   "inc/form_element_intermediate_text.js",
   "inc/form_element_switch.js",
   "inc/form_element_fixed.js",
+  "inc/tryCss.js",
 );
 $include_css=array(
   "inc/form.css",
