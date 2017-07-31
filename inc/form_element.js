@@ -45,6 +45,10 @@ form_element.prototype.weight=function() {
 }
 
 form_element.prototype.path_name=function() {
+  if (!this.form_parent) {
+    return this.name();
+  }
+
   var parent_path=this.form_parent.path_name();
 
   if(parent_path===null)
