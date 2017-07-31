@@ -37,8 +37,7 @@
 
 /* adapt to screen sizes */
 /*   <640px   */
-.form_element_form_chooser_table.medium > tbody > tr > td.field_desc,
-.form_element_form_chooser_table.medium > tbody > tbody > tr> td.field_desc {
+.form_element_form_chooser_table.medium > tbody > tr> td.field_desc {
   width: 128px;
 }
 

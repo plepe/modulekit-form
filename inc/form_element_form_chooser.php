@@ -313,9 +313,12 @@ class form_element_form_chooser extends form_element {
     $this->dom_table->setAttribute('id', $this->id);
     $div->appendChild($this->dom_table);
 
+    $this->dom_table_body = $document->createElement('tbody');
+    $this->dom_table->appendChild($this->dom_table_body);
+
     foreach($this->elements as $k=>$element) {
       $part_div=$this->show_element_part($k, $element, $document);
-      $this->dom_table->appendChild($part_div);
+      $this->dom_table_body->appendChild($part_div);
     }
 
     $el_div=$document->createElement("div");

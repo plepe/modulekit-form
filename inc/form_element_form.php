@@ -99,6 +99,9 @@ class form_element_form extends form_element {
     $table->setAttribute("id", $this->id);
     $element_list = array();
 
+    $table_body = $document->createElement('tbody');
+    $table->appendChild($table_body);
+
     foreach($this->elements as $k=>$element) {
       $element_list[] = array($element->weight(), $element->show($document));
     }
@@ -108,10 +111,10 @@ class form_element_form extends form_element {
     foreach($element_list as $element) {
       if(is_array($element)) {
         foreach($element as $el)
-          $table->appendChild($el);
+          $table_body->appendChild($el);
       }
       else {
-        $table->appendChild($element);
+        $table_body->appendChild($element);
       }
     }
 

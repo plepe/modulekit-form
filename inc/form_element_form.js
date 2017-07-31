@@ -27,6 +27,7 @@ form_element_form.prototype.connect=function(dom_parent) {
   }
 
   this.dom_table = document.getElementById(this.id)
+  this.dom_table_body = this.dom_table.firstChild
 }
 
 form_element_form.prototype.finish_connect=function() {
@@ -58,6 +59,9 @@ form_element_form.prototype.show_element=function() {
   this.dom_table.id = this.id;
   var element_list = [];
 
+  this.dom_table_body = document.createElement('tbody')
+  this.dom_table.appendChild(this.dom_table_body)
+
   for(var i in this.elements) {
     var element = this.elements[i];
 
@@ -69,10 +73,10 @@ form_element_form.prototype.show_element=function() {
   for(var i in element_list) {
     if(element_list[i].length) {
       for(var j = 0; j < element_list[i].length; j++)
-        this.dom_table.appendChild(element_list[i][j]);
+        this.dom_table_body.appendChild(element_list[i][j]);
     }
     else
-      this.dom_table.appendChild(element_list[i]);
+      this.dom_table_body.appendChild(element_list[i]);
   }
 
   return this.dom_table;
