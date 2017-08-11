@@ -17,6 +17,10 @@ class form {
     if(!isset($this->options['var_name']))
       $this->options['var_name']=$this->id;
 
+    if(!isset($this->options['upload_max_filesize'])) {
+      $this->options['upload_max_filesize'] = ini_get('upload_max_filesize');
+    }
+
     $this->build_form();
 
     if(empty($_FILES) && empty($_POST) && isset($_SERVER['REQUEST_METHOD']) && strtolower($_SERVER['REQUEST_METHOD']) == 'post') {
