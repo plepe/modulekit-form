@@ -74,6 +74,12 @@ class form_element_file extends form_element {
     $input->setAttribute("name", $this->options['var_name']."[file]");
     $span->appendChild($input);
 
+    $size_info = $document->createElement("span");
+    $size_info->appendChild($document->createTextNode(
+      lang("form:file_max_size", 0, ini_get('upload_max_filesize'))
+    ));
+    $span->appendChild($size_info);
+
     return $div;
   }
 
