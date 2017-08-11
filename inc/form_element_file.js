@@ -71,13 +71,16 @@ form_element_file.prototype.connect=function(dom_parent) {
     input.setAttribute("name", this.options.var_name+"[file]");
     span.appendChild(input);
 
-    span.appendChild(document.createTextNode(lang("form:file_select")));
+    var button = document.createElement('span')
+    button.className = 'button'
+    button.appendChild(document.createTextNode(lang("form:file_select")));
+    span.appendChild(button)
 
     var size_info = document.createElement('span')
     size_info.appendChild(document.createTextNode(
       ' ' + lang('form:file_max_size', 0, this.form_root.options.upload_max_filesize)
     ))
-    div.appendChild(size_info)
+    span.appendChild(size_info)
 
     this.dom_element = input;
     this.dom_element.onblur=this.notify_change.bind(this);
@@ -175,7 +178,10 @@ form_element_file.prototype.show_element=function() {
   input.setAttribute("name", this.options.var_name+"[file]");
   span.appendChild(input);
 
-  span.appendChild(document.createTextNode(lang("form:file_select")));
+  var button = document.createElement('span')
+  button.className = 'button'
+  button.appendChild(document.createTextNode(lang("form:file_select")));
+  span.appendChild(button)
 
   if (this.form_root.options.upload_max_filesize) {
     var size_info = document.createElement('span')
