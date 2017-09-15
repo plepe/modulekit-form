@@ -96,6 +96,11 @@ EOT
 	'desc:de'=>"Ein Kontinent auf der Südhalbkugel (enthält Känguruhs)",
       ),
       "de"=>"Germany", "gb"=>"Great Britian", "us"=>"USA"),
+    'other'     => true,
+    'button:other' => '-- create new --',
+    'other_def' => array(
+      'type' => 'text',
+    ),
   ),
   'residence'	=>array(
     'name'	=>"Where do you live",
@@ -196,7 +201,7 @@ $default_data=array(
   "fav_hobby"=>"Cycling",
   "birthday"=>"1879-03-14", // Albert Einstein
   "languages"=>array("php", "js"),
-  "nationality"=>"de",
+  "nationality"=>"foo",
   "residence"=>"Germany",
   "os"=>array("Ubuntu Linux", "Debian Linux"),
   "tags"=>array("Foo", "Bar"),

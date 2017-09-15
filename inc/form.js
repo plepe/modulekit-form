@@ -326,3 +326,13 @@ function form_process_def(def) {
       form_process_def(def[k].def.def);
   }
 }
+
+function form_create_element (id, def, options, parent) {
+  var element_class=get_form_element_class(def)
+  var element_options=new clone(this.options)
+
+  var element = eval("new " + element_class + "()")
+  element.init(id, def, options, parent)
+
+  return element
+}

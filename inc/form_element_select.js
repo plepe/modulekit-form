@@ -28,11 +28,19 @@ form_element_select.prototype.connect=function(dom_parent) {
 
     current=current.nextSibling;
   }
+
+  if (this.data) {
+    this.set_data(this.data)
+  }
 }
 
 form_element_select.prototype.get_data=function() {
   if(!this.dom_element)
     return this.data;
+
+  if (this.def.other && this.dom_element.selectedOptions.length && this.dom_element.selectedOptions[0] === this.other_option) {
+    return this.other_form.get_data()
+  }
 
   var data = this.dom_element.value;
 
@@ -53,8 +61,15 @@ form_element_select.prototype.set_data=function(data) {
     return;
 
   for(var k in this.dom_values) {
-    if(this.data==k)
+    if(this.data==k) {
       this.dom_values[k].setAttribute('selected', 'selected');
+      return
+    }
+  }
+
+  if (this.def.other) {
+    this.other_option.setAttribute('selected', 'selected')
+    this.other_form.set_data(data)
   }
 }
 
@@ -62,8 +77,6 @@ form_element_select.prototype.show_element_option=function(select, k, v) {
   var option=document.createElement("option");
   option.value=k;
   // TODO: indexOf not supported in IE8 and earlier
-  if(this.data==k)
-    option.setAttribute('selected', 'selected');
   select.appendChild(option);
   this.dom_values[k]=option;
 
@@ -95,6 +108,9 @@ form_element_select.prototype.show_element=function() {
   div.appendChild(this.div_desc);
 
   this.update_options();
+  if (this.data) {
+    this.set_data(this.data)
+  }
 
   return div;
 }
@@ -117,6 +133,21 @@ form_element_select.prototype.update_options=function() {
   this.show_element_option(this.dom_element, this.def.null_value, placeholder);
   for(var k in values) {
     this.show_element_option(this.dom_element, k, values[k]);
+  }
+
+  if (this.def.other) {
+    this.other_option = document.createElement('option')
+    this.other_option.appendChild(document.createTextNode(this.def['button:other'] || 'Other'))
+
+    this.dom_element.appendChild(this.other_option)
+
+    var other_options = new clone(this.options)
+    other_options.var_name = this.options.var_name + '[other]'
+    this.other_form = form_create_element(this.id + '_other', this.def.other_def, other_options, this)
+
+    this.other_dom = document.createElement('div')
+    var d = this.other_form.show_element()
+    this.dom.appendChild(d)
   }
 }
 
