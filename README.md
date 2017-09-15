@@ -292,6 +292,7 @@ Definition:
 * values_func: function(s) which can update values list; see chapter "Func Call" for details.
 * values_mode: 'keys' (default when a hash array is used) or 'values' (default when a simple array is used)
 * empty_value: Value to be returned if key is empty (default: null)
+* placeholder: Text which will be used, when no value is selected (default: '--- please select ---')
 
 Value:
 * In 'keys' values_mode the key of the chosen value is returned (e.g. "m"); in 'values' mode the value is returned (e.g. "male")
