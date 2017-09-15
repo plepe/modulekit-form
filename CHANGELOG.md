@@ -1,3 +1,12 @@
+2017-09-15 (Version >= 2.6)
+---------------------------
+* Form Element Autocomplete: support option 'placeholder'
+
+2017-08-11 (Version >= 2.6)
+---------------------------
+* Print error when PHP post_max_size exceeded
+* Form Element File: print info about max. allowed file size
+
 2017-01-24 (Version >= 2.6)
 ---------------------------
 * Form Element Array: new option 'removeable' (shall elements be removeable)
