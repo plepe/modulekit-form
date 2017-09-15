@@ -43,6 +43,16 @@ form_element_autocomplete.prototype.create_element=function(div) {
   input.type="text";
   input.autocomplete="off";
 
+  var placeholder;
+  if('placeholder' in this.def)
+    if(typeof this.def.placeholder == 'object')
+      placeholder = lang(this.def.placeholder);
+    else
+      placeholder = this.def.placeholder;
+  else
+    placeholder = lang('form_element:please_select');
+  input.placeholder = placeholder
+
   input.className=cls;
   if(this.data)
     input.value=this.data;

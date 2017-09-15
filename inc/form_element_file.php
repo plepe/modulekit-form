@@ -1,5 +1,9 @@
 <?php
 class form_element_file extends form_element {
+  function __construct($id, $def, $options, $form_parent) {
+    parent::__construct($id, $def, $options, $form_parent);
+  }
+
   function type() {
     return "file";
   }
@@ -73,6 +77,12 @@ class form_element_file extends form_element {
     $input->setAttribute("class", $class);
     $input->setAttribute("name", $this->options['var_name']."[file]");
     $span->appendChild($input);
+
+    $size_info = $document->createElement("span");
+    $size_info->appendChild($document->createTextNode(
+      lang("form:file_max_size", 0, $this->form_root->options['upload_max_filesize'])
+    ));
+    $span->appendChild($size_info);
 
     return $div;
   }

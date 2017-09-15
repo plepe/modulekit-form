@@ -17,7 +17,18 @@ class form {
     if(!isset($this->options['var_name']))
       $this->options['var_name']=$this->id;
 
+    if(!isset($this->options['upload_max_filesize'])) {
+      $this->options['upload_max_filesize'] = ini_get('upload_max_filesize');
+    }
+
     $this->build_form();
+
+    if(empty($_FILES) && empty($_POST) && isset($_SERVER['REQUEST_METHOD']) && strtolower($_SERVER['REQUEST_METHOD']) == 'post') {
+      $this->apparent_post_error = true;
+      $this->has_data = true;
+      $this->has_orig_data = true;
+      return;
+    }
 
     $this->has_data=false;
     if($this->options['var_name'] === '') {
@@ -102,6 +113,10 @@ class form {
   function errors() {
     $errors=array();
 
+    if (isset($this->apparent_post_error)) {
+      $errors[] = lang('form:apparent_post_error');
+    }
+
     $this->element->all_errors($errors);
 
     if(!sizeof($errors))
@@ -163,6 +178,14 @@ class form {
 
   function show() {
     $document=new DOMDocument();
+
+    if (isset($this->apparent_post_error)) {
+      $div = $document->createElement('div');
+      $err = DOM_createHTMLElement("<ul><li>" . lang('form:apparent_post_error', 0, ini_get('post_max_size')) . "</li></ul>", $document);
+      $div->setAttribute('class', 'field_errors');
+      $div->appendChild($err->firstChild);
+      $document->appendChild($div);
+    }
 
     $div=$this->element->show_element($document);
     $document->appendChild($div);
