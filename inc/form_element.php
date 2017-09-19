@@ -619,3 +619,9 @@ function get_form_element_class($def) {
 
   return $element_class;
 }
+
+function form_create_element ($element_id, $element_def, $element_options, $parent) {
+  $element_class=get_form_element_class($element_def);
+
+  return new $element_class($element_id, $element_def, $element_options, $parent);
+}
