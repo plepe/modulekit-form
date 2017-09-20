@@ -21,6 +21,8 @@ form_element_select_other.prototype.connect = function (dom_parent) {
 
   this.other_dom = dom_parent.lastChild
   this.other_form.connect(this.other_dom)
+
+  this.other_option = this.dom_element.lastChild
 }
 
 form_element_select_other.prototype.get_data = function () {
@@ -52,12 +54,15 @@ form_element_select_other.prototype.set_data = function (data) {
 }
 
 form_element_select_other.prototype.update_options = function () {
+  var other_selected = this.dom_element.selectedOptions.length && this.dom_element.selectedOptions[0] === this.other_option
+
   this.parent("form_element_select_other").update_options.call(this)
 
   this.dom_element.name = this.options.var_name + '[main]'
 
   this.other_option = document.createElement('option')
   this.other_option.appendChild(document.createTextNode(this.def['button:other'] || 'Other'))
+  this.other_option.value = ''
 
   this.dom_element.appendChild(this.other_option)
 
@@ -67,6 +72,11 @@ form_element_select_other.prototype.update_options = function () {
     var d = this.other_form.show_element()
     this.dom.appendChild(this.other_dom)
     this.other_dom.appendChild(d)
+  }
+
+  if (other_selected) {
+    this.other_dom.style.display = 'block'
+    this.other_option.selected = true
   }
 }
 
