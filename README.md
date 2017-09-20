@@ -289,6 +289,18 @@ Definition:
 Value:
 * In 'keys' values_mode the key of the chosen value is returned (e.g. "m"); in 'values' mode the value is returned (e.g. "male")
 
+Form Element "Select Other"
+---------------------
+A dropdown box where an entry can be selected with an "Other" option.
+
+Definition (all options from 'Select'):
+* type: 'select_other'
+* other_def: a definition for the other form, default: `{ "type": "text" }`.
+* button:other: the visible value of the other option, default: 'Other'.
+
+Value:
+* Either the value from the Select or the value from the Other option.
+
 Form Element "Autocomplete"
 ---------------------------
 Similar to Form Element "Select", but in Combined or JS mode a text input is shown, where a search for values is possible.
