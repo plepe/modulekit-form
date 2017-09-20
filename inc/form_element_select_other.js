@@ -62,7 +62,7 @@ form_element_select_other.prototype.update_options = function () {
 
   this.other_option = document.createElement('option')
   this.other_option.appendChild(document.createTextNode(this.def['button:other'] || 'Other'))
-  this.other_option.value = ''
+  this.other_option.value = '__other__'
 
   this.dom_element.appendChild(this.other_option)
 

@@ -12,33 +12,44 @@ class form_element_select_other extends form_element_select {
     }
 
     $this->other_form = form_create_element($this->id . '_other', $other_def, $other_options, $this);
+    $this->other_is_set = false;
   }
 
   function set_data($data) {
     parent::set_data($data);
 
+    $this->other_is_set = false;
     $values = $this->get_values();
     if (array_key_exists($data, $values)) {
       return;
     }
 
+    $this->other_is_set = true;
     $this->other_form->set_data($data);
   }
 
   function set_request_data($data) {
+    $this->other_is_set = false;
+
     if (isset($data['other'])) {
       $this->other_form->set_request_data($data['other']);
       unset($data['other']);
+      $this->other_is_set = true;
     }
 
     if (isset($data['main'])) {
-      parent::set_request_data($data['main']);
+      if ($data['main'] === '__other__') {
+        $this->other_is_set = true;
+      } else {
+        parent::set_request_data($data['main']);
+        $this->other_is_set = false;
+      }
     }
   }
 
   function get_data() {
     $ret = parent::get_data();
-    if (!$ret) {
+    if ($this->other_is_set) {
       $ret = $this->other_form->get_data();
     }
 
@@ -51,7 +62,7 @@ class form_element_select_other extends form_element_select {
     $this->dom_element->setAttribute('name', $this->options['var_name'] . '[main]');
 
     $this->other_option = $document->createElement('option');
-    $this->other_option->setAttribute('value', '');
+    $this->other_option->setAttribute('value', '__other__');
     $this->other_option->appendChild($document->createTextNode(isset($this->def['button:other']) ? $this->def['button:other'] : 'Other'));
 
     $this->dom_element->appendChild($this->other_option);
@@ -62,11 +73,10 @@ class form_element_select_other extends form_element_select {
     $this->other_dom->appendChild($d);
     
     $values = $this->get_values();
-    if (array_key_exists($this->data, $values)) {
-      $this->other_dom->setAttribute('style', 'display: none;');
-    }
-    else {
+    if ($this->other_is_set) {
       $this->other_option->setAttribute('selected', 'selected');
+    } else {
+      $this->other_dom->setAttribute('style', 'display: none;');
     }
 
     return $div;
