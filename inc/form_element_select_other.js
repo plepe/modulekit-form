@@ -14,6 +14,7 @@ form_element_select_other.prototype.init=function(id, def, options, form_parent)
   }
 
   this.other_form = form_create_element(this.id + '_other', other_def, other_options, this)
+  this.other_orig_is_set = false
 }
 
 form_element_select_other.prototype.connect = function (dom_parent) {
@@ -43,7 +44,7 @@ form_element_select_other.prototype.get_data = function () {
 form_element_select_other.prototype.set_data = function (data) {
   this.parent("form_element_select_other").set_data.call(this, data);
 
-  if (data in this.values) {
+  if (data in this.get_values()) {
     this.other_dom.style.display = 'none'
     return
   }
@@ -51,6 +52,27 @@ form_element_select_other.prototype.set_data = function (data) {
   this.other_option.selected = true
   this.other_dom.style.display = 'block'
   this.other_form.set_data(data)
+}
+
+form_element_select_other.prototype.set_orig_data = function (data) {
+  this.parent("form_element_select_other").set_orig_data.call(this, data);
+
+  this.other_orig_is_set = false
+  if (data in this.get_values()) {
+    return
+  }
+
+  this.other_orig_is_set = true
+  this.other_form.set_orig_data(data)
+}
+
+form_element_select_other.prototype.get_orig_data = function () {
+  var ret = this.parent("form_element_select_other").get_orig_data.call(this);
+  if (this.other_orig_is_set) {
+    ret = this.other_form.get_orig_data()
+  }
+
+  return ret
 }
 
 form_element_select_other.prototype.update_options = function () {
