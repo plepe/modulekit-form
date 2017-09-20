@@ -13,6 +13,20 @@ class form_element_select_other extends form_element_select {
 
     $this->other_form = form_create_element($this->id . '_other', $other_def, $other_options, $this);
     $this->other_is_set = false;
+    $this->other_orig_is_set = false;
+  }
+
+  function set_orig_data($data) {
+    parent::set_orig_data($data);
+
+    $this->other_orig_is_set = false;
+    $values = $this->get_values();
+    if (array_key_exists($data, $values)) {
+      return;
+    }
+
+    $this->other_orig_is_set = true;
+    $this->other_form->set_orig_data($data);
   }
 
   function set_data($data) {
@@ -51,6 +65,15 @@ class form_element_select_other extends form_element_select {
     $ret = parent::get_data();
     if ($this->other_is_set) {
       $ret = $this->other_form->get_data();
+    }
+
+    return $ret;
+  }
+
+  function get_orig_data() {
+    $ret = parent::get_orig_data();
+    if ($this->other_orig_is_set) {
+      $ret = $this->other_form->get_orig_data();
     }
 
     return $ret;
