@@ -276,7 +276,7 @@ Definition:
 * values_mode: 'keys' (default when a hash array is used) or 'values' (default when a simple array is used)
 * values_func: function(s) which can update values list; see chapter "Func Call" for details.
 * empty_value: Value to be returned if key is empty (default: null)
-* placeholder: Text which will be used, when no value is selected (default: '--- please select ---')
+* placeholder: Text which will be used, when no value is selected (default: '--- please select ---'). If set to boolean false, no placeholder option will be created.
 * null_value: By default an option with the internal value "" (empty string) will be added for the "please select" resp. null option. Set the 'null_value' if "" should be a valid option. Example: '__NULL__'.
 
 Value:

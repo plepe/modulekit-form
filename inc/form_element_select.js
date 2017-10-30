@@ -114,7 +114,9 @@ form_element_select.prototype.update_options=function() {
   else
     placeholder = lang('form_element:please_select');
 
-  this.show_element_option(this.dom_element, this.def.null_value, placeholder);
+  if (placeholder !== false) {
+    this.show_element_option(this.dom_element, this.def.null_value, placeholder);
+  }
   for(var k in values) {
     this.show_element_option(this.dom_element, k, values[k]);
   }
