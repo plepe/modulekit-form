@@ -1,3 +1,7 @@
+Newer
+-----
+* Form Element Select: suppress placeholder (by setting option to false)
+
 2017-09-15 (Version >= 2.6)
 ---------------------------
 * Form Element Autocomplete: support option 'placeholder'
