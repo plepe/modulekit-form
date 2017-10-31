@@ -21,7 +21,7 @@ class form_element_select_other extends form_element_select {
 
     $this->other_orig_is_set = false;
     $values = $this->get_values();
-    if (array_key_exists($data, $values)) {
+    if (is_scalar($data) && array_key_exists($data, $values)) {
       return;
     }
 
