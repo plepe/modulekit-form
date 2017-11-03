@@ -22,6 +22,18 @@ class form_element_checkbox extends form_element {
       $ret = false;
     }
 
+    if ($data && array_key_exists('__presets', $data)) {
+      if ($data['__presets'] === '') {
+        unset($data['__presets']);
+      }
+      else if (array_key_exists($data['__presets'], $this->def['presets'])) {
+        $data = $this->def['presets'][$data['__presets']]['values'];
+      }
+      else {
+        // TODO: error? can't load preset
+      }
+    }
+
     $r = parent::set_request_data($data);
 
     if($r === false)
@@ -94,6 +106,33 @@ class form_element_checkbox extends form_element {
       $this->input_uncheck_all->setAttribute("name", "{$this->options['var_name']}[__uncheck_all]");
       $this->input_uncheck_all->setAttribute("value", lang("form:uncheck_all"));
       $div->appendChild($this->input_uncheck_all);
+    }
+
+    if (array_key_exists('presets', $this->def) && $this->def['presets']) {
+      $this->input_presets = $document->createElement('select');
+      $this->input_presets->setAttribute('name', "{$this->options['var_name']}[__presets]");
+
+      if(array_key_exists('presets:label', $this->def))
+        if(is_array($this->def['presets:label']))
+          $placeholder = lang($this->def['presets:label']);
+        else
+          $placeholder = $this->def['presets:label'];
+      else
+        $placeholder = lang('form:load_preset');
+
+      $option = $document->createElement('option');
+      $option->setAttribute('value', '');
+      $option->appendChild($document->createTextNode($placeholder));
+      $this->input_presets->appendChild($option);
+
+      foreach ($this->def['presets'] as $k => $v) {
+        $option = $document->createElement('option');
+        $option->setAttribute('value', $k);
+        $option->appendChild($document->createTextNode(get_value_string($v)));
+        $this->input_presets->appendChild($option);
+      }
+
+      $div->appendChild($this->input_presets);
     }
 
     return $div;

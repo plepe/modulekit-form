@@ -238,6 +238,8 @@ Definition:
 * values_mode: 'keys' (default when a hash array is used) or 'values' (default when a simple array is used)
 * check_all: if true, include a button "check all" which will check all checkboxes
 * uncheck_all: like 'check_all', but for unchecking
+* presets: Adds a selector with presets for checkbox selections. An array (assoc. array), where each entry has a name and a list of options to select (values). Example: [ { name: "Test", values: [ 1, 2, 3 ] }, { name: "Only 3": values: [ 3 ] } ]
+* presets:label: Override label for "-- load preset --" option.
 
 Value:
 * In 'keys' values_mode an array of the keys of the chosen values is returned (e.g. array("php", "cpp"); in 'values' mode an array of the the keys of the chosen values is returned (e.g. array("PHP", "C++")).

@@ -141,6 +141,55 @@ form_element_checkbox.prototype.update_options = function() {
     this.dom.appendChild(this.input_uncheck_all);
   }
 
+  if (('presets' in this.def) && (this.def.presets)) {
+    this.input_presets = document.createElement('select')
+    this.input_presets.setAttribute('name', this.options.var_name + '[__presets]')
+
+    this.input_presets.onchange = function () {
+      var v = this.input_presets.value
+      if (v === '') {
+        return
+      }
+
+      for (var k in this.dom_values) {
+        this.dom_values[k].checked = false
+      }
+
+      var data = this.def.presets[v].values
+      for (var i = 0; i < data.length; i++) {
+        if (data[i] in this.dom_values) {
+          this.dom_values[data[i]].checked = true
+        }
+      }
+
+      this.notify_change()
+    }.bind(this)
+
+    var placeholder
+    if('presets:label' in this.def)
+      if(typeof this.def['presets:label'] === 'object')
+        placeholder = lang(this.def['presets:label'])
+      else
+        placeholder = this.def['presets:label']
+    else
+      placeholder = lang('form:load_preset')
+
+    var option = document.createElement('option')
+    option.setAttribute('value', '')
+    option.appendChild(document.createTextNode(placeholder))
+    this.input_presets.appendChild(option)
+
+    for (var k in this.def.presets) {
+      var v = this.def.presets[k]
+      var option = document.createElement('option')
+      option.setAttribute('value', k)
+      option.appendChild(document.createTextNode(get_value_string(v)))
+      this.input_presets.appendChild(option)
+    }
+
+    this.dom.appendChild(this.input_presets)
+  }
+
   return values;
 }
 
@@ -170,4 +219,18 @@ form_element_checkbox.prototype.refresh=function(force) {
 
 form_element_checkbox.prototype.is_modified=function() {
   return array_compare_values(this.get_data(), this.get_orig_data());
+}
+
+form_element_checkbox.prototype.notify_change = function() {
+  // Reset preset selector (if selection does not match current preset)
+  if (this.input_presets) {
+    var v = this.input_presets.value
+    if (v !== '') {
+      if (!array_compare(this.get_data(), this.def.presets[v].values)) {
+        this.input_presets.value = ''
+      }
+    }
+  }
+
+  this.parent("form_element_checkbox").notify_change.call(this)
 }

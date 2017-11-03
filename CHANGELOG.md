@@ -1,3 +1,5 @@
+* Form Element Checkbox: support option 'presets' (and 'presets:label')
+
 2017-09-15 (Version >= 2.6)
 ---------------------------
 * Form Element Autocomplete: support option 'placeholder'
