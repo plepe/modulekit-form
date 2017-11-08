@@ -31,6 +31,7 @@ $lang_str['form_element_date:format_error'] = "Could not parse date";
 
 $lang_str['form:check_all'] = "check all";
 $lang_str['form:uncheck_all'] = "uncheck all";
+$lang_str['form:load_preset'] = "-- load preset --";
 $lang_str['form:duplicate'] = array("Value %s appears multiple times.", "Values %s appear multiple times.");
 
 $lang_str['form:hash_key_field_name'] = "Key";

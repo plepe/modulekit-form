@@ -31,6 +31,7 @@ $lang_str['form_element_date:format_error'] = "Kann Datum nicht auslesen";
 
 $lang_str['form:check_all'] = "alle markieren";
 $lang_str['form:uncheck_all'] = "keine markieren";
+$lang_str['form:load_preset'] = "-- Vorauswahl laden --";
 $lang_str['form:duplicate'] = array("Wert %s kommt mehrfach vor.", "Werte %s kommen mehrfach vor.");
 
 $lang_str['form:hash_key_field_name'] = "Schlüssel";

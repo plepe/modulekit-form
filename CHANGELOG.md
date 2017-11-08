@@ -1,6 +1,7 @@
 Newer
 -----
 * Form Element Select: suppress placeholder (by setting option to false)
+* Form Element Checkbox: support option 'presets' (and 'presets:label')
 
 2017-09-15 (Version >= 2.6)
 ---------------------------
