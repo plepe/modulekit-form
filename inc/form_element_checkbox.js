@@ -184,6 +184,10 @@ form_element_checkbox.prototype.update_options = function() {
       var option = document.createElement('option')
       option.setAttribute('value', k)
       option.appendChild(document.createTextNode(get_value_string(v)))
+      var desc = get_value_string(v, 'desc')
+      if (desc) {
+        option.setAttribute('title', desc)
+      }
       this.input_presets.appendChild(option)
     }
 

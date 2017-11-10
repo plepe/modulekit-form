@@ -70,8 +70,8 @@ EOT
     'type'	=>"checkbox",
     'values'	=>array("php"=>"PHP", "perl"=>"Perl", "c"=>"C", "cpp"=>"C++", "java"=>"Java", "js"=>array("name"=>"Javascript", "desc"=>"Script language, supported by web browsers")),
     'presets'   => array(
-      array('name' => 'Web', 'values' => array('php', 'js', 'java')),
-      array('name' => 'System', 'values' => array('c', 'cpp', 'java')),
+      array('name' => 'Web', 'values' => array('php', 'js', 'java'), 'desc:en' => 'Languages used for web development', 'desc:de' => 'Computersprachen für Webseiten'),
+      array('name' => 'System', 'values' => array('c', 'cpp', 'java'), 'desc' => 'Hard-core ;-)'),
     ),
   ),
   'comment'	=>array(
@@ -85,6 +85,7 @@ EOT
   ),
   'nationality'	=>array(
     'name'	=>"Nationality",
+    'placeholder'=>false,
     'type'	=>"select",
     'values'	=>array(
       "at"=>array(

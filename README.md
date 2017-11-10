@@ -238,7 +238,7 @@ Definition:
 * values_mode: 'keys' (default when a hash array is used) or 'values' (default when a simple array is used)
 * check_all: if true, include a button "check all" which will check all checkboxes
 * uncheck_all: like 'check_all', but for unchecking
-* presets: Adds a selector with presets for checkbox selections. An array (assoc. array), where each entry has a name and a list of options to select (values). Example: [ { name: "Test", values: [ 1, 2, 3 ] }, { name: "Only 3": values: [ 3 ] } ]
+* presets: Adds a selector with presets for checkbox selections. An array (assoc. array), where each entry has a name and a list of options to select (values). Example: [ { name: "Test", values: [ 1, 2, 3 ] }, { name: "Only 3": values: [ 3 ] } ]. Each entry may also have a description ('desc').
 * presets:label: Override label for "-- load preset --" option.
 
 Value:

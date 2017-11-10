@@ -129,6 +129,9 @@ class form_element_checkbox extends form_element {
         $option = $document->createElement('option');
         $option->setAttribute('value', $k);
         $option->appendChild($document->createTextNode(get_value_string($v)));
+        if ($desc = get_value_string($v, 'desc')) {
+          $option->setAttribute('title', $desc);
+        }
         $this->input_presets->appendChild($option);
       }
 
