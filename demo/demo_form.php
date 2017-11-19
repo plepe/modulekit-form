@@ -124,7 +124,7 @@ EOT
     'type'	=>"form",
     'name'	=>"Cats",
     'desc'	=>"Describe all your cats",
-    'count'	=>array("default"=>2),
+    'count'	=>array("default"=>2, "index_type" => 'array'),
     'def'	=>array(
       'name'	=>array(
         'name'	=>"Name",
