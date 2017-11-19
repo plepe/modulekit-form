@@ -57,6 +57,19 @@ class form_element_array extends form_element {
       return array_key_exists('empty_value', $this->def) ?
         $this->def['empty_value'] : null;
 
+    if (array_key_exists('index_type', $this->def)) {
+      switch ($this->def['index_type']) {
+        case 'keep':
+        case '_keys':
+          break;
+        case 'array':
+          $data = array_values($data);
+          break;
+        default:
+          trigger_error("{$this->id}: form_element_array: unknown index_type '{$this->def['index_type']}'", E_USER_WARNING);
+      }
+    }
+
     return $data;
   }
 

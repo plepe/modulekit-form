@@ -122,22 +122,51 @@ form_element_array.prototype.finish_connect=function() {
 
 form_element_array.prototype.get_data=function() {
   var ret={};
+  var order = [];
   var count=0;
 
-  for(var i in this.elements) {
-    var d = this.elements[i].get_data();
+  var current=this.dom_parent.firstChild;
+  while(current) {
+    var i = current.getAttribute("form_element_num")
 
-    if(this.def.exclude_null_values && (d === null))
-      continue;
+    if(current.nodeName === "DIV" && i) {
+      var d = this.elements[i].get_data();
 
-    if(this.elements[i].include_data()) {
-      ret[i] = d;
-      count++;
+      if(this.def.exclude_null_values && (d === null))
+        continue;
+
+      if(this.elements[i].include_data()) {
+        ret[i] = d;
+        order.push(i)
+        count++;
+      }
+
     }
+
+    current = current.nextSibling
   }
 
   if(count==0)
     return this.def.empty_value || null;
+
+  if (this.def.index_type) {
+    switch (this.def.index_type) {
+      case 'keep':
+        break;
+      case '_keys':
+        ret._keys = order
+        break;
+      case 'array':
+        var ret1 = []
+        order.forEach(function (i) {
+          ret1.push(ret[i])
+        })
+        ret = ret1
+        break;
+      default:
+        console.log(this.id + ': form_element_array: unknown index_type "' + this.def.index_type + '"')
+    }
+  }
 
   return ret;
 }
