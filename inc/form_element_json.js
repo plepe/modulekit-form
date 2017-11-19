@@ -50,6 +50,17 @@ form_element_json.prototype.get_data=function() {
   return data;
 }
 
+form_element_json.prototype.errors = function(list) {
+  try {
+    JSON.parse(this.dom_element.value)
+  }
+  catch (err) {
+    list.push(err.message)
+  }
+
+  this.parent("form_element_json").errors.call(this, list);
+}
+
 form_element_json.prototype.is_modified=function() {
   return JSON.stringify(this.get_data())!==JSON.stringify(this.get_orig_data());
 }
