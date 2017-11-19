@@ -42,11 +42,7 @@ function process(check_errors) {
   div.appendChild(text);
 
   if(check_errors!==false) {
-    var errors=form_data.errors();
-    var div=document.getElementById("errors");
-    while(div.firstChild)
-      div.removeChild(div.firstChild);
-    form_data.show_errors(div);
+    form_data.show_errors();
   }
 
   return false;
