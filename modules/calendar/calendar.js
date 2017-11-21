@@ -297,6 +297,7 @@ calendar.prototype.choose_date=function(day) {
 calendar.prototype.form_change=function() {
   this.date.setHours(this.input_hour.value);
   this.date.setMinutes(this.input_minute.value);
+  this.date.setSeconds(0);
 
   this.options.callback(this.get_date());
 }
