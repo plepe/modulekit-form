@@ -164,7 +164,6 @@ calendar.prototype.set_date=function(date) {
   }
   else if(this.options.type=="datetime-local") {
     this.options.timezone=0;
-    date+="Z";
   }
   else if(this.options.type=="datetime") {
     var d = date_parse_from_format('Y-m-d\\TH:i:sP', this.options.date);
