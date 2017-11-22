@@ -53,6 +53,16 @@ class form_element_form_chooser extends form_element {
 	$data[$k] = $d;
     }
 
+    if (array_key_exists('result_keep_order', $this->def) && $this->def['result_keep_order']) {
+      $d = array();
+      foreach ($this->def['def'] as $k => $v) {
+        if (array_key_exists($k, $data)) {
+          $d[$k] = $data[$k];
+        }
+      }
+      $data = $d;
+    }
+
     if(!sizeof($data))
       return array_key_exists('empty_value', $this->def) ?
         $this->def['empty_value'] : null;

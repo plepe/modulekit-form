@@ -140,6 +140,16 @@ form_element_form_chooser.prototype.get_data=function() {
     }
   }
 
+  if (this.def.result_keep_order) {
+    var d = {}
+    for (var k in this.def.def) {
+      if (k in ret) {
+        d[k] = ret[k]
+      }
+    }
+    ret = d
+  }
+
   if(count==0)
     return this.def.empty_value || null;
 

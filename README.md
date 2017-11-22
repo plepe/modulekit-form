@@ -404,6 +404,7 @@ Definition:
 * exclude_null_values: if true, remove null values from the array. Default: false.
 * order: whether the elements shall be orderable. true (default) / false.
 * removeable: whether the elements shall be removeable. true (default) / false.
+* result_keep_order: if true, resulting elements will be ordered by appearance in def.
 
 Example:
 ```json

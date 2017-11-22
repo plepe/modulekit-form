@@ -4,6 +4,7 @@ $form_def=array(
     'name'      =>"Filters",
     'type'      =>'form_chooser',
     'order'     =>false,
+    'result_keep_order' => true,
     'def'       =>array(
       'a'         => array(
         'type'    => 'text',
