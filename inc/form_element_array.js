@@ -125,22 +125,23 @@ form_element_array.prototype.get_data=function() {
   var order = [];
   var count=0;
 
-  var current=this.dom_parent.firstChild;
+  if (!this.dom) {
+    return this.data
+  }
+
+  var current=this.dom.firstChild;
   while(current) {
     var i = current.getAttribute("form_element_num")
 
     if(current.nodeName === "DIV" && i) {
       var d = this.elements[i].get_data();
 
-      if(this.def.exclude_null_values && (d === null))
-        continue;
-
-      if(this.elements[i].include_data()) {
+      if((!this.def.exclude_null_values || d !== null) &&
+        this.elements[i].include_data()) {
         ret[i] = d;
         order.push(i)
         count++;
       }
-
     }
 
     current = current.nextSibling
@@ -278,7 +279,6 @@ form_element_array.prototype.show_element_part=function(k, element) {
 
 form_element_array.prototype.show_element=function() {
   var div=this.parent("form_element_array").show_element.call(this);
-  this.get_data();
 
   for(var k in this.elements) {
     var part_div=this.show_element_part(k, this.elements[k]);
