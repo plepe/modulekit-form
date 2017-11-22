@@ -1,5 +1,7 @@
 Newer
 -----
+* Form Element Form Chooser: new form element type!
+* Form Element Switch: new form element type!
 * Form Element Select: suppress placeholder (by setting option to false)
 * Form Element Checkbox: support option 'presets' (and 'presets:label')
 * Form Element Array: new option 'index_type' (keep, _keys or array)
