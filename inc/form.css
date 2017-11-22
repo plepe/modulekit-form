@@ -1,59 +1,62 @@
-table.form td.field_desc,
-table.form td.field_value,
-table.form td.field_value span,
-table.form td.field_value span *
+.form td.field_desc,
+.form td.field_value,
+.form td.field_value span,
+.form td.field_value span *
 {
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
 }
-table.form {
+.form {
   width: 100%;
   border-collapse: collapse;
   border: none;
 }
-table.form td.field_desc {
+.form td.field_desc {
   width: 256px;
   vertical-align: top;
   padding-bottom: 2px;
   padding-right: 0.5em;
 }
-table.form td.field_desc .form_desc,
-table.form .description {
+.form td.field_desc .form_desc,
+.form .description {
   font-size: 0.75em;
   font-style: italic;
 }
-table.form td.field_value {
+.form td.field_value {
   width: auto;
   padding: 0px;
 }
-table.form td.field_value input[type=text],
-table.form td.field_value input[type=password],
-table.form td.field_value textarea,
-table.form td.field_value select {
+.form td.field_value input[type=text],
+.form td.field_value input[type=password],
+.form td.field_value textarea,
+.form td.field_value select {
   width: 100%;
 }
-table.form label:hover {
+.form label:hover {
   text-decoration: underline;
 }
-table.form .form_element_checkbox div {
+.form .form_element_checkbox div {
 }
-table.form .form_element_radio span,
-table.form .form_element_checkbox span {
+.form .field_value > .form_element_radio > span,
+.form .field_value > .form_element_checkbox > span {
   display: block;
-  padding-left: 25px;
-  text-indent: -25px;
 }
-table.form .form_element_radio input.radio,
-table.form .form_element_checkbox input.checkbox {
+.form .field_value > .form_element_radio > span > .description,
+.form .field_value > .form_element_checkbox > span > .description {
+  margin-left: 26px;
+  display: block;
+}
+.form .form_element_radio input.radio,
+.form .form_element_checkbox input.checkbox {
   width: 25px;
   padding: 0px;
   margin: 0px;
   position: relative;
   *overflow: hidden;
 }
-table.form .form_element_radio span .description,
-table.form .form_element_checkbox span .description {
+.form .form_element_radio span .description,
+.form .form_element_checkbox span .description {
   padding-left: 0px;
   text-indent: 0px;
 }
@@ -84,30 +87,4 @@ table.form .form_element_checkbox span .description {
 .form_error {
   color: #ffffff;
   background: #ff0000;
-}
-
-/* adapt to screen sizes */
-/*   <640px   */
-table.form.medium td.field_desc {
-  width: 128px;
-}
-
-/*   <400px   */
-table.form.small,
-table.form.small thead,
-table.form.small tbody,
-table.form.small tr,
-table.form.small th,
-table.form.small td
-{
-  display: block;
-}
-table.form.small td.field_desc {
-  width: 100%;
-}
-table.form.small td.field_value {
-  padding-left: 1em;
-}
-table.form.small tr {
-  padding-bottom: 0.5em;
 }

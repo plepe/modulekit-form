@@ -107,7 +107,8 @@ form_element_date.prototype.update_data=function(data, format) {
       d=date_format(this.date_format(), d);
   }
 
-  this.dom_element.value = d;
+  if(this.dom_element)
+    this.dom_element.value = d;
 }
 
 form_element_date.prototype.set_data_from_calendar=function(data) {

@@ -48,11 +48,14 @@ class form {
   }
 
   function build_form() {
-    $def=array(
-      'type'	=>'form',
-      'def'	=>$this->def,
-    );
-    $this->element=new form_element_form($this->id, $def, $this->options, $this);
+    if (!array_key_exists('type', $this->options)) {
+      $this->options['type'] = 'form';
+    }
+
+    $this->options['def'] = $this->def;
+
+    $element_type = "form_element_{$this->options['type']}";
+    $this->element=new $element_type($this->id, $this->options, $this->options, $this);
   }
 
   function get_data() {
@@ -189,6 +192,7 @@ class form {
 
     $div=$this->element->show_element($document);
     $document->appendChild($div);
+    $div->setAttribute("class", $div->getAttribute("class") . " form");
 
     $orig_data=$this->get_orig_data();
 
@@ -216,6 +220,9 @@ class form {
 
     // render the form
     $ret.=$document->saveHTML();
+
+    $options = $this->options;
+    unset($options['def']); // will be set from 2nd param anyway
 
     // create javascript representation of form
     $ret.="<script type='text/javascript'>\n";

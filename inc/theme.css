@@ -2,7 +2,8 @@
 input[type=submit],
 input[type=button],
 button,
-span.button {
+.form_element_file label,
+.form_element_form_chooser select.form_element_form_chooser_action_add {
   border: 2px outset #000000;
   border-radius: 3px;
   background: #d0d0d0;
@@ -103,6 +104,6 @@ span.form_element_file span.form_modified span.value
   border: 1px inset black;
   border-radius: 3px;
 }
-.form_element_form table.form {
+.form_element_form .form {
   border: none;
 }

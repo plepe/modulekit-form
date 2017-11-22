@@ -40,7 +40,7 @@ form_element_array.prototype.create_element=function(k) {
   var element_class=get_form_element_class(element_def);
   var element_id=this.id+"_"+k;
   var element_options=new clone(this.options);
-  element_options.var_name=element_options.var_name+"["+k+"]";
+  element_options.var_name = form_build_child_var_name(this.options, k)
   element_def._name=function(k) {
     return this.index_element(k);
   }.bind(this, k);
@@ -84,13 +84,26 @@ form_element_array.prototype.connect=function(dom_parent) {
       input=input.firstChild;
       while(input) {
 	if(input.name==this.options.var_name+"[__remove]["+k+"]") {
-	  input.onclick=this.remove_element.bind(this, k);
+	  input.onclick = function (k) {
+            this.remove_element(k)
+            this.notify_change()
+            return false
+          }.bind(this, k)
 	}
 	else if(input.name==this.options.var_name+"[__order_up]["+k+"]") {
+	  input.onclick = function (k) {
+            this.order_up(k)
+            this.notify_change()
+            return false
+          }.bind(this, k)
 	  input.onclick=this.order_up.bind(this, k);
 	}
 	else if(input.name==this.options.var_name+"[__order_down]["+k+"]") {
-	  input.onclick=this.order_down.bind(this, k);
+	  input.onclick = function (k) {
+            this.order_down(k)
+            this.notify_change()
+            return false
+          }.bind(this, k)
 	}
 	input=input.nextSibling;
       }
@@ -102,7 +115,11 @@ form_element_array.prototype.connect=function(dom_parent) {
       while(input) {
 	if(input.name==this.options.var_name+"[__new]") {
 	  this.action_add = input;
-	  this.action_add.onclick = this.add_element.bind(this);
+	  input.onclick = function (k) {
+            this.add_element()
+            this.notify_change()
+            return false
+          }.bind(this)
 	}
 	input=input.nextSibling;
       }
@@ -173,25 +190,37 @@ form_element_array.prototype.get_data=function() {
 }
 
 form_element_array.prototype.set_data=function(data) {
-  this.data=data;
-  this.build_form();
+  this.data = data
+  var new_elements = {}
+  var new_element_divs = {}
 
   if(data)
     for(var k in data) {
-      if(typeof this.elements[k]!="undefined")
-	this.elements[k].set_data(data[k]);
+      if(typeof this.elements[k] === "undefined") {
+        this.add_element(k)
+      }
+
+      this.elements[k].set_data(data[k])
+      new_elements[k] = this.elements[k]
+      new_element_divs[k] = this.element_divs[k]
     }
 
-  if(this.dom) {
-    var old_dom = this.dom;
-    var par = this.dom.parentNode;
-    var div = this.show_element();
-
-    par.insertBefore(div, old_dom);
-    par.removeChild(old_dom);
+  for (var k in this.elements) {
+    if (!(k in data)) {
+      this.remove_element(k)
+    }
   }
 
-  this.data=null;
+  this.elements = new_elements
+  this.element_divs = new_element_divs
+  for (var k in new_element_divs) {
+    var div = this.element_divs[k]
+    if (div) {
+      this.dom.insertBefore(div, this.action_add.parentNode)
+    }
+  }
+
+  this.data = null
 }
 
 form_element_array.prototype.set_orig_data=function(data) {
@@ -254,14 +283,22 @@ form_element_array.prototype.show_element_part=function(k, element) {
     input.type="submit";
     input.name=this.options.var_name+"[__order_up]["+k+"]";
     input.value="↑";
-    input.onclick=this.order_up.bind(this, k);
+    input.onclick = function (k) {
+      this.order_up(k)
+      this.notify_change()
+      return false
+    }.bind(this, k)
     el_div.appendChild(input);
 
     var input=document.createElement("input");
     input.type="submit";
     input.name=this.options.var_name+"[__order_down]["+k+"]";
     input.value="↓";
-    input.onclick=this.order_down.bind(this, k);
+    input.onclick = function (k) {
+      this.order_down(k)
+      this.notify_change()
+      return false
+    }.bind(this, k)
     el_div.appendChild(input);
   }
 
@@ -270,10 +307,15 @@ form_element_array.prototype.show_element_part=function(k, element) {
     input.type="submit";
     input.name=this.options.var_name+"[__remove]["+k+"]";
     input.value="X";
-    input.onclick=this.remove_element.bind(this, k);
+    input.onclick = function (k) {
+      this.remove_element(k)
+      this.notify_change()
+      return false
+    }.bind(this, k)
     el_div.appendChild(input);
   }
 
+  this.element_divs[k] = div
   return div;
 }
 
@@ -282,7 +324,6 @@ form_element_array.prototype.show_element=function() {
 
   for(var k in this.elements) {
     var part_div=this.show_element_part(k, this.elements[k]);
-    this.element_divs[k] = part_div;
     div.appendChild(part_div);
   }
 
@@ -301,7 +342,11 @@ form_element_array.prototype.show_element=function() {
   }
   else
     this.action_add.value=lang('form:add_element');
-  this.action_add.onclick=this.add_element.bind(this);
+  this.action_add.onclick = function (k) {
+    this.add_element()
+    this.notify_change()
+    return false
+  }.bind(this)
   el_div.appendChild(this.action_add);
 
   return div;
@@ -341,28 +386,32 @@ form_element_array.prototype.is_complete=function() {
   return true;
 }
 
-form_element_array.prototype.add_element=function() {
-  var highest_id=0;
+form_element_array.prototype.add_element = function (id) {
+  if (typeof id === 'undefined') {
+    id = 0
 
-  for(var i in this.elements) {
-    i = parseInt(i);
-    if(i>highest_id)
-      highest_id=i;
+    for (var i in this.elements) {
+      i = parseInt(i)
+      if (i > id) {
+        id = i
+      }
+    }
+
+    id = parseInt(id) + 1
   }
 
-  highest_id=parseInt(highest_id)+1;
-  this.create_element(highest_id);
+  this.create_element(id)
 
   var current=document.getElementById(this.id).firstChild;
   while(current) {
     if(current.className=="form_element_array_actions") {
-      current.parentNode.insertBefore(this.show_element_part(highest_id, this.elements[highest_id]), current);
+      current.parentNode.insertBefore(this.show_element_part(id, this.elements[id]), current);
       break;
     }
     current=current.nextSibling;
   }
 
-  this.form_root.form.resize();
+  this.elements[id].resize()
 
   return false;
 }
@@ -380,7 +429,7 @@ form_element_array.prototype.remove_element=function(k) {
   }
 
   this.show_errors();
-  this.form_root.form.resize();
+  this.resize();
 
   return false;
 }
@@ -404,7 +453,7 @@ form_element_array.prototype.order_up=function(k) {
   }
 
   this.show_errors();
-  this.form_root.form.resize();
+  this.resize();
 
   return false;
 }
@@ -428,7 +477,7 @@ form_element_array.prototype.order_down=function(k) {
   }
 
   this.show_errors();
-  this.form_root.form.resize();
+  this.resize();
 
   return false;
 }
@@ -443,10 +492,20 @@ form_element_array.prototype.refresh=function(force) {
   for(var k in this.elements)
     count++;
 
-  if('max' in this.def && (count >= this.def.max))
+  if (!this.action_add)
+    return;
+  else if ('max' in this.def && (count >= this.def.max))
     this.action_add.className = "reached_max";
   else
     this.action_add.className = "";
+}
+
+form_element_array.prototype.resize = function () {
+  this.parent("form_element_array").resize.call(this);
+
+  for (var k in this.elements) {
+    this.elements[k].resize()
+  }
 }
 
 form_element_array.prototype.is_modified=function() {

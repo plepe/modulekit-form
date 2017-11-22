@@ -41,6 +41,8 @@ class form_element {
   }
 
   function name() {
+    $name = $this->id;
+
     if(array_key_exists('name', $this->def))
       $name=$this->def['name'];
 
@@ -68,6 +70,9 @@ class form_element {
   }
 
   function path_name() {
+    if($this->form_parent===null)
+      return null;
+
     $parent_path=$this->form_parent->path_name();
 
     if($parent_path===null)
@@ -508,6 +513,9 @@ class form_element {
 
   function is_shown() {
     if(isset($this->def['show_depend'])) {
+      if($this->def['show_depend'] === false)
+	return false;
+
       $errors=array();
 
       $this->check($errors, $this->def['show_depend']);

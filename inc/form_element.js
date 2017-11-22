@@ -23,7 +23,7 @@ form_element.prototype.init=function(id, def, options, form_parent) {
 }
 
 form_element.prototype.name=function() {
-  var name;
+  var name = this.id;
 
   if(this.def._name)
     name=this.def._name();
@@ -45,6 +45,10 @@ form_element.prototype.weight=function() {
 }
 
 form_element.prototype.path_name=function() {
+  if (!this.form_parent) {
+    return this.name();
+  }
+
   var parent_path=this.form_parent.path_name();
 
   if(parent_path===null)
@@ -565,6 +569,9 @@ form_element.prototype.notify_child_change=function(elements) {
 }
 
 form_element.prototype.is_shown=function() {
+  if(this.def.show_depend === false)
+    return this.def.show_depend;
+
   if(this.def.show_depend) {
     errors=[];
 
@@ -614,6 +621,9 @@ form_element.prototype.refresh=function(force) {
     if(this.dom)
       remove_class(this.dom, "required");
   }
+}
+
+form_element.prototype.resize = function () {
 }
 
 form_element.prototype.is_modified=function() {

@@ -105,6 +105,7 @@ Definition:
   * 'unique': Check if all values of this element are different (element needs to return an array) OR - if a path as 2nd parameter is given - the values of the other elements are different. E.g. array('unique', '../*/name'). See check 'check' how to specify paths.
   * 'required': Error, if this element is required but value is empty.
   * 'has_value': Check if value of this element is not null. If it is null, print "Invalid Value" message or value of 1st parameter.
+* show_depend: if boolean 'false', do not show this field (it is active though). if an array similar to 'check', show the field when it evaluates to success.
 * hide_label: if true, hides the left column with label and description and stretches the form element to the full content width.
 * include_data: if set to false, the current form element is not included in get_data(). if it is 'not_null', it will be only included, if the value is not null. May contain a check like in 'check'.
 
@@ -391,6 +392,37 @@ STATE: It's not possible yet to read file content in JavaScript mode
   * Error 20: Can't rename temporary file to final file
   * Error 21: Final file size differs from PHP upload data
 
+Form Element "Form Chooser"
+---------------------------
+Choose sub elements from a predefined list of elements. The result will only include the selected sub elements.
+
+Definition:
+* type: 'form_chooser'
+* def: a list of available sub elements
+* min: how many elements must be selected at minimum
+* max: how many elements must be selected at maximum
+* exclude_null_values: if true, remove null values from the array. Default: false.
+* order: whether the elements shall be orderable. true (default) / false.
+* removeable: whether the elements shall be removeable. true (default) / false.
+
+Example:
+```json
+"foobar": {
+    "name": "Foobar",
+    "type": "form_chooser",
+    "def": {
+        "foo": {
+            "name": "Foo",
+            "type": "text"
+        },
+        "bar": {
+            "name": "Bar",
+            "type": "textarea"
+        }
+    }
+}
+```
+
 Form Element "Directory"
 ------------------------
 Upload multiple files. Files are moved to a newly created directory in the specified path, as value an array will be returned.
@@ -432,6 +464,52 @@ A non-editable field, which does not even contain data. It's meant for intermedi
 Definition:
 * type: 'intermediate_text'
 * text: some text which will be shown. May contain HTML.
+
+Form Element "Fixed"
+----------------------
+A non-editable field, it always has the specified value and can not be changed by UI or set_data(). It just shows the value. In opposition to other elements, this may contain HTML for formatting.
+
+Definition:
+* type: 'fixed'
+* value: the value of the element.
+
+Tips:
+Set 'show_depend' to false to hide this field.
+
+Form Element "Switch"
+---------------------
+This is not really a form element of it's own, but selects one of several sub form elements by the value of another element. Only the selected sub form element will be shown.
+
+Definition:
+* type: 'switch'
+* switch: path (see check 'check' at Form Element) to other form element, whose value will be used for deciding which sub form element to show.
+* def: hash array where the keys are the possible values of the switch element and value is the definition of the sub form element.
+
+Example:
+```json
+{
+    "text_short_long": {
+        "type": "radio",
+        "name": "Short or long text?",
+        "values": [ "short", "long" ],
+        "default": "short"
+    },
+    "data": {
+        "type": "switch",
+        "switch": "text_short_long",
+        "def": {
+            "short": {
+                "type": "text",
+                "name": "Text"
+            },
+            "long": {
+                "type": "textarea",
+                "name": "Textarea"
+            }
+        }
+    }
+}
+```
 
 General functions
 =================

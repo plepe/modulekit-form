@@ -10,13 +10,6 @@ class form_element_form extends form_element {
     $this->build_form();
   }
 
-  function path_name() {
-    if($this->form_parent===null)
-      return null;
-
-    return parent::path_name();
-  }
-
   function build_form() {
     $this->elements=array();
 
@@ -25,10 +18,7 @@ class form_element_form extends form_element {
 
       $element_id="{$this->id}_{$k}";
       $element_options=$this->options;
-      if($this->options['var_name'])
-	$element_options['var_name']="{$this->options['var_name']}[{$k}]";
-      else
-	$element_options['var_name']=$k;
+      $element_options['var_name'] = form_build_child_var_name($this->options, $k);
 
       $this->elements[$k]=new $element_class($element_id, $element_def, $element_options, $this);
     }
@@ -105,9 +95,12 @@ class form_element_form extends form_element {
 
   function show_element($document) {
     $table=$document->createElement("table");
+    $table->setAttribute("class", 'form_element_form');
     $table->setAttribute("id", $this->id);
-    $table->setAttribute("class", "form");
     $element_list = array();
+
+    $table_body = $document->createElement('tbody');
+    $table->appendChild($table_body);
 
     foreach($this->elements as $k=>$element) {
       $element_list[] = array($element->weight(), $element->show($document));
@@ -116,7 +109,13 @@ class form_element_form extends form_element {
     $element_list = weight_sort($element_list);
 
     foreach($element_list as $element) {
-      $table->appendChild($element);
+      if(is_array($element)) {
+        foreach($element as $el)
+          $table_body->appendChild($el);
+      }
+      else {
+        $table_body->appendChild($element);
+      }
     }
 
     return $table;

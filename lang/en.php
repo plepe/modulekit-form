@@ -4,6 +4,7 @@ $lang_str['cancel']="Cancel";
 $lang_str['new']="New";
 $lang_str['edit']="Edit";
 $lang_str['change']="Change";
+$lang_str['reload']="Reload";
 
 $lang_str['form:add_element']="Add element";
 $lang_str['form_element_array:error_min']="Not enough entries, min. %d.";
@@ -36,5 +37,8 @@ $lang_str['form:duplicate'] = array("Value %s appears multiple times.", "Values 
 
 $lang_str['form:hash_key_field_name'] = "Key";
 $lang_str['form:hash_value_field_name'] = "Value";
+
+$lang_str['form_element_switch:reload_desc'] = "After changing '%s', please click button to reload form.";
+
 $lang_str['form:max_length_exceeded'] = "Value is longer than %d characters.";
 $lang_str['form:max_bytes_exceeded'] = "Value representation is longer than %d bytes.";
