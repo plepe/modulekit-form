@@ -160,6 +160,26 @@ EOT
       ),
     ),
   ),
+  'dogs'	=>array(
+    'type'	=>"grid",
+    'name'	=>"Dogs",
+    'desc'	=>"Describe all your dogs",
+    //'count'	=>array("default"=>2,
+    'index_type' => 'array',
+    'def'	=>array(
+      'name'	=>array(
+        'name'	=>"Name",
+	'type'	=>"text",
+	'empty_value'=>"unnamed",
+	//'check' => array("unique", "../*/name"),
+      ),
+      'age'	=>array(
+        'name'	=>"Age",
+	'type'	=>"integer",
+	'default'=>5,
+      ),
+    ),
+  ),
   'tags'	=>array(
     'type'	=>"keywords",
     'name'	=>"Tags",
@@ -258,6 +278,7 @@ $default_data=array(
   "tags"=>array("Foo", "Bar"),
   "json"=>array(1, 2, "foo", "bar"=>array("b", "a", "r")),
   "cats"=>array(array("name"=>"Foo", "age"=>3)),
+  "dogs"=>array(array("name"=>"Fido", "age"=>3), array("name" => "Dog", "age" => 18)),
   "num"=>10,
   "tt" => "foobar",
   "filters" => array("a"=>'Foobar', "b"=>"3"),
