@@ -163,6 +163,8 @@ EOT
   'dogs'	=>array(
     'type'	=>"grid",
     'name'	=>"Dogs",
+    'order'     =>true,
+    'removeable'=>true,
     'desc'	=>"Describe all your dogs",
     //'count'	=>array("default"=>2,
     'index_type' => 'array',

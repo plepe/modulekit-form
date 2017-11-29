@@ -141,6 +141,7 @@ form_element_grid.prototype.show_element_part=function(n) {
   tr.appendChild(el_div);
 
   if(order == 'order') {
+    el_div.classList.add('orderable')
     var input=document.createElement("input");
     input.type="submit";
     input.name=this.options.var_name+"[__order_up]["+n+"]";
@@ -157,6 +158,7 @@ form_element_grid.prototype.show_element_part=function(n) {
   }
 
   if (removeable === 'removeable') {
+    el_div.classList.add('removeable')
     var input=document.createElement("input");
     input.type="submit";
     input.name=this.options.var_name+"[__remove]["+n+"]";

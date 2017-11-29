@@ -282,6 +282,7 @@ class form_element_grid extends form_element {
       $tr->appendChild($el_div);
 
       if($order == "order") {
+        $el_div->setAttribute("class", "{$el_div->getAttribute("class")} orderable");
         $input=$document->createElement("input");
         $input->setAttribute("type", "submit");
         $input->setAttribute("name", "{$this->options['var_name']}[__order_up][{$n}]");
@@ -296,6 +297,7 @@ class form_element_grid extends form_element {
       }
 
       if ($removeable === 'removeable') {
+        $el_div->setAttribute("class", "{$el_div->getAttribute("class")} removeable");
         $input=$document->createElement("input");
         $input->setAttribute("type", "submit");
         $input->setAttribute("name", "{$this->options['var_name']}[__remove][{$n}]");

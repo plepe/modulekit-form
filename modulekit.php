@@ -76,6 +76,7 @@ $include_css=array(
   "inc/form_element.css",
   "inc/form_element_text.css",
   "inc/form_element_array.css",
+  "inc/form_element_grid.css",
   "inc/form_element_form_chooser.css",
   "inc/form_element_form.css",
   "inc/form_element_keywords.css",

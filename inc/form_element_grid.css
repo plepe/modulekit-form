@@ -1,0 +1,20 @@
+.form_element_grid td {
+}
+td.form_element_grid_part_element_actions {
+  width: 0;
+  padding: 0;
+}
+td.form_element_grid_part_element_actions.orderable {
+  width: 70px;
+}
+td.form_element_grid_part_element_actions.removeable {
+  width: 35px;
+}
+td.form_element_grid_part_element_actions.orderable.removeable {
+  width: 105px;
+}
+.form_element_grid_part_element_actions input {
+  margin-left: 5px;
+  width: 30px;
+}
+
