@@ -402,7 +402,7 @@ form_element_array.prototype.add_element = function (id) {
 
   this.create_element(id)
 
-  var current=document.getElementById(this.id).firstChild;
+  var current=this.dom.firstChild;
   while(current) {
     if(current.className=="form_element_array_actions") {
       current.parentNode.insertBefore(this.show_element_part(id, this.elements[id]), current);
@@ -417,7 +417,7 @@ form_element_array.prototype.add_element = function (id) {
 }
 
 form_element_array.prototype.remove_element=function(k) {
-  var current=document.getElementById(this.id).firstChild;
+  var current = this.dom.firstChild;
   while(current) {
     if((current.className=="form_element_array_part")&&(current.getAttribute("form_element_num")==k)) {
       current.parentNode.removeChild(current);
@@ -435,7 +435,7 @@ form_element_array.prototype.remove_element=function(k) {
 }
 
 form_element_array.prototype.order_up=function(k) {
-  var current=document.getElementById(this.id).firstChild;
+  var current = this.dom.firstChild;
   var prev=null;
 
   while(current) {
@@ -459,7 +459,7 @@ form_element_array.prototype.order_up=function(k) {
 }
 
 form_element_array.prototype.order_down=function(k) {
-  var current=document.getElementById(this.id).lastChild;
+  var current = this.dom.lastChild;
   var next=null;
 
   while(current) {
