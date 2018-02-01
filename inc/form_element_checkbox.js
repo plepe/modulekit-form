@@ -88,7 +88,9 @@ form_element_checkbox.prototype.update_options = function() {
     var input=document.createElement("input");
     input.type="checkbox";
     input.id=id;
-    input.name=this.options.var_name+"[]";
+    if (this.options.var_name) {
+      input.name=this.options.var_name+"[]";
+    }
     input.value=k;
     // TODO: indexOf not supported in IE8 and earlier
     if(this.data && (this.data.indexOf(k)!=-1))
@@ -116,7 +118,9 @@ form_element_checkbox.prototype.update_options = function() {
   if(('check_all' in this.def) && (this.def.check_all)) {
     this.input_check_all = document.createElement("input");
     this.input_check_all.setAttribute("type", "button");
-    this.input_check_all.setAttribute("name", this.options.var_name + "[__check_all]");
+    if (this.options.var_name) {
+      this.input_check_all.setAttribute("name", this.options.var_name + "[__check_all]");
+    }
     this.input_check_all.setAttribute("value", lang("form:check_all"));
     this.input_check_all.onclick = function() {
       for(k in this.dom_values)
@@ -130,7 +134,9 @@ form_element_checkbox.prototype.update_options = function() {
   if(('uncheck_all' in this.def) && (this.def.uncheck_all)) {
     this.input_uncheck_all = document.createElement("input");
     this.input_uncheck_all.setAttribute("type", "button");
-    this.input_uncheck_all.setAttribute("name", this.options.var_name + "[__uncheck_all]");
+    if (this.options.var_name) {
+      this.input_uncheck_all.setAttribute("name", this.options.var_name + "[__uncheck_all]");
+    }
     this.input_uncheck_all.setAttribute("value", lang("form:uncheck_all"));
     this.input_uncheck_all.onclick = function() {
       for(k in this.dom_values)
@@ -143,7 +149,9 @@ form_element_checkbox.prototype.update_options = function() {
 
   if (('presets' in this.def) && (this.def.presets)) {
     this.input_presets = document.createElement('select')
-    this.input_presets.setAttribute('name', this.options.var_name + '[__presets]')
+    if (this.options.var_name) {
+      this.input_presets.setAttribute('name', this.options.var_name + '[__presets]')
+    }
 
     this.input_presets.onchange = function () {
       var v = this.input_presets.value

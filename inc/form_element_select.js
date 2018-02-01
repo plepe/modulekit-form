@@ -83,7 +83,9 @@ form_element_select.prototype.show_element=function() {
   var select=document.createElement("select");
   select.className=cls;
   select.id=this.id;
-  select.name=this.options.var_name;
+  if (this.options.var_name) {
+    select.name=this.options.var_name;
+  }
   select.onchange=this.notify_change.bind(this);
   select.onblur=this.notify_change.bind(this);
   div.appendChild(select);

@@ -112,7 +112,9 @@ form_element_file.prototype.show_element=function() {
     var input=document.createElement("input");
     input.setAttribute("type", "hidden");
     input.setAttribute("value", JSON.stringify(this.data));
-    input.setAttribute("name", this.options.var_name+"[data]");
+    if (this.options.var_name) {
+      input.setAttribute("name", this.options.var_name+"[data]");
+    }
     div.appendChild(input);
 
     // create div for text of old file
@@ -161,7 +163,9 @@ form_element_file.prototype.show_element=function() {
     var input=document.createElement("input");
     input.setAttribute("type", "hidden");
     input.setAttribute("value", null);
-    input.setAttribute("name", this.options.var_name+"[data]");
+    if (this.options.var_name) {
+      input.setAttribute("name", this.options.var_name+"[data]");
+    }
     div.appendChild(input);
   }
 
@@ -175,7 +179,9 @@ form_element_file.prototype.show_element=function() {
   var input=document.createElement("input");
   input.setAttribute("type", "file");
   input.setAttribute("class", cls);
-  input.setAttribute("name", this.options.var_name+"[file]");
+  if (this.options.var_name) {
+    input.setAttribute("name", this.options.var_name+"[file]");
+  }
   span.appendChild(input);
 
   var button = document.createElement('span')

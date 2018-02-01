@@ -38,7 +38,9 @@ form_element_switch.prototype.create_element=function(k, element_def) {
   var element_class=get_form_element_class(element_def);
   var element_id=this.id+"_"+k;
   var element_options=new clone(this.options);
-  element_options.var_name=element_options.var_name+"["+k+"]";
+  if (this.options.var_name) {
+    element_options.var_name=element_options.var_name+"["+k+"]";
+  }
 
   if(class_exists(element_class)) {
     this.elements[k]=eval("new "+element_class+"()");

@@ -78,7 +78,9 @@ form_element_radio.prototype.update_options = function() {
     var input=document.createElement("input");
     input.type="radio";
     input.id=id;
-    input.name=this.options.var_name;
+    if (this.options.var_name) {
+      input.name=this.options.var_name;
+    }
     input.value=k;
     // TODO: indexOf not supported in IE8 and earlier
     if(this.data==k)

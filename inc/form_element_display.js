@@ -35,7 +35,9 @@ form_element_display.prototype.show_element=function() {
 
   input = document.createElement("input");
   input.type = "hidden";
-  input.name=this.options.var_name;
+  if (this.options.var_name) {
+    input.name=this.options.var_name;
+  }
   if(this.data)
     input.value=this.data;
   div.appendChild(input);

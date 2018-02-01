@@ -35,7 +35,9 @@ form_element_autocomplete.prototype.create_element=function(div) {
   if(this.def.html_attributes)
     for(var i in this.def.html_attributes)
       input.setAttribute(i, this.def.html_attributes[i]);
-  input.name=this.options.var_name;
+  if (this.options.var_name) {
+    input.name=this.options.var_name;
+  }
 
   div.appendChild(input);
 

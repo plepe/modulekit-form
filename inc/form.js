@@ -5,15 +5,13 @@ function form(id, def, options) {
 
   if (!id) {
     id = '_'
-    options.var_name = ''
+    options.var_name = null
   }
 
   this.id=id;
   this.def=def;
   form_process_def(this.def);
   this.options=options;
-  if(!('var_name' in this.options))
-    this.options.var_name=this.id;
 
   this.has_data=false;
 
@@ -26,13 +24,15 @@ function form(id, def, options) {
 
     // read orig_data
     var orig_data;
-    if("form_orig_"+this.options.var_name in window)
-      orig_data = window["form_orig_"+this.options.var_name];
-    else {
-      var inputs=document.getElementsByTagName("input");
-      for(var i=0; i<inputs.length; i++) {
-	if(inputs[i].name=="form_orig_"+this.options.var_name)
-	  orig_data=JSON.parse(inputs[i].value);
+    if (this.options.var_name) {
+      if("form_orig_"+this.options.var_name in window)
+        orig_data = window["form_orig_"+this.options.var_name];
+      else {
+        var inputs=document.getElementsByTagName("input");
+        for(var i=0; i<inputs.length; i++) {
+          if(inputs[i].name=="form_orig_"+this.options.var_name)
+            orig_data=JSON.parse(inputs[i].value);
+        }
       }
     }
 

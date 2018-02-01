@@ -64,7 +64,9 @@ form_element_keywords.prototype.show_element=function() {
 
   var input=this.create_element();
   input.className=cls;
-  input.name=this.options.var_name;
+  if (this.options.var_name) {
+    input.name=this.options.var_name;
+  }
   if(this.data)
     input.value=this.data.join(", ");
   div.appendChild(input);

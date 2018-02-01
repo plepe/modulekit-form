@@ -252,7 +252,9 @@ form_element_form_chooser.prototype.show_element_part=function(k, element) {
   if(order == 'order') {
     var input=document.createElement("input");
     input.type="submit";
-    input.name=this.options.var_name+"[__order_up]["+k+"]";
+    if (this.options.var_name) {
+      input.name=this.options.var_name+"[__order_up]["+k+"]";
+    }
     input.value="↑";
     input.onclick = function (k) {
       this.order_up(k)
@@ -263,7 +265,9 @@ form_element_form_chooser.prototype.show_element_part=function(k, element) {
 
     var input=document.createElement("input");
     input.type="submit";
-    input.name=this.options.var_name+"[__order_down]["+k+"]";
+    if (this.options.var_name) {
+      input.name=this.options.var_name+"[__order_down]["+k+"]";
+    }
     input.value="↓";
     input.onclick = function (k) {
       this.order_down(k)
@@ -277,7 +281,9 @@ form_element_form_chooser.prototype.show_element_part=function(k, element) {
   if (removeable === 'removeable') {
     var input=document.createElement("input");
     input.type="submit";
-    input.name=this.options.var_name+"[__remove]["+k+"]";
+    if (this.options.var_name) {
+      input.name=this.options.var_name+"[__remove]["+k+"]";
+    }
     input.value="X";
     input.onclick = function (k) {
       this.remove_element(k)
@@ -312,7 +318,9 @@ form_element_form_chooser.prototype.show_element=function() {
   div.appendChild(el_div);
 
   this.action_add=document.createElement("select");
-  this.action_add.name=this.options.var_name+"[__new]";
+  if (this.options.var_name) {
+    this.action_add.name=this.options.var_name+"[__new]";
+  }
   this.action_add.className = 'form_element_form_chooser_action_add'
 
   var option = document.createElement('option');
@@ -392,7 +400,7 @@ form_element_form_chooser.prototype.add_element = function(k) {
   }
 
   if(!(k in this.available_elements)) {
-    console.log(this.id + ' - add_element: "' + k + '" not found')
+    //console.log(this.id + ' - add_element: "' + k + '" not found')
     return false
   }
 
