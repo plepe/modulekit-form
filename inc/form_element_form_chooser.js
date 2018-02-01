@@ -9,6 +9,10 @@ form_element_form_chooser.prototype.init=function(id, def, options, form_parent)
 }
 
 form_element_form_chooser.prototype.build_form=function() {
+  if ('elements' in this) {
+    return
+  }
+
   this.elements={};
   this.element_divs = {};
   this.available_elements = {};
@@ -157,6 +161,10 @@ form_element_form_chooser.prototype.get_data=function() {
 }
 
 form_element_form_chooser.prototype.set_data=function(data) {
+  if (!('elements' in this)) {
+    this.build_form()
+  }
+
   this.data=data;
 
   if(data)
@@ -390,20 +398,21 @@ form_element_form_chooser.prototype.add_element = function(k) {
 
   this.elements[k] = this.available_elements[k]
 
-  this.dom_table_body.appendChild(this.show_element_part(k, this.elements[k]))
+  if (this.dom_table_body) {
+    this.dom_table_body.appendChild(this.show_element_part(k, this.elements[k]))
 
-  this.resize()
+    this.resize()
 
-  this.action_add.value = ''
-  for (var i = 0; i < this.action_add.options.length; i++) {
-    var option = this.action_add.options[i]
+    for (var i = 0; i < this.action_add.options.length; i++) {
+      var option = this.action_add.options[i]
 
-    if (option.value === k) {
-      option.disabled = true
+      if (option.value === k) {
+        option.disabled = true
+      }
     }
-  }
 
-  this.notify_change()
+    this.notify_change()
+  }
 
   return false
 }
@@ -520,7 +529,7 @@ form_element_form_chooser.prototype.refresh=function(force) {
 form_element_form_chooser.prototype.resize = function () {
   this.parent("form_element_form_chooser").resize.call(this);
 
-  if (this.dom_table.rows.length >= 1) {
+  if (this.dom_table && this.dom_table.rows.length >= 1) {
     var width = this.dom_table.parentNode.parentNode.offsetWidth - this.dom_table.rows[0].cells[2].offsetWidth
     var em_height = get_em_height(this.dom_table);
 
