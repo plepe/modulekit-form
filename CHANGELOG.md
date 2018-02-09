@@ -5,6 +5,7 @@ Newer
 * Form Element Select: suppress placeholder (by setting option to false)
 * Form Element Checkbox: support option 'presets' (and 'presets:label')
 * Form Element Array: new option 'index_type' (keep, _keys or array)
+* Form Element Checkbox: support option 'auto_add_values'
 
 2017-09-15 (Version >= 2.6)
 ---------------------------

@@ -55,9 +55,11 @@ form_element_checkbox.prototype.set_data=function(data) {
 
   for(var i=0; i<this.data.length; i++) {
     var k=this.data[i];
-    if (k in this.dom_values) {
-      this.dom_values[k].checked=true;
+    if (!(k in this.dom_values)) {
+      this.show_element_value(k, k)
     }
+
+    this.dom_values[k].checked=true;
   }
 }
 
@@ -78,7 +80,12 @@ form_element_checkbox.prototype.show_element_value = function(k, value) {
 
   var span=document.createElement("span");
   span.className=cls;
-  this.dom.appendChild(span);
+  if (!this.dom_last_value) {
+    this.dom.appendChild(span);
+  } else {
+    this.dom.insertBefore(span, this.dom_last_value.nextSibling);
+  }
+  this.dom_last_value = span
 
   var input=document.createElement("input");
   input.type="checkbox";
@@ -109,12 +116,19 @@ form_element_checkbox.prototype.show_element_value = function(k, value) {
 }
 
 form_element_checkbox.prototype.update_options = function() {
+  var data = this.get_data()
+
   while(this.dom.firstChild)
     this.dom.removeChild(this.dom.firstChild);
 
   this.dom_values={};
   var values=this.get_values();
 
+  if (this.def.auto_add_values) {
+    for (var i in data) {
+      if (!(data[i] in values)) {
+        values[data[i]] = data[i];
+      }
     }
   }
 

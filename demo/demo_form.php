@@ -90,6 +90,7 @@ EOT
     'name'	=>"What languages do you speak?",
     'type'	=>"checkbox",
     'values'	=>array("php"=>"PHP", "perl"=>"Perl", "c"=>"C", "cpp"=>"C++", "java"=>"Java", "js"=>array("name"=>"Javascript", "desc"=>"Script language, supported by web browsers")),
+    'auto_add_values' => true,
     'presets'   => array(
       array('name' => 'Web', 'values' => array('php', 'js', 'java'), 'desc:en' => 'Languages used for web development', 'desc:de' => 'Computersprachen für Webseiten'),
       array('name' => 'System', 'values' => array('c', 'cpp', 'java'), 'desc' => 'Hard-core ;-)'),
@@ -251,7 +252,7 @@ $default_data=array(
   "hobbies"=>array(0=>"Linux", 2=>"PHP", 5=>"Cycling"),
   "fav_hobby"=>"Cycling",
   "birthday"=>"1879-03-14", // Albert Einstein
-  "languages"=>array("php", "js"),
+  "languages"=>array("php", "js", "test"),
   "nationality"=>"de",
   "residence"=>"Germany",
   "os"=>array("Ubuntu Linux", "Debian Linux"),

@@ -55,7 +55,17 @@ class form_element_checkbox extends form_element {
     if($data==="")
       $data=array();
 
-    foreach($this->get_values() as $k=>$v) {
+    $values = $this->get_values();
+
+    if (array_key_exists('auto_add_values', $this->def) && $this->def['auto_add_values']) {
+      foreach ($this->get_data() as $d) {
+        if (!array_key_exists($d, $values)) {
+          $values[$d] = $d;
+        }
+      }
+    }
+
+    foreach($values as $k=>$v) {
       $id="{$this->id}-$k";
 
       // check for changes
