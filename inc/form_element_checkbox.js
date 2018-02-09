@@ -55,7 +55,9 @@ form_element_checkbox.prototype.set_data=function(data) {
 
   for(var i=0; i<this.data.length; i++) {
     var k=this.data[i];
-    this.dom_values[k].checked=true;
+    if (k in this.dom_values) {
+      this.dom_values[k].checked=true;
+    }
   }
 }
 
