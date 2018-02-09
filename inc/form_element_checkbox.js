@@ -70,6 +70,44 @@ form_element_checkbox.prototype.show_element=function() {
   return div;
 }
 
+form_element_checkbox.prototype.show_element_value = function(k, value) {
+  var id=this.id+"-"+k;
+
+  var cls="form_orig";
+  // TODO: check for changed data
+
+  var span=document.createElement("span");
+  span.className=cls;
+  this.dom.appendChild(span);
+
+  var input=document.createElement("input");
+  input.type="checkbox";
+  input.id=id;
+  input.name=this.options.var_name+"[]";
+  input.value=k;
+  // TODO: indexOf not supported in IE8 and earlier
+  if(this.data && (this.data.indexOf(k)!=-1))
+    input.checked=true;
+  span.appendChild(input);
+  this.dom_values[k]=input;
+
+  input.onchange=this.notify_change.bind(this);
+
+  var label=document.createElement("label");
+  label.setAttribute("for", id);
+  var text=document.createTextNode(get_value_string(value));
+  label.appendChild(text);
+  span.appendChild(label);
+
+  var desc = get_value_string(value, "desc");
+  if(desc) {
+    var desc_label = document.createElement("span");
+    desc_label.setAttribute("class", "description");
+    desc_label.appendChild(document.createTextNode(desc));
+    span.appendChild(desc_label);
+  }
+}
+
 form_element_checkbox.prototype.update_options = function() {
   while(this.dom.firstChild)
     this.dom.removeChild(this.dom.firstChild);
@@ -77,42 +115,11 @@ form_element_checkbox.prototype.update_options = function() {
   this.dom_values={};
   var values=this.get_values();
 
-  for(var k in values) {
-    var id=this.id+"-"+k;
-
-    var cls="form_orig";
-    // TODO: check for changed data
-
-    var span=document.createElement("span");
-    span.className=cls;
-    this.dom.appendChild(span);
-
-    var input=document.createElement("input");
-    input.type="checkbox";
-    input.id=id;
-    input.name=this.options.var_name+"[]";
-    input.value=k;
-    // TODO: indexOf not supported in IE8 and earlier
-    if(this.data && (this.data.indexOf(k)!=-1))
-      input.checked=true;
-    span.appendChild(input);
-    this.dom_values[k]=input;
-
-    input.onchange=this.notify_change.bind(this);
-
-    var label=document.createElement("label");
-    label.setAttribute("for", id);
-    var text=document.createTextNode(get_value_string(values[k]));
-    label.appendChild(text);
-    span.appendChild(label);
-
-    var desc = get_value_string(values[k], "desc");
-    if(desc) {
-      var desc_label = document.createElement("span");
-      desc_label.setAttribute("class", "description");
-      desc_label.appendChild(document.createTextNode(desc));
-      span.appendChild(desc_label);
     }
+  }
+
+  for(var k in values) {
+    this.show_element_value(k, values[k])
   }
 
   if(('check_all' in this.def) && (this.def.check_all)) {
