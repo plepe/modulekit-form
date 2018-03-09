@@ -332,6 +332,16 @@ Definition:
 Value:
 * Mixed value (internally, the data will be saved in JSON format)
 
+Form Element "Label"
+--------------------
+A text input which can not be modified. It will update on set_data().
+
+Definition:
+* type: 'label'
+
+Value:
+* The value which has been set.
+
 Form Element "Color"
 --------------------
 An input of type 'color'. You may want to load the Spectrum Colorpicker: http://bgrins.github.com/spectrum/ 
