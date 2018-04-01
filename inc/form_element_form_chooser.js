@@ -108,6 +108,7 @@ form_element_form_chooser.prototype.connect=function(dom_parent) {
           var k = this.action_add.value
           this.add_element(k)
           this.notify_change()
+          this.action_add.value = ''
           return false
         }.bind(this)
       }
@@ -344,6 +345,7 @@ form_element_form_chooser.prototype.show_element=function() {
     var k = this.action_add.value
     this.add_element(k)
     this.notify_change()
+    this.action_add.value = ''
     return false
   }.bind(this)
 
