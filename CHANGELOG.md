@@ -6,6 +6,7 @@ Newer
 * Form Element Checkbox: support option 'presets' (and 'presets:label')
 * Form Element Array: new option 'index_type' (keep, _keys or array)
 * Form Element Checkbox: support option 'auto_add_values'
+* Form Element Text: option 'change_on' ('blur', 'keyup')
 
 2017-09-15 (Version >= 2.6)
 ---------------------------
