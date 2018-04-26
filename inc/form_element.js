@@ -669,6 +669,12 @@ form_element.prototype.get_values=function() {
   if(!this.def.values_mode)
     this.def.values_mode=this.def.values.length?"values":"keys";
 
+  if (this.def.values_mode === 'property') {
+    if (!this.def.values_property) {
+      this.def.values_property = 'id'
+    }
+  }
+
   for(var k in this.def.values) {
     var val=this.def.values[k];
 
@@ -691,6 +697,9 @@ form_element.prototype.get_values=function() {
       case "values":
         ret[val]={ 'name': val };
 	break;
+      case "property":
+        ret[val[this.def.values_property]] = val;
+        break;
       default:
         // invalid mode
     }

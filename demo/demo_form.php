@@ -80,6 +80,16 @@ EOT
     'name'      =>array("en"=>"Favorite hobby", "de"=>"Lieblingshobby"),
     'include_data' => 'not_null',
   ),
+  'fav_meal'    => array(
+    'type'      => 'select',
+    'name'      => 'Favorite Meal',
+    'values_mode' => 'property',
+    'values_property' => 'id',
+    'values'    => array(
+      array('id' => 'pizza', 'name' => 'Pizza'),
+      array('id' => 'kebab', 'name' => 'Kebab'),
+    ),
+  ),
   'birthday'	=>array(
     'name'	=>"Birthday",
     'type'	=>"date",

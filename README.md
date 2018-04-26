@@ -237,7 +237,7 @@ Definition:
 * type: 'checkbox'
 * values: hash array of values, e.g. array("php"=>"PHP", "cpp"=>"C++", "js"=>"Javascript") or simple array of values, e.g. array("PHP", "C++", "Javascript"); may be translated like: array('m'=>array("en"=>"male", "de"=>"männlich"), 'f'=>array("en"=>"female", "de"=>"weiblich")). A value may also have a description (see Form Element "Select").
 * values_func: function(s) which can update values list; see chapter "Func Call" for details.
-* values_mode: 'keys' (default when a hash array is used) or 'values' (default when a simple array is used)
+* values_mode: 'keys' (default when a hash array is used) or 'values' (default when a simple array is used) or 'property' (values is an array of hashes, where a property (default: 'id') is used as key).
 * check_all: if true, include a button "check all" which will check all checkboxes
 * uncheck_all: like 'check_all', but for unchecking
 * presets: Adds a selector with presets for checkbox selections. An array (assoc. array), where each entry has a name and a list of options to select (values). Example: [ { name: "Test", values: [ 1, 2, 3 ] }, { name: "Only 3": values: [ 3 ] } ]. Each entry may also have a description ('desc').
@@ -256,7 +256,7 @@ Definition:
 * type: 'radio'
 * values: hash array of values, e.g. array("m"=>"male", "f"=>"female") or simple array of values, e.g. array("male", "female"); may be translated like: array('m'=>array("en"=>"male", "de"=>"männlich"), 'f'=>array("en"=>"female", "de"=>"weiblich")). A value may also have a description (see Form Element "Select").
 * values_func: function(s) which can update values list; see chapter "Func Call" for details.
-* values_mode: 'keys' (default when a hash array is used) or 'values' (default when a simple array is used)
+* values_mode: 'keys' (default when a hash array is used) or 'values' (default when a simple array is used) or 'property' (values is an array of hashes, where a property (default: 'id') is used as key).
 
 Value:
 * In 'keys' values_mode the key of the chosen value is returned (e.g. "m"); in 'values' mode the value is returned (e.g. "male")
@@ -278,7 +278,7 @@ A dropdown box where an entry can be selected.
 Definition:
 * type: 'select'
 * values: hash array of values, e.g. array("m"=>"male", "f"=>"female") or simple array of values array("male", "female"); optionally descriptions for values are possible too, when each value is a hash itself (value is saved as key 'name', description in key 'desc') e.g. 'f'=>array("name"=>"female", "desc"=>"the female gender"); may be translated like: array('m'=>array("en"=>"male", "de"=>"männlich"), 'f'=>array("en"=>"female", "de"=>"weiblich")); optionally localized descriptions for values are possible too (with prefix 'desc:'), e.g. 'f'=>array("en"=>"female", "desc:en"=>"the female gender", "de"=>"weiblich", "desc:de"=>"Das weibliche Geschlecht"); optionally values can be hidden by adding a key 'show_depend' with a check similar to the field 'show_depend'.
-* values_mode: 'keys' (default when a hash array is used) or 'values' (default when a simple array is used)
+* values_mode: 'keys' (default when a hash array is used) or 'values' (default when a simple array is used) or 'property' (values is an array of hashes, where a property (default: 'id') is used as key).
 * values_func: function(s) which can update values list; see chapter "Func Call" for details.
 * empty_value: Value to be returned if key is empty (default: null)
 * placeholder: Text which will be used, when no value is selected (default: '--- please select ---'). If set to boolean false, no placeholder option will be created.
@@ -295,7 +295,7 @@ Definition:
 * type: 'select'
 * values: hash array of values, e.g. array("m"=>"male", "f"=>"female") or simple array of values array("male", "female"); may be translated like: array('m'=>array("en"=>"male", "de"=>"männlich"), 'f'=>array("en"=>"female", "de"=>"weiblich")); optionally descriptions for values are possible too (with prefix 'desc:'), e.g. 'f'=>array("en"=>"female", "desc:en"=>"the female gender", "de"=>"weiblich", "desc:de"=>"Das weibliche Geschlecht")
 * values_func: function(s) which can update values list; see chapter "Func Call" for details.
-* values_mode: 'keys' (default when a hash array is used) or 'values' (default when a simple array is used)
+* values_mode: 'keys' (default when a hash array is used) or 'values' (default when a simple array is used) or 'property' (values is an array of hashes, where a property (default: 'id') is used as key).
 * empty_value: Value to be returned if key is empty (default: null)
 * placeholder: Text which will be used, when no value is selected (default: '--- please select ---')
 
