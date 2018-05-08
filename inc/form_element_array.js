@@ -219,8 +219,6 @@ form_element_array.prototype.set_data=function(data) {
       this.dom.insertBefore(div, this.action_add.parentNode)
     }
   }
-
-  this.data = null
 }
 
 form_element_array.prototype.set_orig_data=function(data) {

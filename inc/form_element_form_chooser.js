@@ -185,8 +185,6 @@ form_element_form_chooser.prototype.set_data=function(data) {
   }
 
   this.resize();
-
-  this.data=null;
 }
 
 form_element_form_chooser.prototype.set_orig_data=function(data) {
