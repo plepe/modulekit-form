@@ -410,8 +410,6 @@ form_element_form_chooser.prototype.add_element = function(k) {
         option.disabled = true
       }
     }
-
-    this.notify_change()
   }
 
   return false
