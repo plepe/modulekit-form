@@ -71,6 +71,7 @@ EOT
     'check'	=>array("unique"),
     'order'	=>false,
     'exclude_null_values' => true,
+    'createable' => false,
   ),
   'fav_hobby'   =>array(
     'type'      => 'select',

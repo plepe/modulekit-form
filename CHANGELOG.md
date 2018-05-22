@@ -7,6 +7,7 @@ Newer
 * Form Element Array: new option 'index_type' (keep, _keys or array)
 * Form Element Checkbox: support option 'auto_add_values'
 * All elements which have 'values': new values_mode 'property'
+* Form Element Array: new option 'createable'
 
 2017-09-15 (Version >= 2.6)
 ---------------------------

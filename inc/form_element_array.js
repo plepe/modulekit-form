@@ -318,7 +318,18 @@ form_element_array.prototype.show_element_part=function(k, element) {
 }
 
 form_element_array.prototype.show_element=function() {
+  var createable
   var div=this.parent("form_element_array").show_element.call(this);
+
+  if(!('createable' in this.def) || this.def.createable !== false)
+    createable = 'createable'
+  else
+    createable = 'not_createable'
+
+  if (this.tr) {
+    this.tr.setAttribute('class', this.tr.getAttribute('class') + ' ' + createable)
+  }
+  this.dom.setAttribute('class', this.dom.getAttribute('class') + ' ' + createable)
 
   for(var k in this.elements) {
     var part_div=this.show_element_part(k, this.elements[k]);
@@ -329,22 +340,29 @@ form_element_array.prototype.show_element=function() {
   el_div.className="form_element_array_actions";
   div.appendChild(el_div);
 
-  this.action_add=document.createElement("input");
-  this.action_add.type="submit";
-  this.action_add.name=this.options.var_name+"[__new]";
-  if("button:add_element" in this.def) {
-    if(typeof(this.def['button:add_element']) == "object")
-      this.action_add.value = lang(this.def['button:add_element']);
+  if (createable === 'createable') {
+    this.action_add=document.createElement("input");
+    this.action_add.type="submit";
+    this.action_add.name=this.options.var_name+"[__new]";
+    if("button:add_element" in this.def) {
+      if(typeof(this.def['button:add_element']) == "object")
+        this.action_add.value = lang(this.def['button:add_element']);
+      else
+        this.action_add.value = this.def['button:add_element'];
+    }
     else
-      this.action_add.value = this.def['button:add_element'];
+      this.action_add.value=lang('form:add_element');
+    this.action_add.onclick = function (k) {
+      this.add_element()
+      this.notify_change()
+      return false
+    }.bind(this)
   }
-  else
-    this.action_add.value=lang('form:add_element');
-  this.action_add.onclick = function (k) {
-    this.add_element()
-    this.notify_change()
-    return false
-  }.bind(this)
+  else {
+    // create empty span, because we add before new items will be added before
+    // the 'action_add' input
+    this.action_add = document.createElement('span')
+  }
   el_div.appendChild(this.action_add);
 
   return div;
