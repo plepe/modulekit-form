@@ -12,7 +12,11 @@ form_element_text.prototype.connect=function(dom_parent) {
   if(!this.dom_element)
     this.dom_element=this.dom_parent.getElementsByTagName("input")[0];
 
-  this.dom_element.onblur=this.notify_change.bind(this);
+  if (this.def.change_on === 'keyup') {
+    this.dom_element.onkeyup = this.notify_change.bind(this)
+  } else {
+    this.dom_element.onblur = this.notify_change.bind(this)
+  }
 }
 
 form_element_text.prototype.create_element=function() {
@@ -41,7 +45,11 @@ form_element_text.prototype.show_element=function() {
     input.value=this.data;
   div.appendChild(input);
   this.dom_element=input;
-  this.dom_element.onblur=this.notify_change.bind(this);
+  if (this.def.change_on === 'keyup') {
+    this.dom_element.onkeyup = this.notify_change.bind(this)
+  } else {
+    this.dom_element.onblur = this.notify_change.bind(this)
+  }
 
   this.update_options();
 

@@ -8,6 +8,7 @@ Newer
 * Form Element Checkbox: support option 'auto_add_values'
 * All elements which have 'values': new values_mode 'property'
 * Form Element Array: new option 'createable'
+* Form Element Text: option 'change_on' ('blur', 'keyup')
 
 2017-09-15 (Version >= 2.6)
 ---------------------------
