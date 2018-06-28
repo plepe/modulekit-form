@@ -137,7 +137,7 @@ EOT
   ),
   'residence'	=>array(
     'name'	=>"Where do you live",
-    'type'	=>"select",
+    'type'	=>"select_other",
     'values'	=>array("Austria", "Australia", "Germany", "Great Britian", "USA", "asdfjaksdfj klasdjfkas jdfkassjdk fjaksjdfka jsdfk jaskdfjlkas jdfkasdfj kasfjdk jaskdfjkas jdfkl ajsfkdjadjf kljadfljadf"),
   ),
   'supervisor'	=>array(

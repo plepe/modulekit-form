@@ -748,3 +748,13 @@ function get_form_element_class(def) {
 
   return element_class;
 }
+
+function form_create_element (id, def, options, parent) {
+  var element_class=get_form_element_class(def)
+  var element_options=new clone(this.options)
+
+  var element = eval("new " + element_class + "()")
+  element.init(id, def, options, parent)
+
+  return element
+}
