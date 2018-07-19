@@ -431,6 +431,8 @@ Definition:
 * removeable: whether the elements shall be removeable. true (default) / false.
 * result_keep_order: if true, resulting elements will be ordered by appearance in def.
 
+Child elements may have a property 'non_used_value', which will be returned for this element if the child has not been added to the form.
+
 Example:
 ```json
 "foobar": {
@@ -443,7 +445,8 @@ Example:
         },
         "bar": {
             "name": "Bar",
-            "type": "textarea"
+            "type": "textarea",
+            "non_used_value": "default value"
         }
     }
 }

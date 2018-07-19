@@ -145,6 +145,17 @@ form_element_form_chooser.prototype.get_data=function() {
     }
   }
 
+  for (i in this.available_elements) {
+    if (!(i in this.elements)) {
+      var element = this.available_elements[i]
+
+      if (element.def.non_used_value) {
+        ret[i] = element.def.non_used_value
+        count++
+      }
+    }
+  }
+
   if (this.def.result_keep_order) {
     var d = {}
     for (var k in this.def.def) {

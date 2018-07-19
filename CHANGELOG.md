@@ -9,6 +9,7 @@ Newer
 * All elements which have 'values': new values_mode 'property'
 * Form Element Array: new option 'createable'
 * Form Element Text: option 'change_on' ('blur', 'keyup')
+* Form Element Form Chooser: children may have option 'non_used_value'
 
 2017-09-15 (Version >= 2.6)
 ---------------------------

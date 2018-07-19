@@ -53,6 +53,14 @@ class form_element_form_chooser extends form_element {
 	$data[$k] = $d;
     }
 
+    foreach($this->available_elements as $k=>$element) {
+      if (!array_key_exists($k, $this->elements)) {
+        if (array_key_exists('non_used_value', $element->def)) {
+          $data[$k] = $element->def['non_used_value'];
+        }
+      }
+    }
+
     if (array_key_exists('result_keep_order', $this->def) && $this->def['result_keep_order']) {
       $d = array();
       foreach ($this->def['def'] as $k => $v) {
