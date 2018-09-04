@@ -31,8 +31,13 @@ form_element_boolean.prototype.show_element=function() {
     for(var i in this.def.html_attributes)
       input.setAttribute(i, this.def.html_attributes[i]);
 
-  input.name=this.options.var_name;
-  input.id=this.options.var_name;
+  if (this.options.var_name) {
+    input.name=this.options.var_name;
+    input.id=this.options.var_name;
+  } else {
+    input.id = Math.random()
+  }
+
   input.value="on";
   if((this.data==="on")||(this.data===true))
     input.setAttribute("checked", "checked");
@@ -42,7 +47,7 @@ form_element_boolean.prototype.show_element=function() {
   this.dom_element.onchange=this.notify_change.bind(this);
 
   var label=document.createElement("label");
-  label.setAttribute("for", this.options.var_name);
+  label.setAttribute("for", input.id);
   span.appendChild(label);
 
   return div;

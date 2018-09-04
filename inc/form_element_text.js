@@ -40,7 +40,9 @@ form_element_text.prototype.show_element=function() {
       input.setAttribute(i, this.def.html_attributes[i]);
 
   input.className=cls;
-  input.name=this.options.var_name;
+  if (this.options.var_name) {
+    input.name=this.options.var_name;
+  }
   if(this.data)
     input.value=this.data;
   div.appendChild(input);

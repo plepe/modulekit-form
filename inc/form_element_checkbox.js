@@ -133,13 +133,55 @@ form_element_checkbox.prototype.update_options = function() {
   }
 
   for(var k in values) {
+    var id=this.id+"-"+k;
+
+    var cls="form_orig";
+    // TODO: check for changed data
+
+    var span=document.createElement("span");
+    span.className=cls;
+    this.dom.appendChild(span);
+
+    var input=document.createElement("input");
+    input.type="checkbox";
+    input.id=id;
+    if (this.options.var_name) {
+      input.name=this.options.var_name+"[]";
+    }
+    input.value=k;
+    // TODO: indexOf not supported in IE8 and earlier
+    if(this.data && (this.data.indexOf(k)!=-1))
+      input.checked=true;
+    span.appendChild(input);
+    this.dom_values[k]=input;
+
+    input.onchange=this.notify_change.bind(this);
+
+    var label=document.createElement("label");
+    label.setAttribute("for", id);
+    var text=document.createTextNode(get_value_string(values[k]));
+    label.appendChild(text);
+    span.appendChild(label);
+
+    var desc = get_value_string(values[k], "desc");
+    if(desc) {
+      var desc_label = document.createElement("span");
+      desc_label.setAttribute("class", "description");
+      desc_label.appendChild(document.createTextNode(desc));
+      span.appendChild(desc_label);
+    }
+  }
+
+  for(var k in values) {
     this.show_element_value(k, values[k])
   }
 
   if(('check_all' in this.def) && (this.def.check_all)) {
     this.input_check_all = document.createElement("input");
     this.input_check_all.setAttribute("type", "button");
-    this.input_check_all.setAttribute("name", this.options.var_name + "[__check_all]");
+    if (this.options.var_name) {
+      this.input_check_all.setAttribute("name", this.options.var_name + "[__check_all]");
+    }
     this.input_check_all.setAttribute("value", lang("form:check_all"));
     this.input_check_all.onclick = function() {
       for(k in this.dom_values)
@@ -153,7 +195,9 @@ form_element_checkbox.prototype.update_options = function() {
   if(('uncheck_all' in this.def) && (this.def.uncheck_all)) {
     this.input_uncheck_all = document.createElement("input");
     this.input_uncheck_all.setAttribute("type", "button");
-    this.input_uncheck_all.setAttribute("name", this.options.var_name + "[__uncheck_all]");
+    if (this.options.var_name) {
+      this.input_uncheck_all.setAttribute("name", this.options.var_name + "[__uncheck_all]");
+    }
     this.input_uncheck_all.setAttribute("value", lang("form:uncheck_all"));
     this.input_uncheck_all.onclick = function() {
       for(k in this.dom_values)
@@ -166,7 +210,9 @@ form_element_checkbox.prototype.update_options = function() {
 
   if (('presets' in this.def) && (this.def.presets)) {
     this.input_presets = document.createElement('select')
-    this.input_presets.setAttribute('name', this.options.var_name + '[__presets]')
+    if (this.options.var_name) {
+      this.input_presets.setAttribute('name', this.options.var_name + '[__presets]')
+    }
 
     this.input_presets.onchange = function () {
       var v = this.input_presets.value

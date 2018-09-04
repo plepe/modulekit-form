@@ -279,7 +279,9 @@ form_element_array.prototype.show_element_part=function(k, element) {
   if(order == 'order') {
     var input=document.createElement("input");
     input.type="submit";
-    input.name=this.options.var_name+"[__order_up]["+k+"]";
+    if (this.options.var_name) {
+      input.name=this.options.var_name+"[__order_up]["+k+"]";
+    }
     input.value="↑";
     input.onclick = function (k) {
       this.order_up(k)
@@ -290,7 +292,9 @@ form_element_array.prototype.show_element_part=function(k, element) {
 
     var input=document.createElement("input");
     input.type="submit";
-    input.name=this.options.var_name+"[__order_down]["+k+"]";
+    if (this.options.var_name) {
+      input.name=this.options.var_name+"[__order_down]["+k+"]";
+    }
     input.value="↓";
     input.onclick = function (k) {
       this.order_down(k)
@@ -303,7 +307,9 @@ form_element_array.prototype.show_element_part=function(k, element) {
   if (removeable === 'removeable') {
     var input=document.createElement("input");
     input.type="submit";
-    input.name=this.options.var_name+"[__remove]["+k+"]";
+    if (this.options.var_name) {
+      input.name=this.options.var_name+"[__remove]["+k+"]";
+    }
     input.value="X";
     input.onclick = function (k) {
       this.remove_element(k)
@@ -343,15 +349,19 @@ form_element_array.prototype.show_element=function() {
   if (createable === 'createable') {
     this.action_add=document.createElement("input");
     this.action_add.type="submit";
-    this.action_add.name=this.options.var_name+"[__new]";
+    if (this.options.var_name) {
+      this.action_add.name=this.options.var_name+"[__new]";
+    }
     if("button:add_element" in this.def) {
       if(typeof(this.def['button:add_element']) == "object")
         this.action_add.value = lang(this.def['button:add_element']);
       else
         this.action_add.value = this.def['button:add_element'];
     }
-    else
+    else {
       this.action_add.value=lang('form:add_element');
+    }
+
     this.action_add.onclick = function (k) {
       this.add_element()
       this.notify_change()
