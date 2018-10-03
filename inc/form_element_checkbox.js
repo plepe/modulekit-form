@@ -24,6 +24,8 @@ form_element_checkbox.prototype.connect=function(dom_parent) {
 
     current=current.nextSibling;
   }
+
+  this.values = this.get_values();
 }
 
 form_element_checkbox.prototype.get_data=function() {
