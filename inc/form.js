@@ -262,7 +262,7 @@ var em_height_cache = {};
 function get_em_height(dom_el) {
   var font_size = elementCurrentStyle(dom_el, "font-size");
 
-  if(!(font_size in em_height_cache)) {
+  if(!(font_size in em_height_cache) || em_height_cache[font_size] === 0) {
     // calculate height of M
     var em=document.createElement("div");
     em.setAttribute("style", "display:inline-block; padding:0; line-height:1; position:absolute; visibility:hidden; font-size:1em;");
