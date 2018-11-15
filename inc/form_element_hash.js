@@ -98,3 +98,7 @@ form_element_hash.prototype.set_orig_data=function(data) {
 form_element_hash.prototype.get_orig_data=function() {
   return this._shrink_data(this.parent("form_element_hash").get_orig_data.call(this));
 }
+
+form_element_array.prototype.get_count = function () {
+  return Object.keys(this.get_data()).length
+}

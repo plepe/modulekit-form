@@ -10,6 +10,7 @@ Newer
 * Form Element Array: new option 'createable'
 * Form Element Text: option 'change_on' ('blur', 'keyup')
 * Form Element Form Chooser: children may have option 'non_used_value'
+* Form Element Array (and Hash): new check 'count'
 
 2017-09-15 (Version >= 2.6)
 ---------------------------

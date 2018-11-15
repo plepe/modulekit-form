@@ -581,3 +581,44 @@ form_element_array.prototype.check_required=function(list, param) {
       list.push(param[0]);
   }
 }
+
+form_element_array.prototype.get_count = function () {
+  return this.get_data().length
+}
+
+form_element_array.prototype.check_count=function(list, param) {
+  var op = param[0]
+  var value = param[1]
+  var count = this.get_count()
+  var result
+
+  switch (op) {
+    case '>=':
+      result = count >= value
+      break
+    case '>':
+      result = count > value
+      break
+    case '<':
+      result = count < value
+      break
+    case '<=':
+      result = count <= value
+      break
+    case '==':
+      result = count == value
+      break
+    case '!=':
+      result = count != value
+      break
+    default:
+      list.push('invalid operator')
+  }
+
+  if(!result) {
+    if (param.length < 3)
+      list.push(lang('form:require_value'));
+    else
+      list.push(param[2]);
+  }
+}

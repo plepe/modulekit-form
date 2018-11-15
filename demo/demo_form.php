@@ -157,8 +157,8 @@ EOT
   'cats'	=>array(
     'type'	=>"form",
     'name'	=>"Cats",
-    'desc'	=>"Describe all your cats",
-    'count'	=>array("default"=>2, "index_type" => 'array'),
+    'desc'	=>"Describe all your cats (max. 3)",
+    'count'	=>array("default"=>2, "index_type" => 'array', 'check'	=> array('count', '<=', 3, 'Max. 3 accepted.')),
     'def'	=>array(
       'name'	=>array(
         'name'	=>"Name",

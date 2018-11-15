@@ -141,6 +141,8 @@ Definition:
 * empty_value: value to return if array is empty. Default: null.
 * exclude_null_values: if true, remove null values from the array. Default: false.
 * index_type: 'keep' (keep index values; re-ordering does not work in JS), 'array' (always re-number from 0 on, use a real array in JS mode), '_keys' (like 'keep', but in JS mode add a '_keys' property - an array with the ordering of indexes). Default: 'keep'
+* Additional checks:
+  * 'count' with parameters operator ('==', '>=', '>', '<', '<=', '!='), value and (optional) message. If count of elements does not compare to the specified value, create error message.
 
 Value:
 * Array of sub elements.
