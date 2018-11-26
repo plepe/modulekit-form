@@ -304,6 +304,7 @@ form_element_file.prototype.get_data=function() {
       data.ext = file['name'].substr(file['name'].lastIndexOf(".") + 1);
 
     this.js_file = file;
+    data.file = this.js_file
   }
   else {
     data.orig_name = this.dom_element.value;
