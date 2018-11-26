@@ -52,6 +52,9 @@ form_element_file.prototype.connect=function(dom_parent) {
   for(var i=0; i<obs.length; i++) {
     if(obs[i].name==this.options.var_name+"[file]")
       this.dom_element=obs[i];
+
+    if(obs[i].name == this.options.var_name+"[data]")
+      this.dom_element_orig = obs[i]
   }
 
   if(this.dom_element) {
@@ -273,16 +276,9 @@ form_element_file.prototype.get_data=function() {
 
   // no new file -> check if there's data of an uploaded file
   if(!this.dom_element.value) {
-    var obs;
-    var ob = null;
-    obs = document.getElementsByTagName("input");
-
-    for(var i=0; i<obs.length; i++)
-      if(obs[i].name == this.options.var_name+"[data]")
-	ob = obs[i];
-
-    if(ob)
-      return JSON.parse(ob.value);
+    if(this.dom_element_orig) {
+      return JSON.parse(this.dom_element_orig.value);
+    }
 
     return null;
   }
