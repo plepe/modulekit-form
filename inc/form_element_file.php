@@ -65,6 +65,12 @@ class form_element_file extends form_element {
 
       $span_value->appendChild($document->createElement("br"));
       $span_value->appendChild($document->createTextNode(format_file_size($this->data['size'])));
+
+      $input=$document->createElement("input");
+      $input->setAttribute("type", "submit");
+      $input->setAttribute("name", $this->options['var_name']."[delete]");
+      $input->setAttribute("value", lang("delete"));
+      $span->appendChild($input);
     }
 
     // create input field for new file
@@ -134,11 +140,21 @@ class form_element_file extends form_element {
     $var_path=array_merge($var_path, $m);
     $var_path[]="file";
 
+    if(isset($data['delete'])) {
+      parent::set_request_data('');
+      $this->data = null;
+      return;
+    }
+
     if($this->_FILES_value($var_path, "name")==null) {
       if(isset($data['data'])) {
 	$data=json_decode($data['data'], true);
 
 	parent::set_request_data($data);
+
+        if ($data === null) {
+          $this->data = null;
+        }
       }
 
       return;

@@ -55,6 +55,9 @@ form_element_file.prototype.connect=function(dom_parent) {
 
     if(obs[i].name == this.options.var_name+"[data]")
       this.dom_element_orig = obs[i]
+
+    if(obs[i].name == this.options.var_name+"[delete]")
+      this.dom_element_delete = obs[i]
   }
 
   if(this.dom_element) {
@@ -92,11 +95,10 @@ form_element_file.prototype.connect=function(dom_parent) {
 
   var span;
   if(span=document.getElementById(this.id+"-oldfile")) {
-    var input=document.createElement("input");
-    input.type="button";
-    input.value=lang("change");
-    input.onclick=this.input_change.bind(this);
-    span.appendChild(input);
+    if (this.dom_element_delete) {
+      this.dom_element_delete.type = 'button'
+      this.dom_element_delete.onclick=this.input_delete.bind(this);
+    }
 
     span=document.getElementById(this.id+"-newfile");
     span.style.display="none";
@@ -158,8 +160,8 @@ form_element_file.prototype.show_element=function() {
 
     var input=document.createElement("input");
     input.type="button";
-    input.value=lang("change");
-    input.onclick=this.input_change.bind(this);
+    input.value=lang("delete");
+    input.onclick=this.input_delete.bind(this);
     span.appendChild(input);
   }
   else {
@@ -225,8 +227,8 @@ form_element_file.prototype.notify_change_file=function() {
 
     var input=document.createElement("input");
     input.type="button";
-    input.value=lang("change");
-    input.onclick=this.input_change.bind(this);
+    input.value=lang("delete");
+    input.onclick=this.input_delete.bind(this);
     span.appendChild(input);
 
     div.appendChild(span);
@@ -262,9 +264,14 @@ form_element_file.prototype.notify_change_file=function() {
   span.className = "form_modified";
 }
 
-form_element_file.prototype.input_change=function() {
+form_element_file.prototype.input_delete=function() {
   var span=document.getElementById(this.id+"-oldfile");
   span.style.display="none";
+
+  this.dom_element.value = null;
+  if (this.dom_element_orig) {
+    this.dom_element_orig.value = 'null';
+  }
 
   span=document.getElementById(this.id+"-newfile");
   span.style.display="inline-block";

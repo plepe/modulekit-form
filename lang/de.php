@@ -4,6 +4,7 @@ $lang_str['cancel']="Abbrechen";
 $lang_str['new']="Neu";
 $lang_str['edit']="Bearbeiten";
 $lang_str['change']="Ändern";
+$lang_str['delete']="Löschen";
 $lang_str['reload'] = "Neu laden";
 
 $lang_str['form:add_element']="Element hinzufügen";
