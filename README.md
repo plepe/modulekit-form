@@ -79,6 +79,18 @@ form_dom.onsubmit = function() {
 f.set_data({ name: 'Bob', sex: 'm' });
 ```
 
+Form API
+========
+Constructor
+-----------
+```php
+$form1 = new form($id, $def, $options);
+```
+
+* $id of the form
+* $def the definition of the root's child elements.
+* $options are the definition of the root element (which is usually a form element 'form', but you can override this with 'type').
+
 Form Elements
 =============
 All Form Elements
