@@ -5,10 +5,10 @@ function form_element_form_chooser() {
 form_element_form_chooser.prototype.init=function(id, def, options, form_parent) {
   this.parent("form_element_form_chooser").init.call(this, id, def, options, form_parent);
 
-  this.build_form();
+  this.build_form(true);
 }
 
-form_element_form_chooser.prototype.build_form=function() {
+form_element_form_chooser.prototype.build_form=function(show_default=false) {
   if ('elements' in this) {
     return
   }
@@ -31,6 +31,10 @@ form_element_form_chooser.prototype.build_form=function() {
     if(class_exists(element_class)) {
       this.available_elements[k]=eval("new "+element_class+"()");
       this.available_elements[k].init(element_id, element_def, element_options, this);
+    }
+
+    if (show_default && element_def.show_default) {
+      this.add_element(k);
     }
   }
 }

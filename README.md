@@ -435,6 +435,8 @@ Definition:
 
 Child elements may have a property 'non_used_value', which will be returned for this element if the child has not been added to the form.
 
+Child elements may have a property 'show_default'. If true, this field will be shown, even if it has not been added.
+
 Example:
 ```json
 "foobar": {

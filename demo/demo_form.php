@@ -14,6 +14,7 @@ $form_def=array(
         'type'    => 'select',
         'name'    => 'B',
         'values'  => array('1', '2', '3'),
+        'show_default' => true,
       ),
       'c'         => array(
         'type'    => 'date',

@@ -6,7 +6,7 @@ class form_element_form_chooser extends form_element {
     parent::__construct($id, $def, $options, $form_parent);
     $this->changed_count=false;
 
-    $this->build_form();
+    $this->build_form(true);
   }
 
   function is_complete() {
@@ -244,7 +244,7 @@ class form_element_form_chooser extends form_element {
     return $ret;
   }
 
-  function build_form() {
+  function build_form($show_default=false) {
     $this->elements=array();
     $this->available_elements=array();
 
@@ -262,6 +262,10 @@ class form_element_form_chooser extends form_element {
       if (class_exists($element_class)) {
         $this->available_elements[$k] = new $element_class($element_id, $element_def, $element_options, $this);
       } else {
+      }
+
+      if ($show_default && array_key_exists('show_default', $def) && $def['show_default']) {
+        $this->add_element($k);
       }
     }
   }

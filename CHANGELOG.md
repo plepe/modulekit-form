@@ -13,6 +13,7 @@ Newer
 * Form Element Array (and Hash): new check 'count'
 * Form Element File: replace 'Change' by 'Delete' button
 * Form Element File: include 'file' in JS data (when uploading, JS type File)
+* Form Element Form Chooser: child elements may have property 'show_default'
 
 2017-09-15 (Version >= 2.6)
 ---------------------------
