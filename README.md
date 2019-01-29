@@ -91,6 +91,9 @@ $form1 = new form($id, $def, $options);
 * $def the definition of the root's child elements.
 * $options are the definition of the root element (which is usually a form element 'form', but you can override this with 'type').
 
+Further options:
+* change_on_input: if true, `onchange` will be called whenever a keypress happens (for form elements, which support this)
+
 Form Elements
 =============
 All Form Elements

@@ -14,6 +14,7 @@ Newer
 * Form Element File: replace 'Change' by 'Delete' button
 * Form Element File: include 'file' in JS data (when uploading, JS type File)
 * Form Element Form Chooser: child elements may have property 'show_default'
+* global option 'change_on_input'
 
 2017-09-15 (Version >= 2.6)
 ---------------------------
