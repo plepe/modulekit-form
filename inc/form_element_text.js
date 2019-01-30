@@ -104,6 +104,10 @@ form_element_text.prototype.get_data=function(data) {
   return data;
 }
 
+form_element_text.prototype.focus = function () {
+  this.dom_element.focus()
+}
+
 form_element_text.prototype.set_data=function(data) {
   this.parent("form_element_text").set_data.call(this, data);
 

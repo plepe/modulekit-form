@@ -13,6 +13,10 @@ form_element_boolean.prototype.connect=function(dom_parent) {
   this.dom_element.onchange=this.notify_change.bind(this);
 }
 
+form_element_boolean.prototype.focus = function() {
+  this.dom_element.focus()
+}
+
 form_element_boolean.prototype.show_element=function() {
   var div=this.parent("form_element_boolean").show_element.call(this);
 

@@ -125,6 +125,15 @@ form_element_form_chooser.prototype.connect=function(dom_parent) {
   }
 }
 
+form_element_form_chooser.prototype.focus = function() {
+  let list = Object.keys(this.elements)
+  if (list.length === 0) {
+    return
+  }
+
+  this.elements[list[0]].focus()
+}
+
 form_element_form_chooser.prototype.finish_connect=function() {
   this.parent("form_element_form_chooser").finish_connect.call(this);
 

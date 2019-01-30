@@ -120,6 +120,10 @@ form_element_switch.prototype.refresh=function(force) {
   }
 }
 
+form_element_switch.prototype.focus = function() {
+  this.get_active_element().focus()
+}
+
 // save changes of the active element to the other children
 form_element_switch.prototype.notify_child_change=function(children) {
   this.parent("form_element_switch").notify_child_change.call(this, children);

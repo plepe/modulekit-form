@@ -82,6 +82,10 @@ form.prototype.connect=function() {
   this.resize()
 }
 
+form.prototype.focus = function() {
+  this.element.focus()
+}
+
 form.prototype.get_data=function() {
   return this.element.get_data();
 }

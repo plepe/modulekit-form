@@ -28,6 +28,15 @@ form_element_checkbox.prototype.connect=function(dom_parent) {
   this.values = this.get_values();
 }
 
+form_element_checkbox.prototype.focus = function() {
+  let list = Object.keys(this.dom_values)
+  if (list.length === 0) {
+    return
+  }
+
+  this.dom_values[list[0]].focus()
+}
+
 form_element_checkbox.prototype.get_data=function() {
   if(!this.dom_values)
     return this.data;

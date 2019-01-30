@@ -24,6 +24,10 @@ form_element_autocomplete.prototype.connect=function(dom_parent) {
     this.set_data(value);
 }
 
+form_element_autocomplete.prototype.focus = function() {
+  this.dom_element.focus()
+}
+
 form_element_autocomplete.prototype.create_element=function(div) {
   var cls="form_orig";
   if(this.is_modified())

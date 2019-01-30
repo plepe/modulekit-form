@@ -94,6 +94,10 @@ $form1 = new form($id, $def, $options);
 Further options:
 * change_on_input: if true, `onchange` will be called whenever a keypress happens (for form elements, which support this)
 
+focus() (JS Only)
+-----------------
+Focus the first element.
+
 Form Elements
 =============
 All Form Elements

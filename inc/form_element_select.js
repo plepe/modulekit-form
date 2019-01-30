@@ -30,6 +30,10 @@ form_element_select.prototype.connect=function(dom_parent) {
   }
 }
 
+form_element_select.prototype.focus = function() {
+  this.dom_element.focus()
+}
+
 form_element_select.prototype.get_data=function() {
   if(!this.dom_element)
     return this.data;

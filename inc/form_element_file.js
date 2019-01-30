@@ -27,6 +27,10 @@ form_element_file.prototype.init=function(id, def, options, form_parent) {
   this.parent("form_element_file").init.call(this, id, def, options, form_parent);
 }
 
+form_element_file.prototype.focus = function() {
+  this.dom_element.focus()
+}
+
 form_element_file.prototype.refresh=function(force) {
   var cls;
 

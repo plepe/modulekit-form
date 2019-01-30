@@ -22,6 +22,9 @@ form_element.prototype.init=function(id, def, options, form_parent) {
   }
 }
 
+form_element.prototype.focus = function () {
+}
+
 form_element.prototype.name=function() {
   var name = this.id;
 

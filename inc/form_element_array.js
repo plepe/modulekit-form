@@ -35,6 +35,15 @@ form_element_array.prototype.index_element=function(el) {
   return null;
 }
 
+form_element_array.prototype.focus = function() {
+  let list = Object.keys(this.elements)
+  if (list.length === 0) {
+    return
+  }
+
+  this.elements[list[0]].focus()
+}
+
 form_element_array.prototype.create_element=function(k) {
   var element_def=new clone(this.def.def);
   var element_class=get_form_element_class(element_def);
