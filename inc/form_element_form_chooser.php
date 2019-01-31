@@ -252,6 +252,8 @@ class form_element_form_chooser extends form_element {
       $this->data = array();
     }
 
+    $this->def['def'] = weight_sort($this->def['def']);
+
     foreach ($this->def['def'] as $k => $def) {
       $element_def = $def;
       $element_class = get_form_element_class($element_def);

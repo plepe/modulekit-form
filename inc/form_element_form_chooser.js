@@ -21,6 +21,8 @@ form_element_form_chooser.prototype.build_form=function(show_default=false) {
     this.data={};
   }
 
+  this.def.def = weight_sort(this.def.def)
+
   for (var k in this.def.def) {
     var element_def=new clone(this.def.def[k]);
     var element_class=get_form_element_class(element_def);

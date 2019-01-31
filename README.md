@@ -456,6 +456,8 @@ Child elements may have a property 'non_used_value', which will be returned for 
 
 Child elements may have a property 'show_default'. If true, this field will be shown, even if it has not been added.
 
+Child elements may have a property 'weight'. Elements will be ordered by weight. Elements added interactively will always be added at the bottom.
+
 Example:
 ```json
 "foobar": {
