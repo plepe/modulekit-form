@@ -111,6 +111,7 @@ form_element_form_chooser.prototype.connect=function(dom_parent) {
 	this.action_add.onchange = function () {
           var k = this.action_add.value
           this.add_element(k)
+          this.elements[k].focus()
           this.notify_change()
           this.action_add.value = ''
           return false
@@ -374,6 +375,7 @@ form_element_form_chooser.prototype.show_element=function() {
   this.action_add.onchange = function () {
     var k = this.action_add.value
     this.add_element(k)
+    this.elements[k].focus()
     this.notify_change()
     this.action_add.value = ''
     return false
