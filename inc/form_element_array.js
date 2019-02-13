@@ -437,6 +437,10 @@ form_element_array.prototype.add_element = function (id) {
 
   this.create_element(id)
 
+  if (!this.dom) {
+    return false;
+  }
+
   var current=this.dom.firstChild;
   while(current) {
     if(current.className=="form_element_array_actions") {

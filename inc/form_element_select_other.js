@@ -50,12 +50,18 @@ form_element_select_other.prototype.set_data = function (data) {
   this.parent("form_element_select_other").set_data.call(this, data);
 
   if (data in this.get_values()) {
-    this.other_dom.style.display = 'none'
+    if (this.other_dom) {
+      this.other_dom.style.display = 'none'
+    }
+
     return
   }
 
-  this.other_option.selected = true
-  this.other_dom.style.display = 'block'
+  if (this.other_dom) {
+    this.other_option.selected = true
+    this.other_dom.style.display = 'block'
+  }
+
   this.other_form.set_data(data)
 }
 

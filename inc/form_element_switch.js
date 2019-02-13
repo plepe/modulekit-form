@@ -113,10 +113,12 @@ form_element_switch.prototype.refresh=function(force) {
   for(var k in this.elements) {
     this.elements[k].refresh(force);
 
-    if(this.elements[k] == el)
-      this.element_table[k].style.display = null;
-    else
-      this.element_table[k].style.display = 'none';
+    if (this.element_table) {
+      if(this.elements[k] == el)
+        this.element_table[k].style.display = null;
+      else
+        this.element_table[k].style.display = 'none';
+    }
   }
 }
 
