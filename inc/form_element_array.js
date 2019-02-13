@@ -63,7 +63,7 @@ form_element_array.prototype.create_element=function(k) {
 form_element_array.prototype.connect=function(dom_parent) {
   this.parent("form_element_array").connect.call(this, dom_parent);
 
-  var current=this.dom_parent.firstChild;
+  var current=this.dom.firstChild;
   this.elements={};
   this.element_divs = {};
   while(current) {
