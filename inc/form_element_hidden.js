@@ -1,4 +1,4 @@
-form_element_hidden.inherits_from(form_element_json);
+form_element_hidden.inherits_from(require('./form_element_json'));
 function form_element_hidden() {
 }
 
@@ -14,3 +14,5 @@ form_element_hidden.prototype.show=function() {
 
   return ob;
 }
+
+module.exports = form_element_hidden

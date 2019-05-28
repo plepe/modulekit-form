@@ -1,4 +1,7 @@
-form_element_json.inherits_from(form_element_textarea);
+const { lang } = require('./modulekit-lang')
+const json_readable_encode = require('../modules/base/json_readable_encode/json_readable_encode')
+
+form_element_json.inherits_from(require('./form_element_textarea'));
 function form_element_json() {
   this._errors=[];
 }
@@ -64,3 +67,5 @@ form_element_json.prototype.errors = function(list) {
 form_element_json.prototype.is_modified=function() {
   return JSON.stringify(this.get_data())!==JSON.stringify(this.get_orig_data());
 }
+
+module.exports = form_element_json

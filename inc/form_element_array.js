@@ -1,4 +1,8 @@
-form_element_array.inherits_from(form_element);
+const { lang } = require('./modulekit-lang')
+const { clone, form_build_child_var_name } = require('./functions')
+const form_create_element = require('./form_create_element')
+
+form_element_array.inherits_from(require('./form_element'));
 function form_element_array() {
 }
 
@@ -45,19 +49,15 @@ form_element_array.prototype.focus = function() {
 }
 
 form_element_array.prototype.create_element=function(k) {
-  var element_def=new clone(this.def.def);
-  var element_class=get_form_element_class(element_def);
   var element_id=this.id+"_"+k;
   var element_options=new clone(this.options);
   element_options.var_name = form_build_child_var_name(this.options, k)
+  var element_def=new clone(this.def.def);
   element_def._name=function(k) {
     return this.index_element(k);
   }.bind(this, k);
 
-  if(class_exists(element_class)) {
-    this.elements[k]=eval("new "+element_class+"()");
-    this.elements[k].init(element_id, element_def, element_options, this);
-  }
+  this.elements[k] = form_create_element(element_id, element_def, element_options, this)
 }
 
 form_element_array.prototype.connect=function(dom_parent) {
@@ -635,3 +635,5 @@ form_element_array.prototype.check_count=function(list, param) {
       list.push(param[2]);
   }
 }
+
+module.exports = form_element_array

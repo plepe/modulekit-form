@@ -1,3 +1,6 @@
+const { lang } = require('../../inc/modulekit-lang')
+const date_format = require('../date/date_format')
+
 var calendars=[];
 
 // options:
@@ -320,3 +323,5 @@ if(window.addEventListener) {
 else {
   document.attachEvent('onclick', calendars_cleanup);
 }
+
+module.exports = calendar

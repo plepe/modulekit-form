@@ -1,4 +1,7 @@
-form_element_keywords.inherits_from(form_element);
+const { lang } = require('./modulekit-lang')
+const { array_compare, array_compare_values, get_value_string } = require('./functions')
+
+form_element_keywords.inherits_from(require('./form_element'));
 function form_element_keywords() {
 }
 
@@ -340,3 +343,5 @@ form_element_keywords.prototype.edit_keypress=function(ev) {
 form_element_keywords.prototype.is_modified=function() {
   return array_compare_values(this.get_data(), this.get_orig_data());
 }
+
+module.exports = form_element_keywords

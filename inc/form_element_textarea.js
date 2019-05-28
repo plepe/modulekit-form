@@ -1,4 +1,4 @@
-form_element_textarea.inherits_from(form_element_text);
+form_element_textarea.inherits_from(require('./form_element_text'));
 function form_element_textarea() {
 }
 
@@ -54,3 +54,5 @@ form_element_textarea.prototype.notify_change = function() {
 
   this.delayed_resize(null, true);
 }
+
+module.exports = form_element_textarea

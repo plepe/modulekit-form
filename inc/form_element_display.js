@@ -1,4 +1,4 @@
-form_element_display.inherits_from(form_element);
+form_element_display.inherits_from(require('./form_element'));
 function form_element_display() {
 }
 
@@ -67,3 +67,5 @@ form_element_display.prototype.set_data=function(data) {
     this.dom_display.innerHTML = this.data;
   }
 }
+
+module.exports = form_element_display

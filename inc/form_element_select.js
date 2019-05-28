@@ -1,4 +1,7 @@
-form_element_select.inherits_from(form_element);
+const { lang } = require('./modulekit-lang')
+const { array_compare, get_value_string } = require('./functions')
+
+form_element_select.inherits_from(require('./form_element'));
 function form_element_select() {
 }
 
@@ -159,3 +162,5 @@ form_element_select.prototype.refresh=function(force) {
 
   this.dom_element.className=cls;
 }
+
+module.exports = form_element_select

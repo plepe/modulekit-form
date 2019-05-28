@@ -215,3 +215,5 @@ function date_parse_from_format(format, date, options) {
 
   return ret;
 }
+
+module.exports = date_parse_from_format

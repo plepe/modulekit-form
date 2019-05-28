@@ -1,4 +1,7 @@
-form_element_select_other.inherits_from(form_element_select);
+const { clone } = require('./functions')
+const form_create_element = require('./form_create_element')
+
+form_element_select_other.inherits_from(require('./form_element_select'));
 function form_element_select_other() {
 }
 
@@ -117,3 +120,5 @@ form_element_select_other.prototype.refresh = function (force) {
   this.parent("form_element_select_other").refresh.call(this, force)
   this.other_form.refresh()
 }
+
+module.exports = form_element_select_other

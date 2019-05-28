@@ -1,6 +1,11 @@
-form_element_type_alias['date']='date';
-form_element_type_alias['datetime']='date';
-form_element_type_alias['datetime-local']='date';
+const { lang } = require('./modulekit-lang')
+const date_format = require('../modules/date/date_format')
+const calendar = require('../modules/calendar/calendar')
+const date_parse_from_format = require('../modules/date/date_parse_from_format')
+
+const element_classes = require('./element_classes')
+element_classes.register_alias('datetime', 'date')
+element_classes.register_alias('datetime-local', 'date')
 
 var form_element_date_display_format={
   'date': "j.n.Y",
@@ -18,7 +23,7 @@ var form_element_date_calender_format={
   'datetime-local': "Y-m-d\\TH:i:s"
 };
 
-form_element_date.inherits_from(form_element_text);
+form_element_date.inherits_from(require('./form_element_text'));
 function form_element_date() {
 }
 
@@ -149,3 +154,5 @@ form_element_date.prototype.errors=function(list) {
   if((this.parent("form_element_date").get_data.call(this) !== null) && (this.get_data() === null))
     list.push(lang('form_element_date:format_error'));
 }
+
+module.exports = form_element_date

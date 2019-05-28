@@ -1,4 +1,7 @@
-form_element_radio.inherits_from(form_element);
+const { lang } = require('./modulekit-lang')
+const { array_compare, get_value_string } = require('./functions')
+
+form_element_radio.inherits_from(require('./form_element'));
 function form_element_radio() {
 }
 
@@ -137,3 +140,5 @@ form_element_radio.prototype.refresh=function(force) {
       this.dom_values[k].parentNode.className=cls;
   }
 }
+
+module.exports = form_element_radio

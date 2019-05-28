@@ -1,3 +1,12 @@
+const hooks = require('./hooks')
+const { clone, in_array } = require('./functions')
+const element_types = require('./elements')
+const element_classes = require('./element_classes')
+
+for (let k in element_types) {
+  element_classes.register_type(k, element_types[k])
+}
+
 function form(id, def, options) {
   if(!options) {
     options = {}
@@ -63,8 +72,7 @@ form.prototype.build_form=function() {
 
   this.options.def = this.def
 
-  var element_type = 'form_element_' + this.options.type
-  this.element=new window[element_type]();
+  this.element=new element_types[this.options.type]();
   this.element.init(this.id, this.options, this.options, null);
   this.element.form=this;
 }
@@ -77,7 +85,7 @@ form.prototype.connect=function() {
   if(window.addResizeListener)
     addResizeListener(element_dom_parent, this.resize.bind(this));
 
-  call_hooks('form_connected', this);
+  hooks.call('form_connected', this);
 
   this.resize()
 }
@@ -147,7 +155,7 @@ form.prototype.show=function(dom_parent) {
 
   this.resize();
 
-  call_hooks('form_connected', this);
+  hooks.call('form_connected', this);
 
   return this.table;
 }
@@ -262,24 +270,6 @@ function arr_count(arr) {
   return ret;
 }
 
-var em_height_cache = {};
-function get_em_height(dom_el) {
-  var font_size = elementCurrentStyle(dom_el, "font-size");
-
-  if(!(font_size in em_height_cache) || em_height_cache[font_size] === 0) {
-    // calculate height of M
-    var em=document.createElement("div");
-    em.setAttribute("style", "display:inline-block; padding:0; line-height:1; position:absolute; visibility:hidden; font-size:1em;");
-    em.appendChild(document.createTextNode("M"));
-    dom_el.appendChild(em);
-    em_height_cache[font_size] = em.offsetHeight;
-    dom_el.removeChild(em);
-
-  }
-
-  return em_height_cache[font_size];
-}
-
 function form_process_def(def) {
   for(var k in def) {
     var element_def=new clone(def[k]);
@@ -313,3 +303,5 @@ function form_process_def(def) {
       form_process_def(def[k].def.def);
   }
 }
+
+module.exports = form

@@ -1,7 +1,10 @@
-form_element_type_alias['integer']='numeric';
-form_element_type_alias['float']='numeric';
+const { lang } = require('./modulekit-lang')
 
-form_element_numeric.inherits_from(form_element_text);
+const element_classes = require('./element_classes')
+element_classes.register_alias('integer', 'numeric')
+element_classes.register_alias('float', 'numeric')
+
+form_element_numeric.inherits_from(require('./form_element_text'));
 function form_element_numeric() {
 }
 
@@ -113,3 +116,5 @@ form_element_numeric.prototype.check_lt=function(list, param) {
       list.push(param[1]);
   }
 }
+
+module.exports = form_element_numeric

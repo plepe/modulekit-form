@@ -1,4 +1,7 @@
-form_element_hash.inherits_from(form_element_array);
+const { lang } = require('./modulekit-lang')
+const { clone, array_merge } = require('./functions')
+
+form_element_hash.inherits_from(require('./form_element_array'));
 function form_element_hash() {
 }
 
@@ -99,6 +102,8 @@ form_element_hash.prototype.get_orig_data=function() {
   return this._shrink_data(this.parent("form_element_hash").get_orig_data.call(this));
 }
 
-form_element_array.prototype.get_count = function () {
+form_element_hash.prototype.get_count = function () {
   return Object.keys(this.get_data()).length
 }
+
+module.exports = form_element_hash

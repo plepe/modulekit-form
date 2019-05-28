@@ -1,4 +1,4 @@
-form_element_color.inherits_from(form_element_text);
+form_element_color.inherits_from(require('./form_element_text'));
 function form_element_color() {
 }
 
@@ -8,3 +8,5 @@ form_element_color.prototype.create_element=function() {
 
   return input;
 }
+
+module.exports = form_element_color

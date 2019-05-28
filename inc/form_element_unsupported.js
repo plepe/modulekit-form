@@ -1,4 +1,6 @@
-form_element_unsupported.inherits_from(form_element_json);
+const { lang } = require('./modulekit-lang')
+
+form_element_unsupported.inherits_from(require('./form_element_json'));
 function form_element_unsupported() {
 }
 
@@ -25,3 +27,5 @@ form_element_unsupported.prototype.show_element=function() {
 
   return div;
 }
+
+module.exports = form_element_unsupported

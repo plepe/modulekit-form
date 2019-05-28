@@ -1,4 +1,9 @@
-form_element_form_chooser.inherits_from(form_element);
+const { lang } = require('./modulekit-lang')
+const { clone, form_build_child_var_name } = require('./functions')
+const get_em_height = require('./get_em_height')
+const element_classes = require('./element_classes')
+
+form_element_form_chooser.inherits_from(require('./form_element'));
 function form_element_form_chooser() {
 }
 
@@ -25,15 +30,13 @@ form_element_form_chooser.prototype.build_form=function(show_default=false) {
 
   for (var k in this.def.def) {
     var element_def=new clone(this.def.def[k]);
-    var element_class=get_form_element_class(element_def);
+    var element_class = [ element_classes.get(element_def) ];
     var element_id=this.id+"_"+k;
     var element_options=new clone(this.options);
     element_options.var_name = form_build_child_var_name(this.options, k)
 
-    if(class_exists(element_class)) {
-      this.available_elements[k]=eval("new "+element_class+"()");
-      this.available_elements[k].init(element_id, element_def, element_options, this);
-    }
+    this.available_elements[k]=new element_class[0]()
+    this.available_elements[k].init(element_id, element_def, element_options, this);
 
     if (show_default && element_def.show_default) {
       this.add_element(k);
@@ -631,3 +634,5 @@ form_element_form_chooser.prototype.check_required=function(list, param) {
       list.push(param[0]);
   }
 }
+
+module.exports = form_element_form_chooser

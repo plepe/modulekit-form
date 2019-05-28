@@ -1,4 +1,7 @@
-form_element_text.inherits_from(form_element);
+const { lang } = require('./modulekit-lang')
+const { array_compare, get_value_string, in_array } = require('./functions')
+
+form_element_text.inherits_from(require('./form_element'));
 function form_element_text() {
 }
 
@@ -205,3 +208,5 @@ form_element_text.prototype.is_modified=function() {
 
   return this.parent("form_element_text").is_modified.call(this);
 }
+
+module.exports = form_element_text

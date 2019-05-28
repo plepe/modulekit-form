@@ -1,4 +1,6 @@
-form_element_label.inherits_from(form_element);
+const { lang } = require('./modulekit-lang')
+
+form_element_label.inherits_from(require('./form_element'));
 function form_element_label() {
 }
 
@@ -57,3 +59,5 @@ form_element_label.prototype.get_data=function(data) {
 
   return this.dom_element1.value;
 }
+
+module.exports = form_element_label

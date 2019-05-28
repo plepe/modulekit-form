@@ -1,4 +1,6 @@
-form_element_fixed.inherits_from(form_element);
+const { lang } = require('./modulekit-lang')
+
+form_element_fixed.inherits_from(require('./form_element'));
 function form_element_fixed() {
 }
 
@@ -37,3 +39,5 @@ form_element_fixed.prototype.get_data=function() {
 
 form_element_fixed.prototype.set_data=function(data) {
 }
+
+module.exports = form_element_fixed

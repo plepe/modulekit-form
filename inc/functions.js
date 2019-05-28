@@ -1,3 +1,5 @@
+const { lang } = require('./modulekit-lang')
+
 if (!Function.prototype.bind) {
   Function.prototype.bind = function (oThis) {
     if (typeof this !== "function") {
@@ -175,41 +177,6 @@ function format_file_size(size) {
   return sprintf("% B", size);
 }
 
-// from: http://stackoverflow.com/a/5265175
-function elementCurrentStyle(element, styleName){
-    if (element.currentStyle){
-        var i = 0, temp = "", changeCase = false;
-        for (i = 0; i < styleName.length; i++)
-            if (styleName[i] != '-'){
-                temp += (changeCase ? styleName[i].toUpperCase() : styleName[i]);
-                changeCase = false;
-            } else {
-                changeCase = true;
-            }
-        styleName = temp;
-        return element.currentStyle[styleName];
-    } else {
-        return getComputedStyle(element, null).getPropertyValue(styleName);
-    }
-}
-
-function add_class(dom, cls) {
-  var classes = dom.className.split(" ");
-
-  if(classes.indexOf(cls) == -1)
-    dom.className += " " + cls;
-}
-
-function remove_class(dom, cls) {
-  var classes = dom.className.split(" ");
-  var p = classes.indexOf(cls);
-
-  if(p != -1) {
-    classes.splice(p, 1);
-    dom.className = classes.join(" ");
-  }
-}
-
 function get_value_string(v, key) {
   if(!key)
     key = 'name';
@@ -314,4 +281,14 @@ function form_build_child_var_name (options, k) {
   } else {
     return null
   }
+}
+
+module.exports = {
+  clone,
+  form_build_child_var_name,
+  array_compare,
+  array_compare_values,
+  array_merge,
+  in_array,
+  get_value_string
 }

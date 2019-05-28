@@ -1,4 +1,8 @@
-form_element_form.inherits_from(form_element);
+const { clone, form_build_child_var_name } = require('./functions')
+const element_classes = require('./element_classes')
+const get_em_height = require('./get_em_height')
+
+form_element_form.inherits_from(require('./form_element'));
 function form_element_form() {
 }
 
@@ -42,13 +46,13 @@ form_element_form.prototype.build_form=function() {
   this.elements={};
 
   for(var k in this.def.def) {
-    var element_class=get_form_element_class(this.def.def[k]);
+    var element_class = [ element_classes.get(this.def.def[k]) ];
 
     var element_id=this.id+"_"+k;
     var element_options=new clone(this.options);
     element_options.var_name = form_build_child_var_name(this.options, k)
 
-    this.elements[k]=eval("new "+element_class+"()");
+    this.elements[k] = new element_class[0]()
     this.elements[k].init(element_id, this.def.def[k], element_options, this);
   }
 }
@@ -202,3 +206,5 @@ form_element_form.prototype.notify_child_change=function(element) {
 
   this.parent("form_element_form").notify_child_change.call(this, element);
 }
+
+module.exports = form_element_form

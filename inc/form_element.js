@@ -1,3 +1,7 @@
+const { lang } = require('./modulekit-lang')
+const hooks = require('./hooks')
+const weight_sort = require('weight-sort')
+
 var form_element_type_alias={};
 
 function form_element() {
@@ -85,7 +89,7 @@ form_element.prototype.connect=function(dom_parent) {
 }
 
 form_element.prototype.finish_connect=function(dom_parent) {
-  call_hooks('form_element_connected', this);
+  hooks.call('form_element_connected', this);
 
   this.data = this.get_data();
 }
@@ -195,7 +199,7 @@ form_element.prototype.show=function() {
 
   this.td_value.appendChild(this.show_div_errors());
 
-  call_hooks('form_element_connected', this);
+  hooks.call('form_element_connected', this);
 
   return this.tr;
 }
@@ -738,26 +742,21 @@ form_element.prototype.parse_data=function(str) {
   return str;
 }
 
-function get_form_element_class(def) {
-  var type=def.type;
+function add_class(dom, cls) {
+  var classes = dom.className.split(" ");
 
-  if(form_element_type_alias[def.type])
-    type=form_element_type_alias[def.type];
-
-  var element_class="form_element_"+type;
-
-  if(!class_exists(element_class))
-    element_class="form_element_unsupported";
-
-  return element_class;
+  if(classes.indexOf(cls) == -1)
+    dom.className += " " + cls;
 }
 
-function form_create_element (id, def, options, parent) {
-  var element_class=get_form_element_class(def)
-  var element_options=new clone(this.options)
+function remove_class(dom, cls) {
+  var classes = dom.className.split(" ");
+  var p = classes.indexOf(cls);
 
-  var element = eval("new " + element_class + "()")
-  element.init(id, def, options, parent)
-
-  return element
+  if(p != -1) {
+    classes.splice(p, 1);
+    dom.className = classes.join(" ");
+  }
 }
+
+module.exports = form_element

@@ -1,3 +1,5 @@
+const { lang } = require('./modulekit-lang')
+
 // only used with non-HTML5 browsers
 var form_element_file_types = {
   'png': 'image/png',
@@ -19,7 +21,7 @@ var form_element_file_types = {
   'ogv': 'application/ogg'
 };
 
-form_element_file.inherits_from(form_element);
+form_element_file.inherits_from(require('./form_element'));
 function form_element_file() {
 }
 
@@ -352,3 +354,5 @@ form_element_file.prototype.get_data=function() {
 
   return data;
 }
+
+module.exports = form_element_file

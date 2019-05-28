@@ -1,3 +1,5 @@
+const pad = require('./pad')
+
 // accepts date as read from date_parse_from_format
 function date_format(format, date, tz) {
   if(typeof tz=="undefined")
@@ -81,3 +83,5 @@ function date_format(format, date, tz) {
 
   return ret;
 }
+
+module.exports = date_format

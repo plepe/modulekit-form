@@ -1,4 +1,4 @@
-form_element_boolean.inherits_from(form_element);
+form_element_boolean.inherits_from(require('./form_element'));
 function form_element_boolean() {
 }
 
@@ -96,3 +96,5 @@ form_element_boolean.prototype.is_modified=function() {
 
   return (orig_data!=data);
 }
+
+module.exports = form_element_boolean

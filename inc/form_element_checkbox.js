@@ -1,4 +1,7 @@
-form_element_checkbox.inherits_from(form_element);
+const { lang } = require('./modulekit-lang')
+const { array_compare, get_value_string } = require('./functions')
+
+form_element_checkbox.inherits_from(require('./form_element'));
 function form_element_checkbox() {
 }
 
@@ -280,3 +283,5 @@ form_element_checkbox.prototype.notify_change = function() {
 
   this.parent("form_element_checkbox").notify_change.call(this)
 }
+
+module.exports = form_element_checkbox
