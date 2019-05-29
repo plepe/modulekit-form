@@ -1,5 +1,5 @@
-const { lang } = require('./modulekit-lang')
-const hooks = require('./hooks')
+const { lang } = require('modulekit-lang')
+const hooks = require('modulekit-hooks')
 const weight_sort = require('weight-sort')
 
 var form_element_type_alias={};

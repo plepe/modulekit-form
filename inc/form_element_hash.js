@@ -1,4 +1,4 @@
-const { lang } = require('./modulekit-lang')
+const { lang } = require('modulekit-lang')
 const { clone, array_merge } = require('./functions')
 
 form_element_hash.inherits_from(require('./form_element_array'));

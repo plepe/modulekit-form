@@ -1,4 +1,4 @@
-const { lang } = require('./modulekit-lang')
+const { lang } = require('modulekit-lang')
 const { clone, form_build_child_var_name } = require('./functions')
 const get_em_height = require('./get_em_height')
 const element_classes = require('./element_classes')

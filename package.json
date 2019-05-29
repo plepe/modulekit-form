@@ -3,6 +3,7 @@
     "version": "v2.6.0-devel",
     "description": "This Forms library easily creates powerful and interactive HTML forms via PHP and/or JavaScript.",
     "author": "Stephan Bösch-Plepelits <skunk@xover.mud.at>",
+    "main": "inc/form.js",
     "scripts": {
         "build": "browserify inc/dist.js -o dist/modulekit-form.js",
         "watch": "watchify --debug inc/dist.js -o dist/modulekit-form.js -v"
@@ -15,6 +16,8 @@
         "watchify": "^3.11.1"
     },
     "dependencies": {
+        "modulekit-hooks": "https://github.com/plepe/modulekit-hooks/",
+        "modulekit-lang": "https://github.com/plepe/modulekit-lang#browserify-1.x",
         "weight-sort": "^1.3.0"
     }
 }

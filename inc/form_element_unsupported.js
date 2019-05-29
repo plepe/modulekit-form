@@ -1,4 +1,4 @@
-const { lang } = require('./modulekit-lang')
+const { lang } = require('modulekit-lang')
 
 form_element_unsupported.inherits_from(require('./form_element_json'));
 function form_element_unsupported() {

@@ -1,4 +1,4 @@
-const { lang } = require('./modulekit-lang')
+const { lang } = require('modulekit-lang')
 const date_format = require('../modules/date/date_format')
 const calendar = require('../modules/calendar/calendar')
 const date_parse_from_format = require('../modules/date/date_parse_from_format')
