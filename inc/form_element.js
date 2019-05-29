@@ -2,6 +2,8 @@ const { lang } = require('modulekit-lang')
 const hooks = require('modulekit-hooks')
 const weight_sort = require('weight-sort')
 
+require('./form_element.css')
+
 var form_element_type_alias={};
 
 function form_element() {

@@ -1,5 +1,7 @@
 const { lang } = require('modulekit-lang')
 
+require('./form_element_file.css')
+
 // only used with non-HTML5 browsers
 var form_element_file_types = {
   'png': 'image/png',

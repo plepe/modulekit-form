@@ -2,6 +2,8 @@ const { clone, form_build_child_var_name } = require('./functions')
 const element_classes = require('./element_classes')
 const get_em_height = require('./get_em_height')
 
+require('./form_element_form.css')
+
 form_element_form.inherits_from(require('./form_element'));
 function form_element_form() {
 }

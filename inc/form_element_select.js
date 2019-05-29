@@ -1,6 +1,8 @@
 const { lang } = require('modulekit-lang')
 const { array_compare, get_value_string } = require('./functions')
 
+require('./form_element_select.css')
+
 form_element_select.inherits_from(require('./form_element'));
 function form_element_select() {
 }

@@ -1,5 +1,7 @@
 const { lang } = require('modulekit-lang')
 
+require('./form_element_autocomplete.css')
+
 form_element_autocomplete.inherits_from(require('./form_element'));
 function form_element_autocomplete() {
 }

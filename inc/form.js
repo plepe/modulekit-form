@@ -3,6 +3,9 @@ const { clone, in_array } = require('./functions')
 const element_types = require('./elements')
 const element_classes = require('./element_classes')
 
+require('./form.css')
+require('./theme.css')
+
 for (let k in element_types) {
   element_classes.register_type(k, element_types[k])
 }

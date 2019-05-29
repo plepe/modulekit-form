@@ -1,3 +1,5 @@
+require('./form_element_textarea.css')
+
 form_element_textarea.inherits_from(require('./form_element_text'));
 function form_element_textarea() {
 }
