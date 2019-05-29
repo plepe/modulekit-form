@@ -1,4 +1,4 @@
-const { lang } = require('./modulekit-lang')
+const { lang } = require('modulekit-lang')
 const { array_compare, get_value_string, in_array } = require('./functions')
 
 form_element_text.inherits_from(require('./form_element'));

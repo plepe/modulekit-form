@@ -1,4 +1,4 @@
-const { lang } = require('./modulekit-lang')
+const { lang } = require('modulekit-lang')
 
 const element_classes = require('./element_classes')
 element_classes.register_alias('integer', 'numeric')

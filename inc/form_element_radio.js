@@ -1,4 +1,4 @@
-const { lang } = require('./modulekit-lang')
+const { lang } = require('modulekit-lang')
 const { array_compare, get_value_string } = require('./functions')
 
 form_element_radio.inherits_from(require('./form_element'));

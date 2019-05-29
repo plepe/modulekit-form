@@ -1,4 +1,4 @@
-const { lang } = require('./modulekit-lang')
+const { lang } = require('modulekit-lang')
 
 form_element_label.inherits_from(require('./form_element'));
 function form_element_label() {

@@ -1,4 +1,4 @@
-const { lang } = require('./modulekit-lang')
+const { lang } = require('modulekit-lang')
 
 // only used with non-HTML5 browsers
 var form_element_file_types = {

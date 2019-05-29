@@ -1,4 +1,4 @@
-const { lang } = require('./modulekit-lang')
+const { lang } = require('modulekit-lang')
 
 form_element_password.inherits_from(require('./form_element_text'));
 function form_element_password() {

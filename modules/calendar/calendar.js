@@ -1,4 +1,4 @@
-const { lang } = require('../../inc/modulekit-lang')
+const { lang } = require('modulekit-lang')
 const date_format = require('../date/date_format')
 
 var calendars=[];

@@ -1,4 +1,4 @@
-const hooks = require('./hooks')
+const hooks = require('modulekit-hooks')
 const { clone, in_array } = require('./functions')
 const element_types = require('./elements')
 const element_classes = require('./element_classes')

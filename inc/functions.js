@@ -1,4 +1,4 @@
-const { lang } = require('./modulekit-lang')
+const { lang } = require('modulekit-lang')
 
 if (!Function.prototype.bind) {
   Function.prototype.bind = function (oThis) {

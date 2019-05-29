@@ -1,4 +1,4 @@
-const { lang } = require('./modulekit-lang')
+const { lang } = require('modulekit-lang')
 const json_readable_encode = require('../modules/base/json_readable_encode/json_readable_encode')
 
 form_element_json.inherits_from(require('./form_element_textarea'));
