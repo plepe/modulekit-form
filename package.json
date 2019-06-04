@@ -5,9 +5,12 @@
     "author": "Stephan Bösch-Plepelits <skunk@xover.mud.at>",
     "main": "inc/form.js",
     "scripts": {
-        "build": "mkdir -p dist/ && cat inc/*.css > dist/modulekit-form.css && browserify inc/dist.js -o dist/modulekit-form.js",
-        "watch": "mkdir -p dist/ && cat inc/*.css > dist/modulekit-form.css && watchify --debug inc/dist.js -o dist/modulekit-form.js -v",
-        "prepare": "npm run build"
+	"build": "mkdir -p dist/ && npm run build-css && npm run build-js",
+	"build-css": "cat inc/*.css > dist/modulekit-form.css",
+        "build-js": "browserify inc/dist.js -o dist/modulekit-form.js",
+        "prepare": "npm run build",
+	"watch": "mkdir -p dist/ && npm run build-css && npm run watch-js",
+        "watch-js": "watchify --debug inc/dist.js -o dist/modulekit-form.js -v"
     },
     "devDependencies": {
         "browserify": "^16.2.3",
