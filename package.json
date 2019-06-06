@@ -5,8 +5,9 @@
     "author": "Stephan Bösch-Plepelits <skunk@xover.mud.at>",
     "main": "inc/form.js",
     "scripts": {
-        "build": "browserify inc/dist.js -o dist/modulekit-form.js",
-        "watch": "watchify --debug inc/dist.js -o dist/modulekit-form.js -v"
+        "build": "mkdir -p dist/ && cat inc/*.css > dist/modulekit-form.css && browserify inc/dist.js -o dist/modulekit-form.js",
+        "watch": "mkdir -p dist/ && cat inc/*.css > dist/modulekit-form.css && watchify --debug inc/dist.js -o dist/modulekit-form.js -v",
+        "prepare": "npm run build"
     },
     "devDependencies": {
         "browserify": "^16.2.3",
