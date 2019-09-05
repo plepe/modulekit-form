@@ -96,8 +96,14 @@ form_element_switch.prototype.get_data=function() {
 }
 
 form_element_switch.prototype.set_data=function(data) {
-  for(var k in this.elements)
-    this.elements[k].set_data(data);
+  var el = this.get_active_element();
+
+  if(el == null) {
+    this.data = data
+    return null;
+  }
+
+  el.set_data(data);
 }
 
 form_element_switch.prototype.set_orig_data=function(data) {
@@ -109,6 +115,11 @@ form_element_switch.prototype.refresh=function(force) {
   this.parent("form_element_switch").refresh.call(this, force);
 
   var el = this.get_active_element();
+
+  if (el && this.data) {
+    el.set_data(this.data)
+    this.data = null
+  }
 
   for(var k in this.elements) {
     this.elements[k].refresh(force);
