@@ -253,6 +253,13 @@ class form_element_grid extends form_element {
 
     $div=parent::show_element($document);
 
+    $createable = ((!array_key_exists("createable", $this->def)) || ($this->def['createable'] == true)) ? "createable": "not_createable";
+
+    if ($this->tr) {
+      $this->tr->setAttribute('class', $this->tr->getAttribute('class') . " $createable");
+    }
+    $this->dom->setAttribute('class', $this->dom->getAttribute('class') . " $createable");
+
     $table = $document->createElement("table");
     $div->appendChild($table);
 
@@ -307,18 +314,20 @@ class form_element_grid extends form_element {
       }
     }
 
-    $input=$document->createElement("input");
-    $input->setAttribute("type", "submit");
-    $input->setAttribute("name", "{$this->options['var_name']}[__new]");
-    if(array_key_exists("button:add_element", $this->def)) {
-      if(is_array($this->def['button:add_element']))
-        $input->setAttribute("value", lang($this->def['button:add_element']));
+    if ($createable === 'createable') {
+      $input=$document->createElement("input");
+      $input->setAttribute("type", "submit");
+      $input->setAttribute("name", "{$this->options['var_name']}[__new]");
+      if(array_key_exists("button:add_element", $this->def)) {
+        if(is_array($this->def['button:add_element']))
+          $input->setAttribute("value", lang($this->def['button:add_element']));
+        else
+          $input->setAttribute("value", $this->def['button:add_element']);
+      }
       else
-        $input->setAttribute("value", $this->def['button:add_element']);
+        $input->setAttribute("value", lang("form:add_element"));
+      $div->appendChild($input);
     }
-    else
-      $input->setAttribute("value", lang("form:add_element"));
-    $div->appendChild($input);
 
     if(isset($this->def['max']) && (sizeof($this->elements) >= $this->def['max'])) {
       $input->setAttribute("class", "reached_max");

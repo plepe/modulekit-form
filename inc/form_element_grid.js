@@ -52,6 +52,8 @@ form_element_grid.prototype.connect=function(dom_parent) {
 
   this.action_add = this.dom_parent.lastChild
   this.action_add.onclick=this.add_element.bind(this);
+
+  this.data = null
 }
 
 form_element_grid.prototype.finish_connect=function() {
@@ -92,6 +94,15 @@ form_element_grid.prototype.build_form=function() {
   for(var n in this.data) {
     this.create_element(n)
   }
+}
+
+form_element_grid.prototype.focus = function () {
+  let list = Object.keys(this.elements)
+  if (list.length === 0) {
+    return
+  }
+
+  this.elements[list[0]].focus()
 }
 
 form_element_grid.prototype.create_element = function (n) {
@@ -145,14 +156,18 @@ form_element_grid.prototype.show_element_part=function(n) {
     el_div.classList.add('orderable')
     var input=document.createElement("input");
     input.type="submit";
-    input.name=this.options.var_name+"[__order_up]["+n+"]";
+    if (this.options.var_name) {
+      input.name=this.options.var_name+"[__order_up]["+n+"]";
+    }
     input.value="↑";
     input.onclick=this.order_up.bind(this, n);
     el_div.appendChild(input);
 
     var input=document.createElement("input");
     input.type="submit";
-    input.name=this.options.var_name+"[__order_down]["+n+"]";
+    if (this.options.var_name) {
+      input.name=this.options.var_name+"[__order_down]["+n+"]";
+    }
     input.value="↓";
     input.onclick=this.order_down.bind(this, n);
     el_div.appendChild(input);
@@ -162,7 +177,9 @@ form_element_grid.prototype.show_element_part=function(n) {
     el_div.classList.add('removeable')
     var input=document.createElement("input");
     input.type="submit";
-    input.name=this.options.var_name+"[__remove]["+n+"]";
+    if (this.options.var_name) {
+      input.name=this.options.var_name+"[__remove]["+n+"]";
+    }
     input.value="X";
     input.onclick=this.remove_element.bind(this, n);
     el_div.appendChild(input);
@@ -170,7 +187,18 @@ form_element_grid.prototype.show_element_part=function(n) {
 }
 
 form_element_grid.prototype.show_element=function() {
+  var createable
   var div=this.parent("form_element_grid").show_element.call(this);
+
+  if(!('createable' in this.def) || this.def.createable !== false)
+    createable = 'createable'
+  else
+    createable = 'not_createable'
+
+  if (this.tr) {
+    this.tr.setAttribute('class', this.tr.getAttribute('class') + ' ' + createable)
+  }
+  this.dom.setAttribute('class', this.dom.getAttribute('class') + ' ' + createable)
 
   var table = document.createElement("table")
   table.id = this.id
@@ -191,19 +219,30 @@ form_element_grid.prototype.show_element=function() {
     this.show_element_part(n)
   }
 
-  this.action_add=document.createElement("input");
-  this.action_add.type="submit";
-  this.action_add.name=this.options.var_name+"[__new]";
-  if("button:add_element" in this.def) {
-    if(typeof(this.def['button:add_element']) == "object")
-      this.action_add.value = lang(this.def['button:add_element']);
+  if (createable === 'createable') {
+    this.action_add=document.createElement("input");
+    this.action_add.type="submit";
+    this.action_add.name=this.options.var_name+"[__new]";
+    if("button:add_element" in this.def) {
+      if(typeof(this.def['button:add_element']) == "object")
+        this.action_add.value = lang(this.def['button:add_element']);
+      else
+        this.action_add.value = this.def['button:add_element'];
+    }
     else
-      this.action_add.value = this.def['button:add_element'];
+      this.action_add.value=lang('form:add_element');
+    this.action_add.onclick = function (k) {
+      this.add_element()
+      this.notify_change()
+      return false
+    }.bind(this)
+    div.appendChild(this.action_add);
   }
-  else
-    this.action_add.value=lang('form:add_element');
-  this.action_add.onclick=this.add_element.bind(this);
-  div.appendChild(this.action_add);
+  else {
+    // create empty span, because we add before new items will be added before
+    // the 'action_add' input
+    this.action_add = document.createElement('span')
+  }
 
   return div
 }
@@ -464,4 +503,8 @@ form_element_grid.prototype.add_element = function() {
   this.form_root.form.resize();
 
   return false;
+}
+
+form_element_grid.prototype.get_count = function () {
+  return this.get_data().length
 }
