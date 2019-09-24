@@ -274,6 +274,7 @@ class form_element_grid extends form_element {
         $tr->appendChild($td);
 
         $td->appendChild($element->show_element($document));
+        $td->appendChild($element->show_div_errors($document));
       }
 
       // Actions #k

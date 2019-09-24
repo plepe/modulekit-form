@@ -132,6 +132,7 @@ form_element_grid.prototype.show_element_part=function(n) {
     var td = document.createElement('td')
     tr.appendChild(td)
     td.appendChild(element.show_element())
+    td.appendChild(element.show_div_errors())
   }
 
   // Actions #k
