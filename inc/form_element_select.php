@@ -67,6 +67,7 @@ class form_element_select extends form_element {
     $text=DOM_createHTMLElement($all_descriptions, $document);
     $div_desc->appendChild($text);
     $div->appendChild($div_desc);
+    $this->dom_element = $select;
 
     return $div;
   }

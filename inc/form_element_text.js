@@ -12,7 +12,11 @@ form_element_text.prototype.connect=function(dom_parent) {
   if(!this.dom_element)
     this.dom_element=this.dom_parent.getElementsByTagName("input")[0];
 
-  this.dom_element.onblur=this.notify_change.bind(this);
+  if (this.def.change_on === 'keyup' || this.options.change_on_input) {
+    this.dom_element.addEventListener('input', this.notify_change.bind(this))
+  } else {
+    this.dom_element.onblur = this.notify_change.bind(this)
+  }
 }
 
 form_element_text.prototype.create_element=function() {
@@ -36,12 +40,18 @@ form_element_text.prototype.show_element=function() {
       input.setAttribute(i, this.def.html_attributes[i]);
 
   input.className=cls;
-  input.name=this.options.var_name;
+  if (this.options.var_name) {
+    input.name=this.options.var_name;
+  }
   if(this.data)
     input.value=this.data;
   div.appendChild(input);
   this.dom_element=input;
-  this.dom_element.onblur=this.notify_change.bind(this);
+  if (this.def.change_on === 'keyup' || this.options.change_on_input) {
+    this.dom_element.addEventListener('input', this.notify_change.bind(this))
+  } else {
+    this.dom_element.onblur = this.notify_change.bind(this)
+  }
 
   this.update_options();
 
@@ -92,6 +102,10 @@ form_element_text.prototype.get_data=function(data) {
   }
 
   return data;
+}
+
+form_element_text.prototype.focus = function () {
+  this.dom_element.focus()
 }
 
 form_element_text.prototype.set_data=function(data) {

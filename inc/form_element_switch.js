@@ -38,7 +38,9 @@ form_element_switch.prototype.create_element=function(k, element_def) {
   var element_class=get_form_element_class(element_def);
   var element_id=this.id+"_"+k;
   var element_options=new clone(this.options);
-  element_options.var_name=element_options.var_name+"["+k+"]";
+  if (this.options.var_name) {
+    element_options.var_name=element_options.var_name+"["+k+"]";
+  }
 
   if(class_exists(element_class)) {
     this.elements[k]=eval("new "+element_class+"()");
@@ -94,8 +96,14 @@ form_element_switch.prototype.get_data=function() {
 }
 
 form_element_switch.prototype.set_data=function(data) {
-  for(var k in this.elements)
-    this.elements[k].set_data(data);
+  var el = this.get_active_element();
+
+  if(el == null) {
+    this.data = data
+    return null;
+  }
+
+  el.set_data(data);
 }
 
 form_element_switch.prototype.set_orig_data=function(data) {
@@ -108,14 +116,25 @@ form_element_switch.prototype.refresh=function(force) {
 
   var el = this.get_active_element();
 
+  if (el && this.data) {
+    el.set_data(this.data)
+    this.data = null
+  }
+
   for(var k in this.elements) {
     this.elements[k].refresh(force);
 
-    if(this.elements[k] == el)
-      this.element_table[k].style.display = null;
-    else
-      this.element_table[k].style.display = 'none';
+    if (this.element_table) {
+      if(this.elements[k] == el)
+        this.element_table[k].style.display = null;
+      else
+        this.element_table[k].style.display = 'none';
+    }
   }
+}
+
+form_element_switch.prototype.focus = function() {
+  this.get_active_element().focus()
 }
 
 // save changes of the active element to the other children

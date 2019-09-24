@@ -307,9 +307,11 @@ function lengthInUtf8Bytes(str) {
 }
 
 function form_build_child_var_name (options, k) {
-  if(options.var_name)
+  if(options.var_name) {
     return options.var_name + '[' + k + ']'
-
-  else
+  } else if (options.var_name !== null) {
     return '' + k
+  } else {
+    return null
+  }
 }

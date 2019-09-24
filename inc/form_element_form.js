@@ -53,6 +53,15 @@ form_element_form.prototype.build_form=function() {
   }
 }
 
+form_element_form.prototype.focus = function() {
+  let list = Object.keys(this.elements)
+  if (list.length === 0) {
+    return
+  }
+
+  this.elements[list[0]].focus()
+}
+
 form_element_form.prototype.show_element=function() {
   this.dom_table = document.createElement("table");
   this.dom_table.className = 'form_element_form';

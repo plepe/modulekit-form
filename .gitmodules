@@ -7,3 +7,6 @@
 [submodule "modules/base"]
 	path = modules/base
 	url = https://github.com/plepe/modulekit-base.git
+[submodule "lib/modulekit/weight-sort"]
+	path = lib/modulekit/weight-sort
+	url = https://github.com/plepe/weight-sort

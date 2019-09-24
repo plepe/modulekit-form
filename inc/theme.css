@@ -100,6 +100,10 @@ span.form_element_file span.form_modified span.value
 }
 
 /* embedded form */
+span.form_element_form_chooser {
+  border: 1px inset black;
+  border-radius: 3px;
+}
 .form_element_form.form_element_array_part_element {
   border: 1px inset black;
   border-radius: 3px;

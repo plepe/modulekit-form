@@ -5,6 +5,17 @@ Newer
 * Form Element Select: suppress placeholder (by setting option to false)
 * Form Element Checkbox: support option 'presets' (and 'presets:label')
 * Form Element Array: new option 'index_type' (keep, _keys or array)
+* Form Element Checkbox: support option 'auto_add_values'
+* All elements which have 'values': new values_mode 'property'
+* Form Element Array: new option 'createable'
+* Form Element Text: option 'change_on' ('blur', 'keyup')
+* Form Element Form Chooser: children may have option 'non_used_value'
+* Form Element Array (and Hash): new check 'count'
+* Form Element File: replace 'Change' by 'Delete' button
+* Form Element File: include 'file' in JS data (when uploading, JS type File)
+* Form Element Form Chooser: child elements may have property 'show_default'
+* global option 'change_on_input'
+* function focus()
 
 2017-09-15 (Version >= 2.6)
 ---------------------------

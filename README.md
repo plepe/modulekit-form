@@ -79,6 +79,25 @@ form_dom.onsubmit = function() {
 f.set_data({ name: 'Bob', sex: 'm' });
 ```
 
+Form API
+========
+Constructor
+-----------
+```php
+$form1 = new form($id, $def, $options);
+```
+
+* $id of the form
+* $def the definition of the root's child elements.
+* $options are the definition of the root element (which is usually a form element 'form', but you can override this with 'type').
+
+Further options:
+* change_on_input: if true, `onchange` will be called whenever a keypress happens (for form elements, which support this)
+
+focus() (JS Only)
+-----------------
+Focus the first element.
+
 Form Elements
 =============
 All Form Elements
@@ -135,11 +154,14 @@ Definition:
 * max: maximum count of values
 * order: whether the elements of the array shall be orderable. true (default) / false.
 * removeable: whether the elements of the array shall be removeable. true (default) / false.
+* createable: whether new elements may be added. (boolean; default: true)
 * button:add_element: override text of "Add Element" button (may be translated)
 * req: require at least one element
 * empty_value: value to return if array is empty. Default: null.
 * exclude_null_values: if true, remove null values from the array. Default: false.
 * index_type: 'keep' (keep index values; re-ordering does not work in JS), 'array' (always re-number from 0 on, use a real array in JS mode), '_keys' (like 'keep', but in JS mode add a '_keys' property - an array with the ordering of indexes). Default: 'keep'
+* Additional checks:
+  * 'count' with parameters operator ('==', '>=', '>', '<', '<=', '!='), value and (optional) message. If count of elements does not compare to the specified value, create error message.
 
 Value:
 * Array of sub elements.
@@ -168,6 +190,7 @@ Definition:
 * force_values: boolean; if true, value must be member of 'values' array (default: false).
 * max_length: Value may not be longer than 'max_length' characters.
 * max_bytes: Value may not be longer than 'max_bytes' bytes in the current encoding (hopefully UTF-8).
+* change_on: per default, the element will emit the 'onchange' event on blur. if 'keyup', it will emit on the keyup event. (default: 'blur')
 
 Value:
 * String. Will be stripped of additional slashes.
@@ -237,11 +260,12 @@ Definition:
 * type: 'checkbox'
 * values: hash array of values, e.g. array("php"=>"PHP", "cpp"=>"C++", "js"=>"Javascript") or simple array of values, e.g. array("PHP", "C++", "Javascript"); may be translated like: array('m'=>array("en"=>"male", "de"=>"männlich"), 'f'=>array("en"=>"female", "de"=>"weiblich")). A value may also have a description (see Form Element "Select").
 * values_func: function(s) which can update values list; see chapter "Func Call" for details.
-* values_mode: 'keys' (default when a hash array is used) or 'values' (default when a simple array is used)
+* values_mode: 'keys' (default when a hash array is used) or 'values' (default when a simple array is used) or 'property' (values is an array of hashes, where a property (default: 'id') is used as key).
 * check_all: if true, include a button "check all" which will check all checkboxes
 * uncheck_all: like 'check_all', but for unchecking
 * presets: Adds a selector with presets for checkbox selections. An array (assoc. array), where each entry has a name and a list of options to select (values). Example: [ { name: "Test", values: [ 1, 2, 3 ] }, { name: "Only 3": values: [ 3 ] } ]. Each entry may also have a description ('desc').
 * presets:label: Override label for "-- load preset --" option.
+* auto_add_values: if true, add additional checkboxes if data contains values which were not defined. Default: false.
 
 Value:
 * In 'keys' values_mode an array of the keys of the chosen values is returned (e.g. array("php", "cpp"); in 'values' mode an array of the the keys of the chosen values is returned (e.g. array("PHP", "C++")).
@@ -255,7 +279,7 @@ Definition:
 * type: 'radio'
 * values: hash array of values, e.g. array("m"=>"male", "f"=>"female") or simple array of values, e.g. array("male", "female"); may be translated like: array('m'=>array("en"=>"male", "de"=>"männlich"), 'f'=>array("en"=>"female", "de"=>"weiblich")). A value may also have a description (see Form Element "Select").
 * values_func: function(s) which can update values list; see chapter "Func Call" for details.
-* values_mode: 'keys' (default when a hash array is used) or 'values' (default when a simple array is used)
+* values_mode: 'keys' (default when a hash array is used) or 'values' (default when a simple array is used) or 'property' (values is an array of hashes, where a property (default: 'id') is used as key).
 
 Value:
 * In 'keys' values_mode the key of the chosen value is returned (e.g. "m"); in 'values' mode the value is returned (e.g. "male")
@@ -277,7 +301,7 @@ A dropdown box where an entry can be selected.
 Definition:
 * type: 'select'
 * values: hash array of values, e.g. array("m"=>"male", "f"=>"female") or simple array of values array("male", "female"); optionally descriptions for values are possible too, when each value is a hash itself (value is saved as key 'name', description in key 'desc') e.g. 'f'=>array("name"=>"female", "desc"=>"the female gender"); may be translated like: array('m'=>array("en"=>"male", "de"=>"männlich"), 'f'=>array("en"=>"female", "de"=>"weiblich")); optionally localized descriptions for values are possible too (with prefix 'desc:'), e.g. 'f'=>array("en"=>"female", "desc:en"=>"the female gender", "de"=>"weiblich", "desc:de"=>"Das weibliche Geschlecht"); optionally values can be hidden by adding a key 'show_depend' with a check similar to the field 'show_depend'.
-* values_mode: 'keys' (default when a hash array is used) or 'values' (default when a simple array is used)
+* values_mode: 'keys' (default when a hash array is used) or 'values' (default when a simple array is used) or 'property' (values is an array of hashes, where a property (default: 'id') is used as key).
 * values_func: function(s) which can update values list; see chapter "Func Call" for details.
 * empty_value: Value to be returned if key is empty (default: null)
 * placeholder: Text which will be used, when no value is selected (default: '--- please select ---'). If set to boolean false, no placeholder option will be created.
@@ -285,6 +309,18 @@ Definition:
 
 Value:
 * In 'keys' values_mode the key of the chosen value is returned (e.g. "m"); in 'values' mode the value is returned (e.g. "male")
+
+Form Element "Select Other"
+---------------------
+A dropdown box where an entry can be selected with an "Other" option.
+
+Definition (all options from 'Select'):
+* type: 'select_other'
+* other_def: a definition for the other form, default: `{ "type": "text" }`.
+* button:other: the visible value of the other option, default: 'Other'.
+
+Value:
+* Either the value from the Select or the value from the Other option.
 
 Form Element "Autocomplete"
 ---------------------------
@@ -294,7 +330,7 @@ Definition:
 * type: 'select'
 * values: hash array of values, e.g. array("m"=>"male", "f"=>"female") or simple array of values array("male", "female"); may be translated like: array('m'=>array("en"=>"male", "de"=>"männlich"), 'f'=>array("en"=>"female", "de"=>"weiblich")); optionally descriptions for values are possible too (with prefix 'desc:'), e.g. 'f'=>array("en"=>"female", "desc:en"=>"the female gender", "de"=>"weiblich", "desc:de"=>"Das weibliche Geschlecht")
 * values_func: function(s) which can update values list; see chapter "Func Call" for details.
-* values_mode: 'keys' (default when a hash array is used) or 'values' (default when a simple array is used)
+* values_mode: 'keys' (default when a hash array is used) or 'values' (default when a simple array is used) or 'property' (values is an array of hashes, where a property (default: 'id') is used as key).
 * empty_value: Value to be returned if key is empty (default: null)
 * placeholder: Text which will be used, when no value is selected (default: '--- please select ---')
 
@@ -330,6 +366,16 @@ Definition:
 
 Value:
 * Mixed value (internally, the data will be saved in JSON format)
+
+Form Element "Label"
+--------------------
+A text input which can not be modified. It will update on set_data().
+
+Definition:
+* type: 'label'
+
+Value:
+* The value which has been set.
 
 Form Element "Color"
 --------------------
@@ -406,6 +452,12 @@ Definition:
 * removeable: whether the elements shall be removeable. true (default) / false.
 * result_keep_order: if true, resulting elements will be ordered by appearance in def.
 
+Child elements may have a property 'non_used_value', which will be returned for this element if the child has not been added to the form.
+
+Child elements may have a property 'show_default'. If true, this field will be shown, even if it has not been added.
+
+Child elements may have a property 'weight'. Elements will be ordered by weight. Elements added interactively will always be added at the bottom.
+
 Example:
 ```json
 "foobar": {
@@ -418,7 +470,8 @@ Example:
         },
         "bar": {
             "name": "Bar",
-            "type": "textarea"
+            "type": "textarea",
+            "non_used_value": "default value"
         }
     }
 }

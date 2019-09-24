@@ -14,6 +14,7 @@ $form_def=array(
         'type'    => 'select',
         'name'    => 'B',
         'values'  => array('1', '2', '3'),
+        'show_default' => true,
       ),
       'c'         => array(
         'type'    => 'date',
@@ -29,6 +30,7 @@ $form_def=array(
     'max_length' => 10,
     'html_attributes'   =>array("style"=>"border: 2px solid black;"),
     'check'	=> array("fun", array("js"=>"name_check", "php"=>"name_check")),
+    'non_used_value' => 'FOO',
   ),
   'nickname'   =>array(
     'name'      =>'Nickname',
@@ -71,6 +73,7 @@ EOT
     'check'	=>array("unique"),
     'order'	=>false,
     'exclude_null_values' => true,
+    'createable' => false,
   ),
   'fav_hobby'   =>array(
     'type'      => 'select',
@@ -79,6 +82,16 @@ EOT
     'values_mode'=>"values",
     'name'      =>array("en"=>"Favorite hobby", "de"=>"Lieblingshobby"),
     'include_data' => 'not_null',
+  ),
+  'fav_meal'    => array(
+    'type'      => 'select',
+    'name'      => 'Favorite Meal',
+    'values_mode' => 'property',
+    'values_property' => 'id',
+    'values'    => array(
+      array('id' => 'pizza', 'name' => 'Pizza'),
+      array('id' => 'kebab', 'name' => 'Kebab'),
+    ),
   ),
   'birthday'	=>array(
     'name'	=>"Birthday",
@@ -90,6 +103,7 @@ EOT
     'name'	=>"What languages do you speak?",
     'type'	=>"checkbox",
     'values'	=>array("php"=>"PHP", "perl"=>"Perl", "c"=>"C", "cpp"=>"C++", "java"=>"Java", "js"=>array("name"=>"Javascript", "desc"=>"Script language, supported by web browsers")),
+    'auto_add_values' => true,
     'presets'   => array(
       array('name' => 'Web', 'values' => array('php', 'js', 'java'), 'desc:en' => 'Languages used for web development', 'desc:de' => 'Computersprachen für Webseiten'),
       array('name' => 'System', 'values' => array('c', 'cpp', 'java'), 'desc' => 'Hard-core ;-)'),
@@ -125,7 +139,7 @@ EOT
   ),
   'residence'	=>array(
     'name'	=>"Where do you live",
-    'type'	=>"select",
+    'type'	=>"select_other",
     'values'	=>array("Austria", "Australia", "Germany", "Great Britian", "USA", "asdfjaksdfj klasdjfkas jdfkassjdk fjaksjdfka jsdfk jaskdfjlkas jdfkasdfj kasfjdk jaskdfjkas jdfkl ajsfkdjadjf kljadfljadf"),
   ),
   'supervisor'	=>array(
@@ -144,8 +158,8 @@ EOT
   'cats'	=>array(
     'type'	=>"form",
     'name'	=>"Cats",
-    'desc'	=>"Describe all your cats",
-    'count'	=>array("default"=>2, "index_type" => 'array'),
+    'desc'	=>"Describe all your cats (max. 3)",
+    'count'	=>array("default"=>2, "index_type" => 'array', 'check'	=> array('count', '<=', 3, 'Max. 3 accepted.')),
     'def'	=>array(
       'name'	=>array(
         'name'	=>"Name",
@@ -273,7 +287,7 @@ $default_data=array(
   "hobbies"=>array(0=>"Linux", 2=>"PHP", 5=>"Cycling"),
   "fav_hobby"=>"Cycling",
   "birthday"=>"1879-03-14", // Albert Einstein
-  "languages"=>array("php", "js"),
+  "languages"=>array("php", "js", "test"),
   "nationality"=>"de",
   "residence"=>"Germany",
   "os"=>array("Ubuntu Linux", "Debian Linux"),

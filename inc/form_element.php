@@ -558,6 +558,12 @@ class form_element {
     if(!isset($this->def['values_mode']))
       $this->def['values_mode']=is_hash($this->def['values'])?"keys":"values";
 
+    if ($this->def['values_mode'] === 'property') {
+      if (!isset($this->def['values_property'])) {
+        $this->def['values_property'] = 'id';
+      }
+    }
+
     foreach($this->def['values'] as $k=>$v) {
       if($v === null)
 	continue;
@@ -579,6 +585,9 @@ class form_element {
 	case "values":
 	  $ret[$v]=array('name' => $v);
 	  break;
+        case "property":
+          $ret[$v[$this->def['values_property']]] = $v;
+          break;
 	default:
 	  // invalid mode
 	  break;
@@ -637,4 +646,10 @@ function get_form_element_class($def) {
     $element_class="form_element_unsupported";
 
   return $element_class;
+}
+
+function form_create_element ($element_id, $element_def, $element_options, $parent) {
+  $element_class=get_form_element_class($element_def);
+
+  return new $element_class($element_id, $element_def, $element_options, $parent);
 }

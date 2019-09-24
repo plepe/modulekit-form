@@ -5,10 +5,14 @@ function form_element_form_chooser() {
 form_element_form_chooser.prototype.init=function(id, def, options, form_parent) {
   this.parent("form_element_form_chooser").init.call(this, id, def, options, form_parent);
 
-  this.build_form();
+  this.build_form(true);
 }
 
-form_element_form_chooser.prototype.build_form=function() {
+form_element_form_chooser.prototype.build_form=function(show_default=false) {
+  if ('elements' in this) {
+    return
+  }
+
   this.elements={};
   this.element_divs = {};
   this.available_elements = {};
@@ -16,6 +20,8 @@ form_element_form_chooser.prototype.build_form=function() {
   if(!this.data) {
     this.data={};
   }
+
+  this.def.def = weight_sort(this.def.def)
 
   for (var k in this.def.def) {
     var element_def=new clone(this.def.def[k]);
@@ -27,6 +33,10 @@ form_element_form_chooser.prototype.build_form=function() {
     if(class_exists(element_class)) {
       this.available_elements[k]=eval("new "+element_class+"()");
       this.available_elements[k].init(element_id, element_def, element_options, this);
+    }
+
+    if (show_default && element_def.show_default) {
+      this.add_element(k);
     }
   }
 }
@@ -103,7 +113,9 @@ form_element_form_chooser.prototype.connect=function(dom_parent) {
 	this.action_add.onchange = function () {
           var k = this.action_add.value
           this.add_element(k)
+          this.elements[k].focus()
           this.notify_change()
+          this.action_add.value = ''
           return false
         }.bind(this)
       }
@@ -114,6 +126,15 @@ form_element_form_chooser.prototype.connect=function(dom_parent) {
       div.removeChild(div.firstChild.nextSibling);
     }
   }
+}
+
+form_element_form_chooser.prototype.focus = function() {
+  let list = Object.keys(this.elements)
+  if (list.length === 0) {
+    return
+  }
+
+  this.elements[list[0]].focus()
 }
 
 form_element_form_chooser.prototype.finish_connect=function() {
@@ -140,6 +161,17 @@ form_element_form_chooser.prototype.get_data=function() {
     }
   }
 
+  for (i in this.available_elements) {
+    if (!(i in this.elements)) {
+      var element = this.available_elements[i]
+
+      if (element.def.non_used_value) {
+        ret[i] = element.def.non_used_value
+        count++
+      }
+    }
+  }
+
   if (this.def.result_keep_order) {
     var d = {}
     for (var k in this.def.def) {
@@ -157,6 +189,10 @@ form_element_form_chooser.prototype.get_data=function() {
 }
 
 form_element_form_chooser.prototype.set_data=function(data) {
+  if (!('elements' in this)) {
+    this.build_form()
+  }
+
   this.data=data;
 
   if(data)
@@ -177,8 +213,6 @@ form_element_form_chooser.prototype.set_data=function(data) {
   }
 
   this.resize();
-
-  this.data=null;
 }
 
 form_element_form_chooser.prototype.set_orig_data=function(data) {
@@ -244,7 +278,9 @@ form_element_form_chooser.prototype.show_element_part=function(k, element) {
   if(order == 'order') {
     var input=document.createElement("input");
     input.type="submit";
-    input.name=this.options.var_name+"[__order_up]["+k+"]";
+    if (this.options.var_name) {
+      input.name=this.options.var_name+"[__order_up]["+k+"]";
+    }
     input.value="↑";
     input.onclick = function (k) {
       this.order_up(k)
@@ -255,7 +291,9 @@ form_element_form_chooser.prototype.show_element_part=function(k, element) {
 
     var input=document.createElement("input");
     input.type="submit";
-    input.name=this.options.var_name+"[__order_down]["+k+"]";
+    if (this.options.var_name) {
+      input.name=this.options.var_name+"[__order_down]["+k+"]";
+    }
     input.value="↓";
     input.onclick = function (k) {
       this.order_down(k)
@@ -269,7 +307,9 @@ form_element_form_chooser.prototype.show_element_part=function(k, element) {
   if (removeable === 'removeable') {
     var input=document.createElement("input");
     input.type="submit";
-    input.name=this.options.var_name+"[__remove]["+k+"]";
+    if (this.options.var_name) {
+      input.name=this.options.var_name+"[__remove]["+k+"]";
+    }
     input.value="X";
     input.onclick = function (k) {
       this.remove_element(k)
@@ -304,7 +344,9 @@ form_element_form_chooser.prototype.show_element=function() {
   div.appendChild(el_div);
 
   this.action_add=document.createElement("select");
-  this.action_add.name=this.options.var_name+"[__new]";
+  if (this.options.var_name) {
+    this.action_add.name=this.options.var_name+"[__new]";
+  }
   this.action_add.className = 'form_element_form_chooser_action_add'
 
   var option = document.createElement('option');
@@ -335,7 +377,9 @@ form_element_form_chooser.prototype.show_element=function() {
   this.action_add.onchange = function () {
     var k = this.action_add.value
     this.add_element(k)
+    this.elements[k].focus()
     this.notify_change()
+    this.action_add.value = ''
     return false
   }.bind(this)
 
@@ -384,26 +428,25 @@ form_element_form_chooser.prototype.add_element = function(k) {
   }
 
   if(!(k in this.available_elements)) {
-    console.log(this.id + ' - add_element: "' + k + '" not found')
+    //console.log(this.id + ' - add_element: "' + k + '" not found')
     return false
   }
 
   this.elements[k] = this.available_elements[k]
 
-  this.dom_table_body.appendChild(this.show_element_part(k, this.elements[k]))
+  if (this.dom_table_body) {
+    this.dom_table_body.appendChild(this.show_element_part(k, this.elements[k]))
 
-  this.resize()
+    this.resize()
 
-  this.action_add.value = ''
-  for (var i = 0; i < this.action_add.options.length; i++) {
-    var option = this.action_add.options[i]
+    for (var i = 0; i < this.action_add.options.length; i++) {
+      var option = this.action_add.options[i]
 
-    if (option.value === k) {
-      option.disabled = true
+      if (option.value === k) {
+        option.disabled = true
+      }
     }
   }
-
-  this.notify_change()
 
   return false
 }
@@ -520,7 +563,7 @@ form_element_form_chooser.prototype.refresh=function(force) {
 form_element_form_chooser.prototype.resize = function () {
   this.parent("form_element_form_chooser").resize.call(this);
 
-  if (this.dom_table.rows.length >= 1) {
+  if (this.dom_table && this.dom_table.rows.length >= 1) {
     var width = this.dom_table.parentNode.parentNode.offsetWidth - this.dom_table.rows[0].cells[2].offsetWidth
     var em_height = get_em_height(this.dom_table);
 

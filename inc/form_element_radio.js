@@ -23,6 +23,15 @@ form_element_radio.prototype.connect=function(dom_parent) {
   }
 }
 
+form_element_radio.prototype.focus = function() {
+  let list = Object.keys(this.dom_values)
+  if (list.length === 0) {
+    return
+  }
+
+  this.dom_values[list[0]].focus()
+}
+
 form_element_radio.prototype.get_data=function() {
   if(!this.dom_values)
     return this.data;
@@ -78,7 +87,9 @@ form_element_radio.prototype.update_options = function() {
     var input=document.createElement("input");
     input.type="radio";
     input.id=id;
-    input.name=this.options.var_name;
+    if (this.options.var_name) {
+      input.name=this.options.var_name;
+    }
     input.value=k;
     // TODO: indexOf not supported in IE8 and earlier
     if(this.data==k)

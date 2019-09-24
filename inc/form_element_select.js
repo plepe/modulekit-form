@@ -30,6 +30,10 @@ form_element_select.prototype.connect=function(dom_parent) {
   }
 }
 
+form_element_select.prototype.focus = function() {
+  this.dom_element.focus()
+}
+
 form_element_select.prototype.get_data=function() {
   if(!this.dom_element)
     return this.data;
@@ -54,7 +58,7 @@ form_element_select.prototype.set_data=function(data) {
 
   for(var k in this.dom_values) {
     if(this.data==k)
-      this.dom_values[k].setAttribute('selected', 'selected');
+      this.dom_values[k].selected = true
   }
 }
 
@@ -63,7 +67,7 @@ form_element_select.prototype.show_element_option=function(select, k, v) {
   option.value=k;
   // TODO: indexOf not supported in IE8 and earlier
   if(this.data==k)
-    option.setAttribute('selected', 'selected');
+    option.selected = true
   select.appendChild(option);
   this.dom_values[k]=option;
 
@@ -83,7 +87,9 @@ form_element_select.prototype.show_element=function() {
   var select=document.createElement("select");
   select.className=cls;
   select.id=this.id;
-  select.name=this.options.var_name;
+  if (this.options.var_name) {
+    select.name=this.options.var_name;
+  }
   select.onchange=this.notify_change.bind(this);
   select.onblur=this.notify_change.bind(this);
   div.appendChild(select);

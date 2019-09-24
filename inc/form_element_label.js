@@ -11,7 +11,9 @@ form_element_label.prototype.show_element=function() {
 
   this.dom_element1=document.createElement("input");
   this.dom_element1.type="hidden";
-  this.dom_element1.name=this.options.var_name;
+  if (this.options.var_name) {
+    this.dom_element1.name=this.options.var_name;
+  }
   if(this.data)
     this.dom_element1.value=this.data;
 
@@ -37,7 +39,11 @@ form_element_label.prototype.connect=function(dom_parent) {
 form_element_label.prototype.set_data=function(data) {
   var div=this.parent("form_element_label").set_data.call(this, data);
 
-  if(this.dom_element) {
+  if(this.dom_element1) {
+    this.dom_element1.value = this.data
+  }
+
+  if(this.dom_element2) {
     while(this.dom_element2.firstChild)
       this.dom_element2.removeChild(this.dom_element2.firstChild);
 

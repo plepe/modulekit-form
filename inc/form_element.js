@@ -22,6 +22,9 @@ form_element.prototype.init=function(id, def, options, form_parent) {
   }
 }
 
+form_element.prototype.focus = function () {
+}
+
 form_element.prototype.name=function() {
   var name = this.id;
 
@@ -29,6 +32,10 @@ form_element.prototype.name=function() {
     name=this.def._name();
   else
     name=this.def.name;
+
+  if (!name) {
+    return '';
+  }
 
   if(typeof name=="object") {
     return lang(name);
@@ -669,6 +676,12 @@ form_element.prototype.get_values=function() {
   if(!this.def.values_mode)
     this.def.values_mode=this.def.values.length?"values":"keys";
 
+  if (this.def.values_mode === 'property') {
+    if (!this.def.values_property) {
+      this.def.values_property = 'id'
+    }
+  }
+
   for(var k in this.def.values) {
     var val=this.def.values[k];
 
@@ -691,6 +704,9 @@ form_element.prototype.get_values=function() {
       case "values":
         ret[val]={ 'name': val };
 	break;
+      case "property":
+        ret[val[this.def.values_property]] = val;
+        break;
       default:
         // invalid mode
     }
@@ -738,4 +754,14 @@ function get_form_element_class(def) {
     element_class="form_element_unsupported";
 
   return element_class;
+}
+
+function form_create_element (id, def, options, parent) {
+  var element_class=get_form_element_class(def)
+  var element_options=new clone(this.options)
+
+  var element = eval("new " + element_class + "()")
+  element.init(id, def, options, parent)
+
+  return element
 }

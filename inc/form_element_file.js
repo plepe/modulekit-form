@@ -27,6 +27,10 @@ form_element_file.prototype.init=function(id, def, options, form_parent) {
   this.parent("form_element_file").init.call(this, id, def, options, form_parent);
 }
 
+form_element_file.prototype.focus = function() {
+  this.dom_element.focus()
+}
+
 form_element_file.prototype.refresh=function(force) {
   var cls;
 
@@ -52,6 +56,12 @@ form_element_file.prototype.connect=function(dom_parent) {
   for(var i=0; i<obs.length; i++) {
     if(obs[i].name==this.options.var_name+"[file]")
       this.dom_element=obs[i];
+
+    if(obs[i].name == this.options.var_name+"[data]")
+      this.dom_element_orig = obs[i]
+
+    if(obs[i].name == this.options.var_name+"[delete]")
+      this.dom_element_delete = obs[i]
   }
 
   if(this.dom_element) {
@@ -89,11 +99,10 @@ form_element_file.prototype.connect=function(dom_parent) {
 
   var span;
   if(span=document.getElementById(this.id+"-oldfile")) {
-    var input=document.createElement("input");
-    input.type="button";
-    input.value=lang("change");
-    input.onclick=this.input_change.bind(this);
-    span.appendChild(input);
+    if (this.dom_element_delete) {
+      this.dom_element_delete.type = 'button'
+      this.dom_element_delete.onclick=this.input_delete.bind(this);
+    }
 
     span=document.getElementById(this.id+"-newfile");
     span.style.display="none";
@@ -112,7 +121,9 @@ form_element_file.prototype.show_element=function() {
     var input=document.createElement("input");
     input.setAttribute("type", "hidden");
     input.setAttribute("value", JSON.stringify(this.data));
-    input.setAttribute("name", this.options.var_name+"[data]");
+    if (this.options.var_name) {
+      input.setAttribute("name", this.options.var_name+"[data]");
+    }
     div.appendChild(input);
 
     // create div for text of old file
@@ -153,15 +164,17 @@ form_element_file.prototype.show_element=function() {
 
     var input=document.createElement("input");
     input.type="button";
-    input.value=lang("change");
-    input.onclick=this.input_change.bind(this);
+    input.value=lang("delete");
+    input.onclick=this.input_delete.bind(this);
     span.appendChild(input);
   }
   else {
     var input=document.createElement("input");
     input.setAttribute("type", "hidden");
     input.setAttribute("value", null);
-    input.setAttribute("name", this.options.var_name+"[data]");
+    if (this.options.var_name) {
+      input.setAttribute("name", this.options.var_name+"[data]");
+    }
     div.appendChild(input);
   }
 
@@ -175,7 +188,9 @@ form_element_file.prototype.show_element=function() {
   var input=document.createElement("input");
   input.setAttribute("type", "file");
   input.setAttribute("class", cls);
-  input.setAttribute("name", this.options.var_name+"[file]");
+  if (this.options.var_name) {
+    input.setAttribute("name", this.options.var_name+"[file]");
+  }
   span.appendChild(input);
 
   var button = document.createElement('span')
@@ -216,8 +231,8 @@ form_element_file.prototype.notify_change_file=function() {
 
     var input=document.createElement("input");
     input.type="button";
-    input.value=lang("change");
-    input.onclick=this.input_change.bind(this);
+    input.value=lang("delete");
+    input.onclick=this.input_delete.bind(this);
     span.appendChild(input);
 
     div.appendChild(span);
@@ -253,9 +268,14 @@ form_element_file.prototype.notify_change_file=function() {
   span.className = "form_modified";
 }
 
-form_element_file.prototype.input_change=function() {
+form_element_file.prototype.input_delete=function() {
   var span=document.getElementById(this.id+"-oldfile");
   span.style.display="none";
+
+  this.dom_element.value = null;
+  if (this.dom_element_orig) {
+    this.dom_element_orig.value = 'null';
+  }
 
   span=document.getElementById(this.id+"-newfile");
   span.style.display="inline-block";
@@ -267,16 +287,9 @@ form_element_file.prototype.get_data=function() {
 
   // no new file -> check if there's data of an uploaded file
   if(!this.dom_element.value) {
-    var obs;
-    var ob = null;
-    obs = document.getElementsByTagName("input");
-
-    for(var i=0; i<obs.length; i++)
-      if(obs[i].name == this.options.var_name+"[data]")
-	ob = obs[i];
-
-    if(ob)
-      return JSON.parse(ob.value);
+    if(this.dom_element_orig) {
+      return JSON.parse(this.dom_element_orig.value);
+    }
 
     return null;
   }
@@ -295,6 +308,7 @@ form_element_file.prototype.get_data=function() {
       data.ext = file['name'].substr(file['name'].lastIndexOf(".") + 1);
 
     this.js_file = file;
+    data.file = this.js_file
   }
   else {
     data.orig_name = this.dom_element.value;

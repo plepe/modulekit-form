@@ -78,3 +78,7 @@
 .form_element_form_chooser_table.small > tbody > tr {
   padding-bottom: 0.5em;
 }
+span.form_element_form_chooser {
+  display: block;
+  border: 1px solid black;
+}

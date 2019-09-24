@@ -35,6 +35,15 @@ form_element_array.prototype.index_element=function(el) {
   return null;
 }
 
+form_element_array.prototype.focus = function() {
+  let list = Object.keys(this.elements)
+  if (list.length === 0) {
+    return
+  }
+
+  this.elements[list[0]].focus()
+}
+
 form_element_array.prototype.create_element=function(k) {
   var element_def=new clone(this.def.def);
   var element_class=get_form_element_class(element_def);
@@ -54,7 +63,7 @@ form_element_array.prototype.create_element=function(k) {
 form_element_array.prototype.connect=function(dom_parent) {
   this.parent("form_element_array").connect.call(this, dom_parent);
 
-  var current=this.dom_parent.firstChild;
+  var current=this.dom.firstChild;
   this.elements={};
   this.element_divs = {};
   while(current) {
@@ -219,8 +228,6 @@ form_element_array.prototype.set_data=function(data) {
       this.dom.insertBefore(div, this.action_add.parentNode)
     }
   }
-
-  this.data = null
 }
 
 form_element_array.prototype.set_orig_data=function(data) {
@@ -281,7 +288,9 @@ form_element_array.prototype.show_element_part=function(k, element) {
   if(order == 'order') {
     var input=document.createElement("input");
     input.type="submit";
-    input.name=this.options.var_name+"[__order_up]["+k+"]";
+    if (this.options.var_name) {
+      input.name=this.options.var_name+"[__order_up]["+k+"]";
+    }
     input.value="↑";
     input.onclick = function (k) {
       this.order_up(k)
@@ -292,7 +301,9 @@ form_element_array.prototype.show_element_part=function(k, element) {
 
     var input=document.createElement("input");
     input.type="submit";
-    input.name=this.options.var_name+"[__order_down]["+k+"]";
+    if (this.options.var_name) {
+      input.name=this.options.var_name+"[__order_down]["+k+"]";
+    }
     input.value="↓";
     input.onclick = function (k) {
       this.order_down(k)
@@ -305,7 +316,9 @@ form_element_array.prototype.show_element_part=function(k, element) {
   if (removeable === 'removeable') {
     var input=document.createElement("input");
     input.type="submit";
-    input.name=this.options.var_name+"[__remove]["+k+"]";
+    if (this.options.var_name) {
+      input.name=this.options.var_name+"[__remove]["+k+"]";
+    }
     input.value="X";
     input.onclick = function (k) {
       this.remove_element(k)
@@ -320,7 +333,18 @@ form_element_array.prototype.show_element_part=function(k, element) {
 }
 
 form_element_array.prototype.show_element=function() {
+  var createable
   var div=this.parent("form_element_array").show_element.call(this);
+
+  if(!('createable' in this.def) || this.def.createable !== false)
+    createable = 'createable'
+  else
+    createable = 'not_createable'
+
+  if (this.tr) {
+    this.tr.setAttribute('class', this.tr.getAttribute('class') + ' ' + createable)
+  }
+  this.dom.setAttribute('class', this.dom.getAttribute('class') + ' ' + createable)
 
   for(var k in this.elements) {
     var part_div=this.show_element_part(k, this.elements[k]);
@@ -331,22 +355,33 @@ form_element_array.prototype.show_element=function() {
   el_div.className="form_element_array_actions";
   div.appendChild(el_div);
 
-  this.action_add=document.createElement("input");
-  this.action_add.type="submit";
-  this.action_add.name=this.options.var_name+"[__new]";
-  if("button:add_element" in this.def) {
-    if(typeof(this.def['button:add_element']) == "object")
-      this.action_add.value = lang(this.def['button:add_element']);
-    else
-      this.action_add.value = this.def['button:add_element'];
+  if (createable === 'createable') {
+    this.action_add=document.createElement("input");
+    this.action_add.type="submit";
+    if (this.options.var_name) {
+      this.action_add.name=this.options.var_name+"[__new]";
+    }
+    if("button:add_element" in this.def) {
+      if(typeof(this.def['button:add_element']) == "object")
+        this.action_add.value = lang(this.def['button:add_element']);
+      else
+        this.action_add.value = this.def['button:add_element'];
+    }
+    else {
+      this.action_add.value=lang('form:add_element');
+    }
+
+    this.action_add.onclick = function (k) {
+      this.add_element()
+      this.notify_change()
+      return false
+    }.bind(this)
   }
-  else
-    this.action_add.value=lang('form:add_element');
-  this.action_add.onclick = function (k) {
-    this.add_element()
-    this.notify_change()
-    return false
-  }.bind(this)
+  else {
+    // create empty span, because we add before new items will be added before
+    // the 'action_add' input
+    this.action_add = document.createElement('span')
+  }
   el_div.appendChild(this.action_add);
 
   return div;
@@ -402,7 +437,11 @@ form_element_array.prototype.add_element = function (id) {
 
   this.create_element(id)
 
-  var current=document.getElementById(this.id).firstChild;
+  if (!this.dom) {
+    return false;
+  }
+
+  var current=this.dom.firstChild;
   while(current) {
     if(current.className=="form_element_array_actions") {
       current.parentNode.insertBefore(this.show_element_part(id, this.elements[id]), current);
@@ -417,7 +456,7 @@ form_element_array.prototype.add_element = function (id) {
 }
 
 form_element_array.prototype.remove_element=function(k) {
-  var current=document.getElementById(this.id).firstChild;
+  var current = this.dom.firstChild;
   while(current) {
     if((current.className=="form_element_array_part")&&(current.getAttribute("form_element_num")==k)) {
       current.parentNode.removeChild(current);
@@ -435,7 +474,7 @@ form_element_array.prototype.remove_element=function(k) {
 }
 
 form_element_array.prototype.order_up=function(k) {
-  var current=document.getElementById(this.id).firstChild;
+  var current = this.dom.firstChild;
   var prev=null;
 
   while(current) {
@@ -459,7 +498,7 @@ form_element_array.prototype.order_up=function(k) {
 }
 
 form_element_array.prototype.order_down=function(k) {
-  var current=document.getElementById(this.id).lastChild;
+  var current = this.dom.lastChild;
   var next=null;
 
   while(current) {
@@ -553,5 +592,46 @@ form_element_array.prototype.check_required=function(list, param) {
       list.push(lang('form:require_value'));
     else
       list.push(param[0]);
+  }
+}
+
+form_element_array.prototype.get_count = function () {
+  return this.get_data().length
+}
+
+form_element_array.prototype.check_count=function(list, param) {
+  var op = param[0]
+  var value = param[1]
+  var count = this.get_count()
+  var result
+
+  switch (op) {
+    case '>=':
+      result = count >= value
+      break
+    case '>':
+      result = count > value
+      break
+    case '<':
+      result = count < value
+      break
+    case '<=':
+      result = count <= value
+      break
+    case '==':
+      result = count == value
+      break
+    case '!=':
+      result = count != value
+      break
+    default:
+      list.push('invalid operator')
+  }
+
+  if(!result) {
+    if (param.length < 3)
+      list.push(lang('form:require_value'));
+    else
+      list.push(param[2]);
   }
 }
