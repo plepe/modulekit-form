@@ -517,6 +517,43 @@ form_element.prototype.check_unique=function(list, param) {
   }
 }
 
+form_element.prototype.check_count=function(list, param) {
+  var op = param[0]
+  var value = param[1]
+  var count = this.get_count()
+  var result
+
+  switch (op) {
+    case '>=':
+      result = count >= value
+      break
+    case '>':
+      result = count > value
+      break
+    case '<':
+      result = count < value
+      break
+    case '<=':
+      result = count <= value
+      break
+    case '==':
+      result = count == value
+      break
+    case '!=':
+      result = count != value
+      break
+    default:
+      list.push('invalid operator')
+  }
+
+  if(!result) {
+    if (param.length < 3)
+      list.push(lang('form:require_value'));
+    else
+      list.push(param[2]);
+  }
+}
+
 form_element.prototype.show_errors=function() {
   var check_errors=[];
   this.errors.call(this, check_errors);

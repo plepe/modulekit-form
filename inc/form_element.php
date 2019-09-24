@@ -511,6 +511,43 @@ class form_element {
     }
   }
 
+  function check_count (&$errors, $param) {
+    $op = $param[0];
+    $value = $param[1];
+    $count = sizeof($this->get_data());
+    $result;
+
+    switch ($op) {
+      case '>=':
+        $result = $count >= $value;
+        break;
+      case '>':
+        $result = $count > $value;
+        break;
+      case '<':
+        $result = $count < $value;
+        break;
+      case '<=':
+        $result = $count <= $value;
+        break;
+      case '==':
+        $result = $count == $value;
+        break;
+      case '!=':
+        $result = $count != $value;
+        break;
+      default:
+        $errors[] = 'invalid operator';
+    }
+
+    if(!$result) {
+      if (sizeof($param) < 3)
+        $errors[] = lang('form:require_value');
+      else
+        $errors[] = $param[2];
+    }
+  }
+
   function is_shown() {
     if(isset($this->def['show_depend'])) {
       if($this->def['show_depend'] === false)
