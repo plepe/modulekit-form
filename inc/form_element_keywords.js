@@ -84,6 +84,10 @@ form_element_keywords.prototype.show_element=function() {
 
   this.create_interaction();
 
+  if (this.data) {
+    this.update_element();
+  }
+
   return div;
 }
 
@@ -114,9 +118,12 @@ form_element_keywords.prototype.set_data=function(data) {
 
   this.get_data();
 
-  if (!this.dom_element)
-    return;
+  if (this.dom_element) {
+    this.update_element();
+  }
+}
 
+form_element_keywords.prototype.update_element = function() {
   while(this.keywords_list.firstChild)
     this.keywords_list.removeChild(this.keywords_list.firstChild);
 

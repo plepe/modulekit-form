@@ -37,6 +37,10 @@ form_element.prototype.name=function() {
   else
     name=this.def.name;
 
+  if (!name) {
+    return '';
+  }
+
   if(typeof name=="object") {
     return lang(name);
   }
