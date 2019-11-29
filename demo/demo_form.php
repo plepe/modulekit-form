@@ -227,16 +227,16 @@ EOT
       ),
     ),
   ),
-  'text_or_area' => array(
-    'name'      => 'Text or Textarea?',
+  'switch_chooser' => array(
+    'name'      => 'Switch for next field?',
     'type'      => 'radio',
     'desc'      => 'Is the next field a text or a textarea?',
     'default'   => 'none',
-    'values'    => array('none', 'text', 'textarea'),
+    'values'    => array('none', 'text', 'textarea', 'select', 'autocomplete'),
   ),
-  'tt'      =>array(
+  'switch_value'      =>array(
     'type'      =>"switch",
-    'switch'    =>"text_or_area",
+    'switch'    =>"switch_chooser",
     'def'       =>array(
       'text'       =>array(
         'type'  =>"text",
@@ -246,13 +246,17 @@ EOT
         'type'  =>"textarea",
         'name'  =>"textarea",
       ),
+      'select'     => array(
+        'type'  => 'select',
+        'name'  => 'Select',
+        'values' => array('foo', 'bar'),
+      ),
+      'autocomplete'     => array(
+        'type'  => 'autocomplete',
+        'name'  => 'Autocomplete',
+        'values' => array('foo', 'bar'),
+      ),
     ),
-  ),
-  'fixed'	=> array(
-    'name'	=> 'Fixed',
-    'type'	=> 'fixed',
-    'value'	=> 'test',
-    'show_depend' => false,
   ),
 );
 
@@ -273,6 +277,6 @@ $default_data=array(
   "json"=>array(1, 2, "foo", "bar"=>array("b", "a", "r")),
   "cats"=>array(array("name"=>"Foo", "age"=>3)),
   "num"=>10,
-  "tt" => "foobar",
+  "switch_value" => "foobar",
   "filters" => array("a"=>'Foobar', "b"=>"3"),
 );
