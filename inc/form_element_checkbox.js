@@ -13,6 +13,7 @@ form_element_checkbox.prototype.connect=function(dom_parent) {
   this.parent("form_element_checkbox").connect.call(this, dom_parent);
 
   var current=this.dom_parent.firstChild;
+  var presets_name = this.options.var_name + '[__presets]'
   this.dom_values={};
   while(current) {
     if(current.nodeName=="SPAN") {
@@ -22,10 +23,16 @@ form_element_checkbox.prototype.connect=function(dom_parent) {
       dom.onchange=this.notify_change.bind(this);
     }
 
+    if (current.name === presets_name) {
+      this.input_presets = current
+    }
+
     current=current.nextSibling;
   }
 
   this.values = this.get_values();
+
+  this.init_presets();
 }
 
 form_element_checkbox.prototype.focus = function() {
@@ -135,6 +142,7 @@ form_element_checkbox.prototype.update_options = function() {
     this.dom.removeChild(this.dom.firstChild);
 
   this.dom_values={};
+  this.input_presets = null;
   var values=this.get_values();
 
   if (this.def.auto_add_values) {
@@ -181,31 +189,17 @@ form_element_checkbox.prototype.update_options = function() {
     this.dom.appendChild(this.input_uncheck_all);
   }
 
-  if (('presets' in this.def) && (this.def.presets)) {
+  this.init_presets();
+
+  return values;
+}
+
+form_element_checkbox.prototype.init_presets = function () {
+  if (('presets' in this.def) && (this.def.presets) && !this.input_presets) {
     this.input_presets = document.createElement('select')
     if (this.options.var_name) {
       this.input_presets.setAttribute('name', this.options.var_name + '[__presets]')
     }
-
-    this.input_presets.onchange = function () {
-      var v = this.input_presets.value
-      if (v === '') {
-        return
-      }
-
-      for (var k in this.dom_values) {
-        this.dom_values[k].checked = false
-      }
-
-      var data = this.def.presets[v].values
-      for (var i = 0; i < data.length; i++) {
-        if (data[i] in this.dom_values) {
-          this.dom_values[data[i]].checked = true
-        }
-      }
-
-      this.notify_change()
-    }.bind(this)
 
     var placeholder
     if('presets:label' in this.def)
@@ -236,7 +230,27 @@ form_element_checkbox.prototype.update_options = function() {
     this.dom.appendChild(this.input_presets)
   }
 
-  return values;
+  if (this.input_presets) {
+    this.input_presets.onchange = function () {
+      var v = this.input_presets.value
+      if (v === '') {
+        return
+      }
+
+      for (var k in this.dom_values) {
+        this.dom_values[k].checked = false
+      }
+
+      var data = this.def.presets[v].values
+      for (var i = 0; i < data.length; i++) {
+        if (data[i] in this.dom_values) {
+          this.dom_values[data[i]].checked = true
+        }
+      }
+
+      this.notify_change()
+    }.bind(this)
+  }
 }
 
 form_element_checkbox.prototype.refresh=function(force) {
