@@ -113,7 +113,35 @@ form_element_select_other.prototype.update_options = function () {
   }
 }
 
+form_element_select_other.prototype.show_element = function () {
+  let data = this.get_data();
+
+  var div = this.parent("form_element_select_other").show_element.call(this);
+
+  if (!(data in this.get_values())) {
+    this.other_dom = document.createElement('div')
+
+    var d = this.other_form.show_element()
+    this.dom.appendChild(this.other_dom)
+    this.other_dom.appendChild(d)
+
+    this.other_dom.style.display = 'block'
+    this.other_option.selected = true
+  }
+
+  return div;
+}
+
 form_element_select_other.prototype.refresh = function (force) {
   this.parent("form_element_select_other").refresh.call(this, force)
   this.other_form.refresh()
+
+  if (this.dom_element) {
+    let data = this.get_data()
+    let values = this.get_values()
+
+    if (!(this.orig_data in values) && !(data in values)) {
+      this.dom_element.className = 'form_orig'
+    }
+  }
 }
