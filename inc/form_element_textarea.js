@@ -43,7 +43,8 @@ form_element_textarea.prototype.resize = function(ev, shrink) {
     // thanks for http://codingaspect.com/blog/textarea-auto-grow-resizing-textarea-to-fit-text-height for this solution
     this.dom_element.style.overlowY = 'hidden';
     this.dom_element.style.height = 'auto';
-    this.dom_element.style.height = this.dom_element.scrollHeight + 'px';
+    // add 2px for good measure
+    this.dom_element.style.height = (this.dom_element.scrollHeight + 2) + 'px';
 
     this.dom_element.parentNode.style.minHeight = null;
   }
