@@ -51,14 +51,14 @@ print "<div class='demo'>\n";
 
 print "<div class='definition'>\n";
 print "Form definition:<pre id='definition'>\n";
-print json_readable_encode($form_def);
+print htmlspecialchars(json_readable_encode($form_def));
 print "</pre>\n";
 print "</div>\n";
 
 // save data to database (or - in this example - print to stdout)
 print "<div class='form_data'>\n";
 print "Data: <pre id='form_data'>\n";
-print json_readable_encode($form->get_data());
+print htmlspecialchars(json_readable_encode($form->get_data()));
 print "</pre>\n";
 print "</div>\n";
 
