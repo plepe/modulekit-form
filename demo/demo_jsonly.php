@@ -18,6 +18,7 @@ call_hooks("init");
 <link rel='stylesheet' type='text/css' href='demo.css'/>
 <script type='text/javascript' src='demo_jsonly.js'></script>
 <script type='text/javascript' src='demo_functions.js'></script>
+<script type='text/javascript' src='../node_modules/marked/marked.min.js'></script>
 </head>
 <body>
 <?php
