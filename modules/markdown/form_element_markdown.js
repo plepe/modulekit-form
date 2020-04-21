@@ -2,6 +2,11 @@ form_element_markdown.inherits_from(form_element_textarea);
 function form_element_markdown() {
 }
 
+form_element_markdown.prototype.set_data = function(data) {
+  this.parent("form_element_markdown").set_data.call(this, data)
+  this.update_preview()
+}
+
 form_element_markdown.prototype.refresh = function(force) {
   this.parent("form_element_markdown").refresh.call(this, force);
 
