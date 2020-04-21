@@ -2,8 +2,8 @@
 Header("content-type: text/html; charset=utf-8");
 // create file .nocache to disable caching
 $modulekit_nocache=file_exists(".nocache");
-include "../modulekit/loader.php"; /* loads all php-includes */
 include "demo_form.php";
+include "../modulekit/loader.php"; /* loads all php-includes */
 include "demo_functions.php";
 call_hooks("init");
 ?>
