@@ -5,6 +5,10 @@ function form_element_markdown() {
 form_element_markdown.prototype.refresh = function(force) {
   this.parent("form_element_markdown").refresh.call(this, force);
 
+  if (typeof marked === 'undefined') {
+    return console.log('Library "marked" not loaded')
+  }
+
   if (this.dom_element && !this.dom_preview) {
     this.dom_preview = document.createElement('div')
     this.dom_preview.className = 'preview'

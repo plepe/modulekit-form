@@ -286,7 +286,12 @@ $default_data=array(
   "switch_value" => "foobar",
   "filters" => array("a"=>'Foobar', "b"=>"3"),
   "markdown" => <<<EOT
-# Source code
+TODO:
+* Shop
+* Cook
+* Eat
+
+Code block:
 ```html
 <ul>
   <li><a href='foobar.html'>foobar</a></li>
