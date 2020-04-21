@@ -11,5 +11,6 @@ $include = array(
     'form_element_markdown.js',
   ),
   'css' => array(
+    'form_element_markdown.css',
   ),
 );

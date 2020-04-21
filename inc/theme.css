@@ -28,6 +28,11 @@ select {
   margin-top: 2px;
   margin-bottom: 2px;
 }
+div.preview {
+  border: 1px inset #000000;
+  border-radius: 3px;
+  padding: 2px;
+}
 div.form_element_label {
   background: #ffffff;
 }
