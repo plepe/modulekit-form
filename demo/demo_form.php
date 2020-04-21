@@ -1,4 +1,6 @@
 <?php
+$modulekit_load[] = "modulekit-form-markdown";
+
 $form_def=array(
   'filters'     =>array(
     'name'      =>"Filters",
@@ -258,6 +260,10 @@ EOT
       ),
     ),
   ),
+  'markdown' => array(
+    'name' => 'Markdown Text',
+    'type' => 'markdown',
+  ),
 );
 
 $options = array(
@@ -279,4 +285,13 @@ $default_data=array(
   "num"=>10,
   "switch_value" => "foobar",
   "filters" => array("a"=>'Foobar', "b"=>"3"),
+  "markdown" => <<<EOT
+# Source code
+```html
+<ul>
+  <li><a href='foobar.html'>foobar</a></li>
+</ul>
+```
+EOT
+,
 );
