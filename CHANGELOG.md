@@ -14,6 +14,7 @@ Newer
 * Form Element File: replace 'Change' by 'Delete' button
 * Form Element File: include 'file' in JS data (when uploading, JS type File)
 * Form Element Form Chooser: child elements may have property 'show_default'
+* Form Element Markdown: edit markdown texts with preview (optional module)
 * global option 'change_on_input'
 * function focus()
 

@@ -565,6 +565,15 @@ Example:
 }
 ```
 
+Form Element Markdown
+---------------------
+Optional module, needs 'modulekit-form-markdown' loaded. Also, needs the npm module [marked](https://www.npmjs.com/package/marked) loaded globally.
+
+Definition:
+* type: markdown
+
+Inherits all options from Form Element Textarea. When `marked` is not loaded, a warning will be issued on the JavaScript console and no preview is available.
+
 General functions
 =================
 Func Call
