@@ -64,6 +64,8 @@ form_element_markdown.prototype.add_menu = function(action, menu) {
 
 form_element_markdown.prototype.update_preview = function() {
   if (typeof marked !== 'undefined') {
-    this.dom_preview.innerHTML = marked(this.dom_element.value)
+    if (this.dom_preview) {
+      this.dom_preview.innerHTML = marked(this.dom_element.value)
+    }
   }
 }
