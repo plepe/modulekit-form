@@ -81,7 +81,7 @@ form_element_switch.prototype.get_switch_element=function() {
 form_element_switch.prototype.get_active_element=function() {
   var switch_data = this.get_switch_element().get_data();
 
-  if(!(switch_data in this.elements))
+  if(!this.elements || !(switch_data in this.elements))
     return null;
 
   return this.elements[switch_data];
