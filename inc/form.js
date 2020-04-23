@@ -8,6 +8,10 @@ function form(id, def, options) {
     options.var_name = null
   }
 
+  if (!('var_name' in options)) {
+    options.var_name = id;
+  }
+
   this.id=id;
   this.def=def;
   form_process_def(this.def);
