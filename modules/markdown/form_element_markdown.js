@@ -11,7 +11,11 @@ form_element_markdown.prototype.resize = function(ev, shrink) {
   this.parent("form_element_markdown").resize.call(this, ev, shrink);
 
   if (this.dom_preview) {
-    this.dom_preview.style.height = this.dom_element.style.height;
+    if (this.dom.classList.contains('side-by-side')) {
+      this.dom_preview.style.height = this.dom_element.style.height;
+    } else {
+      this.dom_preview.style.height = null;
+    }
   }
 }
 
@@ -62,6 +66,9 @@ form_element_markdown.prototype.add_menu = function(action, menu) {
 
     this.dom.classList.add(action)
     button.classList.add('active')
+
+    this.resize()
+
     return false
   }.bind(this, button)
   button.innerHTML = lang('form:' + action)
