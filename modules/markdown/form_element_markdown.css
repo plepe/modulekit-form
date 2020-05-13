@@ -5,6 +5,9 @@
   width: calc(50% - 2px);
   display: inline-block;
 }
+.form td.field_value .form_element_markdown.side-by-side > div.preview {
+  overflow: auto;
+}
 .form td.field_value .form_element_markdown.side-by-side > textarea {
   margin-right: 1px;
 }

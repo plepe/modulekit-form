@@ -7,6 +7,14 @@ form_element_markdown.prototype.set_data = function(data) {
   this.update_preview()
 }
 
+form_element_markdown.prototype.resize = function(ev, shrink) {
+  this.parent("form_element_markdown").resize.call(this, ev, shrink);
+
+  if (this.dom_preview) {
+    this.dom_preview.style.height = this.dom_element.style.height;
+  }
+}
+
 form_element_markdown.prototype.refresh = function(force) {
   this.parent("form_element_markdown").refresh.call(this, force);
 
