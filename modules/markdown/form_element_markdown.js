@@ -81,6 +81,13 @@ form_element_markdown.prototype.update_preview = function() {
   if (typeof marked !== 'undefined') {
     if (this.dom_preview) {
       this.dom_preview.innerHTML = marked(this.dom_element.value)
+
+      // when cursor is as bottom of the textarea, scroll preview to the bottom too
+      let rows = this.dom_element.value.split(/\n/g)
+      let current_row = this.dom_element.value.substr(0, this.dom_element.selectionEnd).split(/\n/g)
+      if (current_row.length === rows.length) {
+        this.dom_preview.scrollTop = this.dom_preview.scrollHeight
+      }
     }
   }
 }
