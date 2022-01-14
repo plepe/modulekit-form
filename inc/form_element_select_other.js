@@ -3,18 +3,19 @@ function form_element_select_other() {
 }
 
 form_element_select_other.prototype.init=function(id, def, options, form_parent) {
-  this.parent("form_element_select_other").init.call(this, id, def, options, form_parent)
-
-  var other_options = new clone(this.options)
-  other_options.var_name = this.options.var_name + '[other]'
+  var other_options = new clone(options)
+  other_options.var_name = options.var_name + '[other]'
 
   var other_def = { type: 'text' }
-  if (this.def.other_def) {
-    other_def = this.def.other_def
+  if (def.other_def) {
+    other_def = def.other_def
   }
 
-  this.other_form = form_create_element(this.id + '_other', other_def, other_options, this)
   this.other_orig_is_set = false
+
+  this.other_form = form_create_element(this.id + '_other', other_def, other_options, this)
+
+  this.parent("form_element_select_other").init.call(this, id, def, options, form_parent)
 }
 
 form_element_select_other.prototype.connect = function (dom_parent) {
