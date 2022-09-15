@@ -29,6 +29,9 @@ class form_element_text extends form_element {
     $input->setAttribute("class", $class);
     $input->setAttribute("name", $this->options['var_name']);
     $input->setAttribute("value", $this->data);
+    if ($this->disabled()) {
+      $input->setAttribute("readonly", 'disabled');
+    }
 
     $values = $this->get_values();
 

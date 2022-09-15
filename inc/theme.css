@@ -44,6 +44,10 @@ select {
   margin-top: 2px;
   margin-bottom: 2px;
 }
+input[readonly],
+select[readonly] {
+  background: white;
+}
 div.preview {
   border: 1px inset #000000;
   border-radius: 3px;

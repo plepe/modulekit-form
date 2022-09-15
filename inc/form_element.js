@@ -228,6 +228,27 @@ form_element.prototype.required=function() {
   return false;
 }
 
+form_element.prototype.disabled=function() {
+  if('disabled' in this.def) {
+    let v = this.def.disabled
+    let v_test = []
+
+    if(typeof v == 'object') {
+      this.check(v_test, v)
+      v = v_test.length == 0
+    }
+
+    return v
+  }
+
+  if (this.form_parent) {
+    return this.form_parent.disabled()
+  }
+
+  return false;
+}
+
+
 form_element.prototype.check_required=function(list, param) {
   var data=this.get_data();
 

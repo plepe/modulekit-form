@@ -135,6 +135,12 @@ form_element_text.prototype.refresh=function(force) {
     cls="form_orig";
 
   this.dom_element.className=cls;
+
+  if (this.disabled()) {
+    this.dom_element.setAttribute('readonly', true)
+  } else {
+    this.dom_element.removeAttribute('readonly')
+  }
 }
 
 form_element_text.prototype.check_regexp=function(list, param) {

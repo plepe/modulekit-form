@@ -402,6 +402,8 @@ form_element_autocomplete.prototype.refresh=function(force) {
     cls="form_orig";
 
   this.dom_visible.className=cls;
+
+  this.dom_visible.disabled = this.disabled()
 }
 
 form_element_autocomplete.prototype.check_regexp=function(list, param) {

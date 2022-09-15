@@ -158,4 +158,23 @@ form_element_select.prototype.refresh=function(force) {
     cls="form_orig";
 
   this.dom_element.className=cls;
+
+  if (this.disabled() && !this.dom_element.disabled) {
+    this.dom_element.disabled = true
+    this.dom_hidden_element = document.createElement('input')
+    this.dom_hidden_element.type = 'hidden'
+    this.dom_hidden_element.name = this.dom_element.name
+    this.dom_element.parentNode.appendChild(this.dom_hidden_element)
+  }
+  else if (!this.disabled() && this.dom_element.disabled) {
+    this.dom_element.disabled = false
+    if (this.dom_hidden_element) {
+      this.dom_element.parentNode.removeChild(this.dom_hidden_element)
+      delete this.dom_hidden_element
+    }
+  }
+
+  if (this.dom_hidden_element) {
+    this.dom_hidden_element.value = this.dom_element.value
+  }
 }
