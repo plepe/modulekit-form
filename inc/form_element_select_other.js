@@ -150,3 +150,14 @@ form_element_select_other.prototype.refresh = function (force) {
     }
   }
 }
+
+form_element_select_other.prototype.check_other_selected=function(list, param) {
+  if (this.dom_element.selectedOptions.length && this.dom_element.selectedOptions[0] === this.other_option) {
+    return;
+  }
+
+  if(param.length<1)
+    list.push(lang('form:invalid_value'));
+  else
+    list.push(param[0]);
+}

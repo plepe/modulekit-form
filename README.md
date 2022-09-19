@@ -320,6 +320,8 @@ Definition (all options from 'Select'):
 * other_def: a definition for the other form, default: `{ "type": "text" }`.
 * button:other: the visible value of the other option, default: 'Other'.
 
+There's a check 'other_selected', which is not an error, if the other option is selected.
+
 Value:
 * Either the value from the Select or the value from the Other option.
 
