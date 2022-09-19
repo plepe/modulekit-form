@@ -55,10 +55,29 @@ form_element_checkbox.prototype.get_data=function() {
       data.push(i)
   }
 
-  return data
+  switch (this.def.result_mode || 'array') {
+    case 'csv':
+      return data.join(',')
+    case 'array':
+      return data
+    default:
+      console.error('unknown result mode: ' + this.def.result_mode)
+  }
 }
 
 form_element_checkbox.prototype.set_data=function(data) {
+  if (data) {
+    switch (this.def.result_mode || 'array') {
+      case 'csv':
+        data = data.split(/,/g)
+        break
+      case 'array':
+        break
+      default:
+        console.error('unknown result mode: ' + this.def.result_mode)
+    }
+  }
+
   this.parent("form_element_checkbox").set_data.call(this, data);
 
   if(!this.dom_values)

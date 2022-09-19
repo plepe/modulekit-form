@@ -267,6 +267,7 @@ Definition:
 * presets: Adds a selector with presets for checkbox selections. An array (assoc. array), where each entry has a name and a list of options to select (values). Example: [ { name: "Test", values: [ 1, 2, 3 ] }, { name: "Only 3": values: [ 3 ] } ]. Each entry may also have a description ('desc').
 * presets:label: Override label for "-- load preset --" option.
 * auto_add_values: if true, add additional checkboxes if data contains values which were not defined. Default: false.
+* result_mode: 'array' (return an array), 'csv' (return a string with comma separated values). default: 'array'.
 
 Value:
 * In 'keys' values_mode an array of the keys of the chosen values is returned (e.g. array("php", "cpp"); in 'values' mode an array of the the keys of the chosen values is returned (e.g. array("PHP", "C++")).
