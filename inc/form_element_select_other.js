@@ -12,8 +12,12 @@ form_element_select_other.prototype.init=function(id, def, options, form_parent)
   }
 
   this.other_orig_is_set = false
+  if(form_parent==null)
+    this.form_root=this;
+  else
+    this.form_root=form_parent.form_root;
 
-  this.other_form = form_create_element(this.id + '_other', other_def, other_options, this)
+  this.other_form = form_create_element(id + '_other', other_def, other_options, this)
 
   this.parent("form_element_select_other").init.call(this, id, def, options, form_parent)
 }
