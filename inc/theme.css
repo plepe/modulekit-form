@@ -53,6 +53,9 @@ select[disabled] {
 select[disabled] {
   color: #000000;
 }
+input[type=submit][disabled] {
+  background: white;
+}
 div.preview {
   border: 1px inset #000000;
   border-radius: 3px;

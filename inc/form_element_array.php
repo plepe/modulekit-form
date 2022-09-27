@@ -308,6 +308,11 @@ class form_element_array extends form_element {
       }
       else
         $input->setAttribute("value", lang("form:add_element"));
+
+      if ($this->disabled()) {
+        $input->setAttribute("disabled", "true");
+      }
+
       $el_div->appendChild($input);
     }
 

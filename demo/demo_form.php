@@ -64,10 +64,16 @@ EOT
     'type'	=> 'intermediate_text',
     'text'	=> '<b>Tell something about your hobbies:</b>',
   ),
+  'disable_hobbies' => array(
+    'name'      =>"Disable Hobbies",
+    'type'      =>"boolean",
+    'include_data' => false,
+  ),
   'hobbies'	=>array(
     'name'	=>"Hobbies",
     'type'	=>"array",
     'default'	=>2,
+    'disabled' => array('check', 'disable_hobbies', array('is', true)),
     'def'	=>array(
       'type'	=>"text",
     ),
@@ -84,6 +90,7 @@ EOT
     'values_mode'=>"values",
     'name'      =>array("en"=>"Favorite hobby", "de"=>"Lieblingshobby"),
     'include_data' => 'not_null',
+    'disabled' => array('check', 'disable_hobbies', array('is', true)),
   ),
   'fav_meal'    => array(
     'type'      => 'select',

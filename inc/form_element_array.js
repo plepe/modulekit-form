@@ -533,7 +533,11 @@ form_element_array.prototype.refresh=function(force) {
 
   if (!this.action_add)
     return;
-  else if ('max' in this.def && (count >= this.def.max))
+
+  const disabled = this.disabled()
+  this.action_add.disabled = disabled
+
+  if ('max' in this.def && (count >= this.def.max))
     this.action_add.className = "reached_max";
   else
     this.action_add.className = "";
