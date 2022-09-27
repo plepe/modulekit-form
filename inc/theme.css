@@ -44,9 +44,14 @@ select {
   margin-top: 2px;
   margin-bottom: 2px;
 }
+input.form_modified[readonly],
+select.form_modified[disabled],
 input[readonly],
-select[readonly] {
+select[disabled] {
   background: white;
+}
+select[disabled] {
+  color: #000000;
 }
 div.preview {
   border: 1px inset #000000;
