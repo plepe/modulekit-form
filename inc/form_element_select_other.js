@@ -54,7 +54,7 @@ form_element_select_other.prototype.get_data = function () {
 form_element_select_other.prototype.set_data = function (data) {
   this.parent("form_element_select_other").set_data.call(this, data);
 
-  if (data in this.get_values()) {
+  if (data === null || data in this.get_values()) {
     if (this.other_dom) {
       this.other_dom.style.display = 'none'
     }
@@ -74,7 +74,7 @@ form_element_select_other.prototype.set_orig_data = function (data) {
   this.parent("form_element_select_other").set_orig_data.call(this, data);
 
   this.other_orig_is_set = false
-  if (data in this.get_values()) {
+  if (data === null || data in this.get_values()) {
     return
   }
 
@@ -123,7 +123,7 @@ form_element_select_other.prototype.show_element = function () {
 
   var div = this.parent("form_element_select_other").show_element.call(this);
 
-  if (!(data in this.get_values())) {
+  if (data !== null && !(data in this.get_values())) {
     this.other_dom = document.createElement('div')
 
     var d = this.other_form.show_element()

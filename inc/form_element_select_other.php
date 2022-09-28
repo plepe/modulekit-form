@@ -34,7 +34,7 @@ class form_element_select_other extends form_element_select {
 
     $this->other_is_set = false;
     $values = $this->get_values();
-    if (array_key_exists($data, $values)) {
+    if ($data === null || array_key_exists($data, $values)) {
       return;
     }
 
