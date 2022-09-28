@@ -537,6 +537,29 @@ form_element_array.prototype.refresh=function(force) {
   const disabled = this.disabled()
   this.action_add.disabled = disabled
 
+  Object.keys(this.element_divs).forEach(k => {
+    const current = this.element_divs[k]
+    let el = current.firstChild
+    while (el && el.className !== "form_element_array_part_element_actions") {
+      el = el.nextSibling
+    }
+    if (!el) { return }
+
+    el = el.firstChild
+    while (el) {
+      if (el.name) {
+        if (el.name.substr(0, this.options.var_name.length) === this.options.var_name) {
+          const action = el.name.substr(this.options.var_name.length)
+          if (action.match(/^\[__(remove|order_up|order_down)\]/)) {
+            el.disabled = disabled
+          }
+        }
+      }
+
+      el = el.nextSibling
+    }
+  })
+
   if ('max' in this.def && (count >= this.def.max))
     this.action_add.className = "reached_max";
   else

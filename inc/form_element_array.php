@@ -226,7 +226,7 @@ class form_element_array extends form_element {
     }
   }
 
-  function show_element_part($k, $element, $document) {
+  function show_element_part($k, $element, $document, $options) {
     $order = ((!array_key_exists("order", $this->def)) || ($this->def['order'] == true)) ? "order": "no_order";
     $removeable = ((!array_key_exists("removeable", $this->def)) || ($this->def['removeable'] !== false)) ? "removeable" : "not_removeable";
 
@@ -257,12 +257,18 @@ class form_element_array extends form_element {
       $input->setAttribute("type", "submit");
       $input->setAttribute("name", "{$this->options['var_name']}[__order_up][{$k}]");
       $input->setAttribute("value", "↑");
+      if ($options['disabled']) {
+        $input->setAttribute("disabled", "true");
+      }
       $el_div->appendChild($input);
 
       $input=$document->createElement("input");
       $input->setAttribute("type", "submit");
       $input->setAttribute("name", "{$this->options['var_name']}[__order_down][{$k}]");
       $input->setAttribute("value", "↓");
+      if ($options['disabled']) {
+        $input->setAttribute("disabled", "true");
+      }
       $el_div->appendChild($input);
     }
 
@@ -271,6 +277,9 @@ class form_element_array extends form_element {
       $input->setAttribute("type", "submit");
       $input->setAttribute("name", "{$this->options['var_name']}[__remove][{$k}]");
       $input->setAttribute("value", "X");
+      if ($options['disabled']) {
+        $input->setAttribute("disabled", "true");
+      }
       $el_div->appendChild($input);
     }
 
@@ -280,6 +289,9 @@ class form_element_array extends form_element {
   function show_element($document) {
     $div=parent::show_element($document);
 
+    $options = array(
+      'disabled' => $this->disabled(),
+    );
     $createable = ((!array_key_exists("createable", $this->def)) || ($this->def['createable'] == true)) ? "createable": "not_createable";
 
     if ($this->tr) {
@@ -288,7 +300,7 @@ class form_element_array extends form_element {
     $this->dom->setAttribute('class', $this->dom->getAttribute('class') . " $createable");
 
     foreach($this->elements as $k=>$element) {
-      $part_div=$this->show_element_part($k, $element, $document);
+      $part_div=$this->show_element_part($k, $element, $document, $options);
       $div->appendChild($part_div);
     }
 
@@ -309,7 +321,7 @@ class form_element_array extends form_element {
       else
         $input->setAttribute("value", lang("form:add_element"));
 
-      if ($this->disabled()) {
+      if ($options['disabled']) {
         $input->setAttribute("disabled", "true");
       }
 
