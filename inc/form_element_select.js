@@ -15,11 +15,19 @@ form_element_select.prototype.connect=function(dom_parent) {
   this.dom_element=this.dom_parent.firstChild;
   this.dom_element.onchange=this.notify_change.bind(this);
   this.dom_element.onblur=this.notify_change.bind(this);
+  var current=this.dom_parent.firstChild;
+  while(current) {
+    if (current.nodeName=="INPUT" && current.type === 'hidden' && current.name === this.options.var_name) {
+      this.dom_hidden_element = current
+    }
+
+    current=current.nextSibling;
+  }
 
   if(this.dom_parent.firstChild.nextSibling)
     this.div_desc=this.dom_parent.firstChild.nextSibling;
 
-  var current=this.dom_element.firstChild;
+  current=this.dom_element.firstChild;
   this.dom_values={};
   while(current) {
     if(current.nodeName=="OPTION") {
