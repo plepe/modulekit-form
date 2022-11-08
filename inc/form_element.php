@@ -258,6 +258,17 @@ class form_element {
 
     $this->td_value->appendChild($this->show_div_errors($document));
 
+    $message = $this->message();
+    if ($message) {
+      $div = $document->createElement('div');
+      $div->setAttribute('class', 'message');
+
+      $m = DOM_createHTMLElement($message, $document);
+      $div->appendChild($m);
+
+      $this->td_value->appendChild($div);
+    }
+
     return $this->tr;
   }
 
@@ -649,6 +660,21 @@ class form_element {
       $this->set_data($v);
       $this->set_orig_data($v);
     }
+  }
+
+  function message () {
+    if(isset($this->def['message'])) {
+      $v = $this->def['message'];
+
+      if(is_array($v)) {
+	$this->check($result, $v);
+        return implode("\n", $result);
+      }
+
+      return $v;
+    }
+
+    return false;
   }
 }
 

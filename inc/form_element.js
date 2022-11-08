@@ -86,6 +86,15 @@ form_element.prototype.connect=function(dom_parent) {
 
     current = current.nextSibling;
   }
+
+  current = this.td_value && this.td_value.firstChild
+  while (current) {
+    if (current.className === 'message') {
+      this.dom_message = current
+    }
+
+    current = current.nextSibling
+  }
 }
 
 form_element.prototype.finish_connect=function(dom_parent) {
@@ -248,6 +257,21 @@ form_element.prototype.disabled=function() {
   return false;
 }
 
+form_element.prototype.message = function() {
+  if('message' in this.def) {
+    let v = this.def.message
+
+    if(typeof v == 'object') {
+      const list = []
+      this.check(list, v)
+      return list.join('\n')
+    }
+
+    return v
+  }
+
+  return false;
+}
 
 form_element.prototype.check_required=function(list, param) {
   var data=this.get_data();
@@ -648,6 +672,18 @@ form_element.prototype.refresh=function(force) {
       remove_class(this.td_value, "required");
     if(this.dom)
       remove_class(this.dom, "required");
+  }
+
+  var message = this.message()
+  if (this.dom_message) {
+    this.dom_message.innerHTML = message
+  }
+  else if (message && !this.dom_message) {
+    this.dom_message = document.createElement('div')
+    this.dom_message.className = 'message'
+    this.dom_message.innerHTML = message
+
+    this.td_value.appendChild(this.dom_message)
   }
 }
 
