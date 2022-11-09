@@ -578,6 +578,23 @@ Definition:
 
 Inherits all options from Form Element Textarea. When `marked` is not loaded, a warning will be issued on the JavaScript console and no preview is available.
 
+Extensions
+==========
+Twig
+----
+Allows twig templates for checks and similar fields (disabled, required, message), e.g.:
+
+```json
+{
+  "name": {
+    "type": "text",
+    "message": ["twig", "message {{ value }}"]
+  }
+}
+```
+
+How to enable Twig, please check `demo/twig.php`.
+
 General functions
 =================
 Func Call
