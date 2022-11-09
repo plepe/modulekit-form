@@ -646,3 +646,25 @@ Let the form forget its data (is_empty() will return true).
 get_request_data()
 ------------------
 (JS only): Return a structure similar to this which would be submitted to the server via GET/POST.
+
+ADVANCED DEVELOPMENT
+====================
+Define additional checks
+------------------------
+You can define additional checks. Examples:
+
+PHP:
+```php
+register_hook('init', function () {
+  form_element::$additional_checks['example'] = function (&$errors, $param, $thast) {
+    $errors[] = 'ERROR FOUND';
+  }
+});
+```
+
+JS:
+```js
+form_element.prototype.check_example = function (errors, param) {
+  errors.push('ERROR FOUND')
+}
+```
