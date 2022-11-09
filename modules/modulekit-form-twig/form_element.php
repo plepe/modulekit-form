@@ -16,7 +16,9 @@ register_hook('init', function () {
       'path' => explode('/', $that->path_name()),
     );
 
-    $result = $form_engine_twig->render($param[0], $twigData);
+    $prefix = $that->form_root->options['twig_prefix'] ?? '';
+
+    $result = $form_engine_twig->render("{$prefix}{$param[0]}", $twigData);
     if (trim($result) !== '') {
       $errors[] = $result;
     }
