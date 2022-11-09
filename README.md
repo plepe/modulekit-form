@@ -593,6 +593,13 @@ Allows twig templates for checks and similar fields (disabled, required, message
 }
 ```
 
+The following values will be available:
+* value: current value of this field
+* orig_value: the 'original' value of this field
+* data: the whole data of the form, from the root element
+* orig_data: the original data of the form, from the root element
+* path: the path to the current element as array
+
 How to enable Twig, please check `demo/twig.php`.
 
 General functions
