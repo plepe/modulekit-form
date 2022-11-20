@@ -6,18 +6,23 @@ function form_element_select_other() {
 }
 
 form_element_select_other.prototype.init=function(id, def, options, form_parent) {
-  this.parent("form_element_select_other").init.call(this, id, def, options, form_parent)
-
-  var other_options = new clone(this.options)
-  other_options.var_name = this.options.var_name + '[other]'
+  var other_options = new clone(options)
+  other_options.var_name = options.var_name + '[other]'
 
   var other_def = { type: 'text' }
-  if (this.def.other_def) {
-    other_def = this.def.other_def
+  if (def.other_def) {
+    other_def = def.other_def
   }
 
-  this.other_form = form_create_element(this.id + '_other', other_def, other_options, this)
   this.other_orig_is_set = false
+  if(form_parent==null)
+    this.form_root=this;
+  else
+    this.form_root=form_parent.form_root;
+
+  this.other_form = form_create_element(id + '_other', other_def, other_options, this)
+
+  this.parent("form_element_select_other").init.call(this, id, def, options, form_parent)
 }
 
 form_element_select_other.prototype.connect = function (dom_parent) {
@@ -52,7 +57,7 @@ form_element_select_other.prototype.get_data = function () {
 form_element_select_other.prototype.set_data = function (data) {
   this.parent("form_element_select_other").set_data.call(this, data);
 
-  if (data in this.get_values()) {
+  if (data === null || data in this.get_values()) {
     if (this.other_dom) {
       this.other_dom.style.display = 'none'
     }
@@ -72,7 +77,7 @@ form_element_select_other.prototype.set_orig_data = function (data) {
   this.parent("form_element_select_other").set_orig_data.call(this, data);
 
   this.other_orig_is_set = false
-  if (data in this.get_values()) {
+  if (data === null || data in this.get_values()) {
     return
   }
 
@@ -116,9 +121,48 @@ form_element_select_other.prototype.update_options = function () {
   }
 }
 
+form_element_select_other.prototype.show_element = function () {
+  let data = this.get_data();
+
+  var div = this.parent("form_element_select_other").show_element.call(this);
+
+  if (data !== null && !(data in this.get_values())) {
+    this.other_dom = document.createElement('div')
+
+    var d = this.other_form.show_element()
+    this.dom.appendChild(this.other_dom)
+    this.other_dom.appendChild(d)
+
+    this.other_dom.style.display = 'block'
+    this.other_option.selected = true
+  }
+
+  return div;
+}
+
 form_element_select_other.prototype.refresh = function (force) {
   this.parent("form_element_select_other").refresh.call(this, force)
   this.other_form.refresh()
+
+  if (this.dom_element) {
+    let data = this.get_data()
+    let values = this.get_values()
+
+    if (!(this.orig_data in values) && !(data in values)) {
+      this.dom_element.className = 'form_orig'
+    }
+  }
+}
+
+form_element_select_other.prototype.check_other_selected=function(list, param) {
+  if (this.dom_element.selectedOptions.length && this.dom_element.selectedOptions[0] === this.other_option) {
+    return;
+  }
+
+  if(param.length<1)
+    list.push(lang('form:invalid_value'));
+  else
+    list.push(param[0]);
 }
 
 module.exports = form_element_select_other

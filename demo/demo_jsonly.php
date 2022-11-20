@@ -3,8 +3,8 @@ Header("content-type: text/html; charset=utf-8");
 // create file .nocache to disable caching
 $modulekit_nocache=file_exists(".nocache");
 $modulekit_load[]="modulekit-form-debug";
-include "../modulekit/loader.php"; /* loads all php-includes */
 include "demo_form.php";
+include "../modulekit/loader.php"; /* loads all php-includes */
 call_hooks("init");
 
 ?>
@@ -18,6 +18,7 @@ call_hooks("init");
 <script type='text/javascript' src='../dist/modulekit-form.js'></script>
 <script type='text/javascript' src='demo_jsonly.js'></script>
 <script type='text/javascript' src='demo_functions.js'></script>
+<script type='text/javascript' src='../node_modules/marked/marked.min.js'></script>
 </head>
 <body>
 <?php

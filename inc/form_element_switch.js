@@ -31,9 +31,10 @@ form_element_switch.prototype.connect=function(dom_parent) {
 
   for(var k in this.elements) {
     var dom_parent = document.getElementById('tr-' + this.id + "_" + k);
-    this.elements[k].connect(dom_parent);
     this.element_table[k] = dom_parent;
 
+    var dom_element = dom_parent.querySelector(".field_value > span");
+    this.elements[k].connect(dom_element);
   }
 }
 
@@ -78,7 +79,7 @@ form_element_switch.prototype.get_switch_element=function() {
 form_element_switch.prototype.get_active_element=function() {
   var switch_data = this.get_switch_element().get_data();
 
-  if(!(switch_data in this.elements))
+  if(!this.elements || !(switch_data in this.elements))
     return null;
 
   return this.elements[switch_data];

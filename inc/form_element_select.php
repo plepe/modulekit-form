@@ -49,6 +49,15 @@ class form_element_select extends form_element {
 
     $div->appendChild($select);
 
+    if ($this->disabled()) {
+      $select->setAttribute('disabled', 'disabled');
+      $this->dom_element_hidden = $document->createElement('input');
+      $div->appendChild($this->dom_element_hidden);
+      $this->dom_element_hidden->setAttribute("type", "hidden");
+      $this->dom_element_hidden->setAttribute("name", "{$this->options['var_name']}");
+      $this->dom_element_hidden->setAttribute("value", $this->get_data());
+    }
+
     $all_descriptions = "";
     foreach($values as $v)
       if(is_array($v)) {

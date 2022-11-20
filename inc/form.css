@@ -38,10 +38,14 @@
 }
 .form .form_element_checkbox div {
 }
+.form .form_element_select_other > div > .form_element_radio > span,
+.form .form_element_select_other > div > .form_element_checkbox > span,
 .form .field_value > .form_element_radio > span,
 .form .field_value > .form_element_checkbox > span {
   display: block;
 }
+.form .form_element_select_other > div > .form_element_radio > span > .description,
+.form .form_element_select_other > div > .form_element_checkbox > span > .description,
 .form .field_value > .form_element_radio > span > .description,
 .form .field_value > .form_element_checkbox > span > .description {
   margin-left: 26px;

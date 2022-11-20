@@ -4,9 +4,16 @@ class form_element_checkbox extends form_element {
     $data = parent::get_data();
 
     if(($data === "") or ($data === null))
-      return array();
+      $data = array();
 
-    return $data;
+    switch ($this->def['result_mode'] ?? 'array') {
+      case 'csv':
+        return implode(',', $data);
+      case 'array':
+        return $data;
+      default:
+        throw new Exception("unknown result mode: " + $this->def['result_mode']);
+    }
   }
 
   function set_request_data($data) {
@@ -40,6 +47,22 @@ class form_element_checkbox extends form_element {
       return false;
 
     return $ret;
+  }
+
+  function set_data ($data) {
+    if ($data !== null) {
+      switch ($this->def['result_mode'] ?? 'array') {
+        case 'csv':
+          $data = explode(',', $data);
+          break;
+        case 'array':
+          break;
+        default:
+          throw new Exception("unknown result mode: " + $this->def['result_mode']);
+      }
+    }
+
+    return parent::set_data($data);
   }
 
   function show_element($document) {

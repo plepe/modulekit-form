@@ -34,7 +34,7 @@ class form_element_select_other extends form_element_select {
 
     $this->other_is_set = false;
     $values = $this->get_values();
-    if (array_key_exists($data, $values)) {
+    if ($data === null || array_key_exists($data, $values)) {
       return;
     }
 
@@ -103,5 +103,16 @@ class form_element_select_other extends form_element_select {
     }
 
     return $div;
+  }
+
+  function check_other_selected(&$errors, $param) {
+    if ($this->other_is_set) {
+      return;
+    }
+
+    if(sizeof($param)<1)
+      $errors[]=lang('form:invalid_value');
+    else
+      $errors[]=$param[0];
   }
 }

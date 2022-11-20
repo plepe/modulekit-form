@@ -18,11 +18,19 @@ form_element_select.prototype.connect=function(dom_parent) {
   this.dom_element=this.dom_parent.firstChild;
   this.dom_element.onchange=this.notify_change.bind(this);
   this.dom_element.onblur=this.notify_change.bind(this);
+  var current=this.dom_parent.firstChild;
+  while(current) {
+    if (current.nodeName=="INPUT" && current.type === 'hidden' && current.name === this.options.var_name) {
+      this.dom_hidden_element = current
+    }
+
+    current=current.nextSibling;
+  }
 
   if(this.dom_parent.firstChild.nextSibling)
     this.div_desc=this.dom_parent.firstChild.nextSibling;
 
-  var current=this.dom_element.firstChild;
+  current=this.dom_element.firstChild;
   this.dom_values={};
   while(current) {
     if(current.nodeName=="OPTION") {
@@ -161,6 +169,25 @@ form_element_select.prototype.refresh=function(force) {
     cls="form_orig";
 
   this.dom_element.className=cls;
+
+  if (this.disabled() && !this.dom_element.disabled) {
+    this.dom_element.disabled = true
+    this.dom_hidden_element = document.createElement('input')
+    this.dom_hidden_element.type = 'hidden'
+    this.dom_hidden_element.name = this.dom_element.name
+    this.dom_element.parentNode.appendChild(this.dom_hidden_element)
+  }
+  else if (!this.disabled() && this.dom_element.disabled) {
+    this.dom_element.disabled = false
+    if (this.dom_hidden_element) {
+      this.dom_element.parentNode.removeChild(this.dom_hidden_element)
+      delete this.dom_hidden_element
+    }
+  }
+
+  if (this.dom_hidden_element) {
+    this.dom_hidden_element.value = this.dom_element.value
+  }
 }
 
 module.exports = form_element_select

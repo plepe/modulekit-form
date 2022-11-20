@@ -1,0 +1,35 @@
+.form td.field_value .form_element_markdown.side-by-side > textarea,
+.form td.field_value .form_element_markdown.side-by-side > div.preview {
+  margin-top: 2px;
+  vertical-align: top;
+  width: calc(50% - 2px);
+  display: inline-block;
+}
+.form td.field_value .form_element_markdown.side-by-side > div.preview {
+  overflow: auto;
+}
+.form td.field_value .form_element_markdown.side-by-side > textarea {
+  margin-right: 1px;
+}
+.form td.field_value .form_element_markdown.side-by-side > div.preview {
+  margin-left: 1px;
+}
+
+.form td.field_value .form_element_markdown.source > div.preview {
+  display: none;
+}
+.form td.field_value .form_element_markdown.preview > textarea {
+  display: none;
+}
+.form td.field_value .form_element_markdown > .menu {
+  text-align: center;
+}
+.form td.field_value .form_element_markdown > .menu > a {
+  border: 1px solid grey;
+  padding: 0 1em;
+}
+.form td.field_value .form_element_markdown.side-by-side > .menu > a.side-by-side,
+.form td.field_value .form_element_markdown.source > .menu > a.source,
+.form td.field_value .form_element_markdown.preview > .menu > a.preview {
+  border-bottom: none;
+}

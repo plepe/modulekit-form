@@ -3,8 +3,8 @@ Header("content-type: text/html; charset=utf-8");
 // create file .nocache to disable caching
 $modulekit_nocache=file_exists(".nocache");
 $modulekit_load[]="modulekit-form-debug";
-include "../modulekit/loader.php"; /* loads all php-includes */
 include "demo_form.php";
+include "../modulekit/loader.php"; /* loads all php-includes */
 include "demo_functions.php";
 call_hooks("init");
 ?>
@@ -18,6 +18,7 @@ call_hooks("init");
 <link rel='stylesheet' type='text/css' href='demo.css'/>
 <script type='text/javascript' src='demo_combined.js'></script>
 <script type='text/javascript' src='demo_functions.js'></script>
+<script type='text/javascript' src='../node_modules/marked/marked.min.js'></script>
 </head>
 <body>
 <?php
@@ -59,13 +60,13 @@ print "<div class='demo'>\n";
 
 print "<div class='definition'>\n";
 print "Form definition:<pre id='definition'>\n";
-print json_readable_encode($form_def);
+print htmlspecialchars(json_readable_encode($form_def));
 print "</pre>\n";
 print "</div>\n";
 
 print "<div class='form_data'>\n";
 print "Data: <pre id='form_data'>\n";
-print json_readable_encode($form->get_data());
+print htmlspecialchars(json_readable_encode($form->get_data()));
 print "</pre>\n";
 print "</div>\n";
 

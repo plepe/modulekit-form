@@ -62,12 +62,16 @@ form_element_autocomplete.prototype.create_element=function(div) {
   input.placeholder = placeholder
 
   input.className=cls;
-  if(this.data)
-    input.value=this.data;
   div.appendChild(input);
   this.dom_visible=input;
   this.dom_visible.onblur=this.onblur.bind(this);
   this.dom_visible.onfocus=this.onfocus.bind(this);
+
+  if (this.data) {
+    var values = this.get_values();
+    this.dom_visible.value = values[this.data];
+    this.dom_element.value = this.data;
+  }
 
   this.dom_visible.onkeydown=this.onkeydown.bind(this);
   this.dom_visible.onkeyup=this.onkeyup.bind(this);
@@ -400,6 +404,8 @@ form_element_autocomplete.prototype.refresh=function(force) {
     cls="form_orig";
 
   this.dom_visible.className=cls;
+
+  this.dom_visible.disabled = this.disabled()
 }
 
 form_element_autocomplete.prototype.check_regexp=function(list, param) {

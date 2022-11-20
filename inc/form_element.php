@@ -117,6 +117,26 @@ class form_element {
     return false;
   }
 
+  function disabled() {
+    if(isset($this->def['disabled'])) {
+      $v = $this->def['disabled'];
+      $v_test = array();
+
+      if(is_array($v)) {
+	$this->check($v_test, $v);
+	$v = count($v_test) == 0;
+      }
+
+      return $v;
+    }
+
+    if ($this->form_parent) {
+      return $this->form_parent->disabled();
+    }
+
+    return false;
+  }
+
   function errors(&$errors) {
     $data=$this->get_data();
 
