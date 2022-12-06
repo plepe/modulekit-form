@@ -89,6 +89,21 @@ form_element_form.prototype.show_element=function() {
   return this.dom_table;
 }
 
+form_element_form.prototype.reorder=function() {
+  let element_list = []
+  for(var i in this.elements) {
+    var element = this.elements[i];
+
+    element_list.push([ element.weight(), i ]);
+  }
+
+  element_list = weight_sort(element_list);
+
+  element_list.forEach(i => {
+    this.dom_elements[i].forEach(d => this.dom_table_body.appendChild(d))
+  })
+}
+
 form_element_form.prototype.get_data=function(data) {
   var ret={};
 
@@ -157,6 +172,8 @@ form_element_form.prototype.refresh=function(force) {
 
   for(var i in this.elements)
     this.elements[i].refresh(force);
+
+  this.reorder();
 }
 
 form_element_form.prototype.resize = function () {
