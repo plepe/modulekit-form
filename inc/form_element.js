@@ -45,8 +45,15 @@ form_element.prototype.name=function() {
 }
 
 form_element.prototype.weight=function() {
-  if(this.def.weight)
+  if(this.def.weight) {
+    if(typeof this.def.weight == 'object') {
+      const test = [];
+      this.check(test, this.def.weight, true);
+      return test.length ? test[0] : 0
+    }
+
     return this.def.weight;
+  }
 
   return 0;
 }

@@ -113,7 +113,7 @@ Definition:
 * default_func: if no value is set, use the provided function(s) to get a value. See chapter "Func Call" for details.
 * req: A value is required (true/false). Optionally this may be an array of the same syntax as 'check'.
 * disabled: If true, the element will be readonly (not supported by all elements though). If not defined, the value of the parent element will be used (default: false). This may use an array like 'check'.
-* weight: Modify order of form elements for display; elements with lower weight will appear first. Default: 0.
+* weight: Modify order of form elements for display; elements with lower weight will appear first. Default: 0. Optionally this may be an array of the same syntax as 'check'.
 * check: Evaluate validity of input. Defined as array("type", parameters). Will call function "check_type" inside form element, will be passed parameters. Example: "regexp" for Form Element Text (will call function "check_regexp").
   * 'and': combine several checks, e.g. array("and", array("regexp", ...), array("foo", ...)) - all sub-checks need to resolve positive.
   * 'or': combine several checks, e.g. array("and", array("regexp", ...), array("foo", ...)) - at least one sub-check need to resolve positive.

@@ -33,6 +33,7 @@ $form_def=array(
     'html_attributes'   =>array("style"=>"border: 2px solid black;"),
     'check'	=> array("fun", array("js"=>"name_check", "php"=>"name_check")),
     'non_used_value' => 'FOO',
+    'weight'    => array('check', 'sex', ['is', 'm', -1]),
   ),
   'nickname'   =>array(
     'name'      =>'Nickname',
@@ -106,7 +107,7 @@ EOT
     'name'	=>"Birthday",
     'type'	=>"date",
     'include_data'=>array('check', 'sex', array('is', 'm')),
-    'weight' => -1,
+    'weight' => -2,
   ),
   'languages'	=>array(
     'name'	=>"What languages do you speak?",

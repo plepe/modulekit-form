@@ -64,8 +64,16 @@ class form_element {
   }
 
   function weight() {
-    if(array_key_exists('weight', $this->def))
-      return $this->def['weight'];
+    if(array_key_exists('weight', $this->def)) {
+      $weight = $this->def['weight'];
+
+      if (is_array($weight)) {
+        $this->check($result, $weight, true);
+        return sizeof($result) ? $result[0] : 0;
+      }
+
+      return $weight;
+    }
 
     return 0;
   }
