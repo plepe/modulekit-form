@@ -2,8 +2,16 @@
 Header("content-type: text/html; charset=utf-8");
 // create file .nocache to disable caching
 $modulekit_nocache=file_exists(".nocache");
+
+if (file_exists('../vendor')) {
+  # Extensions installed - load them
+  require_once '../vendor/autoload.php';
+  require_once './twig.php';
+}
+
 include "demo_form.php";
 include "../modulekit/loader.php"; /* loads all php-includes */
+
 include "demo_functions.php";
 call_hooks("init");
 ?>

@@ -9,6 +9,7 @@ class form_element {
   public $orig_data;
   public $form_parent;
   public $form_root;
+  static public $additional_checks = array();
 
   function __construct($id, $def, $options, $form_parent) {
     $this->id=$id;
@@ -161,10 +162,16 @@ class form_element {
   }
 
   function check(&$errors, $param) {
-    $check_fun="check_".array_shift($param);
+    if (array_key_exists($param[0], self::$additional_checks)) {
+      $check_fun = self::$additional_checks[$param[0]];
+      call_user_func_array($check_fun, array(&$errors, array_slice($param, 1), $this));
+    }
+    else {
+      $check_fun="check_".array_shift($param);
 
-    if(method_exists($this, $check_fun)) {
-      call_user_func_array(array($this, $check_fun), array(&$errors, $param));
+      if(method_exists($this, $check_fun)) {
+        call_user_func_array(array($this, $check_fun), array(&$errors, $param));
+      }
     }
 
     $new_errors = array();
@@ -257,6 +264,17 @@ class form_element {
     $this->td_value->appendChild($this->show_element($document));
 
     $this->td_value->appendChild($this->show_div_errors($document));
+
+    $message = $this->message();
+    if ($message) {
+      $div = $document->createElement('div');
+      $div->setAttribute('class', 'message');
+
+      $m = DOM_createHTMLElement($message, $document);
+      $div->appendChild($m);
+
+      $this->td_value->appendChild($div);
+    }
 
     return $this->tr;
   }
@@ -649,6 +667,21 @@ class form_element {
       $this->set_data($v);
       $this->set_orig_data($v);
     }
+  }
+
+  function message () {
+    if(isset($this->def['message'])) {
+      $v = $this->def['message'];
+
+      if(is_array($v)) {
+	$this->check($result, $v);
+        return implode("\n", $result);
+      }
+
+      return $v;
+    }
+
+    return false;
   }
 }
 
