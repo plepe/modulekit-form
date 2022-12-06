@@ -161,7 +161,7 @@ class form_element {
       $errors[] = $this->path_name() . ": " . $v;
   }
 
-  function check(&$errors, $param) {
+  function check(&$errors, $param, $no_path=0) {
     if (array_key_exists($param[0], self::$additional_checks)) {
       $check_fun = self::$additional_checks[$param[0]];
       call_user_func_array($check_fun, array(&$errors, array_slice($param, 1), $this));
@@ -170,7 +170,7 @@ class form_element {
       $check_fun="check_".array_shift($param);
 
       if(method_exists($this, $check_fun)) {
-        call_user_func_array(array($this, $check_fun), array(&$errors, $param));
+        call_user_func_array(array($this, $check_fun), array(&$errors, $param, $no_path));
       }
     }
 
@@ -333,7 +333,7 @@ class form_element {
 
   // call check() for all elements of the param-array
   // if last element is a string it wil be returned as error message (if any of the checks returned an error)
-  function check_and(&$errors, $param) {
+  function check_and(&$errors, $param, $no_path=0) {
     $list_errors=array();
 
     foreach($param as $i=>$p) {
@@ -350,7 +350,7 @@ class form_element {
     $errors=array_merge($errors, $list_errors);
   }
 
-  function check_required(&$errors, $param) {
+  function check_required(&$errors, $param, $no_path=0) {
     $data=$this->get_data();
 
     if($this->required() && ($data === null)) {
@@ -363,7 +363,7 @@ class form_element {
 
   // call check() for all elements of the param-array until one successful check is found
   // if last element is a string it wil be returned as error message (if all of the checks returned an error)
-  function check_or(&$errors, $param) {
+  function check_or(&$errors, $param, $no_path=0) {
     $list_errors=array();
 
     if(sizeof($param) == 0)
@@ -391,7 +391,7 @@ class form_element {
   }
 
   // call check() for the first element of the param-array, return second element as error message if check() returns successful
-  function check_not(&$errors, $param) {
+  function check_not(&$errors, $param, $no_path=0) {
     $check_errors=array();
 
     $this->check($check_errors, $param[0]);
@@ -436,25 +436,25 @@ class form_element {
   }
 
   // call check() on another form element of the same hierarchy
-  function check_check(&$errors, $param) {
+  function check_check(&$errors, $param, $no_path=0) {
     $check_errors=array();
 
     $other_list = $this->form_parent->resolve_other_elements($param[0]);
 
     foreach($other_list as $other) {
-      $other->check($check_errors, $param[1]);
+      $other->check($check_errors, $param[1], $no_path);
 
       if(sizeof($check_errors)) {
 	if(sizeof($param)>2)
 	  $errors[]=$param[2];
 	else foreach($check_errors as $e) {
-	  $errors[]=$other->path_name().": {$e}";
+	  $errors[]=($no_path ? $e : $other->path_name().": {$e}");
 	}
       }
     }
   }
 
-  function check_is(&$errors, $param) {
+  function check_is(&$errors, $param, $no_path=0) {
     if(sizeof($param)<1)
       return;
 
@@ -466,7 +466,7 @@ class form_element {
     }
   }
 
-  function check_contains(&$errors, $param) {
+  function check_contains(&$errors, $param, $no_path=0) {
     if(sizeof($param)<1)
       return;
 
@@ -485,7 +485,7 @@ class form_element {
       $errors[]=$param[1];
   }
 
-  function check_fun(&$list, $param) {
+  function check_fun(&$list, $param, $no_path=0) {
     $fun = null;
     $ret = null;
 
@@ -504,7 +504,7 @@ class form_element {
       $list[] = $ret;
   }
 
-  function check_unique(&$list, $param) {
+  function check_unique(&$list, $param, $no_path=0) {
     $data = array();
     $done = array();
     $dupl = array();
@@ -540,7 +540,7 @@ class form_element {
     }
   }
 
-  function check_has_value(&$errors, $param) {
+  function check_has_value(&$errors, $param, $no_path=0) {
     if($this->get_data() === null) {
       if(sizeof($param)<1)
 	$errors[]=lang('form:invalid_value');

@@ -273,7 +273,7 @@ form_element.prototype.message = function() {
   return false;
 }
 
-form_element.prototype.check_required=function(list, param) {
+form_element.prototype.check_required=function(list, param, no_path=0) {
   var data=this.get_data();
 
   if(this.required() && (data === null)) {
@@ -313,12 +313,12 @@ form_element.prototype.is_complete=function() {
   return true;
 }
 
-form_element.prototype.check=function(list, param) {
+form_element.prototype.check=function(list, param, no_path=0) {
   var check=param.slice(0);
   var check_fun="check_"+check.shift();
 
   if(typeof this[check_fun]==='function') {
-    this[check_fun](list, check);
+    this[check_fun](list, check, no_path);
   }
 
   for(var i = 0; i < list.length; i++) {
@@ -332,7 +332,7 @@ form_element.prototype.check=function(list, param) {
 }
 
 // check if element has a value
-form_element.prototype.check_has_value=function(list, param) {
+form_element.prototype.check_has_value=function(list, param, no_path=0) {
   if(this.get_data() === null) {
     if(param.length<1)
       list.push(lang('form:invalid_value'));
@@ -343,7 +343,7 @@ form_element.prototype.check_has_value=function(list, param) {
 
 // call check() for all elements of the param-array
 // if last element is a string it wil be returned as error message (if any of the checks returned an error)
-form_element.prototype.check_and=function(list, param) {
+form_element.prototype.check_and=function(list, param, no_path=0) {
   var list_errors=[];
 
   for(var i=0; i<param.length; i++) {
@@ -364,7 +364,7 @@ form_element.prototype.check_and=function(list, param) {
 
 // call check() for all elements of the param-array until one successful check is found
 // if last element is a string it wil be returned as error message (if all of the checks returned an error)
-form_element.prototype.check_or=function(list, param) {
+form_element.prototype.check_or=function(list, param, no_path=0) {
   var list_errors=[];
 
   if(param.length == 0)
@@ -380,7 +380,7 @@ form_element.prototype.check_or=function(list, param) {
       list_errors=[];
     }
     else {
-      this.check(check_errors, param[i]);
+      this.check(check_errors, param[i], no_path);
 
       if(!check_errors.length)
 	return;
@@ -395,10 +395,10 @@ form_element.prototype.check_or=function(list, param) {
 }
 
 // call check() for the first element of the param-array, return second element as error message if check() returns successful
-form_element.prototype.check_not=function(list, param) {
+form_element.prototype.check_not=function(list, param, no_path=0) {
   var check_errors=[];
 
-  this.check(check_errors, param[0]);
+  this.check(check_errors, param[0], no_path);
 
   if(check_errors.length)
     return;
@@ -440,7 +440,7 @@ form_element.prototype.resolve_other_elements=function(path) {
 }
 
 // call check() on another form element of the same hierarchy
-form_element.prototype.check_check=function(list, param) {
+form_element.prototype.check_check=function(list, param, no_path=0) {
   var check_errors=[];
 
   var other_list=this.form_parent.resolve_other_elements(param[0]);
@@ -448,20 +448,20 @@ form_element.prototype.check_check=function(list, param) {
   for(var i=0; i<other_list.length; i++) {
     var other = other_list[i];
 
-    other.check(check_errors, param[1]);
+    other.check(check_errors, param[1], no_path);
 
     if(check_errors.length) {
       if(param.length>2)
 	list.push(param[2]);
       else
 	for(var i=0; i<check_errors.length; i++)
-	  list.push(other.path_name()+": "+check_errors[i]);
+	  list.push(no_path ? check_errors[i] : other.path_name()+": "+check_errors[i]);
     }
   }
 }
 
 // call check() on another form element of the same hierarchy
-form_element.prototype.check_is=function(list, param) {
+form_element.prototype.check_is=function(list, param, no_path=0) {
   if(param.length<1)
     return;
 
@@ -473,7 +473,7 @@ form_element.prototype.check_is=function(list, param) {
   }
 }
 
-form_element.prototype.check_contains=function(list, param) {
+form_element.prototype.check_contains=function(list, param, no_path=0) {
   if(param.length<1)
     return;
 
@@ -495,7 +495,7 @@ form_element.prototype.check_contains=function(list, param) {
     list.push(param[1]);
 }
 
-form_element.prototype.check_fun=function(list, param) {
+form_element.prototype.check_fun=function(list, param, no_path=0) {
   var fun;
   var ret = null;
 
@@ -524,7 +524,7 @@ form_element.prototype.check_fun=function(list, param) {
     list.push(ret);
 }
 
-form_element.prototype.check_unique=function(list, param) {
+form_element.prototype.check_unique=function(list, param, no_path=0) {
   var done = [];
   var dupl = [];
   var data = [];
