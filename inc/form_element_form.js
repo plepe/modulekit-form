@@ -66,6 +66,7 @@ form_element_form.prototype.show_element=function() {
   this.dom_table = document.createElement("table");
   this.dom_table.className = 'form_element_form';
   this.dom_table.id = this.id;
+  this.dom_elements = {};
   var element_list = [];
 
   this.dom_table_body = document.createElement('tbody')
@@ -74,19 +75,16 @@ form_element_form.prototype.show_element=function() {
   for(var i in this.elements) {
     var element = this.elements[i];
 
-    element_list.push([ element.weight(), element.show() ]);
+    const d = element.show()
+    this.dom_elements[i] = Array.isArray(d) ? d : [d];
+    element_list.push([ element.weight(), i ]);
   }
 
   element_list = weight_sort(element_list);
 
-  for(var i in element_list) {
-    if(element_list[i].length) {
-      for(var j = 0; j < element_list[i].length; j++)
-        this.dom_table_body.appendChild(element_list[i][j]);
-    }
-    else
-      this.dom_table_body.appendChild(element_list[i]);
-  }
+  element_list.forEach(i => {
+    this.dom_elements[i].forEach(d => this.dom_table_body.appendChild(d))
+  })
 
   return this.dom_table;
 }
