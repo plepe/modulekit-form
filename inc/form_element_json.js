@@ -8,10 +8,12 @@ form_element_json.prototype.init=function(id, def, options, form_parent) {
 }
 
 form_element_json.prototype.connect=function(dom_parent) {
-  this.parent("form_element_json").connect.call(this, dom_parent);
+  var ret = this.parent("form_element_json").connect.call(this, dom_parent);
 
   if(this.dom_element)
     this.dom_element.onblur=this.notify_change.bind(this);
+
+  return ret;
 }
 
 form_element_json.prototype.show_element=function() {

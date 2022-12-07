@@ -7,12 +7,14 @@ form_element_display.prototype.init=function(id, def, options, form_parent) {
 }
 
 form_element_display.prototype.connect=function(dom_parent) {
-  this.parent("form_element_display").connect.call(this, dom_parent);
+  var ret = this.parent("form_element_display").connect.call(this, dom_parent);
 
   if(!this.dom_element) {
     this.dom_element=this.dom_parent.getElementsByTagName("input")[0];
     this.dom_display = this.dom_parent.firstChild;
   }
+
+  return ret;
 }
 
 form_element_display.prototype.show_element=function() {

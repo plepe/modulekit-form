@@ -33,6 +33,8 @@ form_element_switch.prototype.connect=function(dom_parent) {
     var dom_element = dom_parent.querySelector(".field_value > span");
     this.elements[k].connect(dom_element);
   }
+
+  return Object.values(this.element_table);
 }
 
 form_element_switch.prototype.create_element=function(k, element_def) {

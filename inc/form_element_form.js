@@ -16,18 +16,23 @@ form_element_form.prototype.init=function(id, def, options, form_parent) {
 }
 
 form_element_form.prototype.connect=function(dom_parent) {
-  this.parent("form_element_form").connect.call(this, dom_parent);
+  var ret = this.parent("form_element_form").connect.call(this, dom_parent);
+  this.dom_elements = {};
 
   for(var k in this.def.def) {
     var element_id=this.id+"_"+k;
     var element_dom_parent=document.getElementById(element_id);
 
-    if(element_dom_parent)
-      this.elements[k].connect(element_dom_parent);
+    if(element_dom_parent) {
+      const el = this.elements[k].connect(element_dom_parent);
+      this.dom_elements[k] = Array.isArray(el) ? el : [el];
+    }
   }
 
   this.dom_table = document.getElementById(this.id)
   this.dom_table_body = this.dom_table.firstChild
+
+  return ret;
 }
 
 form_element_form.prototype.finish_connect=function() {

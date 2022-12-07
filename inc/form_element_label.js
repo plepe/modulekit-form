@@ -30,10 +30,12 @@ form_element_label.prototype.show_element=function() {
 }
 
 form_element_label.prototype.connect=function(dom_parent) {
-  this.parent("form_element_label").connect.call(this, dom_parent);
+  var ret = this.parent("form_element_label").connect.call(this, dom_parent);
 
   this.dom_element1=this.dom_parent.getElementsByTagName("input")[0];
   this.dom_element2=this.dom_parent.getElementsByTagName("div")[0];
+
+  return ret;
 }
 
 form_element_label.prototype.set_data=function(data) {

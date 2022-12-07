@@ -46,9 +46,11 @@ form_element_date.prototype.create_element=function() {
 }
 
 form_element_date.prototype.connect=function(dom_parent) {
-  this.parent("form_element_date").connect.call(this, dom_parent);
+  var ret = this.parent("form_element_date").connect.call(this, dom_parent);
 
   this.activate_calendar(this.dom_element);
+
+  return ret;
 }
 
 form_element_date.prototype.show_element = function() {

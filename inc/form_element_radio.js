@@ -7,7 +7,7 @@ form_element_radio.prototype.init=function(id, def, options, form_parent) {
 }
 
 form_element_radio.prototype.connect=function(dom_parent) {
-  this.parent("form_element_radio").connect.call(this, dom_parent);
+  var ret = this.parent("form_element_radio").connect.call(this, dom_parent);
 
   var current=this.dom_parent.firstChild;
   this.dom_values={};
@@ -21,6 +21,8 @@ form_element_radio.prototype.connect=function(dom_parent) {
 
     current=current.nextSibling;
   }
+
+  return ret;
 }
 
 form_element_radio.prototype.focus = function() {

@@ -102,6 +102,8 @@ form_element.prototype.connect=function(dom_parent) {
 
     current = current.nextSibling
   }
+
+  return this.tr;
 }
 
 form_element.prototype.finish_connect=function(dom_parent) {

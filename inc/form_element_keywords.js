@@ -7,7 +7,7 @@ form_element_keywords.prototype.init=function(id, def, options, form_parent) {
 }
 
 form_element_keywords.prototype.connect=function(dom_parent) {
-  this.parent("form_element_keywords").connect.call(this, dom_parent);
+  var ret = this.parent("form_element_keywords").connect.call(this, dom_parent);
   this.dom_element=this.dom_parent.getElementsByTagName("input")[0];
 
   this.dom_element.onblur=this.notify_change.bind(this);
@@ -17,6 +17,8 @@ form_element_keywords.prototype.connect=function(dom_parent) {
   this.create_interaction();
 
   this.set_data(this.get_data());
+
+  return ret;
 }
 
 form_element_keywords.prototype.create_interaction=function() {

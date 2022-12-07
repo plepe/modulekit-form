@@ -7,10 +7,12 @@ form_element_boolean.prototype.init=function(id, def, options, form_parent) {
 }
 
 form_element_boolean.prototype.connect=function(dom_parent) {
-  this.parent("form_element_boolean").connect.call(this, dom_parent);
+  var ret = this.parent("form_element_boolean").connect.call(this, dom_parent);
   this.dom_element=this.dom_parent.getElementsByTagName("input")[0];
 
   this.dom_element.onchange=this.notify_change.bind(this);
+
+  return ret;
 }
 
 form_element_boolean.prototype.focus = function() {

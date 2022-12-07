@@ -61,7 +61,7 @@ form_element_array.prototype.create_element=function(k) {
 }
 
 form_element_array.prototype.connect=function(dom_parent) {
-  this.parent("form_element_array").connect.call(this, dom_parent);
+  var ret = this.parent("form_element_array").connect.call(this, dom_parent);
 
   var current=this.dom.firstChild;
   this.elements={};
@@ -136,6 +136,8 @@ form_element_array.prototype.connect=function(dom_parent) {
 
     current=current.nextSibling;
   }
+
+  return ret;
 }
 
 form_element_array.prototype.finish_connect=function() {

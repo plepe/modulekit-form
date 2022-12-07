@@ -42,7 +42,7 @@ form_element_form_chooser.prototype.build_form=function(show_default=false) {
 }
 
 form_element_form_chooser.prototype.connect=function(dom_parent) {
-  this.parent("form_element_form_chooser").connect.call(this, dom_parent);
+  var ret = this.parent("form_element_form_chooser").connect.call(this, dom_parent);
 
   this.dom_table = this.dom_parent.firstChild;
   this.dom_table_body = this.dom_table.firstChild
@@ -126,6 +126,8 @@ form_element_form_chooser.prototype.connect=function(dom_parent) {
       div.removeChild(div.firstChild.nextSibling);
     }
   }
+
+  return ret;
 }
 
 form_element_form_chooser.prototype.focus = function() {

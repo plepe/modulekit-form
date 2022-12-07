@@ -10,7 +10,7 @@ form_element_checkbox.prototype.init=function(id, def, options, form_parent) {
 }
 
 form_element_checkbox.prototype.connect=function(dom_parent) {
-  this.parent("form_element_checkbox").connect.call(this, dom_parent);
+  var ret = this.parent("form_element_checkbox").connect.call(this, dom_parent);
 
   var current=this.dom_parent.firstChild;
   var presets_name = this.options.var_name + '[__presets]'
@@ -33,6 +33,8 @@ form_element_checkbox.prototype.connect=function(dom_parent) {
   this.values = this.get_values();
 
   this.init_presets();
+
+  return ret;
 }
 
 form_element_checkbox.prototype.focus = function() {

@@ -50,7 +50,7 @@ form_element_file.prototype.refresh=function(force) {
 }
 
 form_element_file.prototype.connect=function(dom_parent) {
-  this.parent("form_element_file").connect.call(this, dom_parent);
+  var ret = this.parent("form_element_file").connect.call(this, dom_parent);
 
   var obs=this.dom_parent.getElementsByTagName("input");
   for(var i=0; i<obs.length; i++) {
@@ -107,6 +107,8 @@ form_element_file.prototype.connect=function(dom_parent) {
     span=document.getElementById(this.id+"-newfile");
     span.style.display="none";
   }
+
+  return ret;
 }
 
 form_element_file.prototype.show_element=function() {

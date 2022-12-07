@@ -23,12 +23,14 @@ form_element_select_other.prototype.init=function(id, def, options, form_parent)
 }
 
 form_element_select_other.prototype.connect = function (dom_parent) {
-  this.parent("form_element_select_other").connect.call(this, dom_parent)
+  var ret = this.parent("form_element_select_other").connect.call(this, dom_parent)
 
   this.other_dom = dom_parent.lastChild
   this.other_form.connect(this.other_dom.firstChild)
 
   this.other_option = this.dom_element.lastChild
+
+  return ret;
 }
 
 form_element_select_other.prototype.finish_connect = function (dom_parent) {

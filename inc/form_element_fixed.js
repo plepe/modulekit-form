@@ -3,11 +3,13 @@ function form_element_fixed() {
 }
 
 form_element_fixed.prototype.connect=function(dom_parent) {
-  this.parent("form_element_fixed").connect.call(this, dom_parent);
+  var ret = this.parent("form_element_fixed").connect.call(this, dom_parent);
 
   if(!this.dom_element) {
     this.dom_element=this.dom_parent.getElementsByTagName("input")[0];
   }
+
+  return ret;
 }
 
 form_element_fixed.prototype.show_element=function() {

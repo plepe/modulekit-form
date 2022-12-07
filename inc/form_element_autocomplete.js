@@ -9,7 +9,7 @@ form_element_autocomplete.prototype.init=function(id, def, options, form_parent)
 // Remove <select> and replace by JS <input>
 form_element_autocomplete.prototype.connect=function(dom_parent) {
   var value;
-  this.parent("form_element_autocomplete").connect.call(this, dom_parent);
+  var ret = this.parent("form_element_autocomplete").connect.call(this, dom_parent);
 
   this.dom_element=this.dom_parent.getElementsByTagName("select")[0];
   if(this.dom_element)
@@ -22,6 +22,8 @@ form_element_autocomplete.prototype.connect=function(dom_parent) {
 
   if(value != "")
     this.set_data(value);
+
+  return ret;
 }
 
 form_element_autocomplete.prototype.focus = function() {

@@ -10,7 +10,7 @@ form_element_textarea.prototype.connect=function(dom_parent) {
   this.dom_element.ondrop = this.delayed_resize.bind(this);
   this.dom_element.onkeydown = this.delayed_resize.bind(this);
 
-  this.parent("form_element_textarea").connect.call(this, dom_parent);
+  return this.parent("form_element_textarea").connect.call(this, dom_parent);
 }
 
 form_element_textarea.prototype.create_element=function() {
