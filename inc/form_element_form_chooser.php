@@ -423,7 +423,7 @@ class form_element_form_chooser extends form_element {
     return false;
   }
 
-  function check_required(&$errors, $param) {
+  function check_required(&$errors, $param, $no_path=0) {
     if($this->required()) {
       if(sizeof($this->elements))
         return;
