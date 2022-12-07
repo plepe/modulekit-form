@@ -105,6 +105,10 @@ form_element_form.prototype.reorder=function() {
   element_list = weight_sort(element_list);
 
   element_list.forEach(i => {
+    if (!(i in this.dom_elements)) {
+      return 
+    }
+
     this.dom_elements[i].forEach(d => this.dom_table_body.appendChild(d))
   })
 }
