@@ -49,7 +49,7 @@ form_element.prototype.weight=function() {
     if(typeof this.def.weight == 'object') {
       const test = [];
       this.check(test, this.def.weight, true);
-      return test.length ? parseNumber(test[0]) : 0
+      return test.length ? parseFloat(test[0]) : 0
     }
 
     return this.def.weight;
