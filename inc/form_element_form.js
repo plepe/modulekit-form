@@ -23,9 +23,11 @@ form_element_form.prototype.connect=function(dom_parent) {
     var element_id=this.id+"_"+k;
     var element_dom_parent=document.getElementById(element_id);
 
-    if(element_dom_parent) {
-      const el = this.elements[k].connect(element_dom_parent);
+    const el = this.elements[k].connect(element_dom_parent);
+    if (el) {
       this.dom_elements[k] = Array.isArray(el) ? el : [el];
+    } else {
+      console.error('Form element ' + this.id + ': connecting child ' + k + ' did not return dom node(s)')
     }
   }
 
