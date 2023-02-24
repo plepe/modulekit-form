@@ -4,6 +4,7 @@ function form_element_intermediate_text() {
 
 form_element_intermediate_text.prototype.show=function() {
   this.tr = document.createElement("tr");
+  this.tr.id="tr-"+this.id;
 
   this.td = document.createElement("td");
   this.td.setAttribute("colspan", 2);

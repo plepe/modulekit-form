@@ -6,6 +6,7 @@ class form_element_intermediate_text extends form_element {
 
   function show($document) {
     $this->tr = $document->createElement("tr");
+    $this->tr->setAttribute("id", "tr-".$this->id);
 
     $div = DOM_createHTMLElement($this->def['text'], $document);
     $this->td = $document->createElement("td");
