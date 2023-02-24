@@ -45,8 +45,10 @@ select {
   margin-bottom: 2px;
 }
 input.form_modified[readonly],
+textarea.form_modified[readonly],
 select.form_modified[disabled],
 input[readonly],
+textarea[readonly],
 select[disabled] {
   background: white;
 }
