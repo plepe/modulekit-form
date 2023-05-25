@@ -137,6 +137,14 @@ class form_element_form_chooser extends form_element {
       unset($this->data['__order_down']);
       $ret = false;
     }
+    if(isset($this->data['__placeholder'])) {
+      $placeholder=$this->data['__placeholder'];
+      $order = array();
+      foreach ($placeholder as $k => $d) {
+        $order[$k] = $this->data[$k] ?? null;
+      }
+      $this->data = $order;
+    }
 
     if ($this->data) {
       foreach ($this->data as $k => $d) {
@@ -303,6 +311,12 @@ class form_element_form_chooser extends form_element {
     $el_div->setAttribute("form_element_num", $k);
     $el_div->setAttribute("class", "form_element_form_chooser_part_element_actions");
     $tr->appendChild($el_div);
+
+    $input=$document->createElement("input");
+    $input->setAttribute("type", "hidden");
+    $input->setAttribute("name", "{$this->options['var_name']}[__placeholder][{$k}]");
+    $input->setAttribute("value", "");
+    $el_div->appendChild($input);
 
     if($order == "order") {
       $input=$document->createElement("input");

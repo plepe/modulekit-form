@@ -277,6 +277,14 @@ form_element_form_chooser.prototype.show_element_part=function(k, element) {
   el_div.className="form_element_form_chooser_part_element_actions";
   tr.appendChild(el_div);
 
+  var input=document.createElement("input");
+  input.type="hidden";
+  if (this.options.var_name) {
+    input.name=this.options.var_name+"[__placeholder]["+k+"]";
+  }
+  input.value="";
+  el_div.appendChild(input)
+
   if(order == 'order') {
     var input=document.createElement("input");
     input.type="submit";
