@@ -108,6 +108,8 @@ form_element_form_chooser.prototype.connect=function(dom_parent) {
     // modify actions
     input = div.firstChild;
     while(input) {
+      const next = input.nextSibling
+
       if (input.name == this.options.var_name+"[__new]") {
 	this.action_add = input
 	this.action_add.onchange = function () {
@@ -119,11 +121,11 @@ form_element_form_chooser.prototype.connect=function(dom_parent) {
           return false
         }.bind(this)
       }
-      input=input.nextSibling;
-    }
+      else {
+        div.removeChild(input)
+      }
 
-    if (div.firstChild.nextSibling) {
-      div.removeChild(div.firstChild.nextSibling);
+      input = next
     }
   }
 
