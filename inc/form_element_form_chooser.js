@@ -504,7 +504,9 @@ form_element_form_chooser.prototype.add_element = function(k) {
   this.elements[k] = this.available_elements[k]
 
   if (this.dom_table_body) {
-    this.dom_table_body.appendChild(this.show_element_part(k, this.elements[k]))
+    const tr = this.show_element_part(k, this.elements[k])
+    this.element_divs[k] = tr
+    this.dom_table_body.appendChild(tr)
 
     this.resize()
 
