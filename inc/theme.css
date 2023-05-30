@@ -3,7 +3,8 @@ input[type=submit],
 input[type=button],
 button,
 .form_element_file label,
-.form_element_form_chooser select.form_element_form_chooser_action_add {
+.form_element_form_chooser select.form_element_form_chooser_action_add,
+.form_element_form_chooser select.form_element_form_chooser_action_preset {
   border: 2px outset #000000;
   border-radius: 3px;
   background: #d0d0d0;
@@ -19,7 +20,8 @@ input[type=button]:active,
 button:active,
 button.active,
 .form_element_file label:active,
-.form_element_form_chooser select.form_element_form_chooser_action_add:active {
+.form_element_form_chooser select.form_element_form_chooser_action_add:active,
+.form_element_form_chooser select.form_element_form_chooser_action_preset:active {
   border: 2px inset #000000;
   border-radius: 3px;
   background: #a0a0a0;

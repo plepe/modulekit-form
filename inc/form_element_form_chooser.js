@@ -121,6 +121,17 @@ form_element_form_chooser.prototype.connect=function(dom_parent) {
           return false
         }.bind(this)
       }
+      else if (input.name == this.options.var_name+"[__preset]") {
+	this.action_preset = input
+	this.action_preset.onchange = function () {
+          var k = this.action_preset.value
+          var def = this.def.presets[k];
+          this.set_data(def.value)
+          this.notify_change()
+          this.action_preset.value = ''
+          return false
+        }.bind(this)
+      }
       else {
         div.removeChild(input)
       }
@@ -397,7 +408,53 @@ form_element_form_chooser.prototype.show_element=function() {
 
   el_div.appendChild(this.action_add);
 
+  this.show_preset(el_div);
+
   return div;
+}
+
+form_element_form_chooser.prototype.show_preset=function(el_div) {
+  if (!this.def.presets) {
+    return
+  }
+
+  this.action_preset=document.createElement("select");
+  if (this.options.var_name) {
+    this.action_preset.name=this.options.var_name+"[__preset]";
+  }
+  this.action_preset.className = 'form_element_form_chooser_action_preset'
+
+  var option = document.createElement('option');
+  option.value = '';
+  if("presets:label" in this.def) {
+    if(typeof(this.def['presets:label']) == "object")
+      option.appendChild(document.createTextNode(lang(this.def['presets:label'])));
+    else
+      option.appendChild(document.createTextNode(this.def['presets:label']));
+  }
+  else
+    option.appendChild(document.createTextNode(lang('form:load_preset')));
+  this.action_preset.appendChild(option);
+
+  for (var k in this.def.presets) {
+    var def = this.def.presets[k];
+    var option = document.createElement('option');
+    option.value = k;
+
+    option.appendChild(document.createTextNode(def.name));
+    this.action_preset.appendChild(option);
+  }
+
+  this.action_preset.onchange = function () {
+    var k = this.action_preset.value
+    var def = this.def.presets[k];
+    this.set_data(def.value)
+    this.notify_change()
+    this.action_preset.value = ''
+    return false
+  }.bind(this)
+
+  el_div.appendChild(this.action_preset);
 }
 
 form_element_form_chooser.prototype.all_errors=function(list) {

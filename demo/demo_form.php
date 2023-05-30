@@ -7,6 +7,16 @@ $form_def=array(
     'type'      =>'form_chooser',
     'order'     =>false,
     'result_keep_order' => true,
+    //'presets:label' => 'Reset to selection',
+    'presets'   => array(
+      'default'   => array(
+        'name' => 'Default selection',
+        'value' => array(
+          'a' => 'foo',
+          'c' => '2001-09-11',
+        ),
+      ),
+    ),
     'def'       =>array(
       'a'         => array(
         'type'    => 'text',

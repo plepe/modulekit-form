@@ -137,6 +137,13 @@ class form_element_form_chooser extends form_element {
       unset($this->data['__order_down']);
       $ret = false;
     }
+    if(isset($this->data['__preset'])) {
+      if ($k = $this->data['__preset']) {
+        $preset = $k;
+        $ret = false;
+      }
+      unset($this->data['__preset']);
+    }
     if(isset($this->data['__placeholder'])) {
       $placeholder=$this->data['__placeholder'];
       $order = array();
@@ -208,6 +215,11 @@ class form_element_form_chooser extends form_element {
 
       if($r === false)
 	$ret = false;
+    }
+
+    if (isset($preset)) {
+      $this->set_data($this->def['presets'][$preset]['value']);
+      $this->changed_count=true;
     }
 
     if (isset($new)) {
@@ -395,6 +407,8 @@ class form_element_form_chooser extends form_element {
 
     $el_div->appendChild($input);
 
+    $this->show_preset($document, $el_div);
+
     $input = $document->createElement('input');
     $input->setAttribute('type', 'submit');
     $input->setAttribute('value', lang('ok'));
@@ -405,6 +419,36 @@ class form_element_form_chooser extends form_element {
     }
 
     return $div;
+  }
+
+  function show_preset ($document, $el_div) {
+    $input = $document->createElement('select');
+    $input->setAttribute("name", "{$this->options['var_name']}[__preset]");
+    $input->setAttribute("class", "form_element_form_chooser_action_preset");
+
+    $option = $document->createElement('option');
+    $option->setAttribute('value', '');
+    $option->setAttribute('selected', 'true');
+
+    if(array_key_exists("presets:label", $this->def)) {
+      if(is_array($this->def['presets:label']))
+        $option->appendChild($document->createTextNode(lang($this->def['presets:label'])));
+      else
+        $option->appendChild($document->createTextNode($this->def['presets:label']));
+    }
+    else
+      $option->appendChild($document->createTextNode(lang("form:load_preset")));
+    $input->appendChild($option);
+
+    foreach ($this->def['presets'] as $k => $def) {
+      $option = $document->createElement('option');
+      $option->setAttribute('value', $k);
+
+      $option->appendChild($document->createTextNode($def['name']));
+      $input->appendChild($option);
+    }
+
+    $el_div->appendChild($input);
   }
 
   function save_data() {

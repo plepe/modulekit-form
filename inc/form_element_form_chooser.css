@@ -28,7 +28,8 @@
 }
 .form_element_form_chooser_part_actions {
 }
-.form .form_element_form_chooser select.form_element_form_chooser_action_add {
+.form .form_element_form_chooser select.form_element_form_chooser_action_add,
+.form .form_element_form_chooser select.form_element_form_chooser_action_preset {
   width: auto;
 }
 .form .form_element_form_chooser .form_element_form_chooser_actions.reached_max {

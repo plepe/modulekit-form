@@ -449,6 +449,10 @@ Choose sub elements from a predefined list of elements. The result will only inc
 Definition:
 * type: 'form_chooser'
 * def: a list of available sub elements
+* presets: a list of pre-defined values, with:
+  * name: name of the selection
+  * value: value to set if chosen
+* presets:label: label of the input field for the presets
 * min: how many elements must be selected at minimum
 * max: how many elements must be selected at maximum
 * exclude_null_values: if true, remove null values from the array. Default: false.
