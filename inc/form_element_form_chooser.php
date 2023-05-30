@@ -81,7 +81,7 @@ class form_element_form_chooser extends form_element {
   function set_data($data) {
     $this->data=$data;
 
-    if ($data)
+    if ($data) {
       foreach ($data as $k => $d) {
         if (!array_key_exists($k, $this->elements)) {
           $this->add_element($k);
@@ -92,6 +92,9 @@ class form_element_form_chooser extends form_element {
         }
       }
 
+      $this->reorder(array_keys($data));
+    }
+
     foreach ($this->elements as $k => $element) {
       if (!$data || !array_key_exists($k, $data)) {
         $this->remove_element($k);
@@ -99,6 +102,12 @@ class form_element_form_chooser extends form_element {
     }
 
     unset($this->data);
+  }
+
+  function reorder ($keys) {
+    uksort($this->elements, function ($a, $b) use ($keys) {
+      return array_search($a, $keys) <=> array_search($b, $keys);
+    });
   }
 
   function set_request_data($data) {

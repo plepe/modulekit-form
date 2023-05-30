@@ -210,7 +210,7 @@ form_element_form_chooser.prototype.set_data=function(data) {
 
   this.data=data;
 
-  if(data)
+  if(data) {
     for(var k in data) {
       if (!(k in this.elements)) {
         this.add_element(k)
@@ -220,6 +220,9 @@ form_element_form_chooser.prototype.set_data=function(data) {
         this.elements[k].set_data(data[k]);
       }
     }
+
+    this.reorder(Object.keys(data));
+  }
 
   for (var k in this.elements) {
     if (!data || (!(k in data))) {
@@ -547,6 +550,32 @@ form_element_form_chooser.prototype.remove_element=function(k) {
   }
 
   return false;
+}
+
+form_element_form_chooser.prototype.reorder = function (keys) {
+  const newElements = {}
+  const table_rows = this.dom_table.rows;
+  for (let i = keys.length - 1; i >= 0; i--) {
+    const k = keys[i]
+    const tr = this.element_divs[k]
+
+    if (tr) {
+      tr.parentNode.insertBefore(tr, tr.parentNode.firstChild)
+    }
+  }
+
+  for (let i = 0; i < keys.length; i++) {
+    const k = keys[i]
+    newElements[k] = this.elements[k]
+  }
+
+  for (const k in this.elements) {
+    if (!(k in newElements)) {
+      newElements[k] = this.elements[k]
+    }
+  }
+
+  this.elements = newElements
 }
 
 form_element_form_chooser.prototype.order_up=function(k) {
