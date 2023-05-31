@@ -482,6 +482,18 @@ form_element.prototype.check_is=function(list, param, no_path=0) {
   }
 }
 
+form_element.prototype.check_in=function(list, param, no_path=0) {
+  if(param.length<1)
+    return;
+
+  if(param[0].indexOf(this.get_data()) === -1) {
+    if(param.length<2)
+      list.push(lang('form:invalid_value'));
+    else
+      list.push(param[1]);
+  }
+}
+
 form_element.prototype.check_contains=function(list, param, no_path=0) {
   if(param.length<1)
     return;

@@ -474,6 +474,18 @@ class form_element {
     }
   }
 
+  function check_in(&$errors, $param, $no_path=0) {
+    if(sizeof($param)<1)
+      return;
+
+    if(!in_array($this->get_data(), $param[0])) {
+      if(sizeof($param)<2)
+	$errors[]=lang('form:invalid_value');
+      else
+	$errors[]=$param[1];
+    }
+  }
+
   function check_contains(&$errors, $param, $no_path=0) {
     if(sizeof($param)<1)
       return;
