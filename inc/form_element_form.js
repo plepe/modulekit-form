@@ -106,6 +106,11 @@ form_element_form.prototype.reorder=function() {
 
   element_list = weight_sort(element_list);
 
+  // list stays the same
+  if (this.elements_order && this.elements_order.join(',') === element_list.join(',')) {
+    return
+  }
+
   element_list.forEach(i => {
     if (!(i in this.dom_elements)) {
       return 
@@ -113,6 +118,8 @@ form_element_form.prototype.reorder=function() {
 
     this.dom_elements[i].forEach(d => this.dom_table_body.appendChild(d))
   })
+
+  this.elements_order = element_list
 }
 
 form_element_form.prototype.get_data=function(data) {
