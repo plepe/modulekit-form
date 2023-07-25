@@ -68,6 +68,7 @@ class form_element {
       $weight = $this->def['weight'];
 
       if (is_array($weight)) {
+        $result = array();
         $this->check($result, $weight, true);
         return sizeof($result) ? $result[0] : 0;
       }
@@ -113,9 +114,9 @@ class form_element {
   function required() {
     if(isset($this->def['req'])) {
       $req = $this->def['req'];
-      $req_test = array();
 
       if(is_array($req)) {
+        $req_test = array();
 	$this->check($req_test, $req);
 	$req = count($req_test) != 0;
       }
@@ -129,9 +130,9 @@ class form_element {
   function disabled() {
     if(isset($this->def['disabled'])) {
       $v = $this->def['disabled'];
-      $v_test = array();
 
       if(is_array($v)) {
+        $v_test = array();
 	$this->check($v_test, $v);
 	$v = count($v_test) == 0;
       }
@@ -326,7 +327,6 @@ class form_element {
         return $this->get_data() !== null;
 
       $errors=array();
-
       $this->check($errors, $this->def['include_data']);
 
       if(sizeof($errors))
@@ -579,7 +579,6 @@ class form_element {
 	return false;
 
       $errors=array();
-
       $this->check($errors, $this->def['show_depend']);
 
       if(sizeof($errors)) {
@@ -698,6 +697,7 @@ class form_element {
       $v = $this->def['message'];
 
       if(is_array($v)) {
+        $result = array();
 	$this->check($result, $v);
         return implode("\n", $result);
       }
