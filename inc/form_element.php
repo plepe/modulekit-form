@@ -490,13 +490,17 @@ class form_element {
     if(sizeof($param)<1)
       return;
 
-    if(is_array($param[0])) {
-      if(sizeof(array_intersect($param[0], $this->get_data())))
-	return;
-    }
-    else {
-      if(in_array($param[0], $this->get_data()))
-	return;
+    $data = $this->get_data();
+
+    if (is_array($data)) {
+      if(is_array($param[0])) {
+        if(sizeof(array_intersect($param[0], $data)))
+          return;
+      }
+      else {
+        if(in_array($param[0], $data))
+          return;
+      }
     }
 
     if(sizeof($param)<2)
