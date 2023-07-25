@@ -16,6 +16,22 @@ class form_element_checkbox extends form_element {
     }
   }
 
+  function get_orig_data() {
+    $data = parent::get_orig_data();
+
+    if(($data === "") or ($data === null))
+      $data = array();
+
+    switch ($this->def['result_mode'] ?? 'array') {
+      case 'csv':
+        return implode(',', $data);
+      case 'array':
+        return $data;
+      default:
+        throw new Exception("unknown result mode: " + $this->def['result_mode']);
+    }
+  }
+
   function set_request_data($data) {
     $ret = true;
 
@@ -65,6 +81,22 @@ class form_element_checkbox extends form_element {
     return parent::set_data($data);
   }
 
+  function set_orig_data ($data) {
+    if ($data !== null) {
+      switch ($this->def['result_mode'] ?? 'array') {
+        case 'csv':
+          $data = explode(',', $data);
+          break;
+        case 'array':
+          break;
+        default:
+          throw new Exception("unknown result mode: " + $this->def['result_mode']);
+      }
+    }
+
+    return parent::set_orig_data($data);
+  }
+
   function show_element($document) {
     $div=parent::show_element($document);
 
@@ -81,7 +113,7 @@ class form_element_checkbox extends form_element {
     $values = $this->get_values();
 
     if (array_key_exists('auto_add_values', $this->def) && $this->def['auto_add_values']) {
-      foreach ($this->get_data() as $d) {
+      foreach ($this->data as $d) {
         if (!array_key_exists($d, $values)) {
           $values[$d] = $d;
         }
@@ -175,9 +207,9 @@ class form_element_checkbox extends form_element {
   }
 
   function is_modified() {
-    if(sizeof(array_diff($this->get_data(), $this->get_orig_data()))!=0)
+    if(sizeof(array_diff($this->data, $this->orig_data))!=0)
       return true;
-    if(sizeof(array_diff($this->get_orig_data(), $this->get_data()))!=0)
+    if(sizeof(array_diff($this->orig_data, $this->data))!=0)
       return true;
 
     return false;
