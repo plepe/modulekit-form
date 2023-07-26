@@ -111,13 +111,15 @@ form_element_form.prototype.reorder=function() {
     return
   }
 
-  element_list.forEach(i => {
-    if (!(i in this.dom_elements)) {
-      return 
-    }
+  if (this.dom_elements) {
+    element_list.forEach(i => {
+      if (!(i in this.dom_elements)) {
+        return
+      }
 
-    this.dom_elements[i].forEach(d => this.dom_table_body.appendChild(d))
-  })
+      this.dom_elements[i].forEach(d => this.dom_table_body.appendChild(d))
+    })
+  }
 
   this.elements_order = element_list
 }
