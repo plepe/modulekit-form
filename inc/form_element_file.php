@@ -202,9 +202,9 @@ class form_element_file extends form_element {
 
     else {
       // Check file size of temporary file
-      clearstatcache("{$this->def['path']}/{$this->data['tmp_name']}");
-      if(filesize("{$this->def['path']}/{$this->data['tmp_name']}")!=$this->data['size']) {
-	$this->data['error']=17;
+      clearstatcache("{$this->def['path']}/{$data['tmp_name']}");
+      if(filesize("{$this->def['path']}/{$data['tmp_name']}")!=$data['size']) {
+	$data['error']=17;
       }
     }
 
