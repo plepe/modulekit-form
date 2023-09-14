@@ -172,7 +172,7 @@ function format_file_size(size) {
   if(size > 800)
     return sprintf("%.1f kiB", size/1024.0);
 
-  return sprintf("% B", size);
+  return sprintf("%d B", size);
 }
 
 // from: http://stackoverflow.com/a/5265175

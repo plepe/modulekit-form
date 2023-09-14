@@ -40,7 +40,7 @@ function format_file_size($size) {
   if($size > 800)
     return sprintf("%.1f kiB", $size/1024.0);
 
-  return sprintf("% B", $size);
+  return sprintf("%d B", $size);
 }
 
 function get_value_string($v, $key="name") {
