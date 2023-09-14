@@ -423,6 +423,7 @@ Definition:
   * [timestamp]: Date in form YYYY-MM-DD-HH-MM-SS
 * web_path: If file should be downloadable, set a web_path. "[file_name]" will be replaced by the name of the file (e.g. download.php?file=[file_name]").
 * accept_ext: an array with acceptable extensions (default: all)
+* no_overwrite: if the file already exists, it will be renamed (with '_0', '_1', ... appended to the base name)
 
 Value:
 ```php

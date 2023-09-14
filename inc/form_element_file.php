@@ -220,12 +220,27 @@ class form_element_file extends form_element {
       mkdir($this->def['path'], 0777, true);
     }
 
+    $new_name = $this->data['new_name'];
+
+    if ($this->def['no_overwrite'] ?? false) {
+      $next_index = 0;
+      $ext_pos = strrpos($new_name, '.');
+      while (file_exists("{$this->def['path']}/{$new_name}")) {
+        if ($ext_pos === false) {
+          $new_name = "{$this->data['new_name']}_{$next_index}";
+        } else {
+          $new_name = substr($this->data['new_name'], 0, $ext_pos) . "_{$next_index}" . substr($this->data['new_name'], $ext_pos);
+        }
+        $next_index++;
+      }
+    }
+
     // rename to final file name
     if(rename("{$this->def['path']}/{$this->data['tmp_name']}",
-	      "{$this->def['path']}/{$this->data['new_name']}")===true) {
+	      "{$this->def['path']}/{$new_name}")===true) {
 
       // save data
-      $this->data['name']=$this->data['new_name'];
+      $this->data['name']=$new_name;
       unset($this->data['tmp_name']);
       unset($this->data['new_name']);
 
