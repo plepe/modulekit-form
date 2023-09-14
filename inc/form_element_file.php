@@ -170,7 +170,7 @@ class form_element_file extends form_element {
 
     $data['orig_name']=$data['name'];
     $p2=strrpos($data['name'], ".");
-    $data['ext']=substr($data['name'], $p2+1);
+    $data['ext']=$p2 === false ? null : substr($data['name'], $p2 + 1);
 
     $template="[orig_name]";
     if(isset($this->def['template']))
