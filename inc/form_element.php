@@ -100,7 +100,9 @@ class form_element {
   // false: this form element is not complete (e.g. because a button was
   // clicked to add/remove elements)
   function set_request_data($data) {
-    $data = preg_replace("/\r\n/", "\n", $data);
+    if (is_string($data)) {
+      $data = preg_replace("/\r\n/", "\n", $data);
+    }
 
     $this->data=$data;
 
