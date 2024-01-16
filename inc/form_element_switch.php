@@ -107,14 +107,11 @@ class form_element_switch extends form_element {
   function set_request_data($data) {
     $ret = true;
 
-    if(array_key_exists('__reload__', $data))
+    if($data && array_key_exists('__reload__', $data))
       $this->reload_clicked = true;
 
     foreach($this->elements as $k=>$element) {
-      if(!isset($data[$k]))
-	$data[$k] = null;
-
-      $r = $element->set_request_data($data[$k]);
+      $r = $element->set_request_data($data[$k] ?? null);
 
       if($r === false)
 	$ret = false;
