@@ -109,6 +109,10 @@ class form_element_text extends form_element {
       return null;
     }
 
+    if ($this->def['trim'] ?? false) {
+      $data = trim($data);
+    }
+
     return $data;
   }
 

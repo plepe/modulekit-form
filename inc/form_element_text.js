@@ -103,6 +103,10 @@ form_element_text.prototype.get_data=function(data) {
     return null;
   }
 
+  if (this.def.trim) {
+    data = data.trim()
+  }
+
   return data;
 }
 

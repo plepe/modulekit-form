@@ -193,6 +193,7 @@ Definition:
 * max_length: Value may not be longer than 'max_length' characters.
 * max_bytes: Value may not be longer than 'max_bytes' bytes in the current encoding (hopefully UTF-8).
 * change_on: per default, the element will emit the 'onchange' event on blur. if 'keyup', it will emit on the keyup event. (default: 'blur')
+* trim: if set to `true`, whitespace around the value will be trimmed (default: `false`)
 
 Value:
 * String. Will be stripped of additional slashes.

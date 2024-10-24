@@ -51,6 +51,7 @@ $form_def=array(
     'type'	=>"text",
     'req'	=>true,
     'max_length' => 10,
+    'trim' => true,
     'html_attributes'   =>array("style"=>"border: 2px solid black;"),
     'check'	=> array("fun", array("js"=>"name_check", "php"=>"name_check")),
     'non_used_value' => 'FOO',
