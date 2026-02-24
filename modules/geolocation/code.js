@@ -173,8 +173,11 @@ form_element_geolocation.prototype.toggle_tracking = function(state) {
 
 form_element_geolocation.prototype.update = function(position) {
   var coords = {};
-  for(var k in position.coords)
-    coords[k] = position.coords[k];
+  for(var k in position.coords) {
+    if (k !== 'toJSON') {
+      coords[k] = position.coords[k];
+    }
+  }
 
   if(this.input) {
     if(!this.input.enable_tracking.checked)
