@@ -34,6 +34,7 @@ form_element_file.prototype.focus = function() {
 form_element_file.prototype.refresh=function(force) {
   var cls;
 
+  this.parent("form_element_file").refresh.call(this, force);
   //this.parent("form_element_file").check_modified.call(this);
 
   if(!this.dom_element)
