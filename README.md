@@ -434,10 +434,10 @@ array(
   'size'=>size in byte,
   'orig_name'=>name of file as it was when uploaded,
   'error'=>Error code of file upload
+  'file'=>The [File](https://developer.mozilla.org/en-US/docs/Web/API/File) object (only in JS mode)
+  'url'=>Data URL of the uploaded file (only in JS mode)
 )
 ```
-
-STATE: It's not possible yet to read file content in JavaScript mode
 
 * See http://www.php.net/manual/en/features.file-upload.errors.php for possible error codes. Additional error codes:
   * Error 16: Can't move file from PHP temporary folder to temporary file in final folder

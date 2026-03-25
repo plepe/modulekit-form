@@ -25,6 +25,8 @@ function form_element_file() {
 
 form_element_file.prototype.init=function(id, def, options, form_parent) {
   this.parent("form_element_file").init.call(this, id, def, options, form_parent);
+
+  this.uploaded_url = null;
 }
 
 form_element_file.prototype.focus = function() {
@@ -217,6 +219,8 @@ form_element_file.prototype.show_element=function() {
 }
 
 form_element_file.prototype.notify_change_file=function() {
+  this.uploaded_url = null
+
   this.parent("form_element_file").notify_change.call(this);
 
   var span=document.getElementById(this.id+"-newfile");
@@ -247,14 +251,23 @@ form_element_file.prototype.notify_change_file=function() {
 
   var data = this.get_data();
 
-  if(FileReader && this.js_file && data.type.match(/^image\//)) {
-    var img=document.createElement("img");
-    img.file = this.js_file;
-    img.className = "form_element_file_preview";
-    span_value.appendChild(img);
-
+  if(FileReader && this.js_file) {
     var reader = new FileReader();
-    reader.onload = (function(aImg) { return function(e) { aImg.src = e.target.result; }; })(img);
+    let img
+
+    if (data.type.match(/^image\//)) {
+      img=document.createElement("img");
+      img.file = this.js_file;
+      img.className = "form_element_file_preview";
+      span_value.appendChild(img);
+    }
+
+    reader.onload = e => {
+      this.uploaded_url = e.target.result;
+      if (img) {
+        img.src = e.target.result;
+      }
+    }
     reader.readAsDataURL(this.js_file);
 
     span_value.appendChild(document.createTextNode(" "));
@@ -312,6 +325,9 @@ form_element_file.prototype.get_data=function() {
 
     this.js_file = file;
     data.file = this.js_file
+    if (this.uploaded_url) {
+      data.url = this.uploaded_url
+    }
   }
   else {
     data.orig_name = this.dom_element.value;
